@@ -39,7 +39,7 @@
 
 + (float)startingScaleFactor {  return 0.05;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; }
-+ (float)slidingAnimationSpeed {    return 1.0; }
-+ (float)growingAnimationSpeed {    return 1.0; }
++ (float)slidingAnimationSpeed {    return 1.5; }
++ (float)growingAnimationSpeed {    return 1.5; }
 
 @end

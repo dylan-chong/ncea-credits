@@ -28,8 +28,10 @@
 }
 
 - (void)drawLineFromPoint:(CGPoint)from toPoint:(CGPoint)to withContext:(CGContextRef)context {
-    CGContextMoveToPoint(context, from.x - [Styles screenWidth], from.y - [Styles screenHeight]);
-    CGContextAddLineToPoint(context, to.x - [Styles screenWidth], to.y - [Styles screenHeight]);
+    if (to.x > [Styles screenWidth] && to.y > [Styles screenHeight] && to.x < [Styles screenWidth] * 2 && to.y < [Styles screenHeight] * 2) {
+        CGContextMoveToPoint(context, from.x - [Styles screenWidth], from.y - [Styles screenHeight]);
+        CGContextAddLineToPoint(context, to.x - [Styles screenWidth], to.y - [Styles screenHeight]);
+    }
 }
 
 - (void)drawRect:(CGRect)rect {

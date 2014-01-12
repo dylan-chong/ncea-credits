@@ -13,7 +13,7 @@
 @implementation Styles (Layout)
 
 + (CGRect)mainContainerRect {
-    CGSize size = CGSizeMake(300 * [Styles sizeModifier], 300 * [Styles sizeModifier]);
+    CGSize size = CGSizeMake(340 * [Styles sizeModifier], 340 * [Styles sizeModifier]);
     
     //centre of screen
     CGPoint point = CGPointMake(round(([Styles screenWidth] - size.width) / 2), round(([Styles screenHeight] - size.height) / 2));

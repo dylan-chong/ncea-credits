@@ -25,11 +25,11 @@
     
     [self setMainBubble:self.mainBubble
         andChildBubbles:[NSArray arrayWithObjects:
-                           [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:TopLeft] colour:[Styles greenColour] iconName:@"Add.png" title:@"Add" andDelegate:NO],
-                           [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:TopRight] colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Subjects" andDelegate:NO],
-                           [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:BottomLeft] colour:[Styles blueColour] iconName:@"Stats.png" title:@"Stats" andDelegate:NO],
-                           [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:BottomRight] colour:[Styles orangeColour] iconName:@"Options.png" title:@"Options" andDelegate:NO],
-                           nil]];
+                         [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:TopLeft] colour:[Styles greenColour] iconName:@"Add.png" title:@"Add" andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:TopRight] colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Subjects" andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:BottomLeft] colour:[Styles blueColour] iconName:@"Stats.png" title:@"Stats" andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:BottomRight] colour:[Styles orangeColour] iconName:@"Options.png" title:@"Options" andDelegate:NO],
+                         nil]];
     
     
     _addContainer = self.childBubbles[0];
@@ -46,12 +46,12 @@
     
     [self bringSubviewToFront:self.mainBubble];
     
-    /*[self startChildBubbleCreationAnimation];
-    [NSTimer scheduledTimerWithTimeInterval:[Styles slidingAnimationSpeed]
-                            target:self.mainBubble
-                          selector:@selector(startGrowingAnimationFromTimer:)
-                          userInfo:[NSNumber numberWithFloat:[Styles mainBubbleStartingScaleFactor]]
-                           repeats:NO];*/
+    [self startChildBubbleCreationAnimation];
+    [NSTimer scheduledTimerWithTimeInterval:[Styles slidingAnimationSpeed] / 2
+                                     target:self.mainBubble
+                                   selector:@selector(startGrowingAnimationWithTimer:)
+                                   userInfo:[BubbleContainer getAnimationManagerForGrowingAnimationWithStartingScaleFactor:[Styles mainBubbleStartingScaleFactor] andDelegate:self.mainBubble]
+                                    repeats:NO];
 }
 
 @end

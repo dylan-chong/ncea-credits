@@ -21,7 +21,6 @@
     CGRect frame = [Styles mainContainerRect];
     self = [super initWithFrame:frame];
     if (self) {
-        
         _isMainBubbleContainer = YES;
         
         //create bubble in centre
@@ -41,13 +40,13 @@
     self = [super initWithFrame:[BubbleContainer getCentreOfMainBubbleWithSize:frame.size]];
     
     if (self) {
-        self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
         _rectToMoveTo = frame;
         
         _isMainBubbleContainer = NO;
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:frame] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];
         [_bubble startWiggle];
+        self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
         
         self.backgroundColor = bg;
     }
@@ -81,21 +80,23 @@
 }
 
 - (void)animationHasFinished:(int)tag {
-    if (tag == 1) {
-        [self startGrowingAnimationWithStartingScaleFactor:[Styles startingScaleFactor]];
-    } else _animationManager = nil;
+    [self.delegate slidingAnimationHasCompleted];
 }
 
-- (void)startGrowingAnimationWithStartingScaleFactor:(float)s {
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:
-                         [NSArray arrayWithObjects:
-                          [[AnimationObject alloc] initWithStartingPoint:s endingPoint:1.0 tag:ScaleWidth andDelegate:self],
-                          nil] length:[Styles growingAnimationSpeed] tag:2 andDelegate:self];
+
+- (void)startGrowingAnimationWithAnimationManager:(AnimationManager *)a {
+    _animationManager = a;
     [_animationManager startAnimation];
 }
 
-- (void)startGrowingAnimationFromTimer:(NSTimer *)t {
-    [self startGrowingAnimationWithStartingScaleFactor:[(NSNumber *)[t userInfo] floatValue]];
++ (AnimationManager *)getAnimationManagerForGrowingAnimationWithStartingScaleFactor:(float)factor andDelegate:(id)delegate {
+    return [[AnimationManager alloc] initWithAnimationObjects:
+            [NSArray arrayWithObjects:[[AnimationObject alloc] initWithStartingPoint:factor endingPoint:1.0 tag:ScaleWidth andDelegate:delegate], nil]
+                                                       length:[Styles growingAnimationSpeed] tag:2 andDelegate:nil];
+}
+
+- (void)startGrowingAnimationWithTimer:(NSTimer *)timer {
+    [self startGrowingAnimationWithAnimationManager:[timer userInfo]];
 }
 
 //******************************************** Anchors ***********************************************

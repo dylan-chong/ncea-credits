@@ -22,7 +22,7 @@
         
         //title 23-43% height of bubble
         self.title = [[UILabel alloc] initWithFrame:CGRectMake(0, round(d*0.23), d, round(d*0.2))];
-        self.title.text = @"Credits: 0";
+        self.title.text = [NSString stringWithFormat:@"Credits: %i", arc4random_uniform(100)];
         self.title.font = [Styles heading1Font];
         self.title.textColor = [Styles mainTextColour];
         self.title.textAlignment = NSTextAlignmentCenter;
@@ -38,11 +38,17 @@
                               CGRectMake(round(d*0.63), round(d*0.45), round(d*0.24), round(d*0.1))
                                                               andType:Achieved];
         
+         //goal 65-85% height
+        _goal = [[GoalTitle alloc] initWithFrame:CGRectMake(0, round(d*0.65), d, round(d*0.2))];
+        
+        
         [self addSubview:self.title];
         
         [self addSubview:_excellenceCredits];
         [self addSubview:_meritCredits];
         [self addSubview:_achievedCredits];
+        
+        [self addSubview:_goal];
     }
     return self;
 }

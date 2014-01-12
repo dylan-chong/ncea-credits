@@ -12,7 +12,7 @@
 
 + (UIFont *)heading1Font{   return [UIFont fontWithName:@"Comfortaa-Bold" size:36.0 * [Styles sizeModifier]];   }
 + (UIFont *)heading2Font{   return [UIFont fontWithName:@"Comfortaa-Bold" size:24.0 * [Styles sizeModifier]];   }
-+ (UIFont *)bodyFont{   return [UIFont fontWithName:@"Comfortaa-Bold" size:20.0 * [Styles sizeModifier]];   }
-+ (UIFont *)captionFont{   return [UIFont fontWithName:@"Comfortaa-Light" size:12.0 * [Styles sizeModifier]];    }
++ (UIFont *)bodyFont{   return [UIFont fontWithName:@"Comfortaa-Bold" size:18.0 * [Styles sizeModifier]];   }
++ (UIFont *)captionFont{   return [UIFont fontWithName:@"Comfortaa-Bold" size:16.0 * [Styles sizeModifier]];    }
 
 @end

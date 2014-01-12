@@ -33,7 +33,7 @@
                                                              distanceFromTop,
                                                              self.frame.size.width/2 - halfOfSpaceBetweenLabels,
                                                              self.frame.size.height - distanceFromTop)];
-        _credits.text = @"0";
+        _credits.text = @"";
         _credits.font = [Styles bodyFont];
         _credits.textColor = [Styles mainTextColour];
         _credits.textAlignment = NSTextAlignmentLeft;
@@ -45,9 +45,9 @@
 }
 
 - (void)updateCredits {
-    if (_grade == Excellence) _credits.text = @"1";
-    else if (_grade == Merit) _credits.text = @"2";
-    else _credits.text = @"3";
+    if (_grade == Excellence) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
+    else if (_grade == Merit) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
+    else _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
 }
 
 + (NSString *)getCharTitleForGradeType:(GradeType)grade {

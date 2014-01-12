@@ -14,6 +14,8 @@
 #import "AnimationManager.h"
 
 @protocol BubbleContainerDelegate <BubbleDelegate>
+@optional
+- (void)slidingAnimationHasCompleted;
 @end
 
 @interface BubbleContainer : UIView <BubbleDelegate, AnimationObjectDelegate, AnimationManagerDelegate>
@@ -28,7 +30,8 @@
 - (id)initMainBubble;
 - (id)initTitleBubbleWithFrame:(CGRect)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
 - (void)startSlidingAnimation;
-- (void)startGrowingAnimationWithStartingScaleFactor:(float)s;
-- (void)startGrowingAnimationFromTimer:(NSTimer *)t;
+- (void)startGrowingAnimationWithAnimationManager:(AnimationManager *)a;
++ (AnimationManager *)getAnimationManagerForGrowingAnimationWithStartingScaleFactor:(float)factor andDelegate:(id)delegate;
+- (void)startGrowingAnimationWithTimer:(NSTimer *)timer;
 
 @end

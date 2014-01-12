@@ -17,7 +17,7 @@
     if (self) {
         _animationObjects = a;
         _animationTime = length;
-        _delegate = d;
+        if (d) _delegate = d;
         _tag = tag;
     }
     
