@@ -44,6 +44,9 @@ CGFloat RadiansToDegrees(CGFloat radians)
         _icon.image = [UIImage imageNamed:iconName];
         
         _usesDelegateToCallRedrawAnchors = hasDelegate;
+        
+        [self addSubview:_title];
+        [self addSubview:_icon];
     }
     return self;
 }
@@ -55,12 +58,9 @@ CGFloat RadiansToDegrees(CGFloat radians)
     [_colour setFill];
     [[UIColor clearColor] setStroke];
     
-    CGContextAddEllipseInRect(c, CGRectMake(0, 0, self.frame.size.width, self.frame.size.height));
+    CGContextAddEllipseInRect(c, CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height));
     
     CGContextFillPath(c);
-    
-    [self addSubview:_title];
-    [self addSubview:_icon];
 }
 
 //********************************** Wiggle ************************************

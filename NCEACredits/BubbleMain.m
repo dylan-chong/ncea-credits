@@ -16,6 +16,7 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.colour = [Styles redColour];
+        self.transform = CGAffineTransformMakeScale([Styles mainBubbleStartingScaleFactor], [Styles mainBubbleStartingScaleFactor]);
         
         CGFloat d = frame.size.width;
         
@@ -36,6 +37,12 @@
         _achievedCredits = [[BubbleMainCredits alloc] initWithFrame:
                               CGRectMake(round(d*0.63), round(d*0.45), round(d*0.24), round(d*0.1))
                                                               andType:Achieved];
+        
+        [self addSubview:self.title];
+        
+        [self addSubview:_excellenceCredits];
+        [self addSubview:_meritCredits];
+        [self addSubview:_achievedCredits];
     }
     return self;
 }
@@ -47,23 +54,17 @@
     //circle
     [self.colour setFill];
     [[UIColor clearColor] setStroke];
-    CGContextFillEllipseInRect(c, CGRectMake(0, 0, self.frame.size.width, self.frame.size.height));
+    CGContextFillEllipseInRect(c, CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height));
     
     //chord
     [[UIColor whiteColor] setStroke];
     CGContextSetLineWidth(c, 2.0f);
-    CGPoint left = [BubbleMain getChordVerticeWithRadius:self.frame.size.width/2 andLeft:YES];
-    CGPoint right = [BubbleMain getChordVerticeWithRadius:self.frame.size.width/2 andLeft:NO];
+    CGPoint left = [BubbleMain getChordVerticeWithRadius:self.bounds.size.width/2 andLeft:YES];
+    CGPoint right = [BubbleMain getChordVerticeWithRadius:self.bounds.size.width/2 andLeft:NO];
     CGContextMoveToPoint(c, left.x, left.y);
     CGContextAddLineToPoint(c, right.x, right.y);
     
     CGContextStrokePath(c);
-    
-    [self addSubview:self.title];
-    
-    [self addSubview:_excellenceCredits];
-    [self addSubview:_meritCredits];
-    [self addSubview:_achievedCredits];
 }
 
 + (CGPoint)getChordVerticeWithRadius:(CGFloat)r andLeft:(BOOL)getLeft { //yes==left,no==right

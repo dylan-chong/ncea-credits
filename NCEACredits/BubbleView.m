@@ -27,24 +27,30 @@
     _mainBubble = m;
     _childBubbles = a;
 
-    _anchors = [[AnchorView alloc] initWithStartingPoint:[_mainBubble getanchorPoint] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
+    _anchors = [[AnchorView alloc] initWithStartingPoint:[self convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
     [self addSubview:_anchors];
     [self sendSubviewToBack:_anchors];
     [self bringSubviewToFront:_mainBubble];
 }
 
 - (void)redrawAnchors {
-    [_anchors setStartingPoint:[_mainBubble getanchorPoint] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
+    [_anchors setStartingPoint:[self convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
     [_anchors setNeedsDisplay];
 }
 
 - (NSArray *)getAnchorPointsFromChildBubbles {
     NSMutableArray *points = [[NSMutableArray alloc] init];
     for (BubbleContainer *b in _childBubbles) {
-        [points addObject:[NSValue valueWithCGPoint:[b getanchorPoint]]];
+        [points addObject:[NSValue valueWithCGPoint:[self convertPoint:b.bubble.center fromView:b]]];
     }
     
     return points;
+}
+
+- (void)startChildBubbleCreationAnimation {
+    for (BubbleContainer *b in _childBubbles) {
+        [b startSlidingAnimation];
+    }
 }
 
 

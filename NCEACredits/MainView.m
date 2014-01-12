@@ -43,6 +43,15 @@
     
     _optionsContainer = self.childBubbles[3];
     [self addSubview:_optionsContainer];
+    
+    [self bringSubviewToFront:self.mainBubble];
+    
+    /*[self startChildBubbleCreationAnimation];
+    [NSTimer scheduledTimerWithTimeInterval:[Styles slidingAnimationSpeed]
+                            target:self.mainBubble
+                          selector:@selector(startGrowingAnimationFromTimer:)
+                          userInfo:[NSNumber numberWithFloat:[Styles mainBubbleStartingScaleFactor]]
+                           repeats:NO];*/
 }
 
 @end

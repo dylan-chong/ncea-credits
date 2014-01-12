@@ -17,5 +17,6 @@
 @property AnchorView *anchors;
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a;
+- (void)startChildBubbleCreationAnimation;
 
 @end

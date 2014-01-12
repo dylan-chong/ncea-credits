@@ -37,4 +37,9 @@
 + (CGFloat)screenWidth {    return [[UIScreen mainScreen] bounds].size.height;  }
 + (CGFloat)screenHeight {   return [[UIScreen mainScreen] bounds].size.width;  }
 
++ (float)startingScaleFactor {  return 0.05;    }
++ (float)mainBubbleStartingScaleFactor {    return 0.25; }
++ (float)slidingAnimationSpeed {    return 1.0; }
++ (float)growingAnimationSpeed {    return 1.0; }
+
 @end

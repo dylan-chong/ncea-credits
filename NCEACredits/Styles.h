@@ -31,6 +31,10 @@ typedef enum {
 + (Device)getDevice;
 + (CGFloat)screenWidth;
 + (CGFloat)screenHeight;
++ (float)startingScaleFactor;
++ (float)mainBubbleStartingScaleFactor;
++ (float)slidingAnimationSpeed;
++ (float)growingAnimationSpeed;
 
 @end
 

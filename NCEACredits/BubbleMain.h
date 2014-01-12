@@ -8,6 +8,8 @@
 
 #import "Bubble.h"
 #import "BubbleMainCredits.h"
+#import "AnimationManager.h"
+#import "AnimationObject.h"
 
 @interface BubbleMain : Bubble
 
@@ -15,6 +17,7 @@
 @property BubbleMainCredits *achievedCredits;
 @property BubbleMainCredits *meritCredits;
 
+@property AnimationManager *animationManager;
 @property UILabel *goal, *goalStatus;
 
 - (void)updateStats;

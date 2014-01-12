@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D586C18820C5200DE24B7 /* AnimationManager.m */; };
+		840D5871188216B200DE24B7 /* AnimationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5870188216B200DE24B7 /* AnimationObject.m */; };
 		849D3D231880F2810030D432 /* AnchorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D3D221880F2810030D432 /* AnchorView.m */; };
 		84B5A27A1880D8AD00969952 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A2791880D8AD00969952 /* Foundation.framework */; };
 		84B5A27C1880D8AD00969952 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A27B1880D8AD00969952 /* CoreGraphics.framework */; };
@@ -51,6 +53,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		840D586B18820C5200DE24B7 /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
+		840D586C18820C5200DE24B7 /* AnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationManager.m; sourceTree = "<group>"; };
+		840D586F188216B200DE24B7 /* AnimationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationObject.h; sourceTree = "<group>"; };
+		840D5870188216B200DE24B7 /* AnimationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationObject.m; sourceTree = "<group>"; };
 		849D3D211880F2810030D432 /* AnchorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnchorView.h; sourceTree = "<group>"; };
 		849D3D221880F2810030D432 /* AnchorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnchorView.m; sourceTree = "<group>"; };
 		84B5A2761880D8AD00969952 /* NCEACredits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NCEACredits.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +128,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840D586E18820C5700DE24B7 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				840D586B18820C5200DE24B7 /* AnimationManager.h */,
+				840D586C18820C5200DE24B7 /* AnimationManager.m */,
+				840D586F188216B200DE24B7 /* AnimationObject.h */,
+				840D5870188216B200DE24B7 /* AnimationObject.m */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
+		844BCACA1881126000FC132E /* Main Bubble */ = {
+			isa = PBXGroup;
+			children = (
+				84B5A2C11880D93100969952 /* BubbleMainCredits.h */,
+				84B5A2C21880D93100969952 /* BubbleMainCredits.m */,
+				84B5A2C31880D93100969952 /* BubbleMain.h */,
+				84B5A2C41880D93100969952 /* BubbleMain.m */,
+			);
+			name = "Main Bubble";
+			sourceTree = "<group>";
+		};
 		84B5A26D1880D8AD00969952 = {
 			isa = PBXGroup;
 			children = (
@@ -157,9 +185,10 @@
 			children = (
 				84B5A2881880D8AD00969952 /* AppDelegate.h */,
 				84B5A2891880D8AD00969952 /* AppDelegate.m */,
-				84B5A2B01880D8F500969952 /* Images */,
+				84B5A2B01880D8F500969952 /* Resources */,
 				84B5A2C01880D91400969952 /* Styles */,
 				84B5A28B1880D8AD00969952 /* Images.xcassets */,
+				840D586E18820C5700DE24B7 /* Animation */,
 				84B5A2CD1880D93600969952 /* Bubbles */,
 				84B5A2D41880D96700969952 /* Screen Template */,
 				84B5A2DB1880D98D00969952 /* Screens */,
@@ -197,15 +226,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		84B5A2B01880D8F500969952 /* Images */ = {
+		84B5A2B01880D8F500969952 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84B5A2B61880D91000969952 /* Comfortaa-Bold.ttf */,
+				84B5A2B71880D91000969952 /* Comfortaa-Light.ttf */,
 				84B5A2A81880D8F100969952 /* Add.png */,
 				84B5A2A91880D8F100969952 /* Options.png */,
 				84B5A2AA1880D8F100969952 /* Stats.png */,
 				84B5A2AB1880D8F100969952 /* Subjects.png */,
 			);
-			name = Images;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		84B5A2C01880D91400969952 /* Styles */ = {
@@ -216,8 +247,6 @@
 				84B5A2B31880D91000969952 /* Styles+Fonts.m */,
 				84B5A2B41880D91000969952 /* Styles+Colours.m */,
 				84B5A2B51880D91000969952 /* Styles+Layout.m */,
-				84B5A2B61880D91000969952 /* Comfortaa-Bold.ttf */,
-				84B5A2B71880D91000969952 /* Comfortaa-Light.ttf */,
 			);
 			name = Styles;
 			sourceTree = "<group>";
@@ -225,10 +254,7 @@
 		84B5A2CD1880D93600969952 /* Bubbles */ = {
 			isa = PBXGroup;
 			children = (
-				84B5A2C11880D93100969952 /* BubbleMainCredits.h */,
-				84B5A2C21880D93100969952 /* BubbleMainCredits.m */,
-				84B5A2C31880D93100969952 /* BubbleMain.h */,
-				84B5A2C41880D93100969952 /* BubbleMain.m */,
+				844BCACA1881126000FC132E /* Main Bubble */,
 				84B5A2C51880D93100969952 /* Bubble.h */,
 				84B5A2C61880D93100969952 /* Bubble.m */,
 				84B5A2C71880D93100969952 /* BubbleContainer.h */,
@@ -367,9 +393,11 @@
 				84B5A2BC1880D91000969952 /* Styles+Layout.m in Sources */,
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
+				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
 				84B5A2B91880D91000969952 /* Styles.m in Sources */,
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
 				849D3D231880F2810030D432 /* AnchorView.m in Sources */,
+				840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */,
 				84B5A2D21880D96300969952 /* BubbleView.m in Sources */,
 				84B5A2BA1880D91000969952 /* Styles+Fonts.m in Sources */,
 				84B5A2DA1880D98200969952 /* MainView.m in Sources */,

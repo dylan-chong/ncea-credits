@@ -10,22 +10,25 @@
 #import "Bubble.h"
 #import "BubbleMain.h"
 #import "Styles.h"
+#import "AnimationObject.h"
+#import "AnimationManager.h"
 
 @protocol BubbleContainerDelegate <BubbleDelegate>
 @end
 
-@interface BubbleContainer : UIView <BubbleDelegate>
+@interface BubbleContainer : UIView <BubbleDelegate, AnimationObjectDelegate, AnimationManagerDelegate>
 
 @property id<BubbleContainerDelegate> delegate;
 
 @property Bubble *bubble;
-
 @property BOOL isMainBubbleContainer;
+@property CGRect rectToMoveTo;
+@property AnimationManager *animationManager;
 
 - (id)initMainBubble;
-
 - (id)initTitleBubbleWithFrame:(CGRect)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
-
-- (CGPoint)getanchorPoint;
+- (void)startSlidingAnimation;
+- (void)startGrowingAnimationWithStartingScaleFactor:(float)s;
+- (void)startGrowingAnimationFromTimer:(NSTimer *)t;
 
 @end
