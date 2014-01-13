@@ -114,4 +114,15 @@
     [self.delegate redrawAnchors];
 }
 
+//****************************************** Transition ********************************************
+
+- (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif {
+    return [[NSArray alloc] initWithObjects:
+            
+            [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.x endingPoint:self.frame.origin.x + xDif tag:X andDelegate:self],
+            [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.y endingPoint:self.frame.origin.y + yDif tag:Y andDelegate:self],
+            
+            nil];
+}
+
 @end

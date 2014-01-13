@@ -29,9 +29,11 @@
 
 - (id)initMainBubble;
 - (id)initTitleBubbleWithFrame:(CGRect)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
+
 - (void)startSlidingAnimation;
 - (void)startGrowingAnimationWithAnimationManager:(AnimationManager *)a;
 + (AnimationManager *)getAnimationManagerForGrowingAnimationWithStartingScaleFactor:(float)factor andDelegate:(id)delegate;
 - (void)startGrowingMainBubbleAnimation;
+- (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif;
 
 @end

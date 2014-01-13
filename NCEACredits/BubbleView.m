@@ -102,28 +102,29 @@
 //************************************** Transition **************************************
 
 - (void)startTransitionToChildBubble:(BubbleContainer *)b {
-    CGPoint new = [self getPointToScrollToWithBubbleContainer:b.frame];
-    
-    _transitionAnimationManager = [[AnimationManager alloc] initWithAnimationObjects:[[NSArray alloc] initWithObjects:
-                                                                                      [[AnimationObject alloc] initWithStartingPoint:self.contentOffset.x endingPoint:new.x tag:X andDelegate:self],
-                                                                                      [[AnimationObject alloc] initWithStartingPoint:self.contentOffset.y endingPoint:new.y tag:Y andDelegate:self],
-                                                                                      nil] length:[Styles animationSpeed] tag:3 andDelegate:self];
     [self disableChildButtons];
-    
-    [_transitionAnimationManager startAnimation];
+    [self setTransitionDifsWithBubbleContainerFrame:b.frame];
+    [self setUpAnimationManagerForTransition];
 }
 
 - (void)reverseTransitionToPreviousBubbleContainerPosition {
-    CGPoint new = CGPointMake(self.contentOffset.x + _transitionXDif, self.contentOffset.y + _transitionYDif);
+    _transitionXDif = 0 - _transitionXDif;
+    _transitionYDif = 0 - _transitionYDif;
+    [self setUpAnimationManagerForTransition];
+}
+
+- (void)setUpAnimationManagerForTransition {
+    NSArray *a = [_mainBubble getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif];
     
-    _transitionAnimationManager = [[AnimationManager alloc] initWithAnimationObjects:[[NSArray alloc] initWithObjects:
-                                                                                      [[AnimationObject alloc] initWithStartingPoint:self.contentOffset.x endingPoint:new.x tag:X andDelegate:self],
-                                                                                      [[AnimationObject alloc] initWithStartingPoint:self.contentOffset.y endingPoint:new.y tag:Y andDelegate:self],
-                                                                                      nil] length:[Styles animationSpeed] tag:4 andDelegate:self];
+    for (BubbleContainer *b in _childBubbles) {
+        a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif]];
+    }
+    
+    _transitionAnimationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:4 andDelegate:self];
     [_transitionAnimationManager startAnimation];
 }
 
-- (CGPoint)getPointToScrollToWithBubbleContainer:(CGRect)b {
+- (void)setTransitionDifsWithBubbleContainerFrame:(CGRect)b {
     Corner opposite = [Styles getOppositeCornerToCorner:[Styles getCornerWithTitleContainerFrame:b]];
     
     CGPoint newPoint = [Styles getExactCornerPointForCorner:opposite];
@@ -131,11 +132,6 @@
     
     _transitionXDif = newPoint.x - oldPoint.x;
     _transitionYDif = newPoint.y - oldPoint.y;
-    
-    CGPoint currentScrollRectOrigin = self.contentOffset;
-    CGPoint newScrollOrigin = CGPointMake(currentScrollRectOrigin.x - _transitionXDif, currentScrollRectOrigin.y - _transitionYDif);
-    
-    return newScrollOrigin;
 }
 
 @end
