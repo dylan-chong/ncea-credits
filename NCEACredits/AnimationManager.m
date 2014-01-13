@@ -19,17 +19,34 @@
         _animationTime = length;
         if (d) _delegate = d;
         _tag = tag;
+        
+        [self setUpDistanceArray];
     }
     
     return self;
 }
 
-- (double)getAnimationDistance {
-    if (_animationStage < _animationTime * 15) {
-        return (2.0/9)*pow(_animationStage, 2)*pow(1.0/_animationTime, 2);
-    } else {
-        return (-2.0/9)*pow(_animationStage-(30*_animationTime), 2)*pow(1.0/_animationTime, 2)+100;
+- (void)setUpDistanceArray {
+    NSMutableArray *m = [[NSMutableArray alloc] init];
+    for (int a = 1; a <= _animationTime * 30 + 1; a++) {
+        [m addObject:
+         [NSNumber numberWithDouble:
+          [self getAnimationDistanceForStage:a]]];
     }
+    
+    _distances = m;
+}
+
+- (double)getAnimationDistanceForStage:(int)stage {
+    if (stage < _animationTime * 15) {
+        return (2.0/9)*pow(stage, 2)*pow(1.0/_animationTime, 2);
+    } else {
+        return (-2.0/9)*pow(stage-(30*_animationTime), 2)*pow(1.0/_animationTime, 2)+100;
+    }
+}
+
+- (double)getAnimationDistanceFromArray {
+    return [(NSNumber *) _distances[_animationStage] doubleValue];
 }
 
 - (void)startAnimation {
@@ -40,7 +57,7 @@
 - (void)tick {
     _animationStage++;
     if (_animationStage <= _animationTime * 30) {
-        double d = [self getAnimationDistance];
+        double d = [self getAnimationDistanceFromArray];
         
         for (AnimationObject *a in _animationObjects) {
             [a setDistanceWithPercentage:d];

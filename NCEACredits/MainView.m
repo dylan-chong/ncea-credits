@@ -47,7 +47,7 @@
     [self bringSubviewToFront:self.mainBubble];
     
     [self addControlEventsToBubbleContainers];
-    self.mainBubble.animationManager = [BubbleContainer getAnimationManagerForGrowingAnimationWithStartingScaleFactor:[Styles mainBubbleStartingScaleFactor] andDelegate:self.mainBubble];
+    self.mainBubble.animationManager = [self.mainBubble getAnimationManagerForMainBubbleGrowth];
     [NSTimer scheduledTimerWithTimeInterval:[Styles animationSpeed] / 2
                                      target:self.mainBubble
                                    selector:@selector(startGrowingMainBubbleAnimation)

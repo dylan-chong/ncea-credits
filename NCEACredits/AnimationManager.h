@@ -19,6 +19,7 @@
 @property id<AnimationManagerDelegate> delegate;
 @property NSArray *animationObjects;
 @property NSTimer *timer;
+@property NSArray *distances;
 
 - (id)initWithAnimationObjects:(NSArray *)a length:(float)length tag:(int)tag andDelegate:(id)d;
 - (void)startAnimation;

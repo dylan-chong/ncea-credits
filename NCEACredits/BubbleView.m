@@ -27,7 +27,6 @@
     _mainBubble = m;
     _childBubbles = a;
     ((BubbleContainer *)_childBubbles[0]).delegate = self;
-    _growingAnimationManager = [BubbleContainer getAnimationManagerForGrowingAnimationWithStartingScaleFactor:[Styles startingScaleFactor] andDelegate:self];
     
     _anchors = [[AnchorView alloc] initWithStartingPoint:[self convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
     [self addSubview:_anchors];
@@ -36,8 +35,10 @@
 }
 
 - (void)redrawAnchors {
-    [_anchors setStartingPoint:[self convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
-    [_anchors setNeedsDisplay];
+    if (_disableAnchorReDraw != YES) {
+        [_anchors setStartingPoint:[self convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
+        [_anchors setNeedsDisplay];
+    }
 }
 
 - (NSArray *)getAnchorPointsFromChildBubbles {
@@ -49,25 +50,30 @@
     return points;
 }
 
+//************************************** Starting Animation **************************************
+
 - (void)startChildBubbleCreationAnimation {
+    NSArray *a = [[NSArray alloc] init];
     for (BubbleContainer *b in _childBubbles) {
-        [b startSlidingAnimation];
+        a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForSlidingAnimation]];
     }
+    
+    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:1 andDelegate:self];
+    [_animationManager startAnimation];
 }
 
-- (void)slidingAnimationHasCompleted {
-    if (_hasStartedGrowingAnimation != YES) {
-        _hasStartedGrowingAnimation = YES;
-        [_growingAnimationManager startAnimation];
-    }
+- (void)startSlidingAnimation {
+    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:[[NSArray alloc] initWithObjects:
+                                                                            [[AnimationObject alloc] initWithStartingPoint:[Styles startingScaleFactor] endingPoint:1.0 tag:ScaleWidth andDelegate:self],
+                                                                            nil]
+                                                                    length:[Styles animationSpeed]
+                                                                       tag:2 andDelegate:self];
+    [_animationManager startAnimation];
+    
 }
 
 - (void)useDistanceFromBase:(double)value tag:(AnimationObjectTag)tag {
-    if (tag == X) {//Transition
-        self.contentOffset = CGPointMake(value, self.contentOffset.y);
-    } else if (tag == Y) {//Transition
-        self.contentOffset = CGPointMake(self.contentOffset.x, value);
-    } else if (tag == ScaleWidth || tag == ScaleHeight) { //Growing
+    if (tag == ScaleWidth || tag == ScaleHeight) { //Growing
         for (BubbleContainer *b in _childBubbles) {
             b.bubble.transform = CGAffineTransformMakeScale(value, value);
         }
@@ -75,15 +81,22 @@
 }
 
 - (void)animationHasFinished:(int)tag {
-    if (tag == 3) {
+    if (tag == 1) {
+        [self startSlidingAnimation];
+    } else if (tag == 2) {
+        //Growing finished
+        [self enableChildButtons];
+    } else if (tag == 3) {
         //transition
+        _disableAnchorReDraw = NO;
+        [self enableWiggleForTransition];
+        [self enableChildButtons];
         [self reverseTransitionToPreviousBubbleContainerPosition];
     } else if (tag == 4) {
         //transition reverse
         [self enableChildButtons];
-    } else {
-        //Growing finished
-        [self enableChildButtons];
+        [self enableWiggleForTransition];
+        _disableAnchorReDraw = NO;
     }
 }
 
@@ -99,29 +112,33 @@
     }
 }
 
-//************************************** Transition **************************************
+//************************************** Transition ****************************************
 
 - (void)startTransitionToChildBubble:(BubbleContainer *)b {
-    [self disableChildButtons];
     [self setTransitionDifsWithBubbleContainerFrame:b.frame];
-    [self setUpAnimationManagerForTransition];
+    [self setUpAnimationManagerForTransitionWithTag:3];
 }
 
 - (void)reverseTransitionToPreviousBubbleContainerPosition {
     _transitionXDif = 0 - _transitionXDif;
     _transitionYDif = 0 - _transitionYDif;
-    [self setUpAnimationManagerForTransition];
+    [self setUpAnimationManagerForTransitionWithTag:4];
 }
 
-- (void)setUpAnimationManagerForTransition {
+- (void)setUpAnimationManagerForTransitionWithTag:(int)tag {
+    _disableAnchorReDraw = YES;
+    [self disableChildButtons];
+    [self disableWiggleForTransition];
+    
     NSArray *a = [_mainBubble getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif];
+    a = [a arrayByAddingObjectsFromArray:[_anchors getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif]];
     
     for (BubbleContainer *b in _childBubbles) {
         a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif]];
     }
     
-    _transitionAnimationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:4 andDelegate:self];
-    [_transitionAnimationManager startAnimation];
+    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:tag andDelegate:self];
+    [_animationManager startAnimation];
 }
 
 - (void)setTransitionDifsWithBubbleContainerFrame:(CGRect)b {
@@ -132,6 +149,20 @@
     
     _transitionXDif = newPoint.x - oldPoint.x;
     _transitionYDif = newPoint.y - oldPoint.y;
+}
+
+- (void)disableWiggleForTransition {
+    _mainBubble.bubble.disableWiggleForTransition = YES;
+    for (BubbleContainer *b in _childBubbles) {
+        b.bubble.disableWiggleForTransition = YES;
+    }
+}
+
+- (void)enableWiggleForTransition {
+    _mainBubble.bubble.disableWiggleForTransition = NO;
+    for (BubbleContainer *b in _childBubbles) {
+        b.bubble.disableWiggleForTransition = NO;
+    }
 }
 
 @end

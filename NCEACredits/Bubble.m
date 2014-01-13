@@ -76,23 +76,24 @@ CGFloat RadiansToDegrees(CGFloat radians)
 }
 
 - (void)wiggle {
-    
-    float xMov = sin(DegreesToRadians(_direction)) * _wiggleSpeedPixelsPerFrame;
-    float yMov = cos(DegreesToRadians(_direction)) * _wiggleSpeedPixelsPerFrame;
-
-    CGPoint original = self.center;
-    self.center = CGPointMake(original.x + xMov, original.y + yMov);
-    
-    if (_clockwise == YES) {
-        _direction += _wiggleTurnSpeed;
-        if (_direction > 359) _direction = 0;
-    } else {
-        _direction -= _wiggleTurnSpeed;
-        if (_direction < 0) _direction = 359;
-    }
-    
-    if (_usesDelegateToCallRedrawAnchors == YES) {
-        [self.delegate redrawAnchors];
+    if (_disableWiggleForTransition != YES) {
+        float xMov = sin(DegreesToRadians(_direction)) * _wiggleSpeedPixelsPerFrame;
+        float yMov = cos(DegreesToRadians(_direction)) * _wiggleSpeedPixelsPerFrame;
+        
+        CGPoint original = self.center;
+        self.center = CGPointMake(original.x + xMov, original.y + yMov);
+        
+        if (_clockwise == YES) {
+            _direction += _wiggleTurnSpeed;
+            if (_direction > 359) _direction = 0;
+        } else {
+            _direction -= _wiggleTurnSpeed;
+            if (_direction < 0) _direction = 359;
+        }
+        
+        if (_usesDelegateToCallRedrawAnchors == YES) {
+            [self.delegate redrawAnchors];
+        }
     }
 }
 

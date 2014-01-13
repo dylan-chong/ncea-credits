@@ -15,8 +15,9 @@
 @property (nonatomic) NSArray *childBubbles;
 @property (nonatomic, strong) BubbleContainer *mainBubble;
 @property AnchorView *anchors;
+@property BOOL disableAnchorReDraw;
 @property BOOL hasStartedGrowingAnimation;
-@property AnimationManager *growingAnimationManager, *transitionAnimationManager;
+@property AnimationManager *animationManager;
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a;
 - (void)startChildBubbleCreationAnimation;

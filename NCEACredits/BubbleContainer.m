@@ -58,13 +58,21 @@
 
 //******************************************** Starting Animation ***********************************************
 
-- (void)startSlidingAnimation {
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:
-                         [NSArray arrayWithObjects:
-                          [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.x endingPoint:_rectToMoveTo.origin.x tag:X andDelegate:self],
-                          [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.y endingPoint:_rectToMoveTo.origin.y tag:Y andDelegate:self],
-                          nil] length:[Styles animationSpeed] tag:1 andDelegate:self];
+- (AnimationManager *)getAnimationManagerForMainBubbleGrowth {
+    return [[AnimationManager alloc] initWithAnimationObjects:[[NSArray alloc] initWithObjects:
+                                                               [[AnimationObject alloc] initWithStartingPoint:[Styles mainBubbleStartingScaleFactor] endingPoint:1.0 tag:ScaleWidth andDelegate:self], nil]
+                                                       length:[Styles animationSpeed] tag:0 andDelegate:nil];
+}
+
+- (void)startGrowingMainBubbleAnimation {
     [_animationManager startAnimation];
+}
+
+- (NSArray *)getAnimationObjectsForSlidingAnimation {
+    return [[NSArray alloc] initWithObjects:
+            [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.x endingPoint:_rectToMoveTo.origin.x tag:X andDelegate:self],
+            [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.y endingPoint:_rectToMoveTo.origin.y tag:Y andDelegate:self],
+            nil];
 }
 
 - (void)useDistanceFromBase:(double)value tag:(AnimationObjectTag)tag {
@@ -79,25 +87,6 @@
     } else if (tag == ScaleWidth || tag == ScaleHeight) {
         _bubble.transform = CGAffineTransformMakeScale(value, value);
     }
-}
-
-- (void)animationHasFinished:(int)tag {
-    [self.delegate slidingAnimationHasCompleted];
-}
-
-
-- (void)startGrowingAnimationWithAnimationManager:(AnimationManager *)a {
-    [_animationManager startAnimation];
-}
-
-+ (AnimationManager *)getAnimationManagerForGrowingAnimationWithStartingScaleFactor:(float)factor andDelegate:(id)delegate {
-    return [[AnimationManager alloc] initWithAnimationObjects:
-            [NSArray arrayWithObjects:[[AnimationObject alloc] initWithStartingPoint:factor endingPoint:1.0 tag:ScaleWidth andDelegate:delegate], nil]
-                                                       length:[Styles animationSpeed] tag:2 andDelegate:delegate];
-}
-
-- (void)startGrowingMainBubbleAnimation {
-    [self startGrowingAnimationWithAnimationManager:_animationManager];
 }
 
 //******************************************** Anchors ***********************************************

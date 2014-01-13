@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AnimationObject.h"
 
-@interface AnchorView : UIView
+@interface AnchorView : UIView <AnimationObjectDelegate>
 
 @property (nonatomic) CGPoint startingPoint;
 @property (nonatomic) NSArray *pointsToDrawTo;
 
 - (id)initWithStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo;
 - (void)setStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo;
+- (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif;
 
 @end
