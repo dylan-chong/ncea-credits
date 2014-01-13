@@ -69,7 +69,7 @@ CGFloat RadiansToDegrees(CGFloat radians)
     _direction = arc4random() % 360;
     _clockwise = arc4random() % 2;
     _wiggleSpeedFPS = 30.0;
-    _wiggleSpeedPixelsPerFrame = (0.05 + (arc4random_uniform(1000) / 1000.0 * 0.1)) * [Styles sizeModifier];
+    _wiggleSpeedPixelsPerFrame = (0.03 + (arc4random_uniform(1000) / 1000.0 * 0.1)) * [Styles sizeModifier];
     _wiggleTurnSpeed = 1 + arc4random_uniform(3);
     
     _wiggleTimer = [NSTimer scheduledTimerWithTimeInterval:1/_wiggleSpeedFPS target:self selector:@selector(wiggle) userInfo:Nil repeats:YES];

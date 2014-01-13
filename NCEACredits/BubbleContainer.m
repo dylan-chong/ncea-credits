@@ -49,6 +49,8 @@
         self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
         
         self.backgroundColor = bg;
+        
+        self.userInteractionEnabled = NO;
     }
     
     return self;
@@ -61,7 +63,7 @@
                          [NSArray arrayWithObjects:
                           [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.x endingPoint:_rectToMoveTo.origin.x tag:X andDelegate:self],
                           [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.y endingPoint:_rectToMoveTo.origin.y tag:Y andDelegate:self],
-                          nil] length:[Styles slidingAnimationSpeed] tag:1 andDelegate:self];
+                          nil] length:[Styles animationSpeed] tag:1 andDelegate:self];
     [_animationManager startAnimation];
 }
 
@@ -85,18 +87,17 @@
 
 
 - (void)startGrowingAnimationWithAnimationManager:(AnimationManager *)a {
-    _animationManager = a;
     [_animationManager startAnimation];
 }
 
 + (AnimationManager *)getAnimationManagerForGrowingAnimationWithStartingScaleFactor:(float)factor andDelegate:(id)delegate {
     return [[AnimationManager alloc] initWithAnimationObjects:
             [NSArray arrayWithObjects:[[AnimationObject alloc] initWithStartingPoint:factor endingPoint:1.0 tag:ScaleWidth andDelegate:delegate], nil]
-                                                       length:[Styles growingAnimationSpeed] tag:2 andDelegate:nil];
+                                                       length:[Styles animationSpeed] tag:2 andDelegate:delegate];
 }
 
-- (void)startGrowingAnimationWithTimer:(NSTimer *)timer {
-    [self startGrowingAnimationWithAnimationManager:[timer userInfo]];
+- (void)startGrowingMainBubbleAnimation {
+    [self startGrowingAnimationWithAnimationManager:_animationManager];
 }
 
 //******************************************** Anchors ***********************************************

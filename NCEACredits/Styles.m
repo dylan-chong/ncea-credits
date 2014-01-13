@@ -37,9 +37,21 @@
 + (CGFloat)screenWidth {    return [[UIScreen mainScreen] bounds].size.height;  }
 + (CGFloat)screenHeight {   return [[UIScreen mainScreen] bounds].size.width;  }
 
-+ (float)startingScaleFactor {  return 0.05;    }
++ (float)startingScaleFactor {  return 0.1;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; }
-+ (float)slidingAnimationSpeed {    return 1.5; }
-+ (float)growingAnimationSpeed {    return 1.5; }
++ (float)animationSpeed {    return 1.2; }
+
++ (BOOL)rect:(CGRect)r1 isEqualToRect:(CGRect)r2 {
+    if (r1.origin.x == r2.origin.x &&
+        r1.origin.y == r2.origin.y &&
+        r1.size.width == r2.size.width &&
+        r1.size.height == r2.size.height) return YES;
+    else return NO;
+}
+
++ (BOOL)point:(CGPoint)r1 isEqualToPoint:(CGPoint)r2 {
+    if (r1.x == r2.x && r1.y == r2.y) return YES;
+    else return NO;
+}
 
 @end

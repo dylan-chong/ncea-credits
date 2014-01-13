@@ -21,8 +21,10 @@
     return CGRectMake(point.x + [Styles screenWidth], point.y + [Styles screenHeight], size.width, size.height);
 }
 
++ (CGSize)titleContainerSize {  return CGSizeMake(200 * [Styles sizeModifier], 200 * [Styles sizeModifier]);    }
+
 + (CGRect)titleContainerRectWithCorner:(Corner)c {
-    CGSize size = CGSizeMake(200 * [Styles sizeModifier], 200 * [Styles sizeModifier]);
+    CGSize size = [Styles titleContainerSize];
     CGRect availableOrigins;
     CGRect mainRect = [Styles mainContainerRect];
     mainRect.origin.x -= [Styles screenWidth];
@@ -75,10 +77,30 @@
  	x = (float) availableOrigins.origin.x + arc4random_uniform(availableOrigins.size.width);
     y = (float) availableOrigins.origin.y + arc4random_uniform(availableOrigins.size.height);
     if (showOrigins == YES) return availableOrigins;
-
+    
     CGRect r = CGRectMake(x, y, size.width, size.height);
     
     return r;
+}
+
++ (Corner)getCornerWithTitleContainerFrame:(CGRect)r {
+    CGRect m = [Styles mainContainerRect];
+    
+    if (r.origin.x > m.origin.x + (m.size.width / 2)) {
+        //Right
+        if (r.origin.y > m.origin.y + (m.size.height / 2))  {
+            return BottomRight;
+        } else {
+            return TopRight;
+        }
+    } else {
+        //Left
+        if (r.origin.y > m.origin.y + (m.size.height / 2))  {
+            return BottomLeft;
+        } else {
+            return TopLeft;
+        }
+    }
 }
 
 + (float)spaceFromEdgeOfScreen {
@@ -94,6 +116,41 @@
 
 + (CGRect)getFullScreenFrame {
     return CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight]);
+}
+
++ (Corner)getOppositeCornerToCorner:(Corner)c {
+    if (c == TopLeft) return BottomRight;
+    else if (c == TopRight) return BottomLeft;
+    else if (c == BottomLeft) return TopRight;
+    else return TopLeft;
+}
+
++ (CGPoint)getExactCornerPointForCorner:(Corner)c {
+    CGSize size = [Styles titleContainerSize];
+    float d = [Styles spaceFromEdgeOfScreen];
+    CGPoint p;
+
+    if (c == TopLeft) {
+        p = CGPointMake(d, d);
+    } else if (c == TopRight) {
+        p = CGPointMake([Styles screenWidth] - d - size.width, d);
+    } else if (c == BottomLeft) {
+        p = CGPointMake(d, [Styles screenHeight] - d - size.height);
+    } else {
+        p = CGPointMake([Styles screenWidth] - d - size.width, [Styles screenHeight] - d - size.height);
+    }
+    
+    p.x += [Styles screenWidth];
+    p.y += [Styles screenHeight];
+    return p;
+}
+
++ (Corner)getCornerForExactCornerPoint:(CGPoint)point {
+    if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:TopLeft]]) return TopLeft;
+    if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:TopRight]]) return TopRight;
+    if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:BottomLeft]]) return BottomLeft;
+    if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:BottomRight]]) return BottomRight;
+    return NotValid;
 }
 
 @end

@@ -46,12 +46,40 @@
     
     [self bringSubviewToFront:self.mainBubble];
     
-    [self startChildBubbleCreationAnimation];
-    [NSTimer scheduledTimerWithTimeInterval:[Styles slidingAnimationSpeed] / 2
+    [self addControlEventsToBubbleContainers];
+    self.mainBubble.animationManager = [BubbleContainer getAnimationManagerForGrowingAnimationWithStartingScaleFactor:[Styles mainBubbleStartingScaleFactor] andDelegate:self.mainBubble];
+    [NSTimer scheduledTimerWithTimeInterval:[Styles animationSpeed] / 2
                                      target:self.mainBubble
-                                   selector:@selector(startGrowingAnimationWithTimer:)
-                                   userInfo:[BubbleContainer getAnimationManagerForGrowingAnimationWithStartingScaleFactor:[Styles mainBubbleStartingScaleFactor] andDelegate:self.mainBubble]
+                                   selector:@selector(startGrowingMainBubbleAnimation)
+                                   userInfo:nil
                                     repeats:NO];
+    
+    [self startChildBubbleCreationAnimation];
+}
+
+- (void)addControlEventsToBubbleContainers {
+    [_addContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addContainerPressed)]];
+    [_subjectsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(subjectsContainerPressed)]];
+    [_statsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statsContainerPressed)]];
+    [_optionsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(optionsContainerPressed)]];
+}
+
+//******************************************************* Container Press Events **************************************************************
+
+- (void)addContainerPressed {
+    [self startTransitionToChildBubble:_addContainer];
+}
+
+- (void)subjectsContainerPressed {
+    [self startTransitionToChildBubble:_subjectsContainer];
+}
+
+- (void)statsContainerPressed {
+    [self startTransitionToChildBubble:_statsContainer];
+}
+
+- (void)optionsContainerPressed {
+    [self startTransitionToChildBubble:_optionsContainer];
 }
 
 @end

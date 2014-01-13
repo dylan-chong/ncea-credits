@@ -32,6 +32,6 @@
 - (void)startSlidingAnimation;
 - (void)startGrowingAnimationWithAnimationManager:(AnimationManager *)a;
 + (AnimationManager *)getAnimationManagerForGrowingAnimationWithStartingScaleFactor:(float)factor andDelegate:(id)delegate;
-- (void)startGrowingAnimationWithTimer:(NSTimer *)timer;
+- (void)startGrowingMainBubbleAnimation;
 
 @end

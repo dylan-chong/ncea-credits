@@ -13,7 +13,8 @@ typedef enum {
     TopLeft = 0,
     TopRight = 1,
     BottomLeft = 2,
-    BottomRight = 3
+    BottomRight = 3,
+    NotValid = 4
 } Corner;
 
 
@@ -33,8 +34,9 @@ typedef enum {
 + (CGFloat)screenHeight;
 + (float)startingScaleFactor;
 + (float)mainBubbleStartingScaleFactor;
-+ (float)slidingAnimationSpeed;
-+ (float)growingAnimationSpeed;
++ (float)animationSpeed;
++ (BOOL)rect:(CGRect)r1 isEqualToRect:(CGRect)r2;
++ (BOOL)point:(CGPoint)r1 isEqualToPoint:(CGPoint)r2;
 
 @end
 
@@ -71,5 +73,9 @@ typedef enum {
 + (float)spaceFromEdgeOfScreen;
 + (CGRect)getBubbleFrameWithContainerFrame:(CGRect)frame;
 + (CGRect)getFullScreenFrame;
++ (Corner)getOppositeCornerToCorner:(Corner)c;
++ (Corner)getCornerWithTitleContainerFrame:(CGRect)r;
++ (CGPoint)getExactCornerPointForCorner:(Corner)c;
++ (Corner)getCornerForExactCornerPoint:(CGPoint)point;
 
 @end
