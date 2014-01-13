@@ -67,8 +67,8 @@
     CGContextSetLineWidth(c, 2.0f);
     CGPoint left = [BubbleMain getChordVerticeWithRadius:self.bounds.size.width/2 andLeft:YES];
     CGPoint right = [BubbleMain getChordVerticeWithRadius:self.bounds.size.width/2 andLeft:NO];
-    CGContextMoveToPoint(c, left.x, left.y);
-    CGContextAddLineToPoint(c, right.x, right.y);
+    CGContextMoveToPoint(c, left.x - 1, left.y);
+    CGContextAddLineToPoint(c, right.x + 1, right.y);
     
     CGContextStrokePath(c);
 }

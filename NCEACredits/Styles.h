@@ -72,7 +72,6 @@ typedef enum {
 + (CGRect)titleContainerRectWithCorner:(Corner)c;
 + (float)spaceFromEdgeOfScreen;
 + (CGRect)getBubbleFrameWithContainerFrame:(CGRect)frame;
-+ (CGRect)getFullScreenFrame;
 + (Corner)getOppositeCornerToCorner:(Corner)c;
 + (Corner)getCornerWithTitleContainerFrame:(CGRect)r;
 + (CGPoint)getExactCornerPointForCorner:(Corner)c;

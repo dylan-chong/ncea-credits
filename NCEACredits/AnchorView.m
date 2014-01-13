@@ -13,7 +13,7 @@
 @implementation AnchorView
 
 - (id)initWithStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo {
-    self = [super initWithFrame:CGRectMake([Styles screenWidth], [Styles screenHeight], [Styles screenWidth], [Styles screenHeight])];
+    self = [super initWithFrame:CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight])];
     if (self) {
         _startingPoint = startingPoint;
         _pointsToDrawTo = pointsToDrawTo;
@@ -28,9 +28,9 @@
 }
 
 - (void)drawLineFromPoint:(CGPoint)from toPoint:(CGPoint)to withContext:(CGContextRef)context {
-    if (to.x > [Styles screenWidth] && to.y > [Styles screenHeight] && to.x < [Styles screenWidth] * 2 && to.y < [Styles screenHeight] * 2) {
-        CGContextMoveToPoint(context, from.x - [Styles screenWidth], from.y - [Styles screenHeight]);
-        CGContextAddLineToPoint(context, to.x - [Styles screenWidth], to.y - [Styles screenHeight]);
+    if (to.x > 0 && to.y > 0 && to.x < [Styles screenWidth] && to.y < [Styles screenHeight]) {
+        CGContextMoveToPoint(context, from.x, from.y);
+        CGContextAddLineToPoint(context, to.x, to.y);
     }
 }
 

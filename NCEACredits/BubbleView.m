@@ -12,13 +12,9 @@
 @implementation BubbleView
 
 - (id)init {
-    self = [super initWithFrame:[Styles getFullScreenFrame]];
+    self = [super initWithFrame:CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight])];
     if (self) {
-        float w = [Styles screenWidth];
-        float h = [Styles screenHeight];
-        self.contentSize = CGSizeMake(w * 3, h * 3);
-        self.scrollEnabled = NO;
-        [self scrollRectToVisible:CGRectMake(w, h, w, h) animated:NO];
+        self.clipsToBounds = YES;
     }
     return self;
 }

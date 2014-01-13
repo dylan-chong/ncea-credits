@@ -18,7 +18,7 @@
     //centre of screen
     CGPoint point = CGPointMake(round(([Styles screenWidth] - size.width) / 2), round(([Styles screenHeight] - size.height) / 2));
     
-    return CGRectMake(point.x + [Styles screenWidth], point.y + [Styles screenHeight], size.width, size.height);
+    return CGRectMake(point.x, point.y, size.width, size.height);
 }
 
 + (CGSize)titleContainerSize {  return CGSizeMake(200 * [Styles sizeModifier], 200 * [Styles sizeModifier]);    }
@@ -27,8 +27,6 @@
     CGSize size = [Styles titleContainerSize];
     CGRect availableOrigins;
     CGRect mainRect = [Styles mainContainerRect];
-    mainRect.origin.x -= [Styles screenWidth];
-    mainRect.origin.y -= [Styles screenHeight];
     
     float x, y;
     
@@ -71,9 +69,6 @@
             break;
     }
     
-    availableOrigins.origin.x += [Styles screenWidth];
-    availableOrigins.origin.y += [Styles screenHeight];
-    
  	x = (float) availableOrigins.origin.x + arc4random_uniform(availableOrigins.size.width);
     y = (float) availableOrigins.origin.y + arc4random_uniform(availableOrigins.size.height);
     if (showOrigins == YES) return availableOrigins;
@@ -114,10 +109,6 @@
                       round(frame.size.height * (3.0/4)));
 }
 
-+ (CGRect)getFullScreenFrame {
-    return CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight]);
-}
-
 + (Corner)getOppositeCornerToCorner:(Corner)c {
     if (c == TopLeft) return BottomRight;
     else if (c == TopRight) return BottomLeft;
@@ -140,8 +131,6 @@
         p = CGPointMake([Styles screenWidth] - d - size.width, [Styles screenHeight] - d - size.height);
     }
     
-    p.x += [Styles screenWidth];
-    p.y += [Styles screenHeight];
     return p;
 }
 

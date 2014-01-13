@@ -10,7 +10,7 @@
 #import "BubbleContainer.h"
 #import "AnchorView.h"
 
-@interface BubbleView : UIScrollView <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate>
+@interface BubbleView : UIView <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate>
 
 @property (nonatomic) NSArray *childBubbles;
 @property (nonatomic, strong) BubbleContainer *mainBubble;
