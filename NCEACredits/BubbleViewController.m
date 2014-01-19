@@ -8,10 +8,6 @@
 
 #import "BubbleViewController.h"
 
-@interface BubbleViewController ()
-
-@end
-
 @implementation BubbleViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,5 +30,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    _bubbleView.frame = CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight]);
+    [_bubbleView repositionBubbles];
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    Device d = [Styles getDevice];
+    
+    if (d == iPad) {
+        return UIInterfaceOrientationMaskAll;
+    } else {
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+    }
+}
+
+//Parents call the child's subclassed method
+- (void)toTransitionHasFinishedWithButton:(BubbleContainer *)container {
+    
+}
+
 
 @end

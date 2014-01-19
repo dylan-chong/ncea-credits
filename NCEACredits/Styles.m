@@ -21,7 +21,7 @@
 
 + (Device)getDevice {
     if ([[[UIDevice currentDevice] model] rangeOfString:@"iPad" options:NSCaseInsensitiveSearch].location == NSNotFound) {
-        if ([Styles screenWidth] == 480) {
+        if ([[UIScreen mainScreen] bounds].size.height == 480) {
             //NSLog(@"iPhone/iPod 3.5 inch");
             return iPhone3_5Inch;
         } else {
@@ -34,8 +34,21 @@
     }
 }
 
-+ (CGFloat)screenWidth {    return [[UIScreen mainScreen] bounds].size.height;  }
-+ (CGFloat)screenHeight {   return [[UIScreen mainScreen] bounds].size.width;  }
++ (CGFloat)screenWidth {
+    if ([Styles deviceIsInLandscape])
+        return [[UIScreen mainScreen] bounds].size.height;
+    
+    else return [[UIScreen mainScreen] bounds].size.width;
+}
++ (CGFloat)screenHeight {
+    if ([Styles deviceIsInLandscape])
+        return [[UIScreen mainScreen] bounds].size.width;
+    
+    else return [[UIScreen mainScreen] bounds].size.height;
+}
++ (BOOL)deviceIsInLandscape {
+    return UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+}
 
 + (float)startingScaleFactor {  return 0.1;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; }
@@ -52,6 +65,19 @@
 + (BOOL)point:(CGPoint)r1 isEqualToPoint:(CGPoint)r2 {
     if (r1.x == r2.x && r1.y == r2.y) return YES;
     else return NO;
+}
+
++ (BOOL)size:(CGSize)s1 isEqualToSize:(CGSize)s2 {
+    if (s1.width == s2.width && s1.height == s2.height) return YES;
+    else return NO;
+}
+
++ (CGFloat)degreesToRadians:(CGFloat)d {
+    return d * M_PI / 180;
+}
+
++ (CGFloat)radiansToDegrees:(CGFloat)r {
+    return r * 180 / M_PI;
 }
 
 @end

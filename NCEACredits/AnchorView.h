@@ -17,5 +17,6 @@
 - (id)initWithStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo;
 - (void)setStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo;
 - (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif;
+@property CGSize pointOfParentMainBubbleRelativeToMainBubble;
 
 @end

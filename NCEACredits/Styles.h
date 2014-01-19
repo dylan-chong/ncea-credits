@@ -37,6 +37,10 @@ typedef enum {
 + (float)animationSpeed;
 + (BOOL)rect:(CGRect)r1 isEqualToRect:(CGRect)r2;
 + (BOOL)point:(CGPoint)r1 isEqualToPoint:(CGPoint)r2;
++ (BOOL)size:(CGSize)s1 isEqualToSize:(CGSize)s2;
++ (CGFloat)degreesToRadians:(CGFloat)d;
++ (CGFloat)radiansToDegrees:(CGFloat)r;
++ (BOOL)deviceIsInLandscape;
 
 @end
 
@@ -70,6 +74,8 @@ typedef enum {
 
 + (CGRect)mainContainerRect;
 + (CGRect)titleContainerRectWithCorner:(Corner)c;
++ (CGSize)titleContainerSize;
++ (CGSize)subtitleContainerSize;
 + (float)spaceFromEdgeOfScreen;
 + (CGRect)getBubbleFrameWithContainerFrame:(CGRect)frame;
 + (Corner)getOppositeCornerToCorner:(Corner)c;

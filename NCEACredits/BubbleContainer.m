@@ -17,11 +17,12 @@
 
 @implementation BubbleContainer
 
-- (id)initMainBubble {
-    CGRect frame = [Styles mainContainerRect];
+- (id)initMainBubbleWithFrameCalculator:(PositionCalculationBlock)b {
+    CGRect frame = b();
     self = [super initWithFrame:frame];
     if (self) {
         _isMainBubbleContainer = YES;
+        _calulatePosition = b;
         
         //create bubble in centre
         _bubble = [[BubbleMain alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:frame]];
@@ -36,14 +37,16 @@
     return self;
 }
 
-- (id)initTitleBubbleWithFrame:(CGRect)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate {
-    self = [super initWithFrame:[BubbleContainer getCentreOfMainBubbleWithSize:frame.size]];
+- (id)initTitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate {
+    CGRect f = frame();
+    self = [super initWithFrame:[BubbleContainer getCentreOfMainBubbleWithSize:f.size]];
     
     if (self) {
-        _rectToMoveTo = frame;
+        _rectToMoveTo = f;
+        _calulatePosition = frame;
         
         _isMainBubbleContainer = NO;
-        _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:frame] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
+        _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:f] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];
         [_bubble startWiggle];
         self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
@@ -69,6 +72,7 @@
 }
 
 - (NSArray *)getAnimationObjectsForSlidingAnimation {
+    _rectToMoveTo = _calulatePosition();
     return [[NSArray alloc] initWithObjects:
             [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.x endingPoint:_rectToMoveTo.origin.x tag:X andDelegate:self],
             [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.y endingPoint:_rectToMoveTo.origin.y tag:Y andDelegate:self],
@@ -92,6 +96,7 @@
 //******************************************** Anchors ***********************************************
 
 + (CGRect)getCentreOfMainBubbleWithSize:(CGSize)size {
+    //For starting sliding animation
     CGRect r = CGRectMake(0, 0, size.width, size.height);
     CGRect m = [Styles mainContainerRect];
     r.origin.x = m.origin.x + ((m.size.width - r.size.width) / 2);

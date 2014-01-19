@@ -1,21 +1,22 @@
 //
-//  MainViewController.m
+//  AddViewController.m
 //  NCEACredits
 //
-//  Created by Dylan Chong on 11/01/14.
+//  Created by Dylan Chong on 15/01/14.
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "MainViewController.h"
-#import "MainView.h"
+#import "AddViewController.h"
+#import "AddView.h"
 
-@implementation MainViewController
+@implementation AddViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil delegate:(id)d
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.bubbleView = [[MainView alloc] init];
+        self.delegate = d;
+        self.bubbleView = [[AddView alloc] init];
         [self.view addSubview:self.bubbleView];
     }
     return self;
@@ -32,5 +33,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

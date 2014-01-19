@@ -23,10 +23,11 @@
 
 + (CGSize)titleContainerSize {  return CGSizeMake(200 * [Styles sizeModifier], 200 * [Styles sizeModifier]);    }
 
++ (CGSize)subtitleContainerSize {  return CGSizeMake(180 * [Styles sizeModifier], 180 * [Styles sizeModifier]);    }
+
 + (CGRect)titleContainerRectWithCorner:(Corner)c {
     CGSize size = [Styles titleContainerSize];
     CGRect availableOrigins;
-    CGRect mainRect = [Styles mainContainerRect];
     
     float x, y;
     
@@ -35,39 +36,41 @@
             
             availableOrigins = CGRectMake([Styles spaceFromEdgeOfScreen],
                                           [Styles spaceFromEdgeOfScreen],
-                                          mainRect.origin.x - ([self spaceFromEdgeOfScreen] * 2) - size.width,
-                                          mainRect.origin.y + (mainRect.size.height / 2) - [Styles spaceFromEdgeOfScreen] - size.height);
+                                          0,
+                                          0);
             
             break;
             
         case TopRight:
             
-            availableOrigins = CGRectMake(mainRect.origin.x + mainRect.size.width + [Styles spaceFromEdgeOfScreen],
+            availableOrigins = CGRectMake([Styles middleXTitleBubblePosition],
                                           [Styles spaceFromEdgeOfScreen],
-                                          [Styles screenWidth] - ([Styles spaceFromEdgeOfScreen] * 2) - (mainRect.origin.x + mainRect.size.width) - size.width,
-                                          mainRect.origin.y + (mainRect.size.height / 2) - [Styles spaceFromEdgeOfScreen] - size.height);
+                                          0,
+                                          0);
             
             break;
             
         case BottomLeft:
             
             availableOrigins = CGRectMake([Styles spaceFromEdgeOfScreen],
-                                          mainRect.origin.y + (mainRect.size.height / 2) + [Styles spaceFromEdgeOfScreen],
-                                          mainRect.origin.x - ([self spaceFromEdgeOfScreen] * 2) - size.width,
-                                          [Styles screenHeight] - [Styles spaceFromEdgeOfScreen] - mainRect.origin.y - (mainRect.size.height / 2) - size.height);
+                                          [Styles middleYTitleBubblePosition],
+                                          0,
+                                          0);
             break;
             
         case BottomRight:
             
-            availableOrigins = CGRectMake(mainRect.origin.x + mainRect.size.width + [Styles spaceFromEdgeOfScreen],
-                                          mainRect.origin.y + (mainRect.size.height / 2) + [Styles spaceFromEdgeOfScreen],
-                                          [Styles screenWidth] - ([Styles spaceFromEdgeOfScreen] * 2) - (mainRect.origin.x + mainRect.size.width) - size.width,
-                                          [Styles screenHeight] - [Styles spaceFromEdgeOfScreen] - mainRect.origin.y - (mainRect.size.height / 2) - size.height);
+            availableOrigins = CGRectMake([Styles middleXTitleBubblePosition],
+                                          [Styles middleYTitleBubblePosition],
+                                          0,
+                                          0);
             
             
         default:
             break;
     }
+    
+    availableOrigins.size = [Styles getAvailableOriginsSize];
     
  	x = (float) availableOrigins.origin.x + arc4random_uniform(availableOrigins.size.width);
     y = (float) availableOrigins.origin.y + arc4random_uniform(availableOrigins.size.height);
@@ -76,6 +79,39 @@
     CGRect r = CGRectMake(x, y, size.width, size.height);
     
     return r;
+}
+
++ (CGSize)getAvailableOriginsSize {
+    CGSize s;
+    CGRect mainRect = [Styles mainContainerRect];
+    
+    if ([Styles deviceIsInLandscape]) {
+        s.width = mainRect.origin.x - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
+        s.height = mainRect.origin.y + (mainRect.size.height / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
+    } else {
+        s.width = mainRect.origin.x + (mainRect.size.width / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
+        s.height = mainRect.origin.y - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
+    }
+    
+    return s;
+}
+
++ (float)middleXTitleBubblePosition {
+    CGRect mainRect = [Styles mainContainerRect];
+    if ([Styles deviceIsInLandscape]) {
+        return mainRect.origin.x + mainRect.size.width + [Styles spaceFromEdgeOfScreen];
+    } else {
+        return mainRect.origin.x + (mainRect.size.width / 2) + [Styles spaceFromEdgeOfScreen];
+    }
+}
+
++ (float)middleYTitleBubblePosition {
+    CGRect mainRect = [Styles mainContainerRect];
+    if ([Styles deviceIsInLandscape]) {
+        return mainRect.origin.y + (mainRect.size.height / 2) + [Styles spaceFromEdgeOfScreen];
+    } else {
+        return mainRect.origin.y + mainRect.size.height + [Styles spaceFromEdgeOfScreen];
+    }
 }
 
 + (Corner)getCornerWithTitleContainerFrame:(CGRect)r {
@@ -120,7 +156,7 @@
     CGSize size = [Styles titleContainerSize];
     float d = [Styles spaceFromEdgeOfScreen];
     CGPoint p;
-
+    
     if (c == TopLeft) {
         p = CGPointMake(d, d);
     } else if (c == TopRight) {
@@ -140,6 +176,21 @@
     if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:BottomLeft]]) return BottomLeft;
     if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:BottomRight]]) return BottomRight;
     return NotValid;
+}
+
++ (float)getRadiusOfRadialView {
+    return [Styles screenHeight] - ([Styles spaceFromEdgeOfScreen] * 2);
+}
+
++ (CGRect)getRectOfSubtitleButtonOfIndexInArray:(int)index withNumberOfObjects:(int)count fromCorner:(Corner)corner {
+    CGSize size = CGSizeMake([Styles titleContainerSize].width * 0.8, [Styles titleContainerSize].height * 0.8);
+    float angleFromOrigin = 90.0 * (index + 1.0) / (count + 1);
+    
+    float x = sinf([Styles degreesToRadians:angleFromOrigin]) * [Styles getRadiusOfRadialView];
+    float y = cosf([Styles degreesToRadians:angleFromOrigin]) * [Styles getRadiusOfRadialView];
+    
+    
+    return CGRectMake(x, y, size.width, size.height);
 }
 
 @end

@@ -9,8 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "BubbleView.h"
 
+@protocol BubbleViewControllerTransitionDelegate <NSObject>
+//child view controllers will implement the delegate to communicate with the parent
+- (void)fromTransitionWillStartWithButton:(BubbleContainer *)container;
+@end
+
 @interface BubbleViewController : UIViewController
 
 @property (nonatomic) BubbleView *bubbleView;
+@property id<BubbleViewControllerTransitionDelegate> delegate;
+@property BubbleViewController *childViewController;
+
+- (void)toTransitionHasFinishedWithButton:(BubbleContainer *)container;
 
 @end

@@ -28,10 +28,8 @@
 }
 
 - (void)drawLineFromPoint:(CGPoint)from toPoint:(CGPoint)to withContext:(CGContextRef)context {
-    if (to.x > 0 && to.y > 0 && to.x < [Styles screenWidth] && to.y < [Styles screenHeight]) {
         CGContextMoveToPoint(context, from.x, from.y);
         CGContextAddLineToPoint(context, to.x, to.y);
-    }
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -45,6 +43,13 @@
                         toPoint:
          [AnchorView getCGPointFromNSValue:v]
                     withContext:context];
+    }
+    
+    if ([Styles size:_pointOfParentMainBubbleRelativeToMainBubble isEqualToSize:CGSizeZero] == false) {
+        CGPoint oldMainAnchor = _startingPoint;
+        _startingPoint.x += _pointOfParentMainBubbleRelativeToMainBubble.width;
+        _startingPoint.y += _pointOfParentMainBubbleRelativeToMainBubble.height;
+        [self drawLineFromPoint:_startingPoint toPoint:oldMainAnchor withContext:context];
     }
     
     CGContextStrokePath(context);

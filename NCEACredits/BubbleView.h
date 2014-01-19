@@ -16,15 +16,18 @@
 @property (nonatomic, strong) BubbleContainer *mainBubble;
 @property AnchorView *anchors;
 @property BOOL disableAnchorReDraw;
-@property BOOL hasStartedGrowingAnimation;
-@property AnimationManager *animationManager;
+@property BOOL hasStartedGrowingAnimation, isDoingAnimation;
+@property (nonatomic) AnimationManager *animationManager;
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a;
 - (void)startChildBubbleCreationAnimation;
 
+- (void)repositionBubbles;
+
 - (void)startTransitionToChildBubble:(BubbleContainer *)b;
 @property (weak, nonatomic) BubbleContainer *transitionBubble;
 @property float transitionXDif, transitionYDif;
+- (void)fromTransitionWillStartWithButton:(BubbleContainer *)container;
 
 - (void)enableChildButtons;
 - (void)disableChildButtons;

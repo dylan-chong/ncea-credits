@@ -19,18 +19,38 @@
 }
 
 - (void)createBubbleContainers {
-    self.mainBubble = [[BubbleContainer alloc] initMainBubble];
+    PositionCalculationBlock mainBlock = ^(void) {
+        return  [Styles mainContainerRect];
+    };
+    
+    self.mainBubble = [[BubbleContainer alloc] initMainBubbleWithFrameCalculator:mainBlock];
     self.mainBubble.delegate = self;
     [self addSubview:self.mainBubble];
     
+    
+    PositionCalculationBlock addBlock = ^(void) {
+        return  [Styles titleContainerRectWithCorner:TopLeft];
+    };
+    
+    PositionCalculationBlock subjectsBlock = ^(void) {
+        return  [Styles titleContainerRectWithCorner:TopRight];
+    };
+    
+    PositionCalculationBlock statsBlock = ^(void) {
+        return  [Styles titleContainerRectWithCorner:BottomLeft];
+    };
+    
+    PositionCalculationBlock optionsBlock = ^(void) {
+        return  [Styles titleContainerRectWithCorner:BottomRight];
+    };
+    
     [self setMainBubble:self.mainBubble
         andChildBubbles:[NSArray arrayWithObjects:
-                         [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:TopLeft] colour:[Styles greenColour] iconName:@"Add.png" title:@"Add" andDelegate:NO],
-                         [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:TopRight] colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Subjects" andDelegate:NO],
-                         [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:BottomLeft] colour:[Styles blueColour] iconName:@"Stats.png" title:@"Stats" andDelegate:NO],
-                         [[BubbleContainer alloc] initTitleBubbleWithFrame:[Styles titleContainerRectWithCorner:BottomRight] colour:[Styles orangeColour] iconName:@"Options.png" title:@"Options" andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:addBlock colour:[Styles greenColour] iconName:@"Add.png" title:@"Add" andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:subjectsBlock colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Subjects" andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:statsBlock colour:[Styles blueColour] iconName:@"Stats.png" title:@"Stats" andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:optionsBlock colour:[Styles orangeColour] iconName:@"Options.png" title:@"Options" andDelegate:NO],
                          nil]];
-    
     
     _addContainer = self.childBubbles[0];
     [self addSubview:_addContainer];

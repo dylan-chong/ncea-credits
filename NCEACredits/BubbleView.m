@@ -46,6 +46,21 @@
     return points;
 }
 
+- (void)repositionBubbles {
+    _anchors.frame = CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight]);
+    [self redrawAnchors];
+    
+    if (_isDoingAnimation) {
+        NSMutableArray *m = [[NSMutableArray alloc] init];
+        CGRect r = _mainBubble.calulatePosition();
+        [m addObject:[[AnimationObject alloc] initWithStartingPoint:_mainBubble.frame.origin.x endingPoint:r.origin.x tag:X andDelegate:_mainBubble]];
+        [m addObject:[[AnimationObject alloc] initWithStartingPoint:_mainBubble.frame.origin.y endingPoint:r.origin.y tag:Y andDelegate:_mainBubble]];
+        
+    } else {
+        [self animateRepositionObjects];
+    }
+}
+
 //************************************** Starting Animation **************************************
 
 - (void)startChildBubbleCreationAnimation {
@@ -84,15 +99,11 @@
         [self enableChildButtons];
     } else if (tag == 3) {
         //transition
-        _disableAnchorReDraw = NO;
-        [self enableWiggleForTransition];
-        [self enableChildButtons];
         [self reverseTransitionToPreviousBubbleContainerPosition];
     } else if (tag == 4) {
         //transition reverse
         [self enableChildButtons];
-        [self enableWiggleForTransition];
-        _disableAnchorReDraw = NO;
+        _isDoingAnimation = NO;
     }
 }
 
@@ -112,28 +123,37 @@
 
 - (void)startTransitionToChildBubble:(BubbleContainer *)b {
     [self setTransitionDifsWithBubbleContainerFrame:b.frame];
-    [self setUpAnimationManagerForTransitionWithTag:3];
-}
-
-- (void)reverseTransitionToPreviousBubbleContainerPosition {
-    _transitionXDif = 0 - _transitionXDif;
-    _transitionYDif = 0 - _transitionYDif;
-    [self setUpAnimationManagerForTransitionWithTag:4];
-}
-
-- (void)setUpAnimationManagerForTransitionWithTag:(int)tag {
-    _disableAnchorReDraw = YES;
     [self disableChildButtons];
-    [self disableWiggleForTransition];
+    _isDoingAnimation = YES;
     
     NSArray *a = [_mainBubble getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif];
-    a = [a arrayByAddingObjectsFromArray:[_anchors getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif]];
     
     for (BubbleContainer *b in _childBubbles) {
         a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif]];
     }
     
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:tag andDelegate:self];
+    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:3 andDelegate:self];
+    [_animationManager startAnimation];
+}
+
+- (void)reverseTransitionToPreviousBubbleContainerPosition {
+    [self animateRepositionObjects];
+}
+
+- (void)animateRepositionObjects {
+    NSMutableArray *objects = [[NSMutableArray alloc] init];
+    
+    CGRect pos = _mainBubble.calulatePosition();
+    [objects addObject:[[AnimationObject alloc] initWithStartingPoint:_mainBubble.frame.origin.x endingPoint:pos.origin.x tag:X andDelegate:_mainBubble]];
+    [objects addObject:[[AnimationObject alloc] initWithStartingPoint:_mainBubble.frame.origin.y endingPoint:pos.origin.y tag:Y andDelegate:_mainBubble]];
+    
+    for (BubbleContainer *b in _childBubbles) {
+        pos = b.calulatePosition();
+        [objects addObject:[[AnimationObject alloc] initWithStartingPoint:b.frame.origin.x endingPoint:pos.origin.x tag:X andDelegate:b]];
+        [objects addObject:[[AnimationObject alloc] initWithStartingPoint:b.frame.origin.y endingPoint:pos.origin.y tag:Y andDelegate:b]];
+    }
+    
+    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:4 andDelegate:self];
     [_animationManager startAnimation];
 }
 
@@ -154,11 +174,15 @@
     }
 }
 
-- (void)enableWiggleForTransition {
+- (void)enableWiggleAfterTransition {
     _mainBubble.bubble.disableWiggleForTransition = NO;
     for (BubbleContainer *b in _childBubbles) {
         b.bubble.disableWiggleForTransition = NO;
     }
+}
+
+- (void)fromTransitionWillStartWithButton:(BubbleContainer *)container {
+    
 }
 
 @end

@@ -17,6 +17,8 @@
 
 @end
 
+typedef CGRect (^PositionCalculationBlock) (void);
+
 @interface BubbleContainer : UIView <BubbleDelegate, AnimationObjectDelegate>
 
 @property id<BubbleContainerDelegate> delegate;
@@ -25,13 +27,16 @@
 @property BOOL isMainBubbleContainer;
 @property CGRect rectToMoveTo;
 @property AnimationManager *animationManager;
+@property (nonatomic, copy) PositionCalculationBlock calulatePosition;
 
-- (id)initMainBubble;
-- (id)initTitleBubbleWithFrame:(CGRect)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
+- (id)initMainBubbleWithFrameCalculator:(PositionCalculationBlock)b;
+- (id)initTitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
 
 - (AnimationManager *)getAnimationManagerForMainBubbleGrowth;
 - (void)startGrowingMainBubbleAnimation;
 - (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif;
 - (NSArray *)getAnimationObjectsForSlidingAnimation;
+
++ (CGRect)getCentreOfMainBubbleWithSize:(CGSize)size;
 
 @end
