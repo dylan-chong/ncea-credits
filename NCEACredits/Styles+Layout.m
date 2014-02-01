@@ -178,19 +178,6 @@
     return NotValid;
 }
 
-+ (float)getRadiusOfRadialView {
-    return [Styles screenHeight] - ([Styles spaceFromEdgeOfScreen] * 2);
-}
 
-+ (CGRect)getRectOfSubtitleButtonOfIndexInArray:(int)index withNumberOfObjects:(int)count fromCorner:(Corner)corner {
-    CGSize size = CGSizeMake([Styles titleContainerSize].width * 0.8, [Styles titleContainerSize].height * 0.8);
-    float angleFromOrigin = 90.0 * (index + 1.0) / (count + 1);
-    
-    float x = sinf([Styles degreesToRadians:angleFromOrigin]) * [Styles getRadiusOfRadialView];
-    float y = cosf([Styles degreesToRadians:angleFromOrigin]) * [Styles getRadiusOfRadialView];
-    
-    
-    return CGRectMake(x, y, size.width, size.height);
-}
 
 @end

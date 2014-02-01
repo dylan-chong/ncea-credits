@@ -15,7 +15,7 @@
     self.childBubbles = a;
 }
 
-+ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(int)bubbles size:(CGSize)size fromCorner:(Corner)corner {
++ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner {
     double angleFromOrigin = 90.0 * ((index + 1.0) / (bubbles + 1.0));
     double sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * [SimpleSelectionView getRadius];
     double cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * [SimpleSelectionView getRadius];
@@ -45,6 +45,10 @@
     }
     
     return CGRectMake(origin.x + x - (size.width / 2), origin.y + y - (size.height / 2), size.width, size.height);
+}
+
++ (NSArray *)getArrayOfBubblesWithTitles:(NSArray *)titles and mainBubble:(BubbleContainer)mainB {
+    
 }
 
 + (double)getRadius {

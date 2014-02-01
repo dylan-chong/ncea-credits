@@ -10,6 +10,6 @@
 
 @interface MainView : BubbleView
 
-@property (weak, nonatomic) BubbleContainer *addContainer, *subjectsContainer, *statsContainer, *optionsContainer;
+@property (weak, nonatomic) BubbleContainer *addContainer, *gradesContainer, *statsContainer, *optionsContainer;
 
 @end

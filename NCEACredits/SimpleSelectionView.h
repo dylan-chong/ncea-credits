@@ -10,7 +10,9 @@
 
 @interface SimpleSelectionView : BubbleView
 
-+ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(int)bubbles size:(CGSize)size fromCorner:(Corner)corner;
++ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner;
 + (double)getRadius;
+
+@property Corner mainBubbleCorner;
 
 @end

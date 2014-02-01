@@ -11,6 +11,7 @@
 		840D5871188216B200DE24B7 /* AnimationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5870188216B200DE24B7 /* AnimationObject.m */; };
 		840D5874188240A700DE24B7 /* GoalTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5873188240A700DE24B7 /* GoalTitle.m */; };
 		840D587618834B0300DE24B7 /* Stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D587518834B0300DE24B7 /* Stats.png */; };
+		841DC9B1188CA6B90062C30D /* SubjectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DC9B0188CA6B90062C30D /* SubjectsView.m */; };
 		849D3D231880F2810030D432 /* AnchorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D3D221880F2810030D432 /* AnchorView.m */; };
 		84B5A27A1880D8AD00969952 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A2791880D8AD00969952 /* Foundation.framework */; };
 		84B5A27C1880D8AD00969952 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A27B1880D8AD00969952 /* CoreGraphics.framework */; };
@@ -40,11 +41,8 @@
 		84B5A2D21880D96300969952 /* BubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B5A2CF1880D96300969952 /* BubbleView.m */; };
 		84B5A2D31880D96300969952 /* BubbleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B5A2D11880D96300969952 /* BubbleViewController.m */; };
 		84B5A2D91880D98200969952 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B5A2D61880D98200969952 /* MainViewController.m */; };
-		84C3F1FD188BBFBD00195142 /* SimpleSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C3F1FC188BBFBD00195142 /* SimpleSelectionViewController.m */; };
 		84C3F201188BC03600195142 /* SimpleSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C3F200188BC03600195142 /* SimpleSelectionView.m */; };
 		84C3F204188BDF4600195142 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C3F202188BDF4600195142 /* MainView.m */; };
-		84EBEC99188665C6006C31B8 /* AddView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EBEC98188665C6006C31B8 /* AddView.m */; };
-		84EBEC9E18866607006C31B8 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EBEC9D18866607006C31B8 /* AddViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +63,8 @@
 		840D5872188240A700DE24B7 /* GoalTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalTitle.h; sourceTree = "<group>"; };
 		840D5873188240A700DE24B7 /* GoalTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalTitle.m; sourceTree = "<group>"; };
 		840D587518834B0300DE24B7 /* Stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stats.png; sourceTree = "<group>"; };
+		841DC9AF188CA6B90062C30D /* SubjectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubjectsView.h; path = ../SubjectsView.h; sourceTree = "<group>"; };
+		841DC9B0188CA6B90062C30D /* SubjectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubjectsView.m; path = ../SubjectsView.m; sourceTree = "<group>"; };
 		849D3D211880F2810030D432 /* AnchorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnchorView.h; sourceTree = "<group>"; };
 		849D3D221880F2810030D432 /* AnchorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnchorView.m; sourceTree = "<group>"; };
 		84B5A2761880D8AD00969952 /* NCEACredits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NCEACredits.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,16 +107,10 @@
 		84B5A2D11880D96300969952 /* BubbleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleViewController.m; sourceTree = "<group>"; };
 		84B5A2D51880D98200969952 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		84B5A2D61880D98200969952 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		84C3F1FB188BBFBD00195142 /* SimpleSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSelectionViewController.h; sourceTree = "<group>"; };
-		84C3F1FC188BBFBD00195142 /* SimpleSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleSelectionViewController.m; sourceTree = "<group>"; };
 		84C3F1FF188BC03600195142 /* SimpleSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSelectionView.h; sourceTree = "<group>"; };
 		84C3F200188BC03600195142 /* SimpleSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleSelectionView.m; sourceTree = "<group>"; };
 		84C3F202188BDF4600195142 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
 		84C3F203188BDF4600195142 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
-		84EBEC97188665C6006C31B8 /* AddView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddView.h; sourceTree = "<group>"; };
-		84EBEC98188665C6006C31B8 /* AddView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddView.m; sourceTree = "<group>"; };
-		84EBEC9C18866607006C31B8 /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
-		84EBEC9D18866607006C31B8 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +146,15 @@
 				840D5870188216B200DE24B7 /* AnimationObject.m */,
 			);
 			name = Animation;
+			sourceTree = "<group>";
+		};
+		841DC9B2188CA6D80062C30D /* Subjects */ = {
+			isa = PBXGroup;
+			children = (
+				841DC9AF188CA6B90062C30D /* SubjectsView.h */,
+				841DC9B0188CA6B90062C30D /* SubjectsView.m */,
+			);
+			name = Subjects;
 			sourceTree = "<group>";
 		};
 		844BCACA1881126000FC132E /* Main Bubble */ = {
@@ -294,7 +297,7 @@
 		84B5A2DB1880D98D00969952 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				84EBEC9A188665D6006C31B8 /* Add */,
+				841DC9B2188CA6D80062C30D /* Subjects */,
 				84EBEC9B188665DC006C31B8 /* Main */,
 			);
 			name = Screens;
@@ -316,21 +319,8 @@
 			children = (
 				84C3F1FF188BC03600195142 /* SimpleSelectionView.h */,
 				84C3F200188BC03600195142 /* SimpleSelectionView.m */,
-				84C3F1FB188BBFBD00195142 /* SimpleSelectionViewController.h */,
-				84C3F1FC188BBFBD00195142 /* SimpleSelectionViewController.m */,
 			);
 			name = "Simple Selection";
-			sourceTree = "<group>";
-		};
-		84EBEC9A188665D6006C31B8 /* Add */ = {
-			isa = PBXGroup;
-			children = (
-				84EBEC97188665C6006C31B8 /* AddView.h */,
-				84EBEC98188665C6006C31B8 /* AddView.m */,
-				84EBEC9C18866607006C31B8 /* AddViewController.h */,
-				84EBEC9D18866607006C31B8 /* AddViewController.m */,
-			);
-			name = Add;
 			sourceTree = "<group>";
 		};
 		84EBEC9B188665DC006C31B8 /* Main */ = {
@@ -447,17 +437,15 @@
 			files = (
 				84B5A2CA1880D93100969952 /* BubbleMain.m in Sources */,
 				84B5A2BB1880D91000969952 /* Styles+Colours.m in Sources */,
-				84C3F1FD188BBFBD00195142 /* SimpleSelectionViewController.m in Sources */,
 				84C3F204188BDF4600195142 /* MainView.m in Sources */,
 				84B5A2BC1880D91000969952 /* Styles+Layout.m in Sources */,
-				84EBEC99188665C6006C31B8 /* AddView.m in Sources */,
 				840D5874188240A700DE24B7 /* GoalTitle.m in Sources */,
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
+				841DC9B1188CA6B90062C30D /* SubjectsView.m in Sources */,
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
 				84B5A2B91880D91000969952 /* Styles.m in Sources */,
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
-				84EBEC9E18866607006C31B8 /* AddViewController.m in Sources */,
 				849D3D231880F2810030D432 /* AnchorView.m in Sources */,
 				840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */,
 				84B5A2D21880D96300969952 /* BubbleView.m in Sources */,

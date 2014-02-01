@@ -24,6 +24,7 @@
 @property UILabel *title;
 
 - (id)initWithFrame:(CGRect)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
+- (id)initWithFrame:(CGRect)frame colour:(UIColor *)colour title:(NSString *)title andDelegate:(BOOL)hasDelegate;
 
 - (void)startWiggle;
 - (void)wiggle;

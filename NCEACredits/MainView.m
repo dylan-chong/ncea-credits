@@ -47,7 +47,7 @@
     [self setMainBubble:self.mainBubble
         andChildBubbles:[NSArray arrayWithObjects:
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:addBlock colour:[Styles greenColour] iconName:@"Add.png" title:@"Add" andDelegate:NO],
-                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:subjectsBlock colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Subjects" andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:subjectsBlock colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Grades" andDelegate:NO],
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:statsBlock colour:[Styles blueColour] iconName:@"Stats.png" title:@"Stats" andDelegate:NO],
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:optionsBlock colour:[Styles orangeColour] iconName:@"Options.png" title:@"Options" andDelegate:NO],
                          nil]];
@@ -55,8 +55,8 @@
     _addContainer = self.childBubbles[0];
     [self addSubview:_addContainer];
     
-    _subjectsContainer = self.childBubbles[1];
-    [self addSubview:_subjectsContainer];
+    _gradesContainer = self.childBubbles[1];
+    [self addSubview:_gradesContainer];
     
     _statsContainer = self.childBubbles[2];
     [self addSubview:_statsContainer];
@@ -79,7 +79,7 @@
 
 - (void)addControlEventsToBubbleContainers {
     [_addContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addContainerPressed)]];
-    [_subjectsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(subjectsContainerPressed)]];
+    [_gradesContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gradesContainerPressed)]];
     [_statsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statsContainerPressed)]];
     [_optionsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(optionsContainerPressed)]];
 }
@@ -90,8 +90,8 @@
     [self startTransitionToChildBubble:_addContainer];
 }
 
-- (void)subjectsContainerPressed {
-    [self startTransitionToChildBubble:_subjectsContainer];
+- (void)gradesContainerPressed {
+    [self startTransitionToChildBubble:_gradesContainer];
 }
 
 - (void)statsContainerPressed {

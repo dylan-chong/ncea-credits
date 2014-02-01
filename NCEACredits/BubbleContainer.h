@@ -27,6 +27,7 @@ typedef CGRect (^PositionCalculationBlock) (void);
 @property BOOL isMainBubbleContainer;
 @property CGRect rectToMoveTo;
 @property AnimationManager *animationManager;
+@property UIColor *colour;
 @property (nonatomic, copy) PositionCalculationBlock calulatePosition;
 
 - (id)initMainBubbleWithFrameCalculator:(PositionCalculationBlock)b;

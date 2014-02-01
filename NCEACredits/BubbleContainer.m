@@ -46,7 +46,31 @@
         _calulatePosition = frame;
         
         _isMainBubbleContainer = NO;
+        _colour = colour;
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:f] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
+        [self addSubview:_bubble];
+        [_bubble startWiggle];
+        self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
+        
+        self.backgroundColor = bg;
+        
+        self.userInteractionEnabled = NO;
+    }
+    
+    return self;
+}
+
+- (id)initSubtitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour title:(NSString *)title corner:(Corner)corner andDelegate:(BOOL)hasDelegate {
+    CGRect f = frame();
+    self = [super initWithFrame:[BubbleContainer getCentreOfMainBubbleWithSize:f.size]];
+    
+    if (self) {
+        _rectToMoveTo = f;
+        _calulatePosition = frame;
+        
+        _isMainBubbleContainer = NO;
+        _colour = colour;
+        _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:self.frame] colour:colour title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];
         [_bubble startWiggle];
         self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
