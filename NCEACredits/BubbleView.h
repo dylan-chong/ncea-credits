@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "BubbleContainer.h"
 #import "AnchorView.h"
+#import "BubbleViewController.h"
 
-@interface BubbleView : UIView <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate>
+@protocol BubbleViewTransitionDelegate <NSObject>
+@optional
+- (void)reverseTransitionToPreviousBubbleContainerPosition;
+@end
+
+@interface BubbleView : UIView <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewTransitionDelegate>
 
 @property (nonatomic) NSArray *childBubbles;
 @property (nonatomic, strong) BubbleContainer *mainBubble;
@@ -24,10 +30,12 @@
 
 - (void)repositionBubbles;
 
-- (void)startTransitionToChildBubble:(BubbleContainer *)b;
+@property id<BubbleViewTransitionDelegate> delegate;
+- (void)startTransitionToChildBubble:(BubbleContainer *)b andBubbleViewController:(BubbleViewController *)bubbleViewController;
+@property (strong, nonatomic) BubbleViewController *childBubbleViewController;
 @property (weak, nonatomic) BubbleContainer *transitionBubble;
 @property float transitionXDif, transitionYDif;
-- (void)fromTransitionWillStartWithButton:(BubbleContainer *)container;
+- (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container;
 
 - (void)enableChildButtons;
 - (void)disableChildButtons;

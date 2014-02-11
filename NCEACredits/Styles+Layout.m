@@ -152,8 +152,7 @@
     else return TopLeft;
 }
 
-+ (CGPoint)getExactCornerPointForCorner:(Corner)c {
-    CGSize size = [Styles titleContainerSize];
++ (CGPoint)getExactOriginForCorner:(Corner)c andSize:(CGSize)size {
     float d = [Styles spaceFromEdgeOfScreen];
     CGPoint p;
     
@@ -170,14 +169,21 @@
     return p;
 }
 
-+ (Corner)getCornerForExactCornerPoint:(CGPoint)point {
-    if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:TopLeft]]) return TopLeft;
-    if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:TopRight]]) return TopRight;
-    if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:BottomLeft]]) return BottomLeft;
-    if ([Styles point:point isEqualToPoint:[Styles getExactCornerPointForCorner:BottomRight]]) return BottomRight;
-    return NotValid;
++ (Corner)getCornerForPoint:(CGPoint)point {
+    
+    if (point.x >= [Styles screenWidth] / 2) {
+        if (point.y >= [Styles screenHeight] / 2) {
+            return BottomRight;
+        } else {
+            return TopRight;
+        }
+    } else {
+        if (point.y >= [Styles screenHeight] / 2) {
+            return BottomLeft;
+        } else {
+            return TopLeft;
+        }
+    }
 }
-
-
 
 @end

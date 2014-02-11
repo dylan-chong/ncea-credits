@@ -81,7 +81,7 @@ typedef enum {
 + (CGRect)getBubbleFrameWithContainerFrame:(CGRect)frame;
 + (Corner)getOppositeCornerToCorner:(Corner)c;
 + (Corner)getCornerWithTitleContainerFrame:(CGRect)r;
-+ (CGPoint)getExactCornerPointForCorner:(Corner)c;
-+ (Corner)getCornerForExactCornerPoint:(CGPoint)point;
++ (CGPoint)getExactOriginForCorner:(Corner)c andSize:(CGSize)size;
++ (Corner)getCornerForPoint:(CGPoint)point;
 
 @end

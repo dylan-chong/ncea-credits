@@ -46,10 +46,4 @@
     }
 }
 
-//Parents call the child's subclassed method
-- (void)toTransitionHasFinishedWithButton:(BubbleContainer *)container {
-    
-}
-
-
 @end

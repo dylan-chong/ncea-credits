@@ -19,6 +19,26 @@
     return self;
 }
 
+- (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container {
+    Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:container.center]];
+    CGSize s = container.frame.size;
+    
+    PositionCalculationBlock p = ^{
+        CGRect r;
+        r.origin = [Styles getExactOriginForCorner:c andSize:s];
+        r.size = s;
+        return r;
+    };
+    
+    if (container.bubbleType == TitleBubble) {
+        _mainBubble = [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:p colour:container.colour iconName:nil title:container.bubble.title.text andDelegate:YES];
+        _mainBubble.delegate = self;
+    } else if (container.bubbleType == SubtitleBubble) {
+        _mainBubble = [[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:p colour:container.colour title:container.bubble.title.text andDelegate:YES];
+        _mainBubble.delegate = self;
+    }
+}
+
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a {
     _mainBubble = m;
     _childBubbles = a;
@@ -99,7 +119,7 @@
         [self enableChildButtons];
     } else if (tag == 3) {
         //transition
-        [self reverseTransitionToPreviousBubbleContainerPosition];
+#warning do segue to child bubble view controller
     } else if (tag == 4) {
         //transition reverse
         [self enableChildButtons];
@@ -121,7 +141,8 @@
 
 //************************************** Transition ****************************************
 
-- (void)startTransitionToChildBubble:(BubbleContainer *)b {
+- (void)startTransitionToChildBubble:(BubbleContainer *)b andBubbleViewController:(BubbleViewController *)bubbleViewController {
+    _childBubbleViewController = bubbleViewController;
     [self setTransitionDifsWithBubbleContainerFrame:b.frame];
     [self disableChildButtons];
     _isDoingAnimation = YES;
@@ -160,7 +181,7 @@
 - (void)setTransitionDifsWithBubbleContainerFrame:(CGRect)b {
     Corner opposite = [Styles getOppositeCornerToCorner:[Styles getCornerWithTitleContainerFrame:b]];
     
-    CGPoint newPoint = [Styles getExactCornerPointForCorner:opposite];
+    CGPoint newPoint = [Styles getExactOriginForCorner:opposite andSize:b.size];
     CGPoint oldPoint = b.origin;
     
     _transitionXDif = newPoint.x - oldPoint.x;
@@ -179,10 +200,6 @@
     for (BubbleContainer *b in _childBubbles) {
         b.bubble.disableWiggleForTransition = NO;
     }
-}
-
-- (void)fromTransitionWillStartWithButton:(BubbleContainer *)container {
-    
 }
 
 @end

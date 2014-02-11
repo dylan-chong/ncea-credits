@@ -13,6 +13,12 @@
 #import "AnimationObject.h"
 #import "AnimationManager.h"
 
+typedef enum {
+    MainBubble = 1,
+    TitleBubble = 2,
+    SubtitleBubble = 3
+} BubbleType;
+
 @protocol BubbleContainerDelegate <BubbleDelegate>
 
 @end
@@ -24,7 +30,7 @@ typedef CGRect (^PositionCalculationBlock) (void);
 @property id<BubbleContainerDelegate> delegate;
 
 @property Bubble *bubble;
-@property BOOL isMainBubbleContainer;
+@property BubbleType bubbleType;
 @property CGRect rectToMoveTo;
 @property AnimationManager *animationManager;
 @property UIColor *colour;
@@ -32,6 +38,7 @@ typedef CGRect (^PositionCalculationBlock) (void);
 
 - (id)initMainBubbleWithFrameCalculator:(PositionCalculationBlock)b;
 - (id)initTitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
+- (id)initSubtitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour title:(NSString *)title andDelegate:(BOOL)hasDelegate;
 
 - (AnimationManager *)getAnimationManagerForMainBubbleGrowth;
 - (void)startGrowingMainBubbleAnimation;

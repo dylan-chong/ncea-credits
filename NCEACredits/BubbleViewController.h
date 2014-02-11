@@ -20,6 +20,4 @@
 @property id<BubbleViewControllerTransitionDelegate> delegate;
 @property BubbleViewController *childViewController;
 
-- (void)toTransitionHasFinishedWithButton:(BubbleContainer *)container;
-
 @end

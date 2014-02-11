@@ -21,7 +21,7 @@
     CGRect frame = b();
     self = [super initWithFrame:frame];
     if (self) {
-        _isMainBubbleContainer = YES;
+        _bubbleType = MainBubble;
         _calulatePosition = b;
         
         //create bubble in centre
@@ -45,7 +45,7 @@
         _rectToMoveTo = f;
         _calulatePosition = frame;
         
-        _isMainBubbleContainer = NO;
+        _bubbleType = TitleBubble;
         _colour = colour;
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:f] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];
@@ -60,7 +60,7 @@
     return self;
 }
 
-- (id)initSubtitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour title:(NSString *)title corner:(Corner)corner andDelegate:(BOOL)hasDelegate {
+- (id)initSubtitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour title:(NSString *)title andDelegate:(BOOL)hasDelegate {
     CGRect f = frame();
     self = [super initWithFrame:[BubbleContainer getCentreOfMainBubbleWithSize:f.size]];
     
@@ -68,7 +68,7 @@
         _rectToMoveTo = f;
         _calulatePosition = frame;
         
-        _isMainBubbleContainer = NO;
+        _bubbleType = SubtitleBubble;
         _colour = colour;
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:self.frame] colour:colour title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];

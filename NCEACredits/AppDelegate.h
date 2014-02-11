@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
+#import "Profile.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) MainViewController *mainViewController;
+@property (nonatomic) Profile *currentProfile;
+
+- (Profile *)getCurrentProfile;
 
 @end
