@@ -10,4 +10,7 @@
 
 @interface MainViewController : BubbleViewController
 
+@property (weak, nonatomic) BubbleContainer *addContainer, *gradesContainer, *statsContainer, *optionsContainer;
+
+
 @end

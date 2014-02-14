@@ -7,7 +7,10 @@
 //
 
 #import "BubbleViewController.h"
+#import "SimpleSelectionViewController.h"
 
-@interface GradesViewController : BubbleViewController
+@interface GradesViewController : SimpleSelectionViewController <SimpleSelectionDelegate>
+
+- (id)initWithMainBubble:(BubbleContainer *)mainBubble;
 
 @end

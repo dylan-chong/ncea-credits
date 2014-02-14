@@ -14,25 +14,24 @@
 
 @implementation GradesViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithMainBubble:(BubbleContainer *)mainBubble {
+    self = [super initWithNibName:nil bundle:nil];
+#warning something above
     if (self) {
-        // Custom initialization
+        [self setMainBubbleSimilarToBubble:mainBubble];
+        [self createBubbleContainers];
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
+- (void)createBubbleContainers {
+    NSArray *subjectTitles = [[ApplicationDelegate getCurrentProfile] getSubjects];
+    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithTitles:subjectTitles buttonClickSelector:NSStringFromSelector(@selector(subjectTitleWasPressed:)) target:self andMainBubble:self.mainBubble];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)subjectTitleWasPressed:(BubbleContainer *)bubble {
+    BubbleViewController *b;
+
 }
 
 @end

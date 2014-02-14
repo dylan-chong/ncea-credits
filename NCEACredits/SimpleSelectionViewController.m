@@ -1,14 +1,27 @@
 //
-//  SimpleSelectionView.m
+//  SimpleSelectionViewController.m
 //  NCEACredits
 //
-//  Created by Dylan Chong on 19/01/14.
+//  Created by Dylan Chong on 13/02/14.
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "SimpleSelectionView.h"
+#import "SimpleSelectionViewController.h"
 
-@implementation SimpleSelectionView
+@interface SimpleSelectionViewController ()
+
+@end
+
+@implementation SimpleSelectionViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a {
     self.mainBubble = m;
@@ -17,11 +30,11 @@
 
 + (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner {
     double angleFromOrigin = 90.0 * ((index + 1.0) / (bubbles + 1.0));
-    double r = [SimpleSelectionView getRadius];
+    double r = [SimpleSelectionViewController getRadius];
     if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0)) r /= 2;
-    double sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * [SimpleSelectionView getRadius];
-    double cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * [SimpleSelectionView getRadius];
- 
+    double sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * [SimpleSelectionViewController getRadius];
+    double cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * [SimpleSelectionViewController getRadius];
+    
     double x, y;
     CGPoint origin;
     if (corner == TopLeft) {
@@ -49,7 +62,7 @@
     return CGRectMake(origin.x + x - (size.width / 2), origin.y + y - (size.height / 2), size.width, size.height);
 }
 
-+ (NSArray *)getArrayOfBubblesWithTitles:(NSArray *)titles buttonClickSelector:(NSString *)sel target:(SimpleSelectionView *)target andMainBubble:(BubbleContainer *)mainB {
++ (NSArray *)getArrayOfBubblesWithTitles:(NSArray *)titles buttonClickSelector:(NSString *)sel target:(SimpleSelectionViewController *)target andMainBubble:(BubbleContainer *)mainB {
     UIColor *c = mainB.colour;
     Corner corner = [Styles getCornerForPoint:mainB.frame.origin];
     
@@ -58,7 +71,7 @@
     CGSize size = mainB.frame.size;
     for (int a = 0; a < titles.count; a++) {
         PositionCalculationBlock x = ^{
-            return [SimpleSelectionView getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner];
+            return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner];
         };
         
         [blocks addObject:x];
