@@ -38,16 +38,15 @@
     };
     
     if (container.bubbleType == TitleBubble) {
-        _mainBubble = [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:p colour:container.colour iconName:nil title:container.bubble.title.text andDelegate:YES];
+        _mainBubble = [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:p colour:container.colour iconName:nil title:container.bubble.title.text frameBubbleForStartingPosition:p() andDelegate:YES];
         _mainBubble.delegate = self;
     } else if (container.bubbleType == SubtitleBubble) {
-        _mainBubble = [[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:p colour:container.colour title:container.bubble.title.text andDelegate:YES];
+        _mainBubble = [[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:p colour:container.colour title:container.bubble.title.text frameBubbleForStartingPosition:p() andDelegate:YES];
         _mainBubble.delegate = self;
     }
     
     [self.view addSubview:_mainBubble];
-    
-#warning create bubble in place bool
+
 }
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a {

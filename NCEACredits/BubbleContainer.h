@@ -37,14 +37,12 @@ typedef CGRect (^PositionCalculationBlock) (void);
 @property (nonatomic, copy) PositionCalculationBlock calulatePosition;
 
 - (id)initMainBubbleWithFrameCalculator:(PositionCalculationBlock)b;
-- (id)initTitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
-- (id)initSubtitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour title:(NSString *)title andDelegate:(BOOL)hasDelegate;
+- (id)initTitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title frameBubbleForStartingPosition:(CGRect)startingFrame andDelegate:(BOOL)hasDelegate;
+- (id)initSubtitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour title:(NSString *)title frameBubbleForStartingPosition:(CGRect)startingFrame andDelegate:(BOOL)hasDelegate;
 
 - (AnimationManager *)getAnimationManagerForMainBubbleGrowth;
 - (void)startGrowingMainBubbleAnimation;
 - (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif;
 - (NSArray *)getAnimationObjectsForSlidingAnimation;
-
-+ (CGRect)getCentreOfMainBubbleWithSize:(CGSize)size;
 
 @end

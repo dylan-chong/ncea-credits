@@ -37,9 +37,13 @@
     return self;
 }
 
-- (id)initTitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate {
+- (id)initTitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title frameBubbleForStartingPosition:(CGRect)startingFrame andDelegate:(BOOL)hasDelegate {
     CGRect f = frame();
-    self = [super initWithFrame:[BubbleContainer getCentreOfMainBubbleWithSize:f.size]];
+    if (![Styles rect:startingFrame isEqualToRect:CGRectZero]) {
+        self = [super initWithFrame:[Styles getRectCentreOfFrame:startingFrame withSize:f.size]];
+    } else {
+        self = [super initWithFrame:f];
+    }
     
     if (self) {
         _rectToMoveTo = f;
@@ -50,19 +54,26 @@
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:f] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];
         [_bubble startWiggle];
-        self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
+        if (![Styles rect:startingFrame isEqualToRect:CGRectZero]) {
+            self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
+            self.userInteractionEnabled = NO;
+        } else {
+            self.userInteractionEnabled = YES;
+        }
         
         self.backgroundColor = bg;
-        
-        self.userInteractionEnabled = NO;
     }
     
     return self;
 }
 
-- (id)initSubtitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour title:(NSString *)title andDelegate:(BOOL)hasDelegate {
+- (id)initSubtitleBubbleWithFrameCalculator:(PositionCalculationBlock)frame colour:(UIColor *)colour title:(NSString *)title frameBubbleForStartingPosition:(CGRect)startingFrame andDelegate:(BOOL)hasDelegate {
     CGRect f = frame();
-    self = [super initWithFrame:[BubbleContainer getCentreOfMainBubbleWithSize:f.size]];
+    if (![Styles rect:startingFrame isEqualToRect:CGRectZero]) {
+        self = [super initWithFrame:[Styles getRectCentreOfFrame:startingFrame withSize:f.size]];
+    } else {
+        self = [super initWithFrame:f];
+    }
     
     if (self) {
         _rectToMoveTo = f;
@@ -73,11 +84,15 @@
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:self.frame] colour:colour title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];
         [_bubble startWiggle];
-        self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
         
         self.backgroundColor = bg;
         
-        self.userInteractionEnabled = NO;
+        if (![Styles rect:startingFrame isEqualToRect:CGRectZero]) {
+            self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
+            self.userInteractionEnabled = NO;
+        } else {
+            self.userInteractionEnabled = YES;
+        }
     }
     
     return self;
@@ -118,15 +133,6 @@
 }
 
 //******************************************** Anchors ***********************************************
-
-+ (CGRect)getCentreOfMainBubbleWithSize:(CGSize)size {
-    //For starting sliding animation
-    CGRect r = CGRectMake(0, 0, size.width, size.height);
-    CGRect m = [Styles mainContainerRect];
-    r.origin.x = m.origin.x + ((m.size.width - r.size.width) / 2);
-    r.origin.y = m.origin.y + ((m.size.height - r.size.height) / 2);
-    return r;
-}
 
 - (void)redrawAnchors {
     [self.delegate redrawAnchors];

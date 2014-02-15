@@ -30,7 +30,7 @@
         
         //icon 10-60%
         _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, round(h*0.1), w, round(h*0.5))];
-        _icon.image = [UIImage imageNamed:iconName];
+        if (!([iconName isEqualToString:@""] || !iconName)) _icon.image = [UIImage imageNamed:iconName];
         
         _usesDelegateToCallRedrawAnchors = hasDelegate;
         

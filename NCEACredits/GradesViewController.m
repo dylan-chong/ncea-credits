@@ -16,7 +16,7 @@
 
 - (id)initWithMainBubble:(BubbleContainer *)mainBubble {
     self = [super initWithNibName:nil bundle:nil];
-#warning something above
+
     if (self) {
         [self setMainBubbleSimilarToBubble:mainBubble];
         [self createBubbleContainers];
@@ -29,7 +29,7 @@
     self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithTitles:subjectTitles buttonClickSelector:NSStringFromSelector(@selector(subjectTitleWasPressed:)) target:self andMainBubble:self.mainBubble];
 }
 
-- (void)subjectTitleWasPressed:(BubbleContainer *)bubble {
+- (void)subjectTitleWasPressed:(BubbleContainer *)sender {
     BubbleViewController *b;
 
 }

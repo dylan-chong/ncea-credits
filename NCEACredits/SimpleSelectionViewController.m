@@ -80,7 +80,7 @@
     NSMutableArray *m = [[NSMutableArray alloc] init];
     
     for (int a = 0; a < titles.count; a++) {
-        [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:c title:titles[a] andDelegate:NO]];
+        [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:c title:titles[a] frameBubbleForStartingPosition:mainB.frame andDelegate:NO]];
     }
     
     for (BubbleContainer *b in m) {

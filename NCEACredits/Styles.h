@@ -83,5 +83,6 @@ typedef enum {
 + (Corner)getCornerWithTitleContainerFrame:(CGRect)r;
 + (CGPoint)getExactOriginForCorner:(Corner)c andSize:(CGSize)size;
 + (Corner)getCornerForPoint:(CGPoint)point;
++ (CGRect)getRectCentreOfFrame:(CGRect)rect withSize:(CGSize)size;
 
 @end

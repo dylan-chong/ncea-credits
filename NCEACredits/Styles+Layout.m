@@ -186,4 +186,12 @@
     }
 }
 
++ (CGRect)getRectCentreOfFrame:(CGRect)rect withSize:(CGSize)size {
+    //For starting sliding animation
+    CGRect r = CGRectMake(0, 0, size.width, size.height);
+    r.origin.x = rect.origin.x + ((rect.size.width - r.size.width) / 2);
+    r.origin.y = rect.origin.y + ((rect.size.height - r.size.height) / 2);
+    return r;
+}
+
 @end
