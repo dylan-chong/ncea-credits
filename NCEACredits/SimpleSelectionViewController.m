@@ -17,9 +17,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
@@ -31,9 +28,16 @@
 + (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner {
     double angleFromOrigin = 90.0 * ((index + 1.0) / (bubbles + 1.0));
     double r = [SimpleSelectionViewController getRadius];
-    if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0)) r /= 2;
-    double sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * [SimpleSelectionViewController getRadius];
-    double cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * [SimpleSelectionViewController getRadius];
+    if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0)) r *= 0.75;
+    
+    double sinAns, cosAns;
+    if ([Styles deviceIsInLandscape]) {
+         sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r * ([Styles screenWidth] / [Styles screenHeight]);
+         cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r;
+    } else {
+         sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r;
+         cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r * ([Styles screenHeight] / [Styles screenWidth]);
+    }
     
     double x, y;
     CGPoint origin;
@@ -95,9 +99,9 @@
     double h = [Styles screenHeight];
     
     if (w > h) {
-        return h - ([Styles spaceFromEdgeOfScreen] * 2);
+        return h - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
     } else {
-        return w - ([Styles spaceFromEdgeOfScreen] * 2);
+        return w - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
     }
 }
 

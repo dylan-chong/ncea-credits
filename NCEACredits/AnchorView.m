@@ -17,7 +17,7 @@
     if (self) {
         _startingPoint = startingPoint;
         _pointsToDrawTo = pointsToDrawTo;
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
@@ -28,8 +28,8 @@
 }
 
 - (void)drawLineFromPoint:(CGPoint)from toPoint:(CGPoint)to withContext:(CGContextRef)context {
-        CGContextMoveToPoint(context, from.x, from.y);
-        CGContextAddLineToPoint(context, to.x, to.y);
+    CGContextMoveToPoint(context, from.x, from.y);
+    CGContextAddLineToPoint(context, to.x, to.y);
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -45,11 +45,11 @@
                     withContext:context];
     }
     
-    if ([Styles size:_pointOfParentMainBubbleRelativeToMainBubble isEqualToSize:CGSizeZero] == false) {
-        CGPoint oldMainAnchor = _startingPoint;
-        _startingPoint.x += _pointOfParentMainBubbleRelativeToMainBubble.width;
-        _startingPoint.y += _pointOfParentMainBubbleRelativeToMainBubble.height;
-        [self drawLineFromPoint:_startingPoint toPoint:oldMainAnchor withContext:context];
+    if (![Styles point:_relativityFromMainBubble isEqualToPoint:CGPointZero]) {
+        CGPoint newPoint = _startingPoint;
+        newPoint.x += _relativityFromMainBubble.x;
+        newPoint.y += _relativityFromMainBubble.y;
+        [self drawLineFromPoint:_startingPoint toPoint:newPoint withContext:context];
     }
     
     CGContextStrokePath(context);

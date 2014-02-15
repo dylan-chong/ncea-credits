@@ -21,7 +21,10 @@
 
 @property (nonatomic) NSArray *childBubbles;
 @property (nonatomic, strong) BubbleContainer *mainBubble;
+@property (weak, nonatomic) BubbleContainer *parentBubble;
 @property AnchorView *anchors;
+- (void)createAnchors;
+- (void)createAnchorsWithRelativityToParent:(CGSize)rel;
 @property BOOL disableAnchorReDraw;
 @property BOOL hasStartedGrowingAnimation, isDoingAnimation;
 @property (nonatomic) AnimationManager *animationManager;

@@ -48,10 +48,12 @@
     if (self) {
         _rectToMoveTo = f;
         _calulatePosition = frame;
-        
+        _imageName = iconName;
         _bubbleType = TitleBubble;
         _colour = colour;
+        
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:f] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
+        if (hasDelegate) _bubble.delegate = self;
         [self addSubview:_bubble];
         [_bubble startWiggle];
         if (![Styles rect:startingFrame isEqualToRect:CGRectZero]) {
@@ -78,10 +80,11 @@
     if (self) {
         _rectToMoveTo = f;
         _calulatePosition = frame;
-        
         _bubbleType = SubtitleBubble;
         _colour = colour;
+        
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:self.frame] colour:colour title:title andDelegate:hasDelegate];
+        if (hasDelegate) _bubble.delegate = self;
         [self addSubview:_bubble];
         [_bubble startWiggle];
         

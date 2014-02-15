@@ -20,7 +20,7 @@ typedef enum {
 } BubbleType;
 
 @protocol BubbleContainerDelegate <BubbleDelegate>
-
+//subclasses BubbleDelegate so redrawAnchor method already exists
 @end
 
 typedef CGRect (^PositionCalculationBlock) (void);
@@ -34,6 +34,7 @@ typedef CGRect (^PositionCalculationBlock) (void);
 @property CGRect rectToMoveTo;
 @property AnimationManager *animationManager;
 @property UIColor *colour;
+@property NSString *imageName;
 @property (nonatomic, copy) PositionCalculationBlock calulatePosition;
 
 - (id)initMainBubbleWithFrameCalculator:(PositionCalculationBlock)b;

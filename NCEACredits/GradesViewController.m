@@ -20,6 +20,7 @@
     if (self) {
         [self setMainBubbleSimilarToBubble:mainBubble];
         [self createBubbleContainers];
+        [self createAnchors];
     }
     return self;
 }
@@ -27,11 +28,15 @@
 - (void)createBubbleContainers {
     NSArray *subjectTitles = [[ApplicationDelegate getCurrentProfile] getSubjects];
     self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithTitles:subjectTitles buttonClickSelector:NSStringFromSelector(@selector(subjectTitleWasPressed:)) target:self andMainBubble:self.mainBubble];
+    
+    for (BubbleContainer *b in self.childBubbles) {
+        [self.view addSubview:b];
+    }
 }
 
 - (void)subjectTitleWasPressed:(BubbleContainer *)sender {
     BubbleViewController *b;
-
+    
 }
 
 @end

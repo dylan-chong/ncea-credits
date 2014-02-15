@@ -50,9 +50,10 @@
         CGFloat w = frame.size.width;
         CGFloat h = frame.size.height;
         
-        _title = [[UILabel alloc] initWithFrame:CGRectMake(0, round(h*0.4), w, round(h*0.2))];
+        _title = [[UILabel alloc] initWithFrame:CGRectMake(round(w*0.1), round(h*0.4), round(w*0.8), round(h*0.2))];
         _title.text = title;
         _title.font = [Styles heading2Font];
+        _title.adjustsFontSizeToFitWidth = YES;
         _title.textColor = [Styles mainTextColour];
         _title.textAlignment = NSTextAlignmentCenter;
         

@@ -14,9 +14,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
-    }
     return self;
 }
 
@@ -27,6 +24,7 @@
 }
 
 - (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container {
+    _parentBubble = container;
     Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:container.center]];
     CGSize s = container.frame.size;
     
@@ -38,30 +36,33 @@
     };
     
     if (container.bubbleType == TitleBubble) {
-        _mainBubble = [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:p colour:container.colour iconName:nil title:container.bubble.title.text frameBubbleForStartingPosition:p() andDelegate:YES];
+        _mainBubble = [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:p colour:container.colour iconName:container.imageName title:container.bubble.title.text frameBubbleForStartingPosition:CGRectZero andDelegate:YES];
         _mainBubble.delegate = self;
     } else if (container.bubbleType == SubtitleBubble) {
-        _mainBubble = [[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:p colour:container.colour title:container.bubble.title.text frameBubbleForStartingPosition:p() andDelegate:YES];
+        _mainBubble = [[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:p colour:container.colour title:container.bubble.title.text frameBubbleForStartingPosition:CGRectZero andDelegate:YES];
         _mainBubble.delegate = self;
     }
     
     [self.view addSubview:_mainBubble];
-
 }
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a {
     _mainBubble = m;
     _childBubbles = a;
-    ((BubbleContainer *)_childBubbles[0]).delegate = self;
     
+    [self createAnchors];
+    [self.view bringSubviewToFront:_mainBubble];
+}
+
+- (void)createAnchors {
     _anchors = [[AnchorView alloc] initWithStartingPoint:[self.view convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
     [self.view addSubview:_anchors];
     [self.view sendSubviewToBack:_anchors];
-    [self.view bringSubviewToFront:_mainBubble];
 }
 
 - (void)redrawAnchors {
     if (_disableAnchorReDraw != YES) {
+#warning fix this being called when not front vc
         [_anchors setStartingPoint:[self.view convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
         [_anchors setNeedsDisplay];
     }
@@ -113,6 +114,17 @@
     
 }
 
+- (void)hasTransitionedFromParentViewController {
+    [self startChildBubbleCreationAnimation];
+    
+    if (_parentBubble) {
+        self.mainBubble.bubble.frame = _parentBubble.bubble.frame;
+    }
+    
+    [self.view bringSubviewToFront:_mainBubble];
+    [self.view sendSubviewToBack:_anchors];
+}
+
 - (void)useDistanceFromBase:(double)value tag:(AnimationObjectTag)tag {
     if (tag == ScaleWidth || tag == ScaleHeight) { //Growing
         for (BubbleContainer *b in _childBubbles) {
@@ -130,6 +142,11 @@
     } else if (tag == 3) {
         //transition
         [self presentViewController:_childBubbleViewController animated:NO completion:nil];
+        _childBubbleViewController.anchors.relativityFromMainBubble =
+        CGPointMake(_mainBubble.center.x - _childBubbleViewController.parentBubble.center.x,
+                    _mainBubble.center.y - _childBubbleViewController.parentBubble.center.y);
+        
+        [_childBubbleViewController hasTransitionedFromParentViewController];
     } else if (tag == 4) {
         //transition reverse
         [self enableChildButtons];
@@ -167,6 +184,9 @@
     [_animationManager startAnimation];
 }
 
+- (void)returnToPreviousViewController {
+#warning return to vc
+}
 
 - (void)reverseTransitionToPreviousBubbleContainerPosition {
     [self animateRepositionObjects];
@@ -212,6 +232,8 @@
         b.bubble.disableWiggleForTransition = NO;
     }
 }
+
+//******************************************* View Controller Stuff *******************************************
 
 - (void)didReceiveMemoryWarning
 {
