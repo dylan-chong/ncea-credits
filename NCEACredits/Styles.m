@@ -52,7 +52,7 @@
 
 + (float)startingScaleFactor {  return 0.1;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; }
-+ (float)animationSpeed {    return 1.2; }
++ (float)animationSpeed {    return 0.75; }
 
 + (BOOL)rect:(CGRect)r1 isEqualToRect:(CGRect)r2 {
     if (r1.origin.x == r2.origin.x &&

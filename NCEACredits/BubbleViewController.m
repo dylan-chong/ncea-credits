@@ -43,6 +43,8 @@
         _mainBubble.delegate = self;
     }
     
+    [_mainBubble addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startReturnScaleAnimation)]];
+    
     [self.view addSubview:_mainBubble];
 }
 
@@ -55,7 +57,7 @@
 }
 
 - (void)createAnchors {
-    _anchors = [[AnchorView alloc] initWithStartingPoint:[self.view convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
+    _anchors = [[AnchorView alloc] initWithStartingPoint:[self.view convertPoint:[_mainBubble.bubble getAnchorPoint] fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
     [self.view addSubview:_anchors];
     [self.view sendSubviewToBack:_anchors];
 }
@@ -63,7 +65,7 @@
 - (void)redrawAnchors {
     if (_disableAnchorReDraw != YES) {
 #warning fix this being called when not front vc
-        [_anchors setStartingPoint:[self.view convertPoint:_mainBubble.bubble.center fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
+        [_anchors setStartingPoint:[self.view convertPoint:[_mainBubble.bubble getAnchorPoint] fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
         [_anchors setNeedsDisplay];
     }
 }
@@ -71,7 +73,7 @@
 - (NSArray *)getAnchorPointsFromChildBubbles {
     NSMutableArray *points = [[NSMutableArray alloc] init];
     for (BubbleContainer *b in _childBubbles) {
-        [points addObject:[NSValue valueWithCGPoint:[self.view convertPoint:b.bubble.center fromView:b]]];
+        [points addObject:[NSValue valueWithCGPoint:[self.view convertPoint:[b.bubble getAnchorPoint] fromView:b]]];
     }
     
     return points;
@@ -81,15 +83,7 @@
     _anchors.frame = CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight]);
     [self redrawAnchors];
     
-    if (_isDoingAnimation) {
-        NSMutableArray *m = [[NSMutableArray alloc] init];
-        CGRect r = _mainBubble.calulatePosition();
-        [m addObject:[[AnimationObject alloc] initWithStartingPoint:_mainBubble.frame.origin.x endingPoint:r.origin.x tag:X andDelegate:_mainBubble]];
-        [m addObject:[[AnimationObject alloc] initWithStartingPoint:_mainBubble.frame.origin.y endingPoint:r.origin.y tag:Y andDelegate:_mainBubble]];
-        
-    } else {
-        [self animateRepositionObjects];
-    }
+    [self animateRepositionObjects];
 }
 
 //************************************** Starting Animation **************************************
@@ -112,17 +106,6 @@
                                                                        tag:2 andDelegate:self];
     [_animationManager startAnimation];
     
-}
-
-- (void)hasTransitionedFromParentViewController {
-    [self startChildBubbleCreationAnimation];
-    
-    if (_parentBubble) {
-        self.mainBubble.bubble.frame = _parentBubble.bubble.frame;
-    }
-    
-    [self.view bringSubviewToFront:_mainBubble];
-    [self.view sendSubviewToBack:_anchors];
 }
 
 - (void)useDistanceFromBase:(double)value tag:(AnimationObjectTag)tag {
@@ -151,6 +134,15 @@
         //transition reverse
         [self enableChildButtons];
         _isDoingAnimation = NO;
+    } else if (tag == 5) {
+        //return scale
+        [self startReturnSlideAnimation];
+    } else if (tag == 6) {
+        //return slide
+        [self dismissViewControllerAnimated:NO completion:^{
+            _parentBubble.bubble.frame = _mainBubble.bubble.frame;
+            [self.delegate hasReturnedFromChildViewController];
+        }];
     }
 }
 
@@ -184,12 +176,46 @@
     [_animationManager startAnimation];
 }
 
-- (void)returnToPreviousViewController {
-#warning return to vc
+- (void)hasReturnedFromChildViewController {
+    self.childBubbleViewController = nil;
+    [self repositionBubbles];
 }
 
-- (void)reverseTransitionToPreviousBubbleContainerPosition {
-    [self animateRepositionObjects];
+- (void)startReturnScaleAnimation {
+    self.view.userInteractionEnabled = NO;
+    NSMutableArray *objects = [[NSMutableArray alloc] init];
+    
+    for (BubbleContainer *b in _childBubbles) {
+        [objects addObject:[[AnimationObject alloc] initWithStartingPoint:1.0 endingPoint:[Styles startingScaleFactor] tag:ScaleWidth andDelegate:b]];
+    }
+    
+    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:5 andDelegate:self];
+    [_animationManager startAnimation];
+}
+
+- (void)startReturnSlideAnimation {
+    NSMutableArray *objects = [[NSMutableArray alloc] init];
+    
+    CGRect pos = [Styles getRectCentreOfFrame:_mainBubble.frame withSize:((BubbleContainer *)_childBubbles[0]).frame.size];
+    
+    for (BubbleContainer *b in _childBubbles) {
+        [objects addObject:[[AnimationObject alloc] initWithStartingPoint:b.frame.origin.x endingPoint:pos.origin.x tag:X andDelegate:b]];
+        [objects addObject:[[AnimationObject alloc] initWithStartingPoint:b.frame.origin.y endingPoint:pos.origin.y tag:Y andDelegate:b]];
+    }
+    
+    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:6 andDelegate:self];
+    [_animationManager startAnimation];
+}
+
+- (void)hasTransitionedFromParentViewController {
+    [self startChildBubbleCreationAnimation];
+    
+    if (_parentBubble) {
+        self.mainBubble.bubble.frame = _parentBubble.bubble.frame;
+    }
+    
+    [self.view bringSubviewToFront:_mainBubble];
+    [self.view sendSubviewToBack:_anchors];
 }
 
 - (void)animateRepositionObjects {

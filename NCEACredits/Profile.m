@@ -23,7 +23,7 @@
 //************************************************************************************
 
 - (NSArray *)getSubjects {
-    return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"P.E.", nil];
+    return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"Spanish", nil];
 }
 
 @end

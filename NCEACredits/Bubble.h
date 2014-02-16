@@ -35,4 +35,6 @@
 @property BOOL wiggles, disableWiggleForTransition, clockwise, callsDelegateAfterWiggle;
 @property NSTimer *wiggleTimer;
 
+- (CGPoint)getAnchorPoint;
+
 @end

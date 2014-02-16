@@ -10,9 +10,9 @@
 #import "BubbleContainer.h"
 #import "AnchorView.h"
 
-@protocol BubbleViewControllerTransitionDelegate <NSObject>
+@protocol BubbleViewControllerTransitionDelegate
 //child view controllers will implement the delegate to communicate with the parent
-- (void)reverseTransitionToPreviousBubbleContainerPosition;
+- (void)hasReturnedFromChildViewController;
 @end
 
 @interface BubbleViewController : UIViewController <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerTransitionDelegate>
@@ -24,7 +24,6 @@
 @property (weak, nonatomic) BubbleContainer *parentBubble;
 @property AnchorView *anchors;
 - (void)createAnchors;
-- (void)createAnchorsWithRelativityToParent:(CGSize)rel;
 @property BOOL disableAnchorReDraw;
 @property BOOL hasStartedGrowingAnimation, isDoingAnimation;
 @property (nonatomic) AnimationManager *animationManager;

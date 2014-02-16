@@ -77,6 +77,10 @@
     CGContextFillPath(c);
 }
 
+- (CGPoint)getAnchorPoint {
+    return self.center;
+}
+
 //********************************** Wiggle ************************************
 
 - (void)startWiggle {

@@ -49,6 +49,8 @@
         [self addSubview:_achievedCredits];
         
         [self addSubview:_goal];
+        
+        [self updateStats];
     }
     return self;
 }

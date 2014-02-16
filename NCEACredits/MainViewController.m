@@ -95,6 +95,7 @@
 
 - (void)gradesContainerPressed {
     BubbleViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer];
+    b.delegate = self;
     [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
 }
 
