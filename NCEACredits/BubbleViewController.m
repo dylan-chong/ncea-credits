@@ -94,6 +94,8 @@
         a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForSlidingAnimation]];
     }
     
+    [self.view bringSubviewToFront:_mainBubble];
+    
     _animationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:1 andDelegate:self];
     [_animationManager startAnimation];
 }

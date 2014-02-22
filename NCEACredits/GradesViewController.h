@@ -11,6 +11,4 @@
 
 @interface GradesViewController : SimpleSelectionViewController <SimpleSelectionDelegate>
 
-- (id)initWithMainBubble:(BubbleContainer *)mainBubble;
-
 @end

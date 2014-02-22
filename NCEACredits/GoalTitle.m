@@ -32,7 +32,7 @@
         
         _toGoLabel = [[UILabel alloc] initWithFrame:CGRectMake(round(w*toGoCreditsLabelWidth) + space, 0, round(w*(1.0-toGoCreditsLabelWidth)) - space, round(h*(2.0/3)))];
         _toGoLabel.textAlignment = NSTextAlignmentLeft;
-        _toGoLabel.font = [Styles bodyFont];
+        _toGoLabel.font = [Styles body2Font];
         _toGoLabel.textColor = [Styles mainTextColour];
         _toGoLabel.text = @"to go";
         

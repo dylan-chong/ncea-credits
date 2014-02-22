@@ -14,7 +14,8 @@ typedef enum {
     Width = 2,
     Height = 3,
     ScaleWidth = 4,
-    ScaleHeight = 5
+    ScaleHeight = 5,
+    Alpha = 6
 } AnimationObjectTag;
 
 @protocol AnimationObjectDelegate <NSObject>

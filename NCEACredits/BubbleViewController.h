@@ -30,6 +30,8 @@
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a;
 - (void)startChildBubbleCreationAnimation;
+- (void)startReturnScaleAnimation;
+- (void)startReturnSlideAnimation;
 
 - (void)repositionBubbles;
 

@@ -34,7 +34,7 @@
                                                              self.frame.size.width/2 - halfOfSpaceBetweenLabels,
                                                              self.frame.size.height - distanceFromTop)];
         _credits.text = @"";
-        _credits.font = [Styles bodyFont];
+        _credits.font = [Styles body2Font];
         _credits.textColor = [Styles mainTextColour];
         _credits.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_credits];

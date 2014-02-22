@@ -41,6 +41,7 @@ typedef enum {
 + (CGFloat)degreesToRadians:(CGFloat)d;
 + (CGFloat)radiansToDegrees:(CGFloat)r;
 + (BOOL)deviceIsInLandscape;
++ (double)frameRate;
 
 @end
 
@@ -49,8 +50,9 @@ typedef enum {
 
 + (UIFont *)heading1Font;
 + (UIFont *)heading2Font;
-+ (UIFont *)heading3Font;
 + (UIFont *)bodyFont;
++ (UIFont *)heading3Font;
++ (UIFont *)body2Font;
 + (UIFont *)captionFont;
 
 @end
@@ -66,6 +68,7 @@ typedef enum {
 + (UIColor *)blueColour;
 + (UIColor *)redColour;
 + (UIColor *)greyColour;
++ (UIColor *)darkGreyColour;
 
 @end
 
@@ -84,5 +87,6 @@ typedef enum {
 + (CGPoint)getExactOriginForCorner:(Corner)c andSize:(CGSize)size;
 + (Corner)getCornerForPoint:(CGPoint)point;
 + (CGRect)getRectCentreOfFrame:(CGRect)rect withSize:(CGSize)size;
++ (CGSize)editTextBubbleSize;
 
 @end

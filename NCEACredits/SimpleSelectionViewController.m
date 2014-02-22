@@ -14,10 +14,20 @@
 
 @implementation SimpleSelectionViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithMainBubble:(BubbleContainer *)mainBubble andStaggered:(BOOL)staggered {
+    self = [super initWithNibName:nil bundle:nil];
+    
+    if (self) {
+        self.staggered = staggered;
+        [self setMainBubbleSimilarToBubble:mainBubble];
+        [self createBubbleContainers];
+        [self createAnchors];
+    }
     return self;
+}
+
+- (void)createBubbleContainers {
+    
 }
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a {
@@ -25,10 +35,10 @@
     self.childBubbles = a;
 }
 
-+ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner {
++ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andStaggered:(BOOL)staggered {
     double angleFromOrigin = 90.0 * ((index + 1.0) / (bubbles + 1.0));
     double r = [SimpleSelectionViewController getRadius];
-    if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0)) r *= 0.75;
+    if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0) && staggered) r *= 0.77;
     
     double sinAns, cosAns;
     if ([Styles deviceIsInLandscape]) {
@@ -66,7 +76,7 @@
     return CGRectMake(origin.x + x - (size.width / 2), origin.y + y - (size.height / 2), size.width, size.height);
 }
 
-+ (NSArray *)getArrayOfBubblesWithTitles:(NSArray *)titles buttonClickSelector:(NSString *)sel target:(SimpleSelectionViewController *)target andMainBubble:(BubbleContainer *)mainB {
++ (NSArray *)getArrayOfBubblesWithTitles:(NSArray *)titles buttonClickSelector:(NSString *)sel target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered andMainBubble:(BubbleContainer *)mainB {
     UIColor *c = mainB.colour;
     Corner corner = [Styles getCornerForPoint:mainB.frame.origin];
     
@@ -75,7 +85,7 @@
     CGSize size = mainB.frame.size;
     for (int a = 0; a < titles.count; a++) {
         PositionCalculationBlock x = ^{
-            return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner];
+            return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner andStaggered:staggered];
         };
         
         [blocks addObject:x];

@@ -194,4 +194,8 @@
     return r;
 }
 
++ (CGSize)editTextBubbleSize {
+    return CGSizeMake(450 * [Styles sizeModifier] * 2, 50 * [Styles sizeModifier] * 2);
+}
+
 @end

@@ -14,20 +14,9 @@
 
 @implementation GradesViewController
 
-- (id)initWithMainBubble:(BubbleContainer *)mainBubble {
-    self = [super initWithNibName:nil bundle:nil];
-
-    if (self) {
-        [self setMainBubbleSimilarToBubble:mainBubble];
-        [self createBubbleContainers];
-        [self createAnchors];
-    }
-    return self;
-}
-
 - (void)createBubbleContainers {
     NSArray *subjectTitles = [[ApplicationDelegate getCurrentProfile] getSubjects];
-    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithTitles:subjectTitles buttonClickSelector:NSStringFromSelector(@selector(subjectTitleWasPressed:)) target:self andMainBubble:self.mainBubble];
+    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithTitles:subjectTitles buttonClickSelector:NSStringFromSelector(@selector(subjectTitleWasPressed:)) target:self staggered:self.staggered andMainBubble:self.mainBubble];
     
     for (BubbleContainer *b in self.childBubbles) {
         [self.view addSubview:b];

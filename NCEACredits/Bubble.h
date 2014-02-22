@@ -30,7 +30,7 @@
 - (void)wiggle;
 - (void)stopWiggle;
 - (float)secondsForPixelsToMoveBetweenPoint:(CGPoint)pointA andPoint:(CGPoint)pointB;
-@property float wiggleSpeedFPS, wiggleSpeedPixelsPerFrame, wiggleTurnSpeed;
+@property float wiggleSpeedPixelsPerFrame, wiggleTurnSpeed;
 @property float direction;
 @property BOOL wiggles, disableWiggleForTransition, clockwise, callsDelegateAfterWiggle;
 @property NSTimer *wiggleTimer;

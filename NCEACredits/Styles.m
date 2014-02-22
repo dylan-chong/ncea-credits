@@ -50,9 +50,13 @@
     return UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
 }
 
-+ (float)startingScaleFactor {  return 0.1;    }
++ (float)startingScaleFactor {  return 0.01;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; }
-+ (float)animationSpeed {    return 0.75; }
++ (float)animationSpeed {    return 0.6; }
+
++ (double)frameRate {
+    return 30.0;
+}
 
 + (BOOL)rect:(CGRect)r1 isEqualToRect:(CGRect)r2 {
     if (r1.origin.x == r2.origin.x &&

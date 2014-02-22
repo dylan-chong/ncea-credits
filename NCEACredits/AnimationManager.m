@@ -8,6 +8,7 @@
 
 #import "AnimationManager.h"
 #import "AnimationObject.h"
+#import "Styles.h"
 
 @implementation AnimationManager
 
@@ -28,7 +29,7 @@
 
 - (void)setUpDistanceArray {
     NSMutableArray *m = [[NSMutableArray alloc] init];
-    for (int a = 1; a <= _animationTime * 30 + 1; a++) {
+    for (int a = 1; a <= _animationTime * [Styles frameRate] + 1; a++) {
         [m addObject:
          [NSNumber numberWithDouble:
           [self getAnimationDistanceForStage:a]]];
@@ -41,7 +42,7 @@
     if (stage < _animationTime * 15) {
         return (2.0/9)*pow(stage, 2)*pow(1.0/_animationTime, 2);
     } else {
-        return (-2.0/9)*pow(stage-(30*_animationTime), 2)*pow(1.0/_animationTime, 2)+100;
+        return (-2.0/9)*pow(stage-([Styles frameRate]*_animationTime), 2)*pow(1.0/_animationTime, 2)+100;
     }
 }
 
@@ -51,12 +52,12 @@
 
 - (void)startAnimation {
     _animationStage = 0;
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0/30 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0/[Styles frameRate] target:self selector:@selector(tick) userInfo:nil repeats:YES];
 }
 
 - (void)tick {
     _animationStage++;
-    if (_animationStage <= _animationTime * 30) {
+    if (_animationStage <= _animationTime * [Styles frameRate]) {
         double d = [self getAnimationDistanceFromArray];
         
         for (AnimationObject *a in _animationObjects) {

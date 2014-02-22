@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "AddViewController.h"
 #import "GradesViewController.h"
 
 @implementation MainViewController
@@ -89,12 +90,13 @@
 //******************************************************* Container Press Events **************************************************************
 
 - (void)addContainerPressed {
-    BubbleViewController *b;
+    BubbleViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer];
+    b.delegate = self;
     [self startTransitionToChildBubble:_addContainer andBubbleViewController:b];
 }
 
 - (void)gradesContainerPressed {
-    BubbleViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer];
+    BubbleViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer andStaggered:YES];
     b.delegate = self;
     [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
 }
