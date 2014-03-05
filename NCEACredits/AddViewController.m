@@ -84,6 +84,7 @@
              @"Quick Name",
              @"Subject",
              @"Credits",
+             @"Due Date",
              @"Expected Grade",
              @"Pre-Resub Grade",
              @"Practice Grade",
@@ -92,7 +93,7 @@
 }
 
 + (NSArray *)getAssessmentViewTexts {
-    return  @[@"", @"", @"", @"", @"", @"", @"", @"", @""];
+    return  @[@"", @"", @"", @"", @"", @"", @"", @"", @"", @""];
 }
 
 + (NSArray *)getAssessmentViewPlaceHolders {
@@ -100,6 +101,7 @@
              @"Mechanics",
              @"Science",
              @"4",
+             @"12/03/14",
              @"Achieved",
              @"Achieved",
              @"Achieved",
@@ -112,6 +114,7 @@
              tNSN(Text),
              tNSN(Text),
              tNSN(Number),
+             tNSN(Date),
              tNSN(Grade),
              tNSN(Grade),
              tNSN(Grade),

@@ -17,6 +17,10 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    _isCurrentViewController = YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -63,8 +67,7 @@
 }
 
 - (void)redrawAnchors {
-    if (_disableAnchorReDraw != YES) {
-#warning fix this being called when not front vc
+    if (_disableAnchorReDraw != YES && _isCurrentViewController) {
         [_anchors setStartingPoint:[self.view convertPoint:[_mainBubble.bubble getAnchorPoint] fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
         [_anchors setNeedsDisplay];
     }
@@ -132,6 +135,7 @@
                     _mainBubble.center.y - _childBubbleViewController.parentBubble.center.y);
         
         [_childBubbleViewController hasTransitionedFromParentViewController];
+        _isCurrentViewController = NO;
     } else if (tag == 4) {
         //transition reverse
         [self enableChildButtons];

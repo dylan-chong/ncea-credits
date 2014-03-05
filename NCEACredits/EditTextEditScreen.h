@@ -13,7 +13,9 @@ typedef enum {
     Text = 1,
     Grade = 2,
     Bool = 3,
-    Number = 4
+    Number = 4,
+    Date = 5,
+    TypeOfCredits = 6,
 } EditTextDataType;
 #define tNSN(x) [NSNumber numberWithInt:x]
 
@@ -33,6 +35,7 @@ typedef enum {
 @property UITextField *text;
 @property UIView *buttonContainer;
 @property NSArray *buttons;
+@property EditTextDataType type;
 @property (weak) EditTextBubbleContainer *viewToEdit;
 
 - (void)show;

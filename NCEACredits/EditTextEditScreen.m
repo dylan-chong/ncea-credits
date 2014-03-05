@@ -35,6 +35,7 @@
         _text.userInteractionEnabled = NO;
         [self addSubview:_text];
         
+        _type = toEdit.type;
         if (toEdit.type == Text) {
             [_text becomeFirstResponder];
             _text.userInteractionEnabled = YES;
@@ -44,16 +45,23 @@
             _text.keyboardType = UIKeyboardTypeNumberPad;
         } else {
             NSArray *titles;
-            if (toEdit.type == Grade) {
-                titles = @[@"Excellence", @"Merit", @"Achieved", @"Not Achieved", @"None"];
-            } else if (toEdit.type == Bool) {
-                titles = @[@"Yes", @"No"];
-            }
-            
             _buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
             [self addSubview:_buttonContainer];
             
-            _buttons = [EditTextEditScreen getArrayOfControlsWithTexts:titles andTarget:self];
+            
+            if (toEdit.type != Date) {
+                if (toEdit.type == Grade) {
+                    titles = @[@"Excellence", @"Merit", @"Achieved", @"Not Achieved", @"None"];
+                } else if (toEdit.type == Bool) {
+                    titles = @[@"Yes", @"No"];
+                }
+                
+                _buttons = [EditTextEditScreen getArrayOfControlsWithTexts:titles andTarget:self];
+            } else {
+                _buttons = [EditTextEditScreen getNumpadButtonsWithTarget:self];
+            }
+            
+            
             
             for (UIButton *b in _buttons) {
                 [_buttonContainer addSubview:b];
@@ -73,7 +81,9 @@
     self.frame = CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight]);
     float t = [Styles animationSpeed];
     if (!animated) t = 0;
+    
     [UIView animateWithDuration:t animations:^{
+        _buttonContainer.frame = [self getFrameOfButtonContainer];
         _title.frame = CGRectMake(0,
                                   self.frame.size.height * size / 2,
                                   self.frame.size.width * (middle - 0.005),
@@ -83,10 +93,13 @@
                                  self.frame.size.height * size / 2 + ([Styles sizeModifier] * 3),
                                  self.frame.size.width * (1 - middle - 0.005),
                                  self.frame.size.height * size);
-        if (_buttons) {
-            _buttonContainer.frame = [self getFrameOfButtonContainer];
+        if (_type == Grade || _type == Bool) {
             for (int x = 0; x < _buttons.count; x++) {
                 ((UIButton *)_buttons[x]).frame = [EditTextEditScreen getFrameOfButtonWithIndex:x outOf:_buttons.count withScreenSize:_buttonContainer.frame.size];
+            }
+        } else if (_type == Number || _type == Date) {
+            for (int a = 0; a < _buttons.count; a++) {
+                ((UIButton *)_buttons[a]).frame = [EditTextEditScreen getNumpadButtonFrameWithIndex:a andSize:_buttonContainer.frame.size];
             }
         }
     }];
@@ -135,6 +148,7 @@
         [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
         [b addTarget:target action:@selector(setTextFieldText:) forControlEvents:UIControlEventTouchUpInside];
+        [b setBackgroundColor:[Styles lightGreyColour]];
         [a addObject:b];
     }
     
@@ -149,6 +163,92 @@
     if ([sender.titleLabel.text isEqualToString:@"None"]) [_text setText:@""];
     else [_text setText:sender.titleLabel.text];
     [self hide];
+}
+
+- (void)deleteButtonPressed {
+    
+}
+
+- (void)doneButtonPressed {
+    
+}
+
+- (void)numpadButtonPressed:(UIButton *)sender {
+    if (_type == Date) {
+        
+    } else if (_type == Number) {
+        
+    }
+}
+
+/**************************************** Button Layouts *********************************************/
+
++ (NSArray *)getNumpadButtonsWithTarget:(EditTextEditScreen *)target {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSArray *texts0 = @[@"1", @"2", @"3"];
+    NSArray *texts1 = @[@"4", @"5", @"6"];
+    NSArray *texts2 = @[@"7", @"8", @"9"];
+    NSArray *texts3 = @[@"Done", @"0", @"←"];
+    
+    for (int a = 0; a < 4; a++) {
+        for (int b = 0; b < 3; b++) {
+            NSString *s;
+            switch (a) {
+                case 0:
+                    s = texts0[b];
+                    break;
+                    
+                case 1:
+                    s = texts1[b];
+                    break;
+                    
+                case 2:
+                    s = texts2[b];
+                    break;
+                    
+                case 3:
+                    s = texts3[b];
+                    break;
+            }
+            
+            UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
+            b.frame = CGRectZero;
+            [b setTitle:s forState:UIControlStateNormal];
+            [b.titleLabel setFont:[Styles bodyFont]];
+            [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
+            [b.titleLabel setTextAlignment:NSTextAlignmentCenter];
+            [b setBackgroundColor:[Styles lightGreyColour]];
+            
+            if ([s isEqualToString: @"Done"]) [b addTarget:target action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+            else if ([s isEqualToString:@"←"]) [b addTarget:target action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+            else [b addTarget:target action:@selector(numpadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [array addObject:b];
+        }
+    }
+    
+    return array;
+}
+
++ (CGRect)getNumpadButtonFrameWithIndex:(int)index andSize:(CGSize)size {
+    CGRect r;
+    
+    r.size.width = size.width / 3;
+    r.size.height = size.height / 4;
+    
+    //rows
+    if (index >= 0 && index <= 2) r.origin.y = 0;
+    else if (index >= 3 && index <= 5) r.origin.y = size.height * 0.25;
+    else if (index >= 6 && index <= 8) r.origin.y = size.height * 0.5;
+    else if (index >= 9 && index <= 11) r.origin.y = size.height * 0.75;
+    
+    //cols
+    if (index == 0 || index == 3 || index == 6 || index == 9) r.origin.x = 0;
+    else if (index == 1 || index == 4 || index == 7 || index == 10) r.origin.x = size.width / 3.0;
+    else if (index == 2 || index == 5 || index == 8 || index == 11) r.origin.x = size.width* (2.0 / 3);
+    
+    return r;
 }
 
 @end
