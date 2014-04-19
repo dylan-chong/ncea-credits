@@ -52,7 +52,7 @@
 
 + (float)startingScaleFactor {  return 0.01;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; }
-+ (float)animationSpeed {    return 0.6; }
++ (float)animationSpeed {    return 0.5; }
 
 + (double)frameRate {
     return 30.0;

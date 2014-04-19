@@ -139,8 +139,8 @@
 }
 
 + (CGRect)getBubbleFrameWithContainerFrame:(CGRect)frame {
-    return CGRectMake(round(frame.size.width / 8),
-                      round(frame.size.height / 8),
+    return CGRectMake(round(frame.size.width / 8.0),
+                      round(frame.size.height / 8.0),
                       round(frame.size.width * (3.0/4)),
                       round(frame.size.height * (3.0/4)));
 }

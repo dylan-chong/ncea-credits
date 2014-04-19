@@ -53,6 +53,7 @@ typedef enum {
 + (UIFont *)bodyFont;
 + (UIFont *)heading3Font;
 + (UIFont *)body2Font;
++ (UIFont *)bigTextFont;
 + (UIFont *)captionFont;
 
 @end

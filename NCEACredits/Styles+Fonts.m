@@ -16,5 +16,6 @@
 + (UIFont *)heading3Font{   return [UIFont fontWithName:@"Comfortaa-Bold" size:18.0 * [Styles sizeModifier]];   }
 + (UIFont *)body2Font{   return [UIFont fontWithName:@"Comfortaa" size:18.0 * [Styles sizeModifier]];   }
 + (UIFont *)captionFont{   return [UIFont fontWithName:@"Comfortaa-Bold" size:16.0 * [Styles sizeModifier]];    }
++ (UIFont *)bigTextFont{   return [UIFont fontWithName:@"Comfortaa" size:36.0 * [Styles sizeModifier]];   }
 
 @end

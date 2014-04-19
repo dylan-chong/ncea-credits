@@ -39,17 +39,13 @@
         if (toEdit.type == Text) {
             [_text becomeFirstResponder];
             _text.userInteractionEnabled = YES;
-        } else if (toEdit.type == Number) {
-            [_text becomeFirstResponder];
-            _text.userInteractionEnabled = YES;
-            _text.keyboardType = UIKeyboardTypeNumberPad;
         } else {
             NSArray *titles;
             _buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
             [self addSubview:_buttonContainer];
             
             
-            if (toEdit.type != Date) {
+            if (toEdit.type != Date && toEdit.type != Number) {
                 if (toEdit.type == Grade) {
                     titles = @[@"Excellence", @"Merit", @"Achieved", @"Not Achieved", @"None"];
                 } else if (toEdit.type == Bool) {
@@ -214,7 +210,7 @@
             UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
             b.frame = CGRectZero;
             [b setTitle:s forState:UIControlStateNormal];
-            [b.titleLabel setFont:[Styles bodyFont]];
+            [b.titleLabel setFont:[Styles bigTextFont]];
             [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
             [b.titleLabel setTextAlignment:NSTextAlignmentCenter];

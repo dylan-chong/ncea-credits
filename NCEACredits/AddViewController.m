@@ -57,6 +57,9 @@
     
     if (count == 3) {
         [super startReturnScaleAnimation];
+#warning save stuff
+    } else if (count == 0) {
+        [super startReturnScaleAnimation];
     } else {
         NSString *message = @"You must enter details for the AS Number, Name, and Subject.";
         UIAlertView *a = [[UIAlertView alloc] initWithTitle:@"NCEA Credits" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Don't Save", nil];

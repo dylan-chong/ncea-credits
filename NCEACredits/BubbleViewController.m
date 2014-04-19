@@ -48,7 +48,6 @@
     }
     
     [_mainBubble addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startReturnScaleAnimation)]];
-    
     [self.view addSubview:_mainBubble];
 }
 
