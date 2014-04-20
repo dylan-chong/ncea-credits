@@ -144,7 +144,6 @@
         [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
         [b addTarget:target action:@selector(setTextFieldText:) forControlEvents:UIControlEventTouchUpInside];
-        [b setBackgroundColor:[Styles lightGreyColour]];
         [a addObject:b];
     }
     
@@ -162,22 +161,33 @@
 }
 
 - (void)deleteButtonPressed {
-    
+    if (_text.text.length > 0)
+        _text.text = [_text.text substringToIndex:_text.text.length - 1];
 }
 
 - (void)doneButtonPressed {
-    
+    [self hide];
 }
 
 - (void)numpadButtonPressed:(UIButton *)sender {
     if (_type == Date) {
-        
+#warning TODO: date numpad
     } else if (_type == Number) {
-        
+        _text.text = [_text.text stringByAppendingString:sender.titleLabel.text];
     }
 }
 
-/**************************************** Button Layouts *********************************************/
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Button Layouts    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 + (NSArray *)getNumpadButtonsWithTarget:(EditTextEditScreen *)target {
     NSMutableArray *array = [[NSMutableArray alloc] init];
@@ -214,7 +224,6 @@
             [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
             [b.titleLabel setTextAlignment:NSTextAlignmentCenter];
-            [b setBackgroundColor:[Styles lightGreyColour]];
             
             if ([s isEqualToString: @"Done"]) [b addTarget:target action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
             else if ([s isEqualToString:@"←"]) [b addTarget:target action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -230,7 +239,8 @@
 + (CGRect)getNumpadButtonFrameWithIndex:(int)index andSize:(CGSize)size {
     CGRect r;
     
-    r.size.width = size.width / 3;
+    float cols = 5;
+    r.size.width = size.width / cols;
     r.size.height = size.height / 4;
     
     //rows
@@ -240,9 +250,9 @@
     else if (index >= 9 && index <= 11) r.origin.y = size.height * 0.75;
     
     //cols
-    if (index == 0 || index == 3 || index == 6 || index == 9) r.origin.x = 0;
-    else if (index == 1 || index == 4 || index == 7 || index == 10) r.origin.x = size.width / 3.0;
-    else if (index == 2 || index == 5 || index == 8 || index == 11) r.origin.x = size.width* (2.0 / 3);
+    if (index == 0 || index == 3 || index == 6 || index == 9) r.origin.x = size.width * (floor(cols / 2) - 1) / cols;
+    else if (index == 1 || index == 4 || index == 7 || index == 10) r.origin.x = size.width * floor(cols / 2) / cols;
+    else if (index == 2 || index == 5 || index == 8 || index == 11) r.origin.x = size.width * (floor(cols / 2) + 1) / cols;
     
     return r;
 }

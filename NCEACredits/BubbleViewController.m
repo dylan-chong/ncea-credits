@@ -21,10 +21,8 @@
     _isCurrentViewController = YES;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container {
@@ -88,7 +86,17 @@
     [self animateRepositionObjects];
 }
 
-//************************************** Starting Animation **************************************
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Starting Animation    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (void)startChildBubbleCreationAnimation {
     NSArray *a = [[NSArray alloc] init];
@@ -163,7 +171,17 @@
     }
 }
 
-//************************************** Transition ****************************************
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Transition    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (void)startTransitionToChildBubble:(BubbleContainer *)b andBubbleViewController:(BubbleViewController *)bubbleViewController {
     _childBubbleViewController = bubbleViewController;
@@ -264,7 +282,17 @@
     }
 }
 
-//******************************************* View Controller Stuff *******************************************
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    View Controller Stuff    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (void)didReceiveMemoryWarning
 {

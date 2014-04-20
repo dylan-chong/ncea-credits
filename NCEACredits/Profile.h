@@ -10,6 +10,7 @@
 
 @interface Profile : NSObject
 
+- (id)initBlankProfile;
 - (NSArray *)getSubjects;
 
 @end

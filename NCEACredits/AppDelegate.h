@@ -17,5 +17,6 @@
 @property (nonatomic) Profile *currentProfile;
 
 - (Profile *)getCurrentProfile;
+- (void)saveCurrentProfile;
 
 @end

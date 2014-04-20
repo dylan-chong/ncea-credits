@@ -7,8 +7,6 @@
 //
 
 #import "AnimationManager.h"
-#import "AnimationObject.h"
-#import "Styles.h"
 
 @implementation AnimationManager
 
@@ -57,7 +55,7 @@
 
 - (void)tick {
     _animationStage++;
-    if (_animationStage <= _animationTime * [Styles frameRate]) {
+    if (_animationStage < _animationTime * [Styles frameRate]) {
         double d = [self getAnimationDistanceFromArray];
         
         for (AnimationObject *a in _animationObjects) {

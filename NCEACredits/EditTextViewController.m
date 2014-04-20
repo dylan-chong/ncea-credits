@@ -7,7 +7,6 @@
 //
 
 #import "EditTextViewController.h"
-#import "EditTextBubbleContainer.h"
 #import "AddViewController.h"
 #import "EditTextBubble.h"
 
@@ -45,7 +44,13 @@
     CGPoint startP = [EditTextViewController getCorner:corner withSize:size];
     CGPoint endP = [EditTextViewController getCorner:[Styles getOppositeCornerToCorner:corner] withSize:size];
     double xDif = startP.x - endP.x;
+    //Scrolling
     double yDif = endP.y - startP.y;
+    if (bubbles < EditTextScrollingNumberOfBubbles) {
+        double yDif = EditTextScrollingNumberOfBubbles *
+        ([Styles editTextBubbleSize].height +  EditTextScrollingSpaceBetweenBubbles);
+    }
+    
     if (xDif < 0) xDif *= -1;
     if (yDif < 0) yDif *= -1;
     
@@ -107,10 +112,41 @@
     [_editScreen removeFromSuperview];
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Scroller Stuff    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (!_scroller) {
+        _scroller = [[PanScroller alloc] initWithMax:[Styles screenHeight] * 2 currentValue:0 container:self.view andDelegate:self];
+        [_scroller show];
+    }
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     [_editScreen resetFrameWithAnimation:YES];
+    [_scroller resetArrowPositionsAndSetNewMax:[Styles screenHeight]];
+}
+
+- (void)startReturnSlideAnimation {
+    [_scroller hide];
+    [super startReturnSlideAnimation];
+}
+
+- (void)currentValueChanged:(double)value {
+    NSLog(@"%f", value);
 }
 
 @end

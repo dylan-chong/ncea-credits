@@ -87,7 +87,17 @@
     [_optionsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(optionsContainerPressed)]];
 }
 
-//******************************************************* Container Press Events **************************************************************
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Container Press Events    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (void)addContainerPressed {
     BubbleViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer];

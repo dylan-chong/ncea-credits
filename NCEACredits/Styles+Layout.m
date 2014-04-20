@@ -33,25 +33,20 @@
     
     switch (c) {
         case TopLeft:
-            
             availableOrigins = CGRectMake([Styles spaceFromEdgeOfScreen],
                                           [Styles spaceFromEdgeOfScreen],
                                           0,
                                           0);
-            
             break;
             
         case TopRight:
-            
             availableOrigins = CGRectMake([Styles middleXTitleBubblePosition],
                                           [Styles spaceFromEdgeOfScreen],
                                           0,
                                           0);
-            
             break;
             
         case BottomLeft:
-            
             availableOrigins = CGRectMake([Styles spaceFromEdgeOfScreen],
                                           [Styles middleYTitleBubblePosition],
                                           0,
@@ -59,13 +54,10 @@
             break;
             
         case BottomRight:
-            
             availableOrigins = CGRectMake([Styles middleXTitleBubblePosition],
                                           [Styles middleYTitleBubblePosition],
                                           0,
                                           0);
-            
-            
         default:
             break;
     }

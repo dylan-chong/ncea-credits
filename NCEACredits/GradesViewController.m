@@ -24,8 +24,11 @@
 }
 
 - (void)subjectTitleWasPressed:(BubbleContainer *)sender {
-    BubbleViewController *b;
-    
+//    BubbleViewController *b;
+ #warning TODO: subject bubble press
 }
+
+
+
 
 @end

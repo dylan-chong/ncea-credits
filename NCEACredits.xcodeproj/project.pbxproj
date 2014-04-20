@@ -46,6 +46,8 @@
 		84B64E4618B45B770061ED9D /* EditTextBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B64E4518B45B770061ED9D /* EditTextBubble.m */; };
 		84B64E4818B46CD10061ED9D /* Comfortaa-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84B64E4718B46CD10061ED9D /* Comfortaa-Regular.ttf */; };
 		84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */; };
+		84FCB2E219025BA400BBE4B0 /* PanScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCB2E119025BA400BBE4B0 /* PanScroller.m */; };
+		84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCB2E419026D5700BBE4B0 /* ScrollArrowView.m */; };
 		84FF925918A08F5B00988F62 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF925818A08F5B00988F62 /* Profile.m */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +123,10 @@
 		84B64E4718B46CD10061ED9D /* Comfortaa-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comfortaa-Regular.ttf"; sourceTree = "<group>"; };
 		84BC0F2618B49BCD00D03F3C /* EditTextEditScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextEditScreen.h; sourceTree = "<group>"; };
 		84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextEditScreen.m; sourceTree = "<group>"; };
+		84FCB2E019025BA400BBE4B0 /* PanScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanScroller.h; sourceTree = "<group>"; };
+		84FCB2E119025BA400BBE4B0 /* PanScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanScroller.m; sourceTree = "<group>"; };
+		84FCB2E319026D5700BBE4B0 /* ScrollArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollArrowView.h; sourceTree = "<group>"; };
+		84FCB2E419026D5700BBE4B0 /* ScrollArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollArrowView.m; sourceTree = "<group>"; };
 		84FF925718A08F5B00988F62 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
 		84FF925818A08F5B00988F62 /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -282,12 +288,6 @@
 				84B5A2C61880D93100969952 /* Bubble.m */,
 				84B5A2C71880D93100969952 /* BubbleContainer.h */,
 				84B5A2C81880D93100969952 /* BubbleContainer.m */,
-				841DAE0218B30EF200626302 /* EditTextBubble.h */,
-				84B64E4518B45B770061ED9D /* EditTextBubble.m */,
-				841DADFD18B0A7D700626302 /* EditTextBubbleContainer.h */,
-				841DADFE18B0A7D700626302 /* EditTextBubbleContainer.m */,
-				84BC0F2618B49BCD00D03F3C /* EditTextEditScreen.h */,
-				84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */,
 			);
 			name = Bubbles;
 			sourceTree = "<group>";
@@ -299,8 +299,7 @@
 				84B5A2D11880D96300969952 /* BubbleViewController.m */,
 				8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */,
 				8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */,
-				841DAE0818B312AC00626302 /* EditTextViewController.h */,
-				841DAE0918B312AC00626302 /* EditTextViewController.m */,
+				84FCB2E61902765C00BBE4B0 /* Edit Text */,
 			);
 			name = "Screen Templates";
 			sourceTree = "<group>";
@@ -316,6 +315,41 @@
 				84B5A2D61880D98200969952 /* MainViewController.m */,
 			);
 			name = Screens;
+			sourceTree = "<group>";
+		};
+		84FCB2E61902765C00BBE4B0 /* Edit Text */ = {
+			isa = PBXGroup;
+			children = (
+				84FCB2E71903665A00BBE4B0 /* Bubble */,
+				84FCB2E81903667000BBE4B0 /* Scroller */,
+				84BC0F2618B49BCD00D03F3C /* EditTextEditScreen.h */,
+				84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */,
+				841DAE0818B312AC00626302 /* EditTextViewController.h */,
+				841DAE0918B312AC00626302 /* EditTextViewController.m */,
+			);
+			name = "Edit Text";
+			sourceTree = "<group>";
+		};
+		84FCB2E71903665A00BBE4B0 /* Bubble */ = {
+			isa = PBXGroup;
+			children = (
+				841DAE0218B30EF200626302 /* EditTextBubble.h */,
+				84B64E4518B45B770061ED9D /* EditTextBubble.m */,
+				841DADFD18B0A7D700626302 /* EditTextBubbleContainer.h */,
+				841DADFE18B0A7D700626302 /* EditTextBubbleContainer.m */,
+			);
+			name = Bubble;
+			sourceTree = "<group>";
+		};
+		84FCB2E81903667000BBE4B0 /* Scroller */ = {
+			isa = PBXGroup;
+			children = (
+				84FCB2E019025BA400BBE4B0 /* PanScroller.h */,
+				84FCB2E119025BA400BBE4B0 /* PanScroller.m */,
+				84FCB2E319026D5700BBE4B0 /* ScrollArrowView.h */,
+				84FCB2E419026D5700BBE4B0 /* ScrollArrowView.m */,
+			);
+			name = Scroller;
 			sourceTree = "<group>";
 		};
 		84FF925A18A08F6B00988F62 /* UI */ = {
@@ -382,7 +416,7 @@
 		84B5A26E1880D8AD00969952 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = PiGuyGames;
 				TargetAttributes = {
 					84B5A2901880D8AD00969952 = {
@@ -449,8 +483,10 @@
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
 				84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */,
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
+				84FCB2E219025BA400BBE4B0 /* PanScroller.m in Sources */,
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
 				84B5A2B91880D91000969952 /* Styles.m in Sources */,
+				84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */,
 				844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */,
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
 				849D3D231880F2810030D432 /* AnchorView.m in Sources */,
@@ -508,7 +544,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -548,7 +583,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -611,7 +645,6 @@
 		84B5A2A61880D8AD00969952 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NCEACredits.app/NCEACredits";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -634,7 +667,6 @@
 		84B5A2A71880D8AD00969952 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NCEACredits.app/NCEACredits";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

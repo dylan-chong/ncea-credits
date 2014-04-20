@@ -35,7 +35,7 @@
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     [[Styles greyColour] setStroke];
-    CGContextSetLineWidth(context, 1.0);
+    CGContextSetLineWidth(context, 1.25);
     
     for (NSValue *v in _pointsToDrawTo) {
         [self drawLineFromPoint:
@@ -59,7 +59,17 @@
     return [v CGPointValue];
 }
 
-//******************************************** Transition ***********************************************
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Transition    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif {
     return [[NSArray alloc] initWithObjects:

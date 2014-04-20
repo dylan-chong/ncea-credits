@@ -10,7 +10,7 @@
 
 @implementation Profile
 
-- (id)init {
+- (id)initBlankProfile {
     self = [super init];
     
     if (self) {
@@ -20,7 +20,17 @@
     return self;
 }
 
-//************************************************************************************
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (NSArray *)getSubjects {
     return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"Spanish", nil];
