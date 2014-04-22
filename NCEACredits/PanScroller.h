@@ -27,9 +27,12 @@
 @property double max, currentValue;
 @property id <PanScrollerDelegate>delegate;
 
+#warning TODO: opposite scrolling mode
 - (id)initWithMax:(double)max currentValue:(double)cv container:(UIView *)container andDelegate:(id)delegate;
 - (void)resetArrowPositionsAndSetNewMax:(double)m;
 + (CGSize)getContainerSize:(UIView *)container;
+
+- (void)scrollToDecimal:(double)decimal;
 
 - (void)show;
 - (void)hide;

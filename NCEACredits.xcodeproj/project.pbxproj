@@ -14,6 +14,7 @@
 		841DADFF18B0A7D700626302 /* EditTextBubbleContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DADFE18B0A7D700626302 /* EditTextBubbleContainer.m */; };
 		841DAE0718B3123700626302 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DAE0618B3123700626302 /* AddViewController.m */; };
 		841DAE0A18B312AC00626302 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DAE0918B312AC00626302 /* EditTextViewController.m */; };
+		84265A6C1904A32000141564 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84265A6B1904A32000141564 /* QuartzCore.framework */; };
 		844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844CA93618AAB15A00D55F11 /* GradesViewController.m */; };
 		8459996D18AC00DE005F3FB1 /* SimpleSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */; };
 		849D3D231880F2810030D432 /* AnchorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D3D221880F2810030D432 /* AnchorView.m */; };
@@ -76,6 +77,7 @@
 		841DAE0618B3123700626302 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		841DAE0818B312AC00626302 /* EditTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextViewController.h; sourceTree = "<group>"; };
 		841DAE0918B312AC00626302 /* EditTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextViewController.m; sourceTree = "<group>"; };
+		84265A6B1904A32000141564 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		844CA93518AAB15A00D55F11 /* GradesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradesViewController.h; sourceTree = "<group>"; };
 		844CA93618AAB15A00D55F11 /* GradesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradesViewController.m; sourceTree = "<group>"; };
 		8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSelectionViewController.h; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84265A6C1904A32000141564 /* QuartzCore.framework in Frameworks */,
 				84B5A27C1880D8AD00969952 /* CoreGraphics.framework in Frameworks */,
 				84B5A27E1880D8AD00969952 /* UIKit.framework in Frameworks */,
 				84B5A27A1880D8AD00969952 /* Foundation.framework in Frameworks */,
@@ -201,6 +204,7 @@
 		84B5A2781880D8AD00969952 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84265A6B1904A32000141564 /* QuartzCore.framework */,
 				84B5A2791880D8AD00969952 /* Foundation.framework */,
 				84B5A27B1880D8AD00969952 /* CoreGraphics.framework */,
 				84B5A27D1880D8AD00969952 /* UIKit.framework */,

@@ -17,14 +17,6 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    _isCurrentViewController = YES;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
 - (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container {
     _parentBubble = container;
     Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:container.center]];
@@ -312,6 +304,34 @@
     } else {
         return UIInterfaceOrientationMaskAllButUpsideDown;
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    _isCurrentViewController = YES;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    CGRect frame = CGRectMake(0, 0, 0, 0);
+    
+    //Bigger - width or height
+    int w = [Styles screenWidth];
+    int h = [Styles screenHeight];
+    if (w > h) frame.size.width = w;
+    else frame.size.width = h;
+    
+    
+    //Smaller - width or height
+    int sw = [[UIApplication sharedApplication] statusBarFrame].size.width;
+    int sh = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    if (sw < sh) frame.size.height = sw;
+    else frame.size.height = sh;
+    
+    _statusBarFiller = [[UIView alloc] initWithFrame:frame];
+    _statusBarFiller.backgroundColor = [Styles translucentWhite];
+    [self.view addSubview:_statusBarFiller];
+    _statusBarFiller.layer.zPosition = MAXFLOAT;
 }
 
 @end

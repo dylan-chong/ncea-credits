@@ -100,7 +100,7 @@
 //*
 
 - (void)updateStats {
-#warning
+#warning TODO: main bubble update stats
 }
 
 

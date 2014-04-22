@@ -29,7 +29,12 @@
     NSArray *placeholders = [AddViewController getAssessmentViewPlaceHolders];
     NSArray *types = [AddViewController getAssessmentViewTypes];
     
-    self.childBubbles = [EditTextViewController getEditBubblesWithTitles:titles texts:texts placeholders:placeholders types:types delegate:self towardsRightSide:NO andMainBubble:self.mainBubble];
+    __block AddViewController *addVC = self;
+    ScrollGetterBlock s = ^(void) {
+        return [addVC getScrollerValue];
+    };
+    
+    self.childBubbles = [EditTextViewController getEditBubblesWithTitles:titles texts:texts placeholders:placeholders types:types delegate:self towardsRightSide:NO scrollGetterBlock:s andMainBubble:self.mainBubble];
 
     for (BubbleContainer *b in self.childBubbles) {
         [self.view addSubview:b];
@@ -96,7 +101,7 @@
 }
 
 + (NSArray *)getAssessmentViewTexts {
-    return  @[@"", @"", @"", @"", @"", @"", @"", @"", @"", @""];
+    return  @[@"", @"", @"", @"4", @"", @"", @"", @"", @"", @""];
 }
 
 + (NSArray *)getAssessmentViewPlaceHolders {

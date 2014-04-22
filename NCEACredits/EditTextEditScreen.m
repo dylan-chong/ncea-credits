@@ -17,8 +17,7 @@
     self = [super initWithFrame:CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight])];
     if (self) {
         _viewToEdit = toEdit;
-        self.backgroundColor = [UIColor whiteColor];
-        self.alpha = 0;
+        self.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0];
         
         _title = [[UILabel alloc] initWithFrame:CGRectZero];
         _title.font = [Styles heading2Font];
@@ -117,7 +116,7 @@
 
 - (void)show {
     [UIView animateWithDuration:0.25 animations:^{
-        self.alpha = 0.97;
+        self.backgroundColor = [Styles translucentWhite];
     }];
 }
 

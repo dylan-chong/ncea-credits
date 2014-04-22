@@ -71,6 +71,7 @@ typedef enum {
 + (UIColor *)greyColour;
 + (UIColor *)darkGreyColour;
 + (UIColor *)lightGreyColour;
++ (UIColor *)translucentWhite;
 
 @end
 

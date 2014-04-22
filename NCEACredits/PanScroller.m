@@ -88,6 +88,23 @@
     return containerSize;
 }
 
+- (void)scrollToDecimal:(double)decimal {
+    _currentValue = decimal * _max;
+    [self useNewCurrentValue];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Show/Hide    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
 - (void)show {
     [UIView animateWithDuration:[Styles animationSpeed] animations:^{
         _downArrow.alpha = StandardScrollArrowShowAlpha;

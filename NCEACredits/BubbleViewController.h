@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BubbleContainer.h"
 #import "AnchorView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @protocol BubbleViewControllerTransitionDelegate
 //child view controllers will implement the delegate to communicate with the parent
@@ -18,6 +19,7 @@
 @interface BubbleViewController : UIViewController <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerTransitionDelegate>
 
 @property id<BubbleViewControllerTransitionDelegate> delegate;
+@property UIView *statusBarFiller;
 
 @property (nonatomic) NSArray *childBubbles;
 @property (nonatomic, strong) BubbleContainer *mainBubble;
