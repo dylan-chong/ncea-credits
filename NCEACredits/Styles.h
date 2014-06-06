@@ -91,5 +91,7 @@ typedef enum {
 + (Corner)getCornerForPoint:(CGPoint)point;
 + (CGRect)getRectCentreOfFrame:(CGRect)rect withSize:(CGSize)size;
 + (CGSize)editTextBubbleSize;
++ (float)numberOfItemsInSelectionViewPer100px;
++ (NSUInteger)minimumItemsPerSelectionPage;
 
 @end

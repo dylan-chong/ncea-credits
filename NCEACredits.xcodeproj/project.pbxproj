@@ -47,7 +47,7 @@
 		84B64E4618B45B770061ED9D /* EditTextBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B64E4518B45B770061ED9D /* EditTextBubble.m */; };
 		84B64E4818B46CD10061ED9D /* Comfortaa-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84B64E4718B46CD10061ED9D /* Comfortaa-Regular.ttf */; };
 		84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */; };
-		84FCB2E219025BA400BBE4B0 /* PanScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCB2E119025BA400BBE4B0 /* PanScroller.m */; };
+		84E084A4193F235E00A4DF45 /* FlickScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E084A3193F235E00A4DF45 /* FlickScroller.m */; };
 		84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCB2E419026D5700BBE4B0 /* ScrollArrowView.m */; };
 		84FF925918A08F5B00988F62 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF925818A08F5B00988F62 /* Profile.m */; };
 /* End PBXBuildFile section */
@@ -125,8 +125,8 @@
 		84B64E4718B46CD10061ED9D /* Comfortaa-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comfortaa-Regular.ttf"; sourceTree = "<group>"; };
 		84BC0F2618B49BCD00D03F3C /* EditTextEditScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextEditScreen.h; sourceTree = "<group>"; };
 		84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextEditScreen.m; sourceTree = "<group>"; };
-		84FCB2E019025BA400BBE4B0 /* PanScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanScroller.h; sourceTree = "<group>"; };
-		84FCB2E119025BA400BBE4B0 /* PanScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanScroller.m; sourceTree = "<group>"; };
+		84E084A2193F235E00A4DF45 /* FlickScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickScroller.h; sourceTree = "<group>"; };
+		84E084A3193F235E00A4DF45 /* FlickScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickScroller.m; sourceTree = "<group>"; };
 		84FCB2E319026D5700BBE4B0 /* ScrollArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollArrowView.h; sourceTree = "<group>"; };
 		84FCB2E419026D5700BBE4B0 /* ScrollArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollArrowView.m; sourceTree = "<group>"; };
 		84FF925718A08F5B00988F62 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
@@ -348,8 +348,8 @@
 		84FCB2E81903667000BBE4B0 /* Scroller */ = {
 			isa = PBXGroup;
 			children = (
-				84FCB2E019025BA400BBE4B0 /* PanScroller.h */,
-				84FCB2E119025BA400BBE4B0 /* PanScroller.m */,
+				84E084A2193F235E00A4DF45 /* FlickScroller.h */,
+				84E084A3193F235E00A4DF45 /* FlickScroller.m */,
 				84FCB2E319026D5700BBE4B0 /* ScrollArrowView.h */,
 				84FCB2E419026D5700BBE4B0 /* ScrollArrowView.m */,
 			);
@@ -487,12 +487,12 @@
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
 				84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */,
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
-				84FCB2E219025BA400BBE4B0 /* PanScroller.m in Sources */,
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
 				84B5A2B91880D91000969952 /* Styles.m in Sources */,
 				84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */,
 				844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */,
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
+				84E084A4193F235E00A4DF45 /* FlickScroller.m in Sources */,
 				849D3D231880F2810030D432 /* AnchorView.m in Sources */,
 				84FF925918A08F5B00988F62 /* Profile.m in Sources */,
 				840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */,

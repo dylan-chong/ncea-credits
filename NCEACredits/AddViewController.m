@@ -30,11 +30,8 @@
     NSArray *types = [AddViewController getAssessmentViewTypes];
     
     __block AddViewController *addVC = self;
-    ScrollGetterBlock s = ^(void) {
-        return [addVC getScrollerValue];
-    };
     
-    self.childBubbles = [EditTextViewController getEditBubblesWithTitles:titles texts:texts placeholders:placeholders types:types delegate:self towardsRightSide:NO scrollGetterBlock:s andMainBubble:self.mainBubble];
+    self.childBubbles = [EditTextViewController getEditBubblesWithTitles:titles texts:texts placeholders:placeholders types:types delegate:self towardsRightSide:NO flickScroller:[self getFlickScroller] andMainBubble:self.mainBubble];
 
     for (BubbleContainer *b in self.childBubbles) {
         [self.view addSubview:b];
@@ -117,7 +114,7 @@
              @"Achieved"];
 }
 
-+ (NSArray *)getAssessmentViewTypes {
++ (NSArray *)getAssessmentViewTypes {//to NSNumber
     return @[tNSN(Number),
              tNSN(Text),
              tNSN(Text),

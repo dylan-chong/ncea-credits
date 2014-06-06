@@ -7,7 +7,7 @@
 //
 
 #import "ScrollArrowView.h"
-#import "PanScroller.h"
+#import "FlickScroller.h"
 
 @implementation ScrollArrowView
 
@@ -48,7 +48,7 @@
     CGPoint p = CGPointZero;
     
     //if container is self.view of controller, use Styles screen height and widths
-    CGSize containerSize = [PanScroller getContainerSize:container];
+    CGSize containerSize = [FlickScroller getContainerSize:container];
     p.x = (containerSize.width - size.width) / 2;
     
     if (isUp) p.y = StandardScrollArrowSpaceFromEdge;

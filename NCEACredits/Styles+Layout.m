@@ -190,4 +190,15 @@
     return CGSizeMake(450 * [Styles sizeModifier] * 2, 50 * [Styles sizeModifier] * 2);
 }
 
+//Selection Paging
+
++ (float)numberOfItemsInSelectionViewPer100px {
+    return round(0.75);
+}
+
++ (NSUInteger)minimumItemsPerSelectionPage {
+    return 2;
+    //Don't set too high other wise it may be impossible to get a number of items per page
+}
+
 @end

@@ -11,7 +11,7 @@
 
 @implementation EditTextBubbleContainer
 
-- (id)initWithPositionCalculatorBlock:(PositionCalculationBlock)pos frameForStartingPosition:(CGRect)frameForStartingPosition title:(NSString *)title text:(NSString *)text placeHolderText:(NSString *)placeholder towardsRightSide:(BOOL)isTowardsRight type:(NSNumber *)type andDelegate:(id)delegate;
+- (id)initWithPositionCalculatorBlock:(PositionCalculationBlock)pos frameForStartingPosition:(CGRect)frameForStartingPosition title:(NSString *)title text:(NSString *)text placeHolderText:(NSString *)placeholder towardsRightSide:(BOOL)isTowardsRight type:(NSNumber *)type andDelegate:(id)delegate
 {
     if ([Styles rect:frameForStartingPosition isEqualToRect:CGRectZero]) {
         self = [super initWithFrame:pos()];
