@@ -10,6 +10,7 @@
 #import "AddViewController.h"
 #import "EditTextBubble.h"
 #import "FlickScroller.h"
+#import "EditTextScreenItemData.h"
 
 @interface EditTextViewController ()
 
@@ -17,15 +18,15 @@
 
 @implementation EditTextViewController
 
-+ (NSArray *)getEditBubblesWithTitles:(NSArray *)titles texts:(NSArray *)texts placeholders:(NSArray *)placeholder types:(NSArray *)types delegate:(SimpleSelectionViewController *)delegate towardsRightSide:(BOOL)towardsRightSide flickScroller:(FlickScroller *)flickScroller andMainBubble:(BubbleContainer *)mainB {
++ (NSArray *)getEditBubblesWithEditTextScreenItemDataArray:(NSArray *)itemData delegate:(SimpleSelectionViewController *)delegate towardsRightSide:(BOOL)towardsRightSide flickScroller:(FlickScroller *)flickScroller andMainBubble:(BubbleContainer *)mainB {
     Corner corner = [Styles getCornerForPoint:mainB.frame.origin];
     
     NSMutableArray *blocks = [[NSMutableArray alloc] init];
-    NSUInteger count = titles.count;
+    NSUInteger count = itemData.count;
     CGSize size = [Styles editTextBubbleSize];
     __block FlickScroller *flickS = flickScroller;
     
-    for (int a = 0; a < titles.count; a++) {
+    for (int a = 0; a < count; a++) {
         PositionCalculationBlock x = ^{
             return [EditTextViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner andFlickScroller:flickS];
         };
@@ -35,8 +36,8 @@
     
     NSMutableArray *m = [[NSMutableArray alloc] init];
     
-    for (int a = 0; a < titles.count; a++) {
-        [m addObject:[[EditTextBubbleContainer alloc] initWithPositionCalculatorBlock:blocks[a] frameForStartingPosition:mainB.frame title:titles[a] text:texts[a] placeHolderText:placeholder[a] towardsRightSide:towardsRightSide type:types[a] andDelegate:delegate]];
+    for (int a = 0; a < count; a++) {
+        [m addObject:[[EditTextBubbleContainer alloc] initWithPositionCalculatorBlock:blocks[a] frameForStartingPosition:mainB.frame itemData:itemData[a] towardsRightSide:towardsRightSide andDelegate:delegate]];
     }
     
     return m;
@@ -51,8 +52,8 @@
     //Calculate position on position in page
     NSUInteger perPage = [FlickScroller getNumberOfItemsPerPage];
     NSUInteger indexOnPage = index;
-    while (index > perPage) {
-        index -= perPage;
+    while (indexOnPage > perPage - 1) {
+        indexOnPage -= perPage;
     }
     
     //Shift for page
@@ -78,14 +79,21 @@
         xPageMod = -1;
     }
     
-    x *= indexOnPage / (perPage - 1.0);
-    y *= indexOnPage / (perPage - 1.0);
+    if (bubbles > perPage) {
+        x *= indexOnPage / (perPage - 1.0);
+        y *= indexOnPage / (perPage - 1.0);
+    } else {
+        x *= indexOnPage / (bubbles - 1.0);
+        y *= indexOnPage / (bubbles - 1.0);
+    }
     
     int whichPage = [FlickScroller getPageForIndex:index andNumberOfItems:bubbles];
     
-    int currentPage = flickScroller.currentPageIndex;
-    int xPageMove = (currentPage - whichPage) * xPageMod * [Styles screenWidth];
-    int yPageMove = (currentPage - whichPage) * yPageMod * [Styles screenHeight];
+    int thisItemsPage = [flickScroller getCurrentPageIndex];
+    int xPageMove = (thisItemsPage - whichPage) * xPageMod * [Styles screenWidth];
+    int yPageMove = (thisItemsPage - whichPage) * yPageMod * [Styles screenHeight];
+//    if (index == 0) NSLog(@"---------------------------");
+//    NSLog(@"Index: %i, WhichPage: %i, ThisPage: %i", index, whichPage, thisItemsPage);
     
     return CGRectMake(origin.x + x + xPageMove, origin.y + y + yPageMove, size.width, size.height);
 }
@@ -95,27 +103,14 @@
     CGPoint endP = [EditTextViewController getCorner:BottomRight withSize:size];
     
     double xDif = startP.x - endP.x;
-    //Increase size for scrolling
     double yDif = endP.y - startP.y;
-    if (bubbles > EditTextScrollingNumberOfBubbles) {
-        double diag = sqrt(pow(xDif, 2) + pow(yDif, 2));
-        double ratio = [EditTextViewController getRatioToMultiplyDifsForScrollingWithBubbles:bubbles currentDiagonalDistance:diag];
-        
-        xDif *= ratio;
-        yDif *= ratio;
-    }
     
     if (xDif < 0) xDif *= -1;
     if (yDif < 0) yDif *= -1;
     
-    return CGPointMake(xDif, yDif);
-}
-
-+ (double)getRatioToMultiplyDifsForScrollingWithBubbles:(NSInteger)bubbles currentDiagonalDistance:(double)curDistance {
-    double percentagePerBubble = 1.0 / EditTextScrollingNumberOfBubbles;
-    percentagePerBubble += EditTextScrollingExtraDiagonalFractionalSpaceBetweenBubbles;
+    yDif -= 15;
     
-    return bubbles * percentagePerBubble;
+    return CGPointMake(xDif, yDif);
 }
 
 + (CGPoint)getCorner:(Corner)c withSize:(CGSize)size {
@@ -177,40 +172,26 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [self makeFlickScroller];
+}
+
+- (void)makeFlickScroller {
     if (!_flickScroller) {
-        _flickScroller = [self getFlickScroller];
+        _flickScroller = [[FlickScroller alloc] initWithItems:self.childBubbles.count container:self.view andDelegate:self];
+        [_flickScroller show];
     }
 }
 
 - (FlickScroller *)getFlickScroller {
-    return [[FlickScroller alloc] initWithItems:self.childBubbles.count container:self.view andDelegate:self];
-    //*
-    //****
-    //*********
-    //****************
-    //*************************
-    //************************************************************************
-    //*************************
-    //****************
-    //*********
-    //****
-    //*
-#warning TODO: pages = 0???, paging not working
-    //*
-    //****
-    //*********
-    //****************
-    //*************************
-    //************************************************************************
-    //*************************
-    //****************
-    //*********
-    //****
-    //*
+    if (!_flickScroller) [self makeFlickScroller];
+    return _flickScroller;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    NSUInteger pages = [FlickScroller getPagesForNumberOfItems:_flickScroller.items];
+    if (_flickScroller.currentPageIndex > pages - 1)
+        _flickScroller.currentPageIndex = pages - 1;
+    
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     [_editScreen resetFrameWithAnimation:YES];
@@ -220,8 +201,13 @@
     [super startReturnSlideAnimation];
 }
 
-- (void)pageFlicked:(NSUInteger)newCurrentPage {
+- (void)pageFlicked {
     [self repositionBubbles];
+}
+
+- (void)repositionBubbles {
+    [super repositionBubbles];
+    [_flickScroller resetArrowPositions];
 }
 
 @end

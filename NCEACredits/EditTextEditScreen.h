@@ -17,7 +17,15 @@ typedef enum {
     Date = 5,
     TypeOfCredits = 6,
 } EditTextDataType;
-#define tNSN(x) [NSNumber numberWithInt:x]
+
+typedef enum {
+    Normal = 1,
+    Literacy = 2,
+    Numeracy = 3
+} CreditTypes;
+
+#define EditTextBoolYes @"Yes"
+#define EditTextBoolNo @"No"
 
 @protocol EditTextEditScreenDelegate <NSObject>
 

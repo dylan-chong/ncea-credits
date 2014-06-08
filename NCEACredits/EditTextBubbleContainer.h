@@ -8,6 +8,7 @@
 
 #import "BubbleContainer.h"
 #import "EditTextEditScreen.h"
+#import "EditTextScreenItemData.h"
 
 @class EditTextBubble;
 @class EditTextBubbleContainer;
@@ -20,7 +21,7 @@
 
 @interface EditTextBubbleContainer : BubbleContainer
 
-- (id)initWithPositionCalculatorBlock:(PositionCalculationBlock)pos frameForStartingPosition:(CGRect)frameForStartingPosition title:(NSString *)title text:(NSString *)text placeHolderText:(NSString *)placeholder towardsRightSide:(BOOL)isTowardsRight type:(NSNumber *)type andDelegate:(id)delegate;
+- (id)initWithPositionCalculatorBlock:(PositionCalculationBlock)pos frameForStartingPosition:(CGRect)frameForStartingPosition itemData:(EditTextScreenItemData *)itemData towardsRightSide:(BOOL)isTowardsRight andDelegate:(id)delegate;
 @property id<EditTextBubbleContainerDelegate> touchDelegate;
 @property EditTextDataType type;
 

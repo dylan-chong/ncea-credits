@@ -47,6 +47,7 @@
 		84B64E4618B45B770061ED9D /* EditTextBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B64E4518B45B770061ED9D /* EditTextBubble.m */; };
 		84B64E4818B46CD10061ED9D /* Comfortaa-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84B64E4718B46CD10061ED9D /* Comfortaa-Regular.ttf */; };
 		84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */; };
+		84C7B3BC1943E45400B8DCD8 /* EditTextScreenItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B3BB1943E45400B8DCD8 /* EditTextScreenItemData.m */; };
 		84E084A4193F235E00A4DF45 /* FlickScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E084A3193F235E00A4DF45 /* FlickScroller.m */; };
 		84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCB2E419026D5700BBE4B0 /* ScrollArrowView.m */; };
 		84FF925918A08F5B00988F62 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF925818A08F5B00988F62 /* Profile.m */; };
@@ -125,6 +126,8 @@
 		84B64E4718B46CD10061ED9D /* Comfortaa-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comfortaa-Regular.ttf"; sourceTree = "<group>"; };
 		84BC0F2618B49BCD00D03F3C /* EditTextEditScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextEditScreen.h; sourceTree = "<group>"; };
 		84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextEditScreen.m; sourceTree = "<group>"; };
+		84C7B3BA1943E45400B8DCD8 /* EditTextScreenItemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextScreenItemData.h; sourceTree = "<group>"; };
+		84C7B3BB1943E45400B8DCD8 /* EditTextScreenItemData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextScreenItemData.m; sourceTree = "<group>"; };
 		84E084A2193F235E00A4DF45 /* FlickScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickScroller.h; sourceTree = "<group>"; };
 		84E084A3193F235E00A4DF45 /* FlickScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickScroller.m; sourceTree = "<group>"; };
 		84FCB2E319026D5700BBE4B0 /* ScrollArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollArrowView.h; sourceTree = "<group>"; };
@@ -328,6 +331,8 @@
 				84FCB2E81903667000BBE4B0 /* Scroller */,
 				84BC0F2618B49BCD00D03F3C /* EditTextEditScreen.h */,
 				84BC0F2718B49BCD00D03F3C /* EditTextEditScreen.m */,
+				84C7B3BA1943E45400B8DCD8 /* EditTextScreenItemData.h */,
+				84C7B3BB1943E45400B8DCD8 /* EditTextScreenItemData.m */,
 				841DAE0818B312AC00626302 /* EditTextViewController.h */,
 				841DAE0918B312AC00626302 /* EditTextViewController.m */,
 			);
@@ -485,6 +490,7 @@
 				84B5A2BC1880D91000969952 /* Styles+Layout.m in Sources */,
 				840D5874188240A700DE24B7 /* GoalTitle.m in Sources */,
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
+				84C7B3BC1943E45400B8DCD8 /* EditTextScreenItemData.m in Sources */,
 				84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */,
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,

@@ -48,7 +48,7 @@
                 if (toEdit.type == Grade) {
                     titles = @[@"Excellence", @"Merit", @"Achieved", @"Not Achieved", @"None"];
                 } else if (toEdit.type == Bool) {
-                    titles = @[@"Yes", @"No"];
+                    titles = @[EditTextBoolYes, EditTextBoolNo];
                 }
                 
                 _buttons = [EditTextEditScreen getArrayOfControlsWithTexts:titles andTarget:self];
@@ -122,7 +122,7 @@
 
 - (void)hide {
     [_text resignFirstResponder];
-    _text.text = [_text.text stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    _text.text = [_text.text stringByReplacingOccurrencesOfString:@"\"" withString:@"-"];
     
     EditTextBubble *b = ((EditTextBubble *)(_viewToEdit.bubble));
     [b setTextLabelText:_text.text];
@@ -159,21 +159,104 @@
     [self hide];
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Button Pressed    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
 - (void)deleteButtonPressed {
     if (_text.text.length > 0)
         _text.text = [_text.text substringToIndex:_text.text.length - 1];
 }
 
 - (void)doneButtonPressed {
-    [self hide];
+    if (_type == Date) {
+        //------------------------------ Date Filter Rules ------------------------------
+        if ([EditTextEditScreen dateIsValid:_text.text] || _text.text.length == 0)
+            [self hide];
+        else
+            [[[UIAlertView alloc] initWithTitle:AppName
+                                        message:@"Make sure the date is valid. Check that the day and month are possible.\n\nIt must also be in the format\ndd/mm/yy."
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles: nil] show];
+    } else
+        [self hide];
 }
+
+#define AppendNumpadCharacter(stringToAppend) _text.text = [_text.text stringByAppendingString:stringToAppend]
+#define SenderButtonString sender.titleLabel.text
 
 - (void)numpadButtonPressed:(UIButton *)sender {
     if (_type == Date) {
-#warning TODO: date numpad
+        if (_text.text.length < 8) {//6 for ddmmyy + 2 for slashes
+            if (_text.text.length == 2 || _text.text.length == 4 + 1) {//+ 1 for previous slash
+                AppendNumpadCharacter(@"/");
+            }
+            
+            AppendNumpadCharacter(SenderButtonString);
+        }
     } else if (_type == Number) {
-        _text.text = [_text.text stringByAppendingString:sender.titleLabel.text];
+        AppendNumpadCharacter(SenderButtonString);
     }
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************    Date Validity    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
++ (BOOL)dateIsValid:(NSString *)date {
+    if (date.length != 8) return NO; //Wrong length
+    
+    NSArray *dateParts = [date componentsSeparatedByString:@"/"];
+    int day = [dateParts[0] intValue];
+    int month = [dateParts[1] intValue];
+    int year = [dateParts[2] intValue];
+    
+    if (day > 31) return NO; //Impossible date
+    if (month == 0 || month > 12) return NO; //Impossible month
+    
+    //Check for incompatible day/month combinations
+    if (month == 2) {
+        if (day > 29) return NO;
+        
+        if (day == 29 && [self yearIsPrime:year])
+            return YES;
+    }
+    
+    if (month == 4 || month == 6 ||
+        month == 9 || month == 11) {
+        if (day < 31)
+            return YES;
+        else
+            return NO;
+    }
+    
+    return YES;
+}
+
++ (BOOL)yearIsPrime:(int)year {
+    double divided = year / 4.0;
+    
+    if (round(divided) == divided)
+        return YES;
+    else
+        return NO;
 }
 
 //*

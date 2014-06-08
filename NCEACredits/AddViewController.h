@@ -12,9 +12,6 @@
 
 - (id)initWithMainBubble:(BubbleContainer *)mainBubble;
 
-+ (NSArray *)getAssessmentViewTitles;
-+ (NSArray *)getAssessmentViewPlaceHolders;
-+ (NSArray *)getAssessmentViewTexts;
-+ (NSArray *)getAssessmentViewTypes;
++ (NSArray *)getItemData;
 
 @end

@@ -15,29 +15,6 @@
     
     if (self) {
         _items = items;
-        //*
-        //****
-        //*********
-        //****************
-        //*************************
-        //************************************************************************
-        //*************************
-        //****************
-        //*********
-        //****
-        //*
-#warning TODO: ^^^ page calc with item
-        //*
-        //****
-        //*********
-        //****************
-        //*************************
-        //************************************************************************
-        //*************************
-        //****************
-        //*********
-        //****
-        //*
         _currentPageIndex = 0;
         
         _containerView = container;
@@ -59,16 +36,31 @@
 }
 
 - (void)flicked:(UISwipeGestureRecognizer *)sender {
-    if (sender.direction == UISwipeGestureRecognizerDirectionUp) {
+    if (sender.direction == UISwipeGestureRecognizerDirectionDown) {
         if (_currentPageIndex > 0) {
             _currentPageIndex --;
-            [self.delegate pageFlicked:_currentPageIndex];
+            [self.delegate pageFlicked];
         }
     } else {
         if (_currentPageIndex < [FlickScroller getPagesForNumberOfItems:_items] - 1) {
             _currentPageIndex ++;
-            [self.delegate pageFlicked:_currentPageIndex];
+            [self.delegate pageFlicked];
         }
+    }
+
+    [self showAppropriateArrows];
+}
+
+- (void)showAppropriateArrows {
+    if (_currentPageIndex == 0) {
+        [_upArrow hide];
+        [_downArrow show];
+    } else if (_currentPageIndex == [FlickScroller getPagesForNumberOfItems:_items] - 1) {
+        [_upArrow show];
+        [_downArrow hide];
+    } else {
+        [_upArrow show];
+        [_downArrow show];
     }
 }
 
@@ -110,15 +102,6 @@
     return ceil((items * 1.0) / [FlickScroller getNumberOfItemsPerPage]);
 }
 
-//+ (NSUInteger)getItemsOnLastPageWithItemsPerPage:(NSUInteger)perPage andNumberOfItems:(NSUInteger)number {
-//    //Essentially modulus
-//    while (perPage < number) {
-//        number -= perPage;
-//    }
-//    
-//    return number;
-//}
-
 + (NSUInteger)getPageForIndex:(NSUInteger)index andNumberOfItems:(NSUInteger)items {
     for (int a = 0; a < [FlickScroller getPagesForNumberOfItems:items]; a++) {
         if (index < (a + 1) * [FlickScroller getNumberOfItemsPerPage])
@@ -126,6 +109,10 @@
     }
     
     return 0;
+}
+
+- (NSUInteger)getCurrentPageIndex {
+    return _currentPageIndex;
 }
 
 //*
@@ -141,15 +128,9 @@
 //*
 
 - (void)show {
-    [UIView animateWithDuration:[Styles animationSpeed] animations:^{
-        _downArrow.alpha = StandardScrollArrowShowAlpha;
-        _upArrow.alpha = StandardScrollArrowShowAlpha;
-    } completion:^(BOOL finished) {
-        if (finished) {
-            _downArrow.enabled = YES;
-            _upArrow.enabled = YES;
-        }
-    }];
+    _downArrow.enabled = YES;
+    _upArrow.enabled = YES;
+    [self showAppropriateArrows];
 }
 
 - (void)hide {

@@ -17,3 +17,5 @@
 #endif
 
 #define ApplicationDelegate (AppDelegate *)[[UIApplication sharedApplication] delegate]
+
+#define AppName [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]

@@ -11,7 +11,7 @@
 
 @protocol FlickScrollerDelegate <NSObject>
 @required
-- (void)pageFlicked:(NSUInteger)newCurrentPage;
+- (void)pageFlicked;
 @end
 
 
@@ -21,9 +21,7 @@
 @property UIView *containerView;
 @property ScrollArrowView *upArrow, *downArrow;
 
-@property NSTimer *inertiaTimer;
-@property double currentInertia;
-
+- (NSUInteger)getCurrentPageIndex;
 @property NSUInteger currentPageIndex, items;
 @property id <FlickScrollerDelegate>delegate;
 

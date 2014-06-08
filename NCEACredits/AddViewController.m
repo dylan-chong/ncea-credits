@@ -8,6 +8,7 @@
 
 #import "AddViewController.h"
 #import "EditTextBubble.h"
+#import "EditTextScreenItemData.h"
 
 @implementation AddViewController
 
@@ -24,15 +25,11 @@
 }
 
 - (void)createBubbleContainers {
-    NSArray *titles = [AddViewController getAssessmentViewTitles];
-    NSArray *texts = [AddViewController getAssessmentViewTexts];
-    NSArray *placeholders = [AddViewController getAssessmentViewPlaceHolders];
-    NSArray *types = [AddViewController getAssessmentViewTypes];
+    NSArray *itemData = [AddViewController getItemData];
     
-    __block AddViewController *addVC = self;
+    self.childBubbles = [EditTextViewController getEditBubblesWithEditTextScreenItemDataArray:itemData delegate:self towardsRightSide:NO flickScroller:[self getFlickScroller] andMainBubble:self.mainBubble];
+    [self getFlickScroller].items = self.childBubbles.count;
     
-    self.childBubbles = [EditTextViewController getEditBubblesWithTitles:titles texts:texts placeholders:placeholders types:types delegate:self towardsRightSide:NO flickScroller:[self getFlickScroller] andMainBubble:self.mainBubble];
-
     for (BubbleContainer *b in self.childBubbles) {
         [self.view addSubview:b];
     }
@@ -51,7 +48,7 @@
 
 - (void)startReturnScaleAnimation {
     int count = 0;
-    NSArray *titles = [[AddViewController getAssessmentViewTitles] subarrayWithRange:NSMakeRange(0, 3)];
+    NSArray *titles = @[@"Level", @"Quick Name", @"Subject", @"Credits"];
     
     for (NSString *t in titles) {
         if (![self isPlaceholderForTitle:t]) count++;
@@ -63,8 +60,8 @@
     } else if (count == 0) {
         [super startReturnScaleAnimation];
     } else {
-        NSString *message = @"You must enter details for the AS Number, Name, and Subject.";
-        UIAlertView *a = [[UIAlertView alloc] initWithTitle:@"NCEA Credits" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Don't Save", nil];
+        NSString *message = @"You must at least enter details for the AS Number, Name, and Subject.";
+        UIAlertView *a = [[UIAlertView alloc] initWithTitle:AppName message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Don't Save", nil];
         [a show];
     }
 }
@@ -78,53 +75,25 @@
     }
 }
 
-#warning TODO: add other add types 
-//private static final String dateOfFinalGradeKey = "assessmentNumberKey";
-//private static final String typeOfCreditsKey = "typeOfCreditsKey";
-//private static final String levelKey = "levelKey";
-//private static final String isUnitStandardKey = "isUnitStandardKey";
-
-+ (NSArray *)getAssessmentViewTitles {
-    return @[@"AS Number",
-             @"Quick Name",
-             @"Subject",
-             @"Credits",
-             @"Due Date",
-             @"Expected Grade",
-             @"Pre-Resub Grade",
-             @"Practice Grade",
-             @"Preliminary Grade",
-             @"Final Grade"];
-}
-
-+ (NSArray *)getAssessmentViewTexts {
-    return  @[@"", @"", @"", @"4", @"", @"", @"", @"", @"", @""];
-}
-
-+ (NSArray *)getAssessmentViewPlaceHolders {
-    return @[@"901234",
-             @"Mechanics",
-             @"Science",
-             @"4",
-             @"12/03/14",
-             @"Achieved",
-             @"Achieved",
-             @"Achieved",
-             @"Achieved",
-             @"Achieved"];
-}
-
-+ (NSArray *)getAssessmentViewTypes {//to NSNumber
-    return @[tNSN(Number),
-             tNSN(Text),
-             tNSN(Text),
-             tNSN(Number),
-             tNSN(Date),
-             tNSN(Grade),
-             tNSN(Grade),
-             tNSN(Grade),
-             tNSN(Grade),
-             tNSN(Grade)];
++ (NSArray *)getItemData {
+    #warning TODO: level get current level for placeholder
+    return @[ItemData(@"Level",             @"1",               @"1",               tNSN(Number)),
+             ItemData(@"AS Number",         @"",                @"901234",          tNSN(Number)),
+             ItemData(@"Quick Name",        @"",                @"Mechanics",       tNSN(Text)),
+             ItemData(@"Subject",           @"",                @"Science",         tNSN(Text)),
+             ItemData(@"Credits",           @"",                @"4",               tNSN(Number)),
+             
+             ItemData(@"Is an Internal",    EditTextBoolYes,    EditTextBoolYes,    tNSN(Bool)),
+             ItemData(@"Exam/Due Date",     @"",                @"12/04/14",        tNSN(Date)),
+             ItemData(@"Is Unit Standard",  EditTextBoolNo,     EditTextBoolNo,     tNSN(Bool)),
+             ItemData(@"Type of Credits",   @"No",              @"No",              tNSN(TypeOfCredits)),
+             
+             ItemData(@"Expected Grade",    @"",                @"Achieved",        tNSN(Grade)),
+             ItemData(@"Pre-Resub Grade",   @"",                @"Achieved",        tNSN(Grade)),
+             ItemData(@"Practice Grade",    @"",                @"Achieved",        tNSN(Grade)),
+             ItemData(@"Prelminary Grade",  @"",                @"Achieved",        tNSN(Grade)),
+             ItemData(@"Practice Grade",    @"",                @"Achieved",        tNSN(Grade)),
+             ItemData(@"Final Grade",       @"",                @"Achieved",        tNSN(Grade))];
 }
 
 @end

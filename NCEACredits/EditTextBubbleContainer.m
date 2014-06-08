@@ -11,8 +11,7 @@
 
 @implementation EditTextBubbleContainer
 
-- (id)initWithPositionCalculatorBlock:(PositionCalculationBlock)pos frameForStartingPosition:(CGRect)frameForStartingPosition title:(NSString *)title text:(NSString *)text placeHolderText:(NSString *)placeholder towardsRightSide:(BOOL)isTowardsRight type:(NSNumber *)type andDelegate:(id)delegate
-{
+- (id)initWithPositionCalculatorBlock:(PositionCalculationBlock)pos frameForStartingPosition:(CGRect)frameForStartingPosition itemData:(EditTextScreenItemData *)itemData towardsRightSide:(BOOL)isTowardsRight andDelegate:(id)delegate {
     if ([Styles rect:frameForStartingPosition isEqualToRect:CGRectZero]) {
         self = [super initWithFrame:pos()];
     } else {
@@ -22,12 +21,17 @@
     
     if (self) {
         _touchDelegate = delegate;
-        _type = [type intValue];
+        _type = [itemData.type intValue];
         self.backgroundColor = [UIColor clearColor];
         self.calulatePosition = pos;
         self.bubble = [[EditTextBubble alloc] initWithFrame:
-                       [Styles getRectCentreOfFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) withSize:CGSizeMake(self.frame.size.width * 0.95, self.frame.size.height * 0.95)]
-                                                      title:title text:text placeHolderText:placeholder towardsRightSide:isTowardsRight andType:_type];
+                       [Styles getRectCentreOfFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
+                                           withSize:CGSizeMake(self.frame.size.width * 0.95, self.frame.size.height * 0.95)]
+                                                      title:itemData.title
+                                                       text:itemData.text
+                                            placeHolderText:itemData.placeholder
+                                           towardsRightSide:isTowardsRight
+                                                    andType:[itemData.type intValue]];
         [self addSubview:self.bubble];
         [((EditTextBubble *)(self.bubble)).viewContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touch)]];
         
