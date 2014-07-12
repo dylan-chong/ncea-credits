@@ -48,7 +48,8 @@
 
 - (void)startReturnScaleAnimation {
     int count = 0;
-    NSArray *titles = @[@"Level", @"Quick Name", @"Subject", @"Credits"];
+    //Required fields
+    NSArray *titles = @[@"Level", @"Quick Name", @"Subject", ItemCredits];
     
     for (NSString *t in titles) {
         if (![self isPlaceholderForTitle:t]) count++;
@@ -60,7 +61,18 @@
     } else if (count == 0) {
         [super startReturnScaleAnimation];
     } else {
-        NSString *message = @"You must at least enter details for the AS Number, Name, and Subject.";
+        
+        //Add requirements to messages
+        NSString *message = @"You must at least enter details for the ";
+        for (int a = 0; a < titles.count - 1; a++) {
+            message = [message stringByAppendingString:
+                       [NSString stringWithFormat:@"'%@', ", titles[a]]];
+        }
+        message = [message stringByAppendingString:@"and '"];
+        message = [message stringByAppendingString:titles[titles.count - 1]];
+        message = [message stringByAppendingString:@"' fields."];
+        
+        
         UIAlertView *a = [[UIAlertView alloc] initWithTitle:AppName message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Don't Save", nil];
         [a show];
     }
@@ -75,25 +87,50 @@
     }
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************************************************
+//*************************
+//****************
+//*********
+//****
+//*
+#warning TODO: make json structure with android folder
+//*
+//****
+//*********
+//****************
+//*************************
+//************************************************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
 + (NSArray *)getItemData {
-    #warning TODO: level get current level for placeholder
-    return @[ItemData(@"Level",             @"1",               @"1",               tNSN(Number)),
-             ItemData(@"AS Number",         @"",                @"901234",          tNSN(Number)),
-             ItemData(@"Quick Name",        @"",                @"Mechanics",       tNSN(Text)),
-             ItemData(@"Subject",           @"",                @"Science",         tNSN(Text)),
-             ItemData(@"Credits",           @"",                @"4",               tNSN(Number)),
+#warning TODO: level get current level for placeholder
+    return @[
+             ItemData(@"Quick Name",        @"",                        @"Mechanics",               tNSN(EditTextDataTypeText)),
+             ItemData(@"AS Number",         @"",                        @"901234",                  tNSN(EditTextDataTypeNumber)),
+             ItemData(@"Subject",           @"",                        @"Science",                 tNSN(EditTextDataTypeText)),
+             ItemData(ItemCredits,          @"",                        @"4",                       tNSN(EditTextDataTypeNumber)),
+             #warning TODO: maybe remove date, dont forget assessment.h
+             ItemData(@"Exam / Due Date",   @"",                        @"12/04/14",                tNSN(EditTextDataTypeDate)),
              
-             ItemData(@"Is an Internal",    EditTextBoolYes,    EditTextBoolYes,    tNSN(Bool)),
-             ItemData(@"Exam/Due Date",     @"",                @"12/04/14",        tNSN(Date)),
-             ItemData(@"Is Unit Standard",  EditTextBoolNo,     EditTextBoolNo,     tNSN(Bool)),
-             ItemData(@"Type of Credits",   @"No",              @"No",              tNSN(TypeOfCredits)),
+             ItemData(@"Is an Internal",    EditTextBoolYes,            EditTextBoolYes,            tNSN(EditTextDataTypeBool)),
+             ItemData(@"Is Unit Standard",  EditTextBoolNo,             @"Probably not",            tNSN(EditTextDataTypeBool)),
+             ItemData(@"NCEA Level",        @"",                        @"1",                       tNSN(EditTextDataTypeNumber)),
+#warning TODO: get level
+             ItemData(@"Type of Credits",   EditTextCreditTypeNormal,   EditTextCreditTypeNormal,   tNSN(EditTextDataTypeTypeOfCredits)),
              
-             ItemData(@"Expected Grade",    @"",                @"Achieved",        tNSN(Grade)),
-             ItemData(@"Pre-Resub Grade",   @"",                @"Achieved",        tNSN(Grade)),
-             ItemData(@"Practice Grade",    @"",                @"Achieved",        tNSN(Grade)),
-             ItemData(@"Prelminary Grade",  @"",                @"Achieved",        tNSN(Grade)),
-             ItemData(@"Practice Grade",    @"",                @"Achieved",        tNSN(Grade)),
-             ItemData(@"Final Grade",       @"",                @"Achieved",        tNSN(Grade))];
+             ItemData(@"Final Grade",       @"",                        @"If you have it",          tNSN(EditTextDataTypeGrade)),
+             ItemData(@"Expected Grade",    @"",                        @"To predict results",      tNSN(EditTextDataTypeGrade)),
+             ItemData(@"Prelminary Grade",  @"",                        @"Latest practice",         tNSN(EditTextDataTypeGrade)),
+             ];
 }
 
 @end

@@ -10,22 +10,13 @@
 #import "AnimationManager.h"
 
 typedef enum {
-    Text = 1,
-    Grade = 2,
-    Bool = 3,
-    Number = 4,
-    Date = 5,
-    TypeOfCredits = 6,
+    EditTextDataTypeText = 1,
+    EditTextDataTypeGrade = 2,
+    EditTextDataTypeBool = 3,
+    EditTextDataTypeNumber = 4,
+    EditTextDataTypeDate = 5,
+    EditTextDataTypeTypeOfCredits = 6,
 } EditTextDataType;
-
-typedef enum {
-    Normal = 1,
-    Literacy = 2,
-    Numeracy = 3
-} CreditTypes;
-
-#define EditTextBoolYes @"Yes"
-#define EditTextBoolNo @"No"
 
 @protocol EditTextEditScreenDelegate <NSObject>
 

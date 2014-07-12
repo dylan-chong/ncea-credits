@@ -47,14 +47,19 @@
             [self.delegate pageFlicked];
         }
     }
-
+    
     [self showAppropriateArrows];
 }
 
 - (void)showAppropriateArrows {
     if (_currentPageIndex == 0) {
         [_upArrow hide];
-        [_downArrow show];
+        
+        if ([FlickScroller getPagesForNumberOfItems:_items] == 1)
+            [_downArrow hide];
+        else
+            [_downArrow show];
+        
     } else if (_currentPageIndex == [FlickScroller getPagesForNumberOfItems:_items] - 1) {
         [_upArrow show];
         [_downArrow hide];
@@ -87,7 +92,7 @@
 //*********
 //****************
 //*************************
-//************************************    Paging    ************************************
+#pragma mark - ***************************    Paging    ************************************
 //*************************
 //****************
 //*********
@@ -120,7 +125,7 @@
 //*********
 //****************
 //*************************
-//************************************    Show/Hide    ************************************
+#pragma mark - ***************************    Show/Hide    ************************************
 //*************************
 //****************
 //*********

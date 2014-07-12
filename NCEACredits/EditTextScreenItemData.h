@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define tNSN(x) [NSNumber numberWithInt:x]
 #define ItemData(theTitle, theText, thePlaceholder, theType) [[EditTextScreenItemData alloc] initWithTitle:theTitle text:theText placeholder:thePlaceholder andType:theType]
 
 @interface EditTextScreenItemData : NSObject

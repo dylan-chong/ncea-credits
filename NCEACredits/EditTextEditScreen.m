@@ -35,32 +35,11 @@
         [self addSubview:_text];
         
         _type = toEdit.type;
-        if (toEdit.type == Text) {
+        if (toEdit.type == EditTextDataTypeText) {
             [_text becomeFirstResponder];
             _text.userInteractionEnabled = YES;
         } else {
-            NSArray *titles;
-            _buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
-            [self addSubview:_buttonContainer];
-            
-            
-            if (toEdit.type != Date && toEdit.type != Number) {
-                if (toEdit.type == Grade) {
-                    titles = @[@"Excellence", @"Merit", @"Achieved", @"Not Achieved", @"None"];
-                } else if (toEdit.type == Bool) {
-                    titles = @[EditTextBoolYes, EditTextBoolNo];
-                }
-                
-                _buttons = [EditTextEditScreen getArrayOfControlsWithTexts:titles andTarget:self];
-            } else {
-                _buttons = [EditTextEditScreen getNumpadButtonsWithTarget:self];
-            }
-            
-            
-            
-            for (UIButton *b in _buttons) {
-                [_buttonContainer addSubview:b];
-            }
+            [self setButtonsWithType:toEdit.type];
         }
         
         
@@ -88,30 +67,16 @@
                                  self.frame.size.height * size / 2 + ([Styles sizeModifier] * 3),
                                  self.frame.size.width * (1 - middle - 0.005),
                                  self.frame.size.height * size);
-        if (_type == Grade || _type == Bool) {
-            for (int x = 0; x < _buttons.count; x++) {
-                ((UIButton *)_buttons[x]).frame = [EditTextEditScreen getFrameOfButtonWithIndex:x outOf:_buttons.count withScreenSize:_buttonContainer.frame.size];
-            }
-        } else if (_type == Number || _type == Date) {
+        if (_type == EditTextDataTypeNumber || _type == EditTextDataTypeDate) {
             for (int a = 0; a < _buttons.count; a++) {
                 ((UIButton *)_buttons[a]).frame = [EditTextEditScreen getNumpadButtonFrameWithIndex:a andSize:_buttonContainer.frame.size];
             }
+        } else if (_type != EditTextDataTypeText) {
+            for (int x = 0; x < _buttons.count; x++) {
+                ((UIButton *)_buttons[x]).frame = [EditTextEditScreen getFrameOfButtonWithIndex:x outOf:_buttons.count withScreenSize:_buttonContainer.frame.size];
+            }
         }
     }];
-}
-
-- (CGRect)getFrameOfButtonContainer {
-    return CGRectMake(0, self.frame.size.height * 0.5, self.frame.size.width, self.frame.size.height * 0.4);
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self hide];
-    return YES;
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    [self hide];
-    return YES;
 }
 
 - (void)show {
@@ -132,25 +97,106 @@
     }];
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Buttons    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+//*
+
+- (CGRect)getFrameOfButtonContainer {
+    return CGRectMake(0, self.frame.size.height * 0.5, self.frame.size.width, self.frame.size.height * 0.4);
+}
+
+- (void)setButtonsWithType:(EditTextDataType)type {
+    NSArray *titles;
+    _buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
+    [self addSubview:_buttonContainer];
+    
+    //Decide type
+    if (type == EditTextDataTypeDate || type == EditTextDataTypeNumber) {
+        //Numpad
+        _buttons = [EditTextEditScreen getNumpadButtonsWithTarget:self];
+    } else {
+        //Selection buttons
+        if (type == EditTextDataTypeGrade) {
+            titles = @[@"Excellence",
+                       @"Merit",
+                       @"Achieved",
+                       @"Not Achieved",
+                       @"None"];
+            
+        } else if (type == EditTextDataTypeBool) {
+            titles = @[EditTextBoolYes,
+                       EditTextBoolNo];
+            
+        } else if (type == EditTextDataTypeTypeOfCredits) {
+            titles = @[EditTextCreditTypeNormal,
+                       EditTextCreditTypeLiteracy,
+                       EditTextCreditTypeNumeracy];
+        } else {
+            //Non-existent type
+            NSException *e = [[NSException alloc] initWithName:@"EditTextEditScreen type" reason:@"No valid type" userInfo:nil];
+            [e raise];
+        }
+        
+        _buttons = [EditTextEditScreen getArrayOfControlsWithTexts:titles andTarget:self];
+    }
+    
+    //Add buttons to view
+    for (UIButton *b in _buttons) {
+        [_buttonContainer addSubview:b];
+    }
+}
+
 + (NSArray *)getArrayOfControlsWithTexts:(NSArray *)texts andTarget:(EditTextEditScreen *)target {
     NSMutableArray *a = [[NSMutableArray alloc] init];
     
     for (int x = 0; x < texts.count; x++) {
         UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
-        b.frame = CGRectZero;
+        b.frame = CGRectZero; //set in reeset layout
         [b setTitle:texts[x] forState:UIControlStateNormal];
         [b.titleLabel setFont:[Styles bodyFont]];
         [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
         [b addTarget:target action:@selector(setTextFieldText:) forControlEvents:UIControlEventTouchUpInside];
         [a addObject:b];
+        [b setBackgroundColor:[Styles greyColour]];
     }
     
     return a;
 }
 
-+ (CGRect)getFrameOfButtonWithIndex:(float)index outOf:(int)outOf withScreenSize:(CGSize)size {
++ (CGRect)getFrameOfButtonWithIndex:(float)index outOf:(NSUInteger)outOf withScreenSize:(CGSize)size {
     return CGRectMake(0, size.height * (index / outOf), size.width, size.height / outOf);
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Text Field    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self hide];
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    [self hide];
+    return YES;
 }
 
 - (void)setTextFieldText:(UIButton *)sender {
@@ -164,7 +210,7 @@
 //*********
 //****************
 //*************************
-//************************************    Button Pressed    ************************************
+#pragma mark - ***************************    Button Pressed    ************************************
 //*************************
 //****************
 //*********
@@ -177,25 +223,33 @@
 }
 
 - (void)doneButtonPressed {
-    if (_type == Date) {
-        //------------------------------ Date Filter Rules ------------------------------
+    if (_type == EditTextDataTypeDate) {
+        //Prevent
         if ([EditTextEditScreen dateIsValid:_text.text] || _text.text.length == 0)
             [self hide];
         else
             [[[UIAlertView alloc] initWithTitle:AppName
-                                        message:@"Make sure the date is valid. Check that the day and month are possible.\n\nIt must also be in the format\ndd/mm/yy."
+                                        message:@"Make sure the date is valid. Check that the day and month are possible.\n\nIt must also be in the format:\ndd/mm/yy."
                                        delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles: nil] show];
-    } else
+    } else {
+        //Lots of credits
+        if ([[ItemCredits stringByAppendingString:@":"] isEqualToString:_title.text] && [_text.text intValue] > 15)
+            [[[UIAlertView alloc] initWithTitle:AppName
+                                        message:@"Gee that's a lot of credits. I hope you aren't trying to cheat the system.\n\nLuckily for everyone else, it doesn't work like that."
+                                       delegate:nil
+                              cancelButtonTitle:@"Sigh"
+                              otherButtonTitles: nil] show];
         [self hide];
+    }
 }
 
 #define AppendNumpadCharacter(stringToAppend) _text.text = [_text.text stringByAppendingString:stringToAppend]
 #define SenderButtonString sender.titleLabel.text
 
 - (void)numpadButtonPressed:(UIButton *)sender {
-    if (_type == Date) {
+    if (_type == EditTextDataTypeDate) {
         if (_text.text.length < 8) {//6 for ddmmyy + 2 for slashes
             if (_text.text.length == 2 || _text.text.length == 4 + 1) {//+ 1 for previous slash
                 AppendNumpadCharacter(@"/");
@@ -203,7 +257,7 @@
             
             AppendNumpadCharacter(SenderButtonString);
         }
-    } else if (_type == Number) {
+    } else if (_type == EditTextDataTypeNumber && _text.text.length < 10) {
         AppendNumpadCharacter(SenderButtonString);
     }
 }
@@ -213,7 +267,7 @@
 //*********
 //****************
 //*************************
-//************************************    Date Validity    ************************************
+#pragma mark - ***************************    Date Validity    ************************************
 //*************************
 //****************
 //*********
@@ -228,7 +282,7 @@
     int month = [dateParts[1] intValue];
     int year = [dateParts[2] intValue];
     
-    if (day > 31) return NO; //Impossible date
+    if (day > 31 || day == 0) return NO; //Impossible date
     if (month == 0 || month > 12) return NO; //Impossible month
     
     //Check for incompatible day/month combinations
@@ -237,6 +291,8 @@
         
         if (day == 29 && [self yearIsPrime:year])
             return YES;
+        else
+            return NO;
     }
     
     if (month == 4 || month == 6 ||
@@ -264,7 +320,7 @@
 //*********
 //****************
 //*************************
-//************************************    Button Layouts    ************************************
+#pragma mark - ***************************    Numpad    ************************************
 //*************************
 //****************
 //*********

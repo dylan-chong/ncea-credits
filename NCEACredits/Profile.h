@@ -7,10 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "YearCollection.h"
+#import "GradePriority.h"
+#import "Year.h"
+#import "ToJSONTemplate.h"
 
-@interface Profile : NSObject
+@interface Profile : ToJSONTemplate
 
-- (id)initBlankProfile;
 - (NSArray *)getSubjects;
+
+@property NSString *profileName;
+@property GradePriority *gradePriority;
+@property NSUInteger *currentYear;
+- (Year *)getYearObjectForYearDate:(NSUInteger)date;
+@property YearCollection *yearCollection;
+
+@property NSString *currentGoalTitle;
 
 @end

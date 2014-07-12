@@ -52,10 +52,10 @@
 
 + (float)startingScaleFactor {  return 0.01;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; }
-+ (float)animationSpeed {    return 0.5; }
++ (float)animationSpeed {    return 0.6; }
 
 + (double)frameRate {
-    return 30.0;
+    return 30.0; //Do not chance unless you alter animation class formula
 }
 
 + (BOOL)rect:(CGRect)r1 isEqualToRect:(CGRect)r2 {

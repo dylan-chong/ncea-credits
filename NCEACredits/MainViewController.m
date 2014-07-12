@@ -21,6 +21,13 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    _setupController = [[SetupModalController alloc] init];
+    [_setupController showFromViewController:self];
+}
+
 - (void)createBubbleContainers {
     PositionCalculationBlock mainBlock = ^(void) {
         return  [Styles mainContainerRect];
@@ -92,7 +99,7 @@
 //*********
 //****************
 //*************************
-//************************************    Container Press Events    ************************************
+#pragma mark - ***************************    Container Press Events    ************************************
 //*************************
 //****************
 //*********

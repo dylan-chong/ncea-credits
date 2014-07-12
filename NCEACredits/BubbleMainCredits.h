@@ -7,12 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef enum {
-    Excellence = 0,
-    Merit = 1,
-    Achieved = 2
-} GradeType;
+#import "Grade.h"
 
 @interface BubbleMainCredits : UIView
 

@@ -21,8 +21,13 @@
 }
 
 - (Profile *)getCurrentProfile {
-    if (_currentProfile) return _currentProfile;
-    else return [[Profile alloc] initBlankProfile];
+    if (_currentProfile)
+        return _currentProfile;
+    else {
+        
+#warning load JSON
+        return [[Profile alloc] initWithJSONOrNil:nil];
+    }
 }
 
 - (void)saveCurrentProfile {
@@ -36,7 +41,7 @@
 //*********
 //****************
 //*************************
-//************************************    Delegate    ************************************
+#pragma mark - ***************************    Delegate    ************************************
 //*************************
 //****************
 //*********

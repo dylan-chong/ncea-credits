@@ -55,7 +55,7 @@
 }
 
 - (void)setTextLabelText:(NSString *)text {
-    if (_type == Number) text = [EditTextBubble numbersOnlyStringFilter:text];
+    if (_type == EditTextDataTypeNumber) text = [EditTextBubble numbersOnlyStringFilter:text];
     
     if (![text isEqualToString:@""]) {
         _textLabel.text = text;

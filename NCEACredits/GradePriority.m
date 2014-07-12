@@ -1,17 +1,17 @@
 //
-//  Profile.m
+//  GradePriority.m
 //  NCEACredits
 //
-//  Created by Dylan Chong on 4/02/14.
+//  Created by Dylan Chong on 11/06/14.
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "Profile.h"
+#import "GradePriority.h"
 
-@implementation Profile
+@implementation GradePriority
 
 - (void)createBlank {
-    
+    _priorityOrder = [GradePriority defaultPriorityOrder];
 }
 
 - (void)loadFromJSON:(NSData *)json {
@@ -35,13 +35,8 @@
 //****
 //*
 
-- (NSArray *)getSubjects {
-    return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"Spanish", nil];
-}
-
-- (id)getYearObjectForYearDate:(NSUInteger)date {
-    return nil;
-    #warning TODO: do year thing
++ (NSArray *)defaultPriorityOrder {
+    return @[tNSN(FinalGrade), tNSN(PreliminaryGrade), tNSN(ExpectedGrade)];
 }
 
 @end

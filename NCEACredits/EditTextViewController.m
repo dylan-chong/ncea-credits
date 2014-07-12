@@ -87,11 +87,12 @@
         y *= indexOnPage / (bubbles - 1.0);
     }
     
-    int whichPage = [FlickScroller getPageForIndex:index andNumberOfItems:bubbles];
+    NSInteger whichPage = [FlickScroller getPageForIndex:index andNumberOfItems:bubbles];
     
-    int thisItemsPage = [flickScroller getCurrentPageIndex];
-    int xPageMove = (thisItemsPage - whichPage) * xPageMod * [Styles screenWidth];
-    int yPageMove = (thisItemsPage - whichPage) * yPageMod * [Styles screenHeight];
+    NSInteger thisItemsPage = [flickScroller getCurrentPageIndex];
+    NSInteger xPageMove = (thisItemsPage - whichPage) * xPageMod * [Styles screenWidth];
+    NSInteger yPageMove = (thisItemsPage - whichPage) * yPageMod * [Styles screenHeight];
+//    For debugging pages
 //    if (index == 0) NSLog(@"---------------------------");
 //    NSLog(@"Index: %i, WhichPage: %i, ThisPage: %i", index, whichPage, thisItemsPage);
     
@@ -139,7 +140,7 @@
 //*********
 //****************
 //*************************
-//************************************    EditTextScreen    ************************************
+#pragma mark - ***************************    EditTextScreen    ************************************
 //*************************
 //****************
 //*********
@@ -163,7 +164,7 @@
 //*********
 //****************
 //*************************
-//************************************    Scroller Stuff    ************************************
+#pragma mark - ***************************    Scroller Stuff    ************************************
 //*************************
 //****************
 //*********
@@ -195,6 +196,8 @@
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     [_editScreen resetFrameWithAnimation:YES];
+    
+    [_flickScroller resetArrowPositions];
 }
 
 - (void)startReturnSlideAnimation {

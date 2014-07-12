@@ -16,6 +16,21 @@
     #import <Foundation/Foundation.h>
 #endif
 
+
+
 #define ApplicationDelegate (AppDelegate *)[[UIApplication sharedApplication] delegate]
 
 #define AppName [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]
+
+
+#define ItemCredits @"Credits"
+
+
+#define EditTextBoolYes @"Yes"
+#define EditTextBoolNo @"No"
+
+#define EditTextCreditTypeNormal @"Normal"
+#define EditTextCreditTypeLiteracy @"Literacy"
+#define EditTextCreditTypeNumeracy @"Numeracy"
+
+#define tNSN(x) [NSNumber numberWithInt:x]

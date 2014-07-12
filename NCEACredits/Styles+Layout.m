@@ -193,7 +193,7 @@
 //Selection Paging
 
 + (float)numberOfItemsInSelectionViewPer100px {
-    return 1.2;
+    return 0.8 / [Styles sizeModifier];
 }
 
 + (NSUInteger)minimumItemsPerSelectionPage {

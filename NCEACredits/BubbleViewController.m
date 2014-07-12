@@ -14,6 +14,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
     return self;
 }
 
@@ -83,7 +84,7 @@
 //*********
 //****************
 //*************************
-//************************************    Starting Animation    ************************************
+#pragma mark - ***************************    Starting Animation    ************************************
 //*************************
 //****************
 //*********
@@ -168,13 +169,12 @@
 //*********
 //****************
 //*************************
-//************************************    Transition    ************************************
+#pragma mark - ***************************    Transition    ************************************
 //*************************
 //****************
 //*********
 //****
 //*
-
 - (void)startTransitionToChildBubble:(BubbleContainer *)b andBubbleViewController:(BubbleViewController *)bubbleViewController {
     _childBubbleViewController = bubbleViewController;
     [self setTransitionDifsWithBubbleContainerFrame:b.frame];
@@ -279,7 +279,7 @@
 //*********
 //****************
 //*************************
-//************************************    View Controller Stuff    ************************************
+#pragma mark - ***************************    View Controller Stuff    ************************************
 //*************************
 //****************
 //*********
@@ -312,6 +312,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     
     CGRect frame = CGRectMake(0, 0, 0, 0);
     

@@ -1,17 +1,19 @@
 //
-//  Profile.m
+//  Grade.m
 //  NCEACredits
 //
-//  Created by Dylan Chong on 4/02/14.
+//  Created by Dylan Chong on 4/07/14.
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "Profile.h"
+#import "Grade.h"
 
-@implementation Profile
+@implementation Grade
 
 - (void)createBlank {
-    
+    _final = None;
+    _expected = None;
+    _preliminary = None;
 }
 
 - (void)loadFromJSON:(NSData *)json {
@@ -35,13 +37,5 @@
 //****
 //*
 
-- (NSArray *)getSubjects {
-    return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"Spanish", nil];
-}
-
-- (id)getYearObjectForYearDate:(NSUInteger)date {
-    return nil;
-    #warning TODO: do year thing
-}
 
 @end
