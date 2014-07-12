@@ -8,7 +8,6 @@
 
 #import "SetupRootController.h"
 #import "Year.h"
-#import "TableViewCellData.h"
 
 @interface SetupRootController ()
 
@@ -20,27 +19,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        _cellData = @[
-                      [[TableViewCellData alloc] initWithDetail:@"Name"
-                                                           text:@"Abc"
-                                                        reuseId:nil
-                                                       andStyle:UITableViewCellStyleValue2],
-                      
-                      [[TableViewCellData alloc] initWithDetail:@"Current Year"
-                                                           text:[NSString stringWithFormat:@"%i", [Year getCurrentYearDate]]
-                                                        reuseId:nil
-                                                       andStyle:UITableViewCellStyleValue2],
-                      
-                      [[TableViewCellData alloc] initWithDetail:@"Years"
-                                                           text:@""
-                                                        reuseId:nil
-                                                       andStyle:UITableViewCellStyleDefault],
-                      
-                      [[TableViewCellData alloc] initWithDetail:@"Goal"
-                                                           text:@""
-                                                        reuseId:nil
-                                                       andStyle:UITableViewCellStyleDefault],
-                      ];
+
     }
     return self;
 }
@@ -48,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,10 +48,6 @@
 //****
 //*
 
-- (TableViewCellData *)getTableViewCellDataAtIndex:(NSInteger)index {
-    return (TableViewCellData *)_cellData[index];
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -87,15 +63,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TableViewCellData *t = [self getTableViewCellDataAtIndex:indexPath.row];
     
     UITableViewCell *cell; //= [tableView dequeueReusableCellWithIdentifier:t.reuseId forIndexPath:indexPath];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:t.style
-                                      reuseIdentifier:t.reuseId];
-        cell.detailTextLabel.text = t.detail;
-        cell.textLabel.text = t.text;
+        
     }
     
     return cell;

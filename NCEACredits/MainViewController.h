@@ -7,11 +7,9 @@
 //
 
 #import "BubbleViewController.h"
-#import "SetupModalController.h"
 
 @interface MainViewController : BubbleViewController
 
 @property (weak, nonatomic) BubbleContainer *addContainer, *gradesContainer, *statsContainer, *optionsContainer;
-@property SetupModalController *setupController;
 
 @end

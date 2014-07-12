@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "AddViewController.h"
 #import "GradesViewController.h"
+#import "SetupNavigationController.h"
 
 @implementation MainViewController
 
@@ -24,8 +25,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    _setupController = [[SetupModalController alloc] init];
-    [_setupController showFromViewController:self];
+    //Show setup window
+    [SetupNavigationController showStoryboardFromViewController:self];
 }
 
 - (void)createBubbleContainers {

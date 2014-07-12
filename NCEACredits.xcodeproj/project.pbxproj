@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		840440301971428500CC390E /* TableViewCellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8404402F1971428500CC390E /* TableViewCellData.m */; };
+		840440331971FAA700CC390E /* SetupNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840440321971FAA700CC390E /* SetupNavigationController.m */; };
 		840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D586C18820C5200DE24B7 /* AnimationManager.m */; };
 		840D5871188216B200DE24B7 /* AnimationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5870188216B200DE24B7 /* AnimationObject.m */; };
 		840D5874188240A700DE24B7 /* GoalTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5873188240A700DE24B7 /* GoalTitle.m */; };
@@ -18,11 +18,9 @@
 		84265A6C1904A32000141564 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84265A6B1904A32000141564 /* QuartzCore.framework */; };
 		844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844CA93618AAB15A00D55F11 /* GradesViewController.m */; };
 		8459996D18AC00DE005F3FB1 /* SimpleSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */; };
-		8459E885196FD0A0000D1C85 /* SetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E884196FD0A0000D1C85 /* SetupController.m */; };
 		8459E887196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */; };
 		8459E88C196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */; };
 		8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E88E196FDB42000D1C85 /* SetupRootController.m */; };
-		8459E892196FDB8E000D1C85 /* SetupModalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E891196FDB8E000D1C85 /* SetupModalController.m */; };
 		8459E8951970DC8D000D1C85 /* SetupYearController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E8941970DC8D000D1C85 /* SetupYearController.m */; };
 		8459E8981970DDD2000D1C85 /* SetupGoalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E8971970DDD2000D1C85 /* SetupGoalController.m */; };
 		845C40DE19481350001B1499 /* YearCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40DD19481350001B1499 /* YearCollection.m */; };
@@ -80,8 +78,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8404402E1971428500CC390E /* TableViewCellData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellData.h; sourceTree = "<group>"; };
-		8404402F1971428500CC390E /* TableViewCellData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCellData.m; sourceTree = "<group>"; };
+		840440311971FAA700CC390E /* SetupNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNavigationController.h; sourceTree = "<group>"; };
+		840440321971FAA700CC390E /* SetupNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNavigationController.m; sourceTree = "<group>"; };
 		840D586B18820C5200DE24B7 /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
 		840D586C18820C5200DE24B7 /* AnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationManager.m; sourceTree = "<group>"; };
 		840D586F188216B200DE24B7 /* AnimationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationObject.h; sourceTree = "<group>"; };
@@ -101,14 +99,10 @@
 		844CA93618AAB15A00D55F11 /* GradesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradesViewController.m; sourceTree = "<group>"; };
 		8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSelectionViewController.h; sourceTree = "<group>"; };
 		8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleSelectionViewController.m; sourceTree = "<group>"; };
-		8459E883196FD0A0000D1C85 /* SetupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupController.h; sourceTree = "<group>"; };
-		8459E884196FD0A0000D1C85 /* SetupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupController.m; sourceTree = "<group>"; };
 		8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "SetupStoryboard~iphone.storyboard"; sourceTree = "<group>"; };
 		8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "SetupStoryboard~ipad.storyboard"; sourceTree = "<group>"; };
 		8459E88D196FDB42000D1C85 /* SetupRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupRootController.h; sourceTree = "<group>"; };
 		8459E88E196FDB42000D1C85 /* SetupRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupRootController.m; sourceTree = "<group>"; };
-		8459E890196FDB8E000D1C85 /* SetupModalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupModalController.h; sourceTree = "<group>"; };
-		8459E891196FDB8E000D1C85 /* SetupModalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupModalController.m; sourceTree = "<group>"; };
 		8459E8931970DC8D000D1C85 /* SetupYearController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupYearController.h; sourceTree = "<group>"; };
 		8459E8941970DC8D000D1C85 /* SetupYearController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupYearController.m; sourceTree = "<group>"; };
 		8459E8961970DDD2000D1C85 /* SetupGoalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupGoalController.h; sourceTree = "<group>"; };
@@ -234,12 +228,8 @@
 		8459E868196FB456000D1C85 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
-				8459E890196FDB8E000D1C85 /* SetupModalController.h */,
-				8459E891196FDB8E000D1C85 /* SetupModalController.m */,
-				8459E883196FD0A0000D1C85 /* SetupController.h */,
-				8459E884196FD0A0000D1C85 /* SetupController.m */,
-				8404402E1971428500CC390E /* TableViewCellData.h */,
-				8404402F1971428500CC390E /* TableViewCellData.m */,
+				840440311971FAA700CC390E /* SetupNavigationController.h */,
+				840440321971FAA700CC390E /* SetupNavigationController.m */,
 				8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */,
 				8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */,
 				8459E88D196FDB42000D1C85 /* SetupRootController.h */,
@@ -416,7 +406,7 @@
 			name = "Screen Templates";
 			sourceTree = "<group>";
 		};
-		84B5A2DB1880D98D00969952 /* Screens */ = {
+		84B5A2DB1880D98D00969952 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				841DAE0518B3123700626302 /* AddViewController.h */,
@@ -426,7 +416,7 @@
 				84B5A2D51880D98200969952 /* MainViewController.h */,
 				84B5A2D61880D98200969952 /* MainViewController.m */,
 			);
-			name = Screens;
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		84FCB2E61902765C00BBE4B0 /* Edit Text */ = {
@@ -472,7 +462,7 @@
 				840D586E18820C5700DE24B7 /* Animation */,
 				84B5A2CD1880D93600969952 /* Bubbles */,
 				84B5A2D41880D96700969952 /* Screen Templates */,
-				84B5A2DB1880D98D00969952 /* Screens */,
+				84B5A2DB1880D98D00969952 /* View Controllers */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -611,6 +601,7 @@
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
 				8459E8951970DC8D000D1C85 /* SetupYearController.m in Sources */,
 				84B5A2B91880D91000969952 /* Styles.m in Sources */,
+				840440331971FAA700CC390E /* SetupNavigationController.m in Sources */,
 				84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */,
 				844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */,
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
@@ -625,12 +616,9 @@
 				84A435CC1966B9D70091905B /* Assessment.m in Sources */,
 				84B5A2D31880D96300969952 /* BubbleViewController.m in Sources */,
 				841DAE0A18B312AC00626302 /* EditTextViewController.m in Sources */,
-				840440301971428500CC390E /* TableViewCellData.m in Sources */,
 				84B64E4618B45B770061ED9D /* EditTextBubble.m in Sources */,
 				8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */,
 				84B5A2CC1880D93100969952 /* BubbleContainer.m in Sources */,
-				8459E885196FD0A0000D1C85 /* SetupController.m in Sources */,
-				8459E892196FDB8E000D1C85 /* SetupModalController.m in Sources */,
 				84B5A2861880D8AD00969952 /* main.m in Sources */,
 				84B5A2C91880D93100969952 /* BubbleMainCredits.m in Sources */,
 			);

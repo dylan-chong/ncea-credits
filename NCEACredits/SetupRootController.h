@@ -10,6 +10,4 @@
 
 @interface SetupRootController : UITableViewController
 
-@property NSArray *cellData;
-
 @end
