@@ -1,9 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="1oF-rQ-YIT">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Setup Root Controller - NCEA Credits - Setup-->
+        <scene sceneID="xjf-3r-309">
+            <objects>
+                <tableViewController modalPresentationStyle="formSheet" id="i4w-bf-PWb" customClass="SetupRootController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="eSh-fP-3Nu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="i4w-bf-PWb" id="Nvf-c3-qNz"/>
+                            <outlet property="delegate" destination="i4w-bf-PWb" id="yNu-dD-tL9"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="NCEA Credits - Setup" id="OO3-dn-MfK"/>
+                    <connections>
+                        <segue destination="hWw-ei-UEb" kind="push" identifier="years" id="zSh-gq-guj"/>
+                        <segue destination="EXb-p1-TOn" kind="push" identifier="goal" id="m5g-wx-9gW"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NnV-rj-Hl8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="774" y="62"/>
+        </scene>
+        <!--Setup Year Controller - Years-->
+        <scene sceneID="kz7-nQ-l8V">
+            <objects>
+                <tableViewController id="hWw-ei-UEb" customClass="SetupYearController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="guq-Wy-JrU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="hWw-ei-UEb" id="FXg-s8-0AX"/>
+                            <outlet property="delegate" destination="hWw-ei-UEb" id="dCu-gC-IEp"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Years" id="Aen-rc-Qea"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rRr-0L-Iuq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1444" y="-297"/>
+        </scene>
+        <!--Setup Goal Controller - Goal-->
+        <scene sceneID="r00-X0-V6m">
+            <objects>
+                <tableViewController id="EXb-p1-TOn" customClass="SetupGoalController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="48G-OJ-LHi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="EXb-p1-TOn" id="a6g-GQ-4BP"/>
+                            <outlet property="delegate" destination="EXb-p1-TOn" id="prn-Zy-9vc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Goal" id="cNO-w7-bbs"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cjA-wX-591" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1444" y="402"/>
+        </scene>
+        <!--Setup Navigation Controller-->
+        <scene sceneID="qPi-jq-Ugn">
+            <objects>
+                <navigationController definesPresentationContext="YES" modalPresentationStyle="formSheet" id="1oF-rQ-YIT" customClass="SetupNavigationController" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="iLa-ak-vVr">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="i4w-bf-PWb" kind="relationship" relationship="rootViewController" id="DQe-Qh-uYx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o2r-Y2-CKg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="133" y="62"/>
+        </scene>
+    </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

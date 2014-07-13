@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		840440331971FAA700CC390E /* SetupNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840440321971FAA700CC390E /* SetupNavigationController.m */; };
+		840440391971FF2100CC390E /* TableViewCellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 840440381971FF2100CC390E /* TableViewCellData.m */; };
 		840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D586C18820C5200DE24B7 /* AnimationManager.m */; };
 		840D5871188216B200DE24B7 /* AnimationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5870188216B200DE24B7 /* AnimationObject.m */; };
 		840D5874188240A700DE24B7 /* GoalTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5873188240A700DE24B7 /* GoalTitle.m */; };
@@ -21,7 +22,6 @@
 		8459E887196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */; };
 		8459E88C196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */; };
 		8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E88E196FDB42000D1C85 /* SetupRootController.m */; };
-		8459E8951970DC8D000D1C85 /* SetupYearController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E8941970DC8D000D1C85 /* SetupYearController.m */; };
 		8459E8981970DDD2000D1C85 /* SetupGoalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E8971970DDD2000D1C85 /* SetupGoalController.m */; };
 		845C40DE19481350001B1499 /* YearCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40DD19481350001B1499 /* YearCollection.m */; };
 		845C40E119481973001B1499 /* GradePriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40E019481973001B1499 /* GradePriority.m */; };
@@ -80,6 +80,8 @@
 /* Begin PBXFileReference section */
 		840440311971FAA700CC390E /* SetupNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNavigationController.h; sourceTree = "<group>"; };
 		840440321971FAA700CC390E /* SetupNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNavigationController.m; sourceTree = "<group>"; };
+		840440371971FF2100CC390E /* TableViewCellData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableViewCellData.h; path = "../../../Frameworks/My Table View Data/TableViewCellData.h"; sourceTree = "<group>"; };
+		840440381971FF2100CC390E /* TableViewCellData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableViewCellData.m; path = "../../../Frameworks/My Table View Data/TableViewCellData.m"; sourceTree = "<group>"; };
 		840D586B18820C5200DE24B7 /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
 		840D586C18820C5200DE24B7 /* AnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationManager.m; sourceTree = "<group>"; };
 		840D586F188216B200DE24B7 /* AnimationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationObject.h; sourceTree = "<group>"; };
@@ -103,8 +105,6 @@
 		8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "SetupStoryboard~ipad.storyboard"; sourceTree = "<group>"; };
 		8459E88D196FDB42000D1C85 /* SetupRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupRootController.h; sourceTree = "<group>"; };
 		8459E88E196FDB42000D1C85 /* SetupRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupRootController.m; sourceTree = "<group>"; };
-		8459E8931970DC8D000D1C85 /* SetupYearController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupYearController.h; sourceTree = "<group>"; };
-		8459E8941970DC8D000D1C85 /* SetupYearController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupYearController.m; sourceTree = "<group>"; };
 		8459E8961970DDD2000D1C85 /* SetupGoalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupGoalController.h; sourceTree = "<group>"; };
 		8459E8971970DDD2000D1C85 /* SetupGoalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupGoalController.m; sourceTree = "<group>"; };
 		845C40DC19481350001B1499 /* YearCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearCollection.h; sourceTree = "<group>"; };
@@ -228,14 +228,14 @@
 		8459E868196FB456000D1C85 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
+				840440371971FF2100CC390E /* TableViewCellData.h */,
+				840440381971FF2100CC390E /* TableViewCellData.m */,
 				840440311971FAA700CC390E /* SetupNavigationController.h */,
 				840440321971FAA700CC390E /* SetupNavigationController.m */,
 				8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */,
 				8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */,
 				8459E88D196FDB42000D1C85 /* SetupRootController.h */,
 				8459E88E196FDB42000D1C85 /* SetupRootController.m */,
-				8459E8931970DC8D000D1C85 /* SetupYearController.h */,
-				8459E8941970DC8D000D1C85 /* SetupYearController.m */,
 				8459E8961970DDD2000D1C85 /* SetupGoalController.h */,
 				8459E8971970DDD2000D1C85 /* SetupGoalController.m */,
 			);
@@ -599,8 +599,8 @@
 				84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */,
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
-				8459E8951970DC8D000D1C85 /* SetupYearController.m in Sources */,
 				84B5A2B91880D91000969952 /* Styles.m in Sources */,
+				840440391971FF2100CC390E /* TableViewCellData.m in Sources */,
 				840440331971FAA700CC390E /* SetupNavigationController.m in Sources */,
 				84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */,
 				844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */,
