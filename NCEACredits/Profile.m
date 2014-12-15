@@ -52,20 +52,24 @@
 - (NSArray *)getYearsAsTableDatasForSetup {
     NSMutableArray *dataArray = [[NSMutableArray alloc] init];
     
-    for (Year *year in _yearCollection.years) {
-        [dataArray addObject:[[TableViewCellData alloc] initWithDetail:[NSString stringWithFormat:@"NCEA Level %i", year.primaryLevelNumber]
-                                                                  text:[NSString stringWithFormat:@"%i", year.yearDate]
+    Year *year;
+    for (int a = 0; a < _yearCollection.years.count; a++) {
+        year = _yearCollection.years[a];
+        [dataArray addObject:[[TableViewCellData alloc] initWithDetail:[NSString stringWithFormat:@"NCEA Level %lu", (unsigned long)year.primaryLevelNumber]
+                                                                  text:[NSString stringWithFormat:@"%lu", (unsigned long)year.yearDate]
                                                                reuseId:@"year"
                                                              accessory:UITableViewCellAccessoryNone
                                                                  style:UITableViewCellStyleValue1
-                                                              selected:NO]];
+                                                              selected:NO
+                                                             optionalData:year.identifier
+                              ]];
     }
     
     return dataArray;
 }
 
-- (NSInteger)getYearCurrentlyInUseOtherwiseCurrentDateYear {
-    if (_currentYear) return _currentYear;
+- (NSUInteger)getYearCurrentlyInUseOtherwiseCurrentDateYear {
+    if (_currentYear) return *(_currentYear);
     else return [Year getCurrentYearDate];
 }
 

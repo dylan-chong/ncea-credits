@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TableViewCellData.h"
 
-@interface SetupRootController : UITableViewController <UIAlertViewDelegate>
+@interface SetupRootController : UITableViewController
 @property NSArray *generalCells, *goalCells;
 @property NSMutableArray *yearCells;
 @end

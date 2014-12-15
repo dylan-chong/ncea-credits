@@ -15,6 +15,7 @@
 
 @property NSUInteger yearDate, primaryLevelNumber;
 @property AssessmentCollection *assessmentCollection;
+@property NSUInteger identifier;
 
 + (NSUInteger)getCurrentYearDate;
 

@@ -47,14 +47,16 @@
                                                reuseId:@"edit"
                                              accessory:UITableViewCellAccessoryNone
                                                  style:UITableViewCellStyleValue1
-                                              selected:NO],
+                                              selected:NO
+                                          optionalData:0],
              
              [[TableViewCellData alloc] initWithDetail:[NSString stringWithFormat:@"%lu", (unsigned long)[CurrentProfile getYearCurrentlyInUseOtherwiseCurrentDateYear]]
                                                   text:@"Current Year"
                                                reuseId:@"edit"
                                              accessory:UITableViewCellAccessoryNone
                                                  style:UITableViewCellStyleValue1
-                                              selected:NO],
+                                              selected:NO
+                                          optionalData:0],
              ];
 }
 
@@ -69,7 +71,8 @@
                           reuseId:@"goal"
                           accessory:UITableViewCellAccessoryNone
                           style:UITableViewCellStyleDefault
-                          selected:NO]
+                          selected:NO
+                          optionalData:0]
          ];
     }
     
@@ -88,17 +91,32 @@
         //Creates new TableViewCellData not year object. Save year object in doneButtonPressed
     }
     
+    //Add year button
     [y addObject:[[TableViewCellData alloc] initWithDetail:@""
                                                       text:@"Add year..."
                                                    reuseId:@"add"
                                                  accessory:UITableViewCellAccessoryNone
                                                      style:UITableViewCellStyleDefault
                                                   selected:NO
+                                              optionalData:0
+                  
                   ]
      ];
     
     return y;
 }
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Year Stuff    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (TableViewCellData *)getNewYearObjectWithAlreadyExistingYears:(BOOL)alreadyExistingYears {
     unsigned long year;
@@ -115,7 +133,8 @@
             reuseId:@"year"
             accessory:UITableViewCellAccessoryNone
             style:UITableViewCellStyleValue1
-            selected:NO];
+            selected:NO
+            optionalData:[self getUnusedYearIdentifer]];
 }
 
 - (unsigned long)getNewYearDate {
@@ -151,6 +170,34 @@
     }
     
     return array;
+}
+
+//------------------------------ Optional data (year identifiers) ------------------------------
+//Year identifiers link the cells to the data
+
+- (NSUInteger)getUnusedYearIdentifer {
+    NSArray *usedIDs = [self getAllUsedYearIdentifiers];
+    NSUInteger largestID = 0;
+    
+    //Find an identifier larger than the largest being used
+    for (NSNumber *n in usedIDs) {
+        if ([n integerValue] > largestID)
+            largestID = [n integerValue];
+    }
+    NSLog(@"%lu", largestID +1);
+    return largestID + 1;
+}
+
+- (NSArray *)getAllUsedYearIdentifiers {
+    NSMutableArray *used = [[NSMutableArray alloc] init];
+    
+    if (_yearCells.count > 1) {
+        for (int a = 0; a < _yearCells.count - 1; a++) {//-1 to avoid add year button
+            [used addObject:[NSNumber numberWithInteger:((TableViewCellData *)_yearCells[a]).optionalData]];
+        }
+    }
+    
+    return used;
 }
 
 //*
@@ -281,7 +328,7 @@
         } else {
             //Current year cell
             [self currentYearSelected];
-
+            
         }
     } else if (indexPath.section == 1) {
         
@@ -291,9 +338,9 @@
             [pressedCell setSelected:NO];
         } else {
             //Year tapped
-            
+            [self yearWasTappedAtRow:indexPath.row];
         }
-    
+        
     } else if (indexPath.section == 2) {
         
         //Goal
@@ -318,6 +365,8 @@
     }
 }
 
+//------------------------------ Add ------------------------------
+
 - (void)addYearCellAndData {
     NSInteger index = _yearCells.count - 1;
     TableViewCellData *d = [self getNewYearObjectWithAlreadyExistingYears:YES];
@@ -325,21 +374,84 @@
     
     NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:1];
     [self.tableView insertRowsAtIndexPaths:@[path]
-                     withRowAnimation:UITableViewRowAnimationAutomatic];
+                          withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
     [self.tableView deselectRowAtIndexPath:path animated:NO];
 }
 
-- (void)yearWasTappedAtIndex:(NSInteger)index {
+//------------------------------ Edit Years ------------------------------
+
+- (void)yearWasTappedAtRow:(NSInteger)row {
+    //Original cell data
+    TableViewCellData *tappedYearData = _yearCells[row];
     
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please type in a year,\nthen select its NCEA Level." preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = tappedYearData.text;
+        textField.placeholder = @"Year";
+    }];
+    
+    
+    
+    //Action buttons (NCEA level + cancel)
+    for (int a = 1; a < 5; a++) {
+        [alert addAction:[UIAlertAction actionWithTitle:
+                          [NSString stringWithFormat:@"NCEA Level %i", a]
+                                                  style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction *action) {
+                                                    //Selected
+                                                    [self changeYearWithLevel:a
+                                                                      andYear:((UITextField *)alert.textFields[0]).text
+                                                                  onCellAtRow:row];
+                                                }]];
+    }
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction *action) {
+                                                //Cancel - do nothing
+                                            }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
-//------------------------------ Selecting year ------------------------------
+- (void)changeYearWithLevel:(NSInteger)level andYear:(NSString *)year onCellAtRow:(NSInteger)row {
+    TableViewCellData *data = _yearCells[row];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:1]];
+    
+    NSString *detail = [NSString stringWithFormat:@"NCEA Level %li", (long)level];
+    data.detail = detail;
+    cell.detailTextLabel.text = detail;
+    
+    //Validate year
+    if ([self isDateTextValidForRealDate:year]) {
+        data.text = year;
+        cell.textLabel.text = year;
+    } else {
+        //Not valid
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please enter a valid year." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
+- (BOOL)isDateTextValidForRealDate:(NSString *)dateToCheck {
+    //Make sure its 4 chars long and all numbers
+    if (dateToCheck.length != 4 || [dateToCheck rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location != NSNotFound) {
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
+//------------------------------ Selecting current year ------------------------------
 - (void)currentYearSelected { //Current Year button (second item)
     UIAlertController *alert = [UIAlertController
-                            alertControllerWithTitle:AppName
-                            message:@"Choose your year\n(or close this and add a new one)."
-                            preferredStyle:UIAlertControllerStyleActionSheet];
+                                alertControllerWithTitle:AppName
+                                message:@"Choose your year\n(or close this and add a new one)."
+                                preferredStyle:UIAlertControllerStyleActionSheet];
     
     for (int a = 0; a < _yearCells.count - 1; a++) { // -1 cos last item in _year cells is add year
         TableViewCellData *year = (TableViewCellData *)_yearCells[a];
@@ -357,64 +469,15 @@
     [alert addAction:
      [UIAlertAction actionWithTitle:@"Cancel"
                               style:UIAlertActionStyleCancel
-                            handler:^(UIAlertAction *action) {
-                                //Do nothing on cancel
-                            }]];
+                            handler:nil]];
     
-    [self presentViewController:alert animated:YES completion:^{}];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)setCurrentYear:(unsigned long)indexFromYears {
     NSString *text = [self getYearDatesOfListedYears][indexFromYears];
     ((TableViewCellData *)_generalCells[1]).text = text;
     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]].detailTextLabel.text = text;
-}
-
-//------------------------------ Alert View Textbox ------------------------------
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSString *input = [alertView textFieldAtIndex:0].text;
-    [[alertView textFieldAtIndex:0] resignFirstResponder];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:alertView.tag inSection:0];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    
-    if ([SetupRootController validateInputText:input atIndexPath:indexPath]) {
-        //Valid input
-        [self getTableViewCellDataAtIndexPath:[NSIndexPath indexPathForRow:alertView.tag inSection:0]].detail = input;
-        cell.detailTextLabel.text = input;
-    }
-}
-
-+ (BOOL)validateInputText:(NSString *)text atIndexPath:(NSIndexPath *)indexPath {
-    
-    switch (indexPath.row) {
-        case 0:
-            //Name
-            return YES;//Probably nothing ever wrong with name
-            break;
-            
-        case 1:
-            //Current Year
-            
-            if (text.length != 4 || [text rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location != NSNotFound) {
-                
-                UIAlertView *a = [[UIAlertView alloc] initWithTitle:AppName
-                                                            message:@"Please enter a valid year."
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-                [a show];
-                
-                return NO;
-            }
-            
-            break;
-            
-        default:
-            break;
-    }
-    
-    return YES;
 }
 
 //*
@@ -430,6 +493,7 @@
 //*
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Only allow deleting of years
     if (indexPath.section == 1) {
         if (indexPath.row != _yearCells.count - 1) {
             
@@ -453,7 +517,6 @@
         //Delete pressed
         [_yearCells removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
     }
 }
 
@@ -471,6 +534,11 @@
 
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
 #warning TODO: save data to profile ad hide
+#warning TODO: make sure there are no duplicate years
+    
+}
+
+- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
     
 }
 

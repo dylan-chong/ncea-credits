@@ -19,6 +19,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="NCEA Credits - Setup" id="ltB-ig-Jul">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="fV3-Oh-n1H">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="M8G-28-RdR" id="ngF-Bm-Fyv"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="zcP-Zh-muT">
                             <connections>
                                 <action selector="doneButtonPressed:" destination="M8G-28-RdR" id="6s3-pq-iyQ"/>

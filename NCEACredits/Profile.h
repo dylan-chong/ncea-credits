@@ -21,7 +21,7 @@
 
 @property NSUInteger *currentYear;
 - (Year *)getYearObjectForYearDate:(NSUInteger)date;
-- (int)getYearCurrentlyInUseOtherwiseCurrentDateYear;
+- (NSUInteger)getYearCurrentlyInUseOtherwiseCurrentDateYear;
 
 @property YearCollection *yearCollection;
 - (NSArray *)getYearsAsTableDatasForSetup;
