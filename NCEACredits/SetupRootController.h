@@ -10,6 +10,6 @@
 #import "TableViewCellData.h"
 
 @interface SetupRootController : UITableViewController <UIAlertViewDelegate>
-@property NSArray *cellData;
-@property TableViewCellData *addYearData;
+@property NSArray *generalCells, *goalCells;
+@property NSMutableArray *yearCells;
 @end

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		840440331971FAA700CC390E /* SetupNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840440321971FAA700CC390E /* SetupNavigationController.m */; };
 		840440391971FF2100CC390E /* TableViewCellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 840440381971FF2100CC390E /* TableViewCellData.m */; };
+		8404403C1972781C00CC390E /* DefaultGoals.m in Sources */ = {isa = PBXBuildFile; fileRef = 8404403B1972781C00CC390E /* DefaultGoals.m */; };
 		840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D586C18820C5200DE24B7 /* AnimationManager.m */; };
 		840D5871188216B200DE24B7 /* AnimationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5870188216B200DE24B7 /* AnimationObject.m */; };
 		840D5874188240A700DE24B7 /* GoalTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5873188240A700DE24B7 /* GoalTitle.m */; };
@@ -22,7 +23,6 @@
 		8459E887196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */; };
 		8459E88C196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */; };
 		8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E88E196FDB42000D1C85 /* SetupRootController.m */; };
-		8459E8981970DDD2000D1C85 /* SetupGoalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E8971970DDD2000D1C85 /* SetupGoalController.m */; };
 		845C40DE19481350001B1499 /* YearCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40DD19481350001B1499 /* YearCollection.m */; };
 		845C40E119481973001B1499 /* GradePriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40E019481973001B1499 /* GradePriority.m */; };
 		849D3D231880F2810030D432 /* AnchorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D3D221880F2810030D432 /* AnchorView.m */; };
@@ -82,6 +82,8 @@
 		840440321971FAA700CC390E /* SetupNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNavigationController.m; sourceTree = "<group>"; };
 		840440371971FF2100CC390E /* TableViewCellData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableViewCellData.h; path = "../../../Frameworks/My Table View Data/TableViewCellData.h"; sourceTree = "<group>"; };
 		840440381971FF2100CC390E /* TableViewCellData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableViewCellData.m; path = "../../../Frameworks/My Table View Data/TableViewCellData.m"; sourceTree = "<group>"; };
+		8404403A1972781C00CC390E /* DefaultGoals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultGoals.h; sourceTree = "<group>"; };
+		8404403B1972781C00CC390E /* DefaultGoals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultGoals.m; sourceTree = "<group>"; };
 		840D586B18820C5200DE24B7 /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
 		840D586C18820C5200DE24B7 /* AnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationManager.m; sourceTree = "<group>"; };
 		840D586F188216B200DE24B7 /* AnimationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationObject.h; sourceTree = "<group>"; };
@@ -105,8 +107,6 @@
 		8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "SetupStoryboard~ipad.storyboard"; sourceTree = "<group>"; };
 		8459E88D196FDB42000D1C85 /* SetupRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupRootController.h; sourceTree = "<group>"; };
 		8459E88E196FDB42000D1C85 /* SetupRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupRootController.m; sourceTree = "<group>"; };
-		8459E8961970DDD2000D1C85 /* SetupGoalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupGoalController.h; sourceTree = "<group>"; };
-		8459E8971970DDD2000D1C85 /* SetupGoalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupGoalController.m; sourceTree = "<group>"; };
 		845C40DC19481350001B1499 /* YearCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearCollection.h; sourceTree = "<group>"; };
 		845C40DD19481350001B1499 /* YearCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearCollection.m; sourceTree = "<group>"; };
 		845C40DF19481973001B1499 /* GradePriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradePriority.h; sourceTree = "<group>"; };
@@ -201,6 +201,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8404403D1972782500CC390E /* Goals */ = {
+			isa = PBXGroup;
+			children = (
+				8404403A1972781C00CC390E /* DefaultGoals.h */,
+				8404403B1972781C00CC390E /* DefaultGoals.m */,
+			);
+			name = Goals;
+			sourceTree = "<group>";
+		};
 		840D586E18820C5700DE24B7 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,8 +245,6 @@
 				8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */,
 				8459E88D196FDB42000D1C85 /* SetupRootController.h */,
 				8459E88E196FDB42000D1C85 /* SetupRootController.m */,
-				8459E8961970DDD2000D1C85 /* SetupGoalController.h */,
-				8459E8971970DDD2000D1C85 /* SetupGoalController.m */,
 			);
 			name = Setup;
 			sourceTree = "<group>";
@@ -315,8 +322,9 @@
 			children = (
 				84B5A2881880D8AD00969952 /* AppDelegate.h */,
 				84B5A2891880D8AD00969952 /* AppDelegate.m */,
-				8459E868196FB456000D1C85 /* Setup */,
 				84FF925B18A08F7B00988F62 /* Profile Structure */,
+				8459E868196FB456000D1C85 /* Setup */,
+				8404403D1972782500CC390E /* Goals */,
 				84B5A2B01880D8F500969952 /* Resources */,
 				84B5A2C01880D91400969952 /* Styles */,
 				84FF925A18A08F6B00988F62 /* UI */,
@@ -582,7 +590,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8459E8981970DDD2000D1C85 /* SetupGoalController.m in Sources */,
 				84B5A2CA1880D93100969952 /* BubbleMain.m in Sources */,
 				84B5A2BB1880D91000969952 /* Styles+Colours.m in Sources */,
 				841DAE0718B3123700626302 /* AddViewController.m in Sources */,
@@ -608,6 +615,7 @@
 				84FCDDE51968D1ED0020C994 /* ToJSONTemplate.m in Sources */,
 				845C40DE19481350001B1499 /* YearCollection.m in Sources */,
 				84E084A4193F235E00A4DF45 /* FlickScroller.m in Sources */,
+				8404403C1972781C00CC390E /* DefaultGoals.m in Sources */,
 				849D3D231880F2810030D432 /* AnchorView.m in Sources */,
 				84FF925918A08F5B00988F62 /* Profile.m in Sources */,
 				840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */,
@@ -743,6 +751,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCEACredits/NCEACredits-Prefix.pch";
 				INFOPLIST_FILE = "NCEACredits/NCEACredits-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7D5757BE-903C-4DF9-B257-753D90AE82AB";
 				WRAPPER_EXTENSION = app;
@@ -758,6 +767,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCEACredits/NCEACredits-Prefix.pch";
 				INFOPLIST_FILE = "NCEACredits/NCEACredits-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7D5757BE-903C-4DF9-B257-753D90AE82AB";
 				WRAPPER_EXTENSION = app;

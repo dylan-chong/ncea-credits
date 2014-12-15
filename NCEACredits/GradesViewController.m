@@ -15,7 +15,7 @@
 @implementation GradesViewController
 
 - (void)createBubbleContainers {
-    NSArray *subjectTitles = [[ApplicationDelegate getCurrentProfile] getSubjects];
+    NSArray *subjectTitles = [CurrentProfile getSubjects];
     self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithTitles:subjectTitles buttonClickSelector:NSStringFromSelector(@selector(subjectTitleWasPressed:)) target:self staggered:self.staggered andMainBubble:self.mainBubble];
     
     for (BubbleContainer *b in self.childBubbles) {

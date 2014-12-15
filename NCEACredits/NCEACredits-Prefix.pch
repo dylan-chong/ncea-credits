@@ -19,6 +19,7 @@
 
 
 #define ApplicationDelegate (AppDelegate *)[[UIApplication sharedApplication] delegate]
+#define CurrentProfile [(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentProfile]
 
 #define AppName [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]
 
@@ -34,3 +35,6 @@
 #define EditTextCreditTypeNumeracy @"Numeracy"
 
 #define tNSN(x) [NSNumber numberWithInt:x]
+
+
+#define QUICK_ALERT(text) [[[UIAlertView alloc] initWithTitle:AppName message:text delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil] show];

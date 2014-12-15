@@ -18,9 +18,13 @@
 
 @property NSString *profileName;
 @property GradePriority *gradePriority;
+
 @property NSUInteger *currentYear;
 - (Year *)getYearObjectForYearDate:(NSUInteger)date;
+- (int)getYearCurrentlyInUseOtherwiseCurrentDateYear;
+
 @property YearCollection *yearCollection;
+- (NSArray *)getYearsAsTableDatasForSetup;
 
 @property NSString *currentGoalTitle;
 

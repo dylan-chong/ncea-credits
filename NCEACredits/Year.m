@@ -43,7 +43,7 @@
 //****
 //*
 
-+ (NSUInteger)getCurrentYearDate {
++ (unsigned long)getCurrentYearDate {
     NSDateComponents *comp = [[NSCalendar currentCalendar]
                               components: NSCalendarUnitYear
                               fromDate:[NSDate date]];

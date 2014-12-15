@@ -7,6 +7,7 @@
 //
 
 #import "Profile.h"
+#import "TableViewCellData.h"
 
 @implementation Profile
 
@@ -39,9 +40,33 @@
     return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"Spanish", nil];
 }
 
-- (id)getYearObjectForYearDate:(NSUInteger)date {
+- (Year *)getYearObjectForYearDate:(NSUInteger)date {
+    for (Year *year in _yearCollection.years) {
+        if (year.yearDate == date)
+            return year;
+    }
+    
     return nil;
-    #warning TODO: do year thing
+}
+
+- (NSArray *)getYearsAsTableDatasForSetup {
+    NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+    
+    for (Year *year in _yearCollection.years) {
+        [dataArray addObject:[[TableViewCellData alloc] initWithDetail:[NSString stringWithFormat:@"NCEA Level %i", year.primaryLevelNumber]
+                                                                  text:[NSString stringWithFormat:@"%i", year.yearDate]
+                                                               reuseId:@"year"
+                                                             accessory:UITableViewCellAccessoryNone
+                                                                 style:UITableViewCellStyleValue1
+                                                              selected:NO]];
+    }
+    
+    return dataArray;
+}
+
+- (NSInteger)getYearCurrentlyInUseOtherwiseCurrentDateYear {
+    if (_currentYear) return _currentYear;
+    else return [Year getCurrentYearDate];
 }
 
 @end
