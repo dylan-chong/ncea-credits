@@ -11,7 +11,7 @@
 @implementation YearCollection
 
 - (void)createBlank {
-    _years = @[];
+    
 }
 
 - (void)loadFromJSON:(NSData *)json {

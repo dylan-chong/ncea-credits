@@ -30,6 +30,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cancelButton" destination="fV3-Oh-n1H" id="TvU-Vz-cII"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fza-vK-oAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -21,8 +21,9 @@ typedef enum {
 //device
 typedef enum {
     iPad = 0,
-    iPhone3_5Inch = 1,
-    iPhone4Inch = 2
+//    iPhone3_5Inch = 1,
+//    iPhone4Inch = 2,
+    iPhone = 3
 } Device;
 
 //*

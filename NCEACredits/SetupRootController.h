@@ -10,6 +10,7 @@
 #import "TableViewCellData.h"
 
 @interface SetupRootController : UITableViewController
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property NSArray *generalCells, *goalCells;
 @property NSMutableArray *yearCells;
 @end

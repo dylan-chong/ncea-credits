@@ -11,13 +11,16 @@
 #import "GradesViewController.h"
 #import "SetupNavigationController.h"
 
-@implementation MainViewController
+@implementation MainViewController {
+    BOOL tempHasShownSetup;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self createBubbleContainers];
+        tempHasShownSetup = NO;
     }
     return self;
 }
@@ -26,7 +29,9 @@
     [super viewDidAppear:animated];
     
     //Show setup window
-    [SetupNavigationController showStoryboardFromViewController:self];
+    
+    if (!tempHasShownSetup)[SetupNavigationController showStoryboardFromViewController:self];
+    tempHasShownSetup = YES;
 }
 
 - (void)createBubbleContainers {

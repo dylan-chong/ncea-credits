@@ -28,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84B5A2901880D8AD00969952"
-               BuildableName = "NCEACreditsTests.xctest"
-               BlueprintName = "NCEACreditsTests"
-               ReferencedContainer = "container:NCEACredits.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

@@ -10,10 +10,11 @@
 #import "YearCollection.h"
 #import "GradePriority.h"
 #import "Year.h"
-#import "ToJSONTemplate.h"
 
-@interface Profile : ToJSONTemplate
+@interface Profile : NSObject
++ (Profile *)createBlank;
 
+- (BOOL)hasAllNecessaryInformation;
 - (NSArray *)getSubjects;
 
 @property NSString *profileName;

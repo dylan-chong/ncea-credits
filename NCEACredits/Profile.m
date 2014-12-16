@@ -11,7 +11,7 @@
 
 @implementation Profile
 
-- (void)createBlank {
++ (Profile *)createBlank {
     
 }
 
@@ -22,6 +22,14 @@
 - (NSData *)convertToJSON {
     
     return nil;
+}
+
+-(BOOL)hasAllNecessaryInformation {
+    if (_yearCollection) {
+        if (_yearCollection.years.count < 1) return NO;
+    } else return NO;
+    
+    return YES;
 }
 
 //*
@@ -37,6 +45,7 @@
 //*
 
 - (NSArray *)getSubjects {
+    #warning TODO: actually get subjets for year
     return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"Spanish", nil];
 }
 
@@ -46,6 +55,9 @@
             return year;
     }
     
+    //Only if requested date does not exist
+    NSException *e = [NSException exceptionWithName:@"InvalidYear" reason:@"Requested year date does not exist" userInfo:nil];
+    [e raise];
     return nil;
 }
 

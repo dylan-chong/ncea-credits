@@ -11,12 +11,14 @@
 #import "Assessment.h"
 #import "ToJSONTemplate.h"
 
-@interface Year : ToJSONTemplate <UIAlertViewDelegate>
+@interface Year : ToJSONTemplate 
 
 @property NSUInteger yearDate, primaryLevelNumber;
 @property AssessmentCollection *assessmentCollection;
 @property NSUInteger identifier;
 
 + (NSUInteger)getCurrentYearDate;
+
++ (Year *)createBlank;
 
 @end

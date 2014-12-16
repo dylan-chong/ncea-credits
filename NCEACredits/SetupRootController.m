@@ -21,6 +21,14 @@
     [super viewDidLoad];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    if (![CurrentProfile hasAllNecessaryInformation]) {
+        //Hide the cancel button so that data must be saved using done button
+        [_cancelButton setTitle:@""];
+        [_cancelButton setTarget:nil];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -184,7 +192,7 @@
         if ([n integerValue] > largestID)
             largestID = [n integerValue];
     }
-    NSLog(@"%lu", largestID +1);
+    
     return largestID + 1;
 }
 
@@ -385,65 +393,83 @@
     //Original cell data
     TableViewCellData *tappedYearData = _yearCells[row];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please type in a year,\nthen select its NCEA Level." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please type in a year (date), then the primary NCEA Level for that year." preferredStyle:UIAlertControllerStyleAlert];
     
+    //Text fields
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.text = tappedYearData.text;
-        textField.placeholder = @"Year";
+        textField.placeholder = @"Year (Date)";
     }];
     
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = [self getLastCharacterOfString:tappedYearData.detail];
+        textField.placeholder = @"NCEA Level 1/2/3/(4)";
+    }];
     
-    
-    //Action buttons (NCEA level + cancel)
-    for (int a = 1; a < 5; a++) {
-        [alert addAction:[UIAlertAction actionWithTitle:
-                          [NSString stringWithFormat:@"NCEA Level %i", a]
-                                                  style:UIAlertActionStyleDefault
-                                                handler:^(UIAlertAction *action) {
-                                                    //Selected
-                                                    [self changeYearWithLevel:a
-                                                                      andYear:((UITextField *)alert.textFields[0]).text
-                                                                  onCellAtRow:row];
-                                                }]];
-    }
+    //Done/cancel
+    [alert addAction:[UIAlertAction actionWithTitle:@"Done"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction *action) {
+                                                [self yearCellAtRow:row editWindowDoneClicked:alert];
+                                            }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
                                               style:UIAlertActionStyleCancel
-                                            handler:^(UIAlertAction *action) {
-                                                //Cancel - do nothing
-                                            }]];
+                                            handler:nil]];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)changeYearWithLevel:(NSInteger)level andYear:(NSString *)year onCellAtRow:(NSInteger)row {
+- (void)yearCellAtRow:(NSUInteger)row editWindowDoneClicked:(UIAlertController *)alert {
     TableViewCellData *data = _yearCells[row];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:1]];
-    
-    NSString *detail = [NSString stringWithFormat:@"NCEA Level %li", (long)level];
-    data.detail = detail;
-    cell.detailTextLabel.text = detail;
+    NSString *invalidityMessage;
     
     //Validate year
-    if ([self isDateTextValidForRealDate:year]) {
+    NSString *year = ((UITextField *)alert.textFields[0]).text;
+    if ([self isString:year NumbersOnlyAndHasCertainNumberOfCharacters:4]) {
         data.text = year;
         cell.textLabel.text = year;
     } else {
-        //Not valid
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please enter a valid year." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
+        invalidityMessage = @"Please enter a valid year.";
+    }
+    
+    //Validate level
+    NSString *level = ((UITextField *)alert.textFields[1]).text;
+    NSUInteger levelInt = [level integerValue];
+    if ([self isString:level NumbersOnlyAndHasCertainNumberOfCharacters:1] && levelInt >= 1 && levelInt <= 4) {//Supports NCEA 1-4
+        NSString *detail = [NSString stringWithFormat:@"NCEA Level %li", (long) levelInt];
+        data.detail = detail;
+        cell.detailTextLabel.text = detail;
+    } else {
+        if (invalidityMessage.length > 0) {
+            invalidityMessage = @"Please enter a valid year and NCEA level.";
+        } else {
+            invalidityMessage = @"Please enter a valid NCEA level.";
+        }
+    }
+    
+    //Some stuff not valid
+    if (invalidityMessage) {
+        UIAlertController *invalidityAlert = [UIAlertController alertControllerWithTitle:AppName message:invalidityMessage preferredStyle:UIAlertControllerStyleAlert];
+        [invalidityAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+            //Reshow edit window after close
+            [self yearWasTappedAtRow:row];
+        }]];
+        [self presentViewController:invalidityAlert animated:YES completion:nil];
     }
 }
 
-- (BOOL)isDateTextValidForRealDate:(NSString *)dateToCheck {
+- (BOOL)isString:(NSString *)string NumbersOnlyAndHasCertainNumberOfCharacters:(NSUInteger)number {
     //Make sure its 4 chars long and all numbers
-    if (dateToCheck.length != 4 || [dateToCheck rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location != NSNotFound) {
-        
+    if (string.length != number || [string rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location != NSNotFound)
         return NO;
-    }
     
     return YES;
+}
+
+- (NSString *)getLastCharacterOfString:(NSString *)string {
+    return [string substringFromIndex:string.length - 1];
 }
 
 //------------------------------ Selecting current year ------------------------------
@@ -532,14 +558,75 @@
 //****
 //*
 
-- (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
-#warning TODO: save data to profile ad hide
-#warning TODO: make sure there are no duplicate years
-    
+- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
+- (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
+    if (![self checkForDuplicateYears]) {
+        //Modify current profile
+        [self applySettingsToCurrentProfile];
+        NSMutableArray *y = CurrentProfile.yearCollection.years;
+        NSLog(@"%@", y);
+        NSLog(@"%@", y);
+        NSLog(@"%@", y);
+        NSLog(@"%@", y);
+        
+        //Dismiss setup window
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        //Duplicate alert
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You seem to have duplicate years. Duplicate NCEA levels are allowed, but not years." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
+- (BOOL)checkForDuplicateYears {
+    //Shortcut to get year without having to cast to type each time
+    TableViewCellData * (^Year)(int) = ^(int index) {
+        return _yearCells[index];
+    };
     
+    for (int a = 0; a < _yearCells.count - 1; a++) {
+        for (int b = 0; b < _yearCells.count - 1; b++) {
+            if (b != a) {//Don't compare a year with itself
+                if ([Year(a).text isEqualToString:Year(b).text]) {
+                    return YES;
+                }
+            }
+        }
+    }
+    
+    return NO;
+}
+
+- (void)applySettingsToCurrentProfile {
+    //Remove add year button so that for-in loops can be used
+    [_yearCells removeLastObject];
+    
+    //Go through existing years, applying changes to NCEA level
+    NSMutableArray *existingYears = CurrentProfile.yearCollection.years;
+    for (Year *year in existingYears) {
+        //Make sure to find the right year
+        for (TableViewCellData *data in _yearCells) {
+            if (year.identifier == data.optionalData) { //use ID to find matches
+                year.primaryLevelNumber = [[self getLastCharacterOfString:data.detail] integerValue];
+                year.yearDate = [data.text integerValue];
+                
+                [_yearCells removeObject:data]; //Remove data as it's job is done
+                break;
+            }
+        }
+    }
+    
+    //Create blank years for remaining datas
+    for (TableViewCellData *dataToCreateYear in _yearCells) {
+        Year *newYear = [Year createBlank];
+        newYear.yearDate = [dataToCreateYear.text integerValue];
+        newYear.primaryLevelNumber = [self getLastCharacterOfString:dataToCreateYear.detail];
+        [CurrentProfile.yearCollection.years addObject:newYear];
+    }
 }
 
 /*

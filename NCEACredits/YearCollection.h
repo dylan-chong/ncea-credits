@@ -11,6 +11,6 @@
 
 @interface YearCollection : ToJSONTemplate
 
-@property NSArray *years;
+@property NSMutableArray *years;
 
 @end

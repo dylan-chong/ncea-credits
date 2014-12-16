@@ -10,16 +10,10 @@
 
 @implementation Year
 
-- (void)createBlank {
-    _assessmentCollection = [[AssessmentCollection alloc] initWithJSONOrNil:nil];
-    _yearDate = [Year getCurrentYearDate];
-    
-//    UIAlertView *a = [[UIAlertView alloc] initWithTitle:AppName
-//                                                message:@"Please enter in your NCEA level for this year."
-//                                               delegate:self
-//                                      cancelButtonTitle:@"4 (only for special cases)"
-//                                      otherButtonTitles:@"1", @"2", @"3", nil];
-//    [a show];
++ (Year *)createBlank {
+    Year *blank = [[Year alloc] init];
+    blank.assessmentCollection = [[AssessmentCollection alloc] initWithJSONOrNil:nil];
+    return blank;
 }
 
 - (void)loadFromJSON:(NSData *)json {
@@ -43,7 +37,7 @@
 //****
 //*
 
-+ (unsigned long)getCurrentYearDate {
++ (NSUInteger)getCurrentYearDate {
     NSDateComponents *comp = [[NSCalendar currentCalendar]
                               components: NSCalendarUnitYear
                               fromDate:[NSDate date]];

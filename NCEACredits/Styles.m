@@ -11,23 +11,24 @@
 @implementation Styles
 
 + (float)sizeModifier {
-    float a = 1;
     Device d = [Styles getDevice];
-    if (d == iPhone4Inch || d == iPhone3_5Inch) {
-        a = 0.5;
+//    if (d == iPhone4Inch || d == iPhone3_5Inch) {
+    if (d == iPhone) {
+        return 0.5;
     }
-    return a;
+    return 1; //iPad
 }
 
 + (Device)getDevice {
     if ([[[UIDevice currentDevice] model] rangeOfString:@"iPad" options:NSCaseInsensitiveSearch].location == NSNotFound) {
-        if ([[UIScreen mainScreen] bounds].size.height == 480) {
-            //NSLog(@"iPhone/iPod 3.5 inch");
-            return iPhone3_5Inch;
-        } else {
-            //NSLog(@"iPhone/iPod 4 inch");
-            return iPhone4Inch;
-        }
+//        if ([[UIScreen mainScreen] bounds].size.height == 480) {
+//            //NSLog(@"iPhone/iPod 3.5 inch");
+//            return iPhone3_5Inch;
+//        } else {
+//            //NSLog(@"iPhone/iPod 4 inch");
+//            return iPhone4Inch;
+//        }
+        return iPhone;
     } else {
         //NSLog(@"iPad");
         return iPad;
