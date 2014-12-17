@@ -11,6 +11,6 @@
 
 @interface AssessmentCollection : ToJSONTemplate
 
-@property NSArray *assessments;
+@property NSMutableArray *assessments;
 
 @end

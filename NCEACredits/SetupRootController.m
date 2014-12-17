@@ -22,7 +22,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if (![CurrentProfile hasAllNecessaryInformation]) {
+    if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
         //Hide the cancel button so that data must be saved using done button
         [_cancelButton setTitle:@""];
         [_cancelButton setTarget:nil];
@@ -566,14 +566,10 @@
     if (![self checkForDuplicateYears]) {
         //Modify current profile
         [self applySettingsToCurrentProfile];
-        NSMutableArray *y = CurrentProfile.yearCollection.years;
-        NSLog(@"%@", y);
-        NSLog(@"%@", y);
-        NSLog(@"%@", y);
-        NSLog(@"%@", y);
         
         //Dismiss setup window
         [self dismissViewControllerAnimated:YES completion:nil];
+        
     } else {
         //Duplicate alert
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You seem to have duplicate years. Duplicate NCEA levels are allowed, but not years." preferredStyle:UIAlertControllerStyleAlert];
@@ -582,6 +578,7 @@
     }
 }
 
+//------------------------------ Subfunctions of done ------------------------------
 - (BOOL)checkForDuplicateYears {
     //Shortcut to get year without having to cast to type each time
     TableViewCellData * (^Year)(int) = ^(int index) {
@@ -602,7 +599,20 @@
 }
 
 - (void)applySettingsToCurrentProfile {
-    //Remove add year button so that for-in loops can be used
+    //Apply general things first
+    CurrentProfile.profileName = ((TableViewCellData *)_generalCells[0]).detail;
+    CurrentProfile.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
+    
+    //Apply selected goal
+    for (TableViewCellData *goalData in _goalCells) {
+        if (goalData.accessory == UITableViewCellAccessoryCheckmark) {
+            CurrentProfile.selectedGoalTitle = goalData.text;
+            break;
+        }
+    }
+    
+    //------------------------------ Year stuff ------------------------------
+    //Remove add year button so that for-in loops can be used (actual cell isnt removed)
     [_yearCells removeLastObject];
     
     //Go through existing years, applying changes to NCEA level
@@ -622,9 +632,10 @@
     
     //Create blank years for remaining datas
     for (TableViewCellData *dataToCreateYear in _yearCells) {
-        Year *newYear = [Year createBlank];
+        Year *newYear = [[Year alloc] initWithJSONOrNil:nil];
         newYear.yearDate = [dataToCreateYear.text integerValue];
-        newYear.primaryLevelNumber = [self getLastCharacterOfString:dataToCreateYear.detail];
+        newYear.primaryLevelNumber = [[self getLastCharacterOfString:dataToCreateYear.detail] integerValue];
+        newYear.identifier = dataToCreateYear.optionalData;
         [CurrentProfile.yearCollection.years addObject:newYear];
     }
 }

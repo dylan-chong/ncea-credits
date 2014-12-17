@@ -24,8 +24,9 @@
     if (_currentProfile)
         return _currentProfile;
     else {
-#warning load JSON
+#warning load JSON (and save a file that says which one should be loaded next time)
         Profile *p = [[Profile alloc] initWithJSONOrNil:nil];
+        _currentProfile = p;
         return p;
     }
 }

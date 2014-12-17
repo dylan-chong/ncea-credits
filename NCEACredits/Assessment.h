@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "Grade.h"
 #import "ToJSONTemplate.h"
+#import "Credits.h"
 
 @interface Assessment : ToJSONTemplate
 
 
 @property NSUInteger assessmentNumber, creditsWhenAchieved, level;
-@property NSString *assessmentKeyword, *subject, *typeOfCredits, *dueDate;
+@property NSString *assessmentKeyword, *subject, *typeOfCredits;
 @property BOOL isInternal, isUnitStandard;
 @property Grade *gradeSet;
 

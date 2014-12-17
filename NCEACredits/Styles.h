@@ -106,6 +106,12 @@ typedef enum {
 
 @end
 
+#define StandardScrollArrowWidth 35
+#define StandardScrollArrowHeight 10
+#define StandardScrollArrowSpaceFromEdge 25
+
+#define StandardScrollArrowShowAlpha 0.75
+
 //*
 //****
 //*********

@@ -10,11 +10,11 @@
 #import "ToJSONTemplate.h"
 
 typedef enum {
-    Excellence = 4,
-    Merit = 3,
-    Achieved = 2,
-    NotAchieved = 1,
-    None = 0
+    GradeExcellence = 4,
+    GradeMerit = 3,
+    GradeAchieved = 2,
+    GradeNotAchieved = 1,
+    GradeNone = 0
 } GradeType;
 
 @interface Grade : ToJSONTemplate

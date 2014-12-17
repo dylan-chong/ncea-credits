@@ -10,19 +10,32 @@
 
 @implementation Grade
 
-- (void)createBlank {
-    _final = None;
-    _expected = None;
-    _preliminary = None;
+- (Grade *)createBlank {
+    Grade *g = [[Grade alloc] init];
+    g.final = GradeNone;
+    g.expected = GradeNone;
+    g.preliminary = GradeNone;
+    return g;
 }
 
-- (void)loadFromJSON:(NSData *)json {
-    
+- (Grade *)loadFromJSONWithProperties:(NSDictionary *)properties {
+    Grade *g = [[Grade alloc] init];
+    g.final = [[properties objectForKey:@"final"] intValue];
+    g.expected = [[properties objectForKey:@"expected"] intValue];
+    g.preliminary = [[properties objectForKey:@"preliminary"] intValue];
+    return g;
 }
 
 - (NSData *)convertToJSON {
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    [properties setObject:[NSNumber numberWithInt:_final] forKey:@"final"];
+    [properties setObject:[NSNumber numberWithInt:_expected] forKey:@"expected"];
+    [properties setObject:[NSNumber numberWithInt:_preliminary] forKey:@"preliminary"];
     
-    return nil;
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
+    if (error) NSLog(@"%@", error);
+    return data;
 }
 
 //*

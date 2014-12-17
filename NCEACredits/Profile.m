@@ -11,20 +11,38 @@
 
 @implementation Profile
 
-+ (Profile *)createBlank {
-    
+- (Profile *)createBlank {
+    Profile *p = [[Profile alloc] init];
+    p.gradePriority = [[GradePriority alloc] initWithJSONOrNil:nil];
+    p.yearCollection = [[YearCollection alloc] initWithJSONOrNil:nil];
+    return p;
 }
 
-- (void)loadFromJSON:(NSData *)json {
-    
+- (Profile *)loadFromJSONWithProperties:(NSDictionary *)properties {
+    Profile *p = [[Profile alloc] init];
+    p.profileName = [properties objectForKey:@"profileName"];
+    p.currentYear = [[properties objectForKey:@"currentYear"] integerValue];
+    p.selectedGoalTitle = [properties objectForKey:@"selectedGoalTitle"];
+    p.gradePriority = [[GradePriority alloc] initWithJSONOrNil:NSStringToNSData([properties objectForKey:@"gradePriority"])];
+    p.yearCollection = [[YearCollection alloc] initWithJSONOrNil:NSStringToNSData([properties objectForKey:@"yearCollection"])];
+    return p;
 }
 
 - (NSData *)convertToJSON {
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    [properties setObject:_profileName forKey:@"profileName"];
+    [properties setObject:[NSNumber numberWithInteger:_currentYear] forKey:@"currentYear"];
+    [properties setObject:_selectedGoalTitle forKey:@"selectedGoalTitle"];
+    [properties setObject:NSDataToNSString([_gradePriority convertToJSON]) forKey:@"gradePriority"];
+    [properties setObject:NSDataToNSString([_yearCollection convertToJSON]) forKey:@"yearCollection"];
     
-    return nil;
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
+    if (error) NSLog(@"%@", error);
+    return data;
 }
 
--(BOOL)hasAllNecessaryInformation {
+- (BOOL)hasAllNecessaryInformationFromSetup {
     if (_yearCollection) {
         if (_yearCollection.years.count < 1) return NO;
     } else return NO;
@@ -48,6 +66,18 @@
     #warning TODO: actually get subjets for year
     return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"Spanish", nil];
 }
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Year Stuff    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (Year *)getYearObjectForYearDate:(NSUInteger)date {
     for (Year *year in _yearCollection.years) {
@@ -81,8 +111,13 @@
 }
 
 - (NSUInteger)getYearCurrentlyInUseOtherwiseCurrentDateYear {
-    if (_currentYear) return *(_currentYear);
+    if (_currentYear) return _currentYear;
     else return [Year getCurrentYearDate];
+}
+
+- (NSUInteger)getPrimaryNCEALevelForCurrentYear {
+    Year *year = [self getYearObjectForYearDate:_currentYear];
+    return year.primaryLevelNumber;
 }
 
 @end

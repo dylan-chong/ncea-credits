@@ -137,9 +137,9 @@
                        EditTextBoolNo];
             
         } else if (type == EditTextDataTypeTypeOfCredits) {
-            titles = @[EditTextCreditTypeNormal,
-                       EditTextCreditTypeLiteracy,
-                       EditTextCreditTypeNumeracy];
+            titles = @[TypeOfCreditsNormal,
+                       TypeOfCreditsLiteracy,
+                       TypeOfCreditsNumeracy];
         } else {
             //Non-existent type
             NSException *e = [[NSException alloc] initWithName:@"EditTextEditScreen type" reason:@"No valid type" userInfo:nil];

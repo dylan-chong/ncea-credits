@@ -11,7 +11,7 @@
 #import "EditTextScreenItemData.h"
 
 @implementation AddViewController
-
+#warning TODO: make this a subclass of AssessmentModifierVC which is subclass of edittextvc
 - (id)initWithMainBubble:(BubbleContainer *)mainBubble {
     self = [super initWithNibName:nil bundle:nil];
     
@@ -88,20 +88,19 @@
 }
 
 + (NSArray *)getItemData {
-#warning TODO: level get current level for placeholder
+#warning TODO: get all stuff from blank assessment (defaults)
+    //ItemData(theTitle, theText (i.e. default), thePlaceholder, theType)
     return @[
              ItemData(@"Quick Name",        @"",                        @"Mechanics",               tNSN(EditTextDataTypeText)),
              ItemData(@"AS Number",         @"",                        @"901234",                  tNSN(EditTextDataTypeNumber)),
              ItemData(@"Subject",           @"",                        @"Science",                 tNSN(EditTextDataTypeText)),
              ItemData(ItemCredits,          @"",                        @"4",                       tNSN(EditTextDataTypeNumber)),
-             #warning TODO: maybe remove date, dont forget assessment.h
-             ItemData(@"Exam / Due Date",   @"",                        @"12/04/14",                tNSN(EditTextDataTypeDate)),
              
              ItemData(@"Is an Internal",    EditTextBoolYes,            EditTextBoolYes,            tNSN(EditTextDataTypeBool)),
              ItemData(@"Is Unit Standard",  EditTextBoolNo,             @"Probably not",            tNSN(EditTextDataTypeBool)),
              ItemData(@"NCEA Level",        @"",                        @"1",                       tNSN(EditTextDataTypeNumber)),
-#warning TODO: get level
-             ItemData(@"Type of Credits",   EditTextCreditTypeNormal,   EditTextCreditTypeNormal,   tNSN(EditTextDataTypeTypeOfCredits)),
+
+             ItemData(@"Type of Credits",   TypeOfCreditsNormal,        TypeOfCreditsNormal,        tNSN(EditTextDataTypeTypeOfCredits)),
              
              ItemData(@"Final Grade",       @"",                        @"If you have it",          tNSN(EditTextDataTypeGrade)),
              ItemData(@"Expected Grade",    @"",                        @"To predict results",      tNSN(EditTextDataTypeGrade)),

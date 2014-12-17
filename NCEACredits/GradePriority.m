@@ -10,17 +10,26 @@
 
 @implementation GradePriority
 
-- (void)createBlank {
-    _priorityOrder = [GradePriority defaultPriorityOrder];
+- (GradePriority *)createBlank {
+    GradePriority *gp = [[GradePriority alloc] init];
+    gp.priorityOrder = [GradePriority defaultPriorityOrder];
+    return gp;
 }
 
-- (void)loadFromJSON:(NSData *)json {
-    
+- (GradePriority *)loadFromJSONWithProperties:(NSDictionary *)properties {
+    GradePriority *gp = [[GradePriority alloc] init];
+    gp.priorityOrder = [properties objectForKey:@"priorityOrder"];
+    return gp;
 }
 
 - (NSData *)convertToJSON {
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    [properties setObject:_priorityOrder forKey:@"priorityOrder"];
     
-    return nil;
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
+    if (error) NSLog(@"%@", error);
+    return data;
 }
 
 //*

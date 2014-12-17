@@ -10,17 +10,27 @@
 
 @implementation YearCollection
 
-- (void)createBlank {
-    
+- (YearCollection *)createBlank {
+    YearCollection *yc = [[YearCollection alloc] init];
+    yc.years = [[NSMutableArray alloc] init];
+    return yc;
 }
 
-- (void)loadFromJSON:(NSData *)json {
-    
+- (YearCollection *)loadFromJSONWithProperties:(NSDictionary *)properties {
+    YearCollection *yc = [[YearCollection alloc] init];
+    yc.years = [ToJSONTemplate convertBackArrayOfJSONObjects:[properties objectForKey:@"years"]
+                                          toTemplateSubclass:NSStringFromClass([Year class])];
+    return yc;
 }
 
 - (NSData *)convertToJSON {
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    [properties setObject:[ToJSONTemplate convertArrayOfTemplateSubclassesToJSON:_years] forKey:@"years"];
     
-    return nil;
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
+    if (error) NSLog(@"%@", error);
+    return data;
 }
 
 //*

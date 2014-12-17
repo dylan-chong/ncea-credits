@@ -45,14 +45,14 @@
 }
 
 - (void)updateCredits {
-    if (_grade == Excellence) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
-    else if (_grade == Merit) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
+    if (_grade == GradeExcellence) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
+    else if (_grade == GradeMerit) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
     else _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
 }
 
 + (NSString *)getCharTitleForGradeType:(GradeType)grade {
-    if (grade == Excellence) return @"E";
-    else if (grade == Merit) return @"M";
+    if (grade == GradeExcellence) return @"E";
+    else if (grade == GradeMerit) return @"M";
     else return @"A";
 }
 

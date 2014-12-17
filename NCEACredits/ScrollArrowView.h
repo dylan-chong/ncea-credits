@@ -8,12 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define StandardScrollArrowWidth 35
-#define StandardScrollArrowHeight 10
-#define StandardScrollArrowSpaceFromEdge 25
-
-#define StandardScrollArrowShowAlpha 0.6
-
 @interface ScrollArrowView : UIView
 
 @property UIView *container;

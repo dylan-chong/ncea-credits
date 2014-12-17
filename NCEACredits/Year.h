@@ -13,12 +13,9 @@
 
 @interface Year : ToJSONTemplate 
 
-@property NSUInteger yearDate, primaryLevelNumber;
+@property NSUInteger yearDate, primaryLevelNumber, identifier;
 @property AssessmentCollection *assessmentCollection;
-@property NSUInteger identifier;
 
 + (NSUInteger)getCurrentYearDate;
-
-+ (Year *)createBlank;
 
 @end

@@ -11,5 +11,9 @@
 
 @interface SubjectsAndColours : ToJSONTemplate
 
-@property NSDictionary *subjectsAndColours;
+@property NSMutableDictionary *subjectsAndColours;
+
+- (UIColor *)getColourForSubject:(NSString *)subject;
+- (NSArray *)getSortedDefaultColours;
+
 @end

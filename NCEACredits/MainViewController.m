@@ -29,9 +29,21 @@
     [super viewDidAppear:animated];
     
     //Show setup window
+    if (!tempHasShownSetup) {
+        //Hasn't shown setup
+        [SetupNavigationController showStoryboardFromViewController:self];
+        tempHasShownSetup = YES;
+    } else {
+        Profile *p = CurrentProfile;
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:NSDataToNSString([p convertToJSON]) preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
     
-    if (!tempHasShownSetup)[SetupNavigationController showStoryboardFromViewController:self];
-    tempHasShownSetup = YES;
+    
+    
+    #warning TODO: refresh data (e.g. goals)
 }
 
 - (void)createBubbleContainers {

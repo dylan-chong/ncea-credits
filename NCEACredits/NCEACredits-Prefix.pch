@@ -30,10 +30,6 @@
 #define EditTextBoolYes @"Yes"
 #define EditTextBoolNo @"No"
 
-#define EditTextCreditTypeNormal @"Normal"
-#define EditTextCreditTypeLiteracy @"Literacy"
-#define EditTextCreditTypeNumeracy @"Numeracy"
-
 #define tNSN(x) [NSNumber numberWithInt:x]
 
 

@@ -10,18 +10,28 @@
 
 @implementation AssessmentCollection
 
-- (void)createBlank {
-    _assessments = @[];
+- (AssessmentCollection *)createBlank {
+    AssessmentCollection *a = [[AssessmentCollection alloc] init];
+    a.assessments = [[NSMutableArray alloc] init];
+    return a;
 }
 
-- (void)loadFromJSON:(NSData *)json {
-    
+- (AssessmentCollection *)loadFromJSONWithProperties:(NSDictionary *)properties {
+    AssessmentCollection *a = [[AssessmentCollection alloc] init];
+    a.assessments = [ToJSONTemplate convertBackArrayOfJSONObjects:[properties objectForKey:@"assessments"] toTemplateSubclass:NSStringFromClass([Assessment class])];
+    return a;
 }
 
 - (NSData *)convertToJSON {
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    [properties setObject:[ToJSONTemplate convertArrayOfTemplateSubclassesToJSON:_assessments] forKey:@"assessments"];
     
-    return nil;
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
+    if (error) NSLog(@"%@", error);
+    return data;
 }
+
 
 //*
 //****
