@@ -8,13 +8,17 @@
 
 #import "BubbleViewController.h"
 #import "Styles.h"
+#import "Assessment.h"
+#import "MainViewController.h"
 
 @implementation BubbleViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
+    _shouldDelayCreationAnimation = NO;
+    _isDoingAnimation = YES; //Stops the automatic reposition bubbles animation, but not the creation animation
+    _hasDoneCreationAnimation = NO;
     return self;
 }
 
@@ -79,6 +83,16 @@
     [self animateRepositionObjects];
 }
 
+- (void)setAnimationManager:(AnimationManager *)animationManager {
+    if (!_shouldDelayCreationAnimation) {
+        if (_animationManager && !_animationManager.animationHasFinished) {
+            [_animationManager stopAnimationMidWay];
+        }
+        
+        _animationManager = animationManager;
+    }
+}
+
 //*
 //****
 //*********
@@ -92,23 +106,33 @@
 //*
 
 - (void)startChildBubbleCreationAnimation {
-    NSArray *a = [[NSArray alloc] init];
-    for (BubbleContainer *b in _childBubbles) {
-        a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForSlidingAnimation]];
+    if (!_shouldDelayCreationAnimation && !_hasDoneCreationAnimation) {
+        NSArray *a = [[NSArray alloc] init];
+        for (BubbleContainer *b in _childBubbles) {
+            a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForSlidingAnimation]];
+        }
+        
+        [self.view bringSubviewToFront:_mainBubble];
+        
+        [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:1 andDelegate:self]];
+        [_animationManager startAnimation];
+        
+        //Only works on main vc
+        if ([self class] == [MainViewController class])
+        [NSTimer scheduledTimerWithTimeInterval:[Styles animationSpeed] / 2
+                                         target:self.mainBubble
+                                       selector:@selector(startGrowingMainBubbleAnimation)
+                                       userInfo:nil
+                                        repeats:NO];
     }
-    
-    [self.view bringSubviewToFront:_mainBubble];
-    
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:1 andDelegate:self];
-    [_animationManager startAnimation];
 }
 
-- (void)startSlidingAnimation {
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:[[NSArray alloc] initWithObjects:
-                                                                            [[AnimationObject alloc] initWithStartingPoint:[Styles startingScaleFactor] endingPoint:1.0 tag:ScaleWidth andDelegate:self],
-                                                                            nil]
-                                                                    length:[Styles animationSpeed]
-                                                                       tag:2 andDelegate:self];
+- (void)startGrowingAnimation {
+    [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:[[NSArray alloc] initWithObjects:
+                                                                                  [[AnimationObject alloc] initWithStartingPoint:[Styles startingScaleFactor] endingPoint:1.0 tag:ScaleWidth andDelegate:self],
+                                                                                  nil]
+                                                                          length:[Styles animationSpeed]
+                                                                             tag:2 andDelegate:self]];
     [_animationManager startAnimation];
     
 }
@@ -123,9 +147,10 @@
 
 - (void)animationHasFinished:(int)tag {
     if (tag == 1) {
-        [self startSlidingAnimation];
+        [self startGrowingAnimation];
     } else if (tag == 2) {
         //Growing finished
+        _hasDoneCreationAnimation = YES;
         [self enableChildButtons];
     } else if (tag == 3) {
         //transition
@@ -147,7 +172,7 @@
         //return slide
         [self dismissViewControllerAnimated:NO completion:^{
             _parentBubble.bubble.frame = _mainBubble.bubble.frame;
-            [self.delegate hasReturnedFromChildViewController];
+            [self hasReturnedFromChildViewController];
         }];
     }
 }
@@ -187,13 +212,8 @@
         a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif]];
     }
     
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:3 andDelegate:self];
+    [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:3 andDelegate:self]];
     [_animationManager startAnimation];
-}
-
-- (void)hasReturnedFromChildViewController {
-    self.childBubbleViewController = nil;
-    [self repositionBubbles];
 }
 
 - (void)startReturnScaleAnimation {
@@ -204,7 +224,7 @@
         [objects addObject:[[AnimationObject alloc] initWithStartingPoint:1.0 endingPoint:[Styles startingScaleFactor] tag:ScaleWidth andDelegate:b]];
     }
     
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:5 andDelegate:self];
+    [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:5 andDelegate:self]];
     [_animationManager startAnimation];
 }
 
@@ -218,7 +238,7 @@
         [objects addObject:[[AnimationObject alloc] initWithStartingPoint:b.frame.origin.y endingPoint:pos.origin.y tag:Y andDelegate:b]];
     }
     
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:6 andDelegate:self];
+    [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:6 andDelegate:self]];
     [_animationManager startAnimation];
 }
 
@@ -246,7 +266,7 @@
         [objects addObject:[[AnimationObject alloc] initWithStartingPoint:b.frame.origin.y endingPoint:pos.origin.y tag:Y andDelegate:b]];
     }
     
-    _animationManager = [[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:4 andDelegate:self];
+    [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:objects length:[Styles animationSpeed] tag:4 andDelegate:self]];
     [_animationManager startAnimation];
 }
 
@@ -279,6 +299,24 @@
 //*********
 //****************
 //*************************
+#pragma mark - ***************************    Delegate    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)hasReturnedFromChildViewController {
+    self.childBubbleViewController = nil;
+    [self repositionBubbles];
+}
+
+
+//*
+//****
+//*********
+//****************
+//*************************
 #pragma mark - ***************************    View Controller Stuff    ************************************
 //*************************
 //****************
@@ -293,7 +331,9 @@
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [self repositionBubbles];
+    if ([Styles deviceIsInLandscape]) [_statusBarFiller setHidden:YES];
+    else [_statusBarFiller setHidden:NO];
+    if (!_shouldDelayCreationAnimation) [self repositionBubbles];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -308,12 +348,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     _isCurrentViewController = YES;
+    if (!_isDoingAnimation && !_shouldDelayCreationAnimation) [self repositionBubbles];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
     
     CGRect frame = CGRectMake(0, 0, 0, 0);
     

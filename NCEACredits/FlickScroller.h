@@ -14,7 +14,6 @@
 - (void)pageFlicked;
 @end
 
-
 @interface FlickScroller : NSObject
 
 @property UISwipeGestureRecognizer *upFlick, *downFlick;

@@ -7,7 +7,6 @@
 //
 
 #import "SimpleSelectionViewController.h"
-#import "EditTextEditScreen.h"
 #import "EditTextBubbleContainer.h"
 #import "FlickScroller.h"
 

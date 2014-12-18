@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "EditTextBubbleContainer.h"
 #import "EditTextBubble.h"
 
 @implementation EditTextBubbleContainer

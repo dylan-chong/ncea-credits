@@ -7,6 +7,7 @@
 //
 
 #import "EditTextBubble.h"
+#import "Styles.h"
 
 @implementation EditTextBubble
 
@@ -64,7 +65,7 @@
     } else {
         _textLabel.text = _placeholder;
         _isPlaceHolder = YES;
-        _textLabel.textColor = [Styles greyColour];
+        _textLabel.textColor = [EditTextBubble placeholderColour];
     }
 }
 
@@ -103,6 +104,10 @@
     }
     
     return strippedString;
+}
+
++ (UIColor *)placeholderColour {
+    return [Styles greyColour];
 }
 
 @end

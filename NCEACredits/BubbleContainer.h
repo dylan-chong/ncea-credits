@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "Bubble.h"
-#import "BubbleMain.h"
-#import "Styles.h"
 #import "AnimationObject.h"
-#import "AnimationManager.h"
 
-typedef enum {
-    MainBubble = 1,
-    TitleBubble = 2,
-    SubtitleBubble = 3
-} BubbleType;
+@class AnimationManager;
+
+typedef NS_ENUM(NSInteger, BubbleType) {
+    MainBubble,
+    TitleBubble,
+    SubtitleBubble
+};
+
 
 @protocol BubbleContainerDelegate <BubbleDelegate>
 //subclasses BubbleDelegate so redrawAnchor method already exists

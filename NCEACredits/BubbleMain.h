@@ -9,9 +9,9 @@
 #import "Bubble.h"
 #import "BubbleMainCredits.h"
 #import "AnimationManager.h"
-#import "AnimationObject.h"
 #import "GoalTitle.h"
 
+@class AnimationManager, BubbleMainCredits, GoalTitle;
 @interface BubbleMain : Bubble
 
 @property BubbleMainCredits *excellenceCredits;

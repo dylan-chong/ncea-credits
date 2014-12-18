@@ -8,10 +8,11 @@
 
 #import "BubbleMainCredits.h"
 #import "Styles.h"
+#import "Grade.h"
 
 @implementation BubbleMainCredits
 
-- (id)initWithFrame:(CGRect)frame andType:(GradeType)grade {
+- (id)initWithFrame:(CGRect)frame andGradeTextType:(NSString *)grade {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
@@ -45,14 +46,14 @@
 }
 
 - (void)updateCredits {
-    if (_grade == GradeExcellence) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
-    else if (_grade == GradeMerit) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
+    if ([_grade isEqualToString: GradeTextExcellence]) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
+    else if ([_grade isEqualToString: GradeTextMerit]) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
     else _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
 }
 
-+ (NSString *)getCharTitleForGradeType:(GradeType)grade {
-    if (grade == GradeExcellence) return @"E";
-    else if (grade == GradeMerit) return @"M";
++ (NSString *)getCharTitleForGradeType:(NSString *)grade {
+    if ([grade isEqualToString: GradeTextExcellence]) return @"E";
+    else if ([grade isEqualToString: GradeTextMerit]) return @"M";
     else return @"A";
 }
 

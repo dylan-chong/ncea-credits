@@ -22,14 +22,11 @@
     return gp;
 }
 
-- (NSData *)convertToJSON {
+- (NSDictionary *)convertToDictionaryOfProperties {
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
     [properties setObject:_priorityOrder forKey:@"priorityOrder"];
     
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) NSLog(@"%@", error);
-    return data;
+    return properties;
 }
 
 //*

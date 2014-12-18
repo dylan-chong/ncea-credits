@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "BubbleContainer.h"
 #import "EditTextEditScreen.h"
 #import "EditTextScreenItemData.h"
+#import "BubbleContainer.h"
 
-@class EditTextBubble;
-@class EditTextBubbleContainer;
+@class EditTextBubble, EditTextBubbleContainer;
 
 @protocol EditTextBubbleContainerDelegate
 

@@ -13,8 +13,8 @@
 
 - (Profile *)createBlank {
     Profile *p = [[Profile alloc] init];
-    p.gradePriority = [[GradePriority alloc] initWithJSONOrNil:nil];
-    p.yearCollection = [[YearCollection alloc] initWithJSONOrNil:nil];
+    p.gradePriority = [[GradePriority alloc] initWithPropertiesOrNil:nil];
+    p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:nil];
     return p;
 }
 
@@ -23,18 +23,18 @@
     p.profileName = [properties objectForKey:@"profileName"];
     p.currentYear = [[properties objectForKey:@"currentYear"] integerValue];
     p.selectedGoalTitle = [properties objectForKey:@"selectedGoalTitle"];
-    p.gradePriority = [[GradePriority alloc] initWithJSONOrNil:NSStringToNSData([properties objectForKey:@"gradePriority"])];
-    p.yearCollection = [[YearCollection alloc] initWithJSONOrNil:NSStringToNSData([properties objectForKey:@"yearCollection"])];
+    p.gradePriority = [[GradePriority alloc] initWithPropertiesOrNil:[properties objectForKey:@"gradePriority"]];
+    p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:[properties objectForKey:@"yearCollection"]];
     return p;
 }
 
-- (NSData *)convertToJSON {
+- (NSData *)convertToJSONAsRoot {
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
     [properties setObject:_profileName forKey:@"profileName"];
     [properties setObject:[NSNumber numberWithInteger:_currentYear] forKey:@"currentYear"];
     [properties setObject:_selectedGoalTitle forKey:@"selectedGoalTitle"];
-    [properties setObject:NSDataToNSString([_gradePriority convertToJSON]) forKey:@"gradePriority"];
-    [properties setObject:NSDataToNSString([_yearCollection convertToJSON]) forKey:@"yearCollection"];
+    [properties setObject:[_gradePriority convertToDictionaryOfProperties] forKey:@"gradePriority"];
+    [properties setObject:[_yearCollection convertToDictionaryOfProperties] forKey:@"yearCollection"];
     
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
@@ -48,6 +48,16 @@
     } else return NO;
     
     return YES;
+}
+
+- (void)logJSONText {
+    //Logs profile JSON
+    if (DEBUG_MODE_ON && ApplicationDelegate.currentProfile) {
+        Profile *p = CurrentProfile;
+        NSString *m = [[NSString alloc] initWithData:[p convertToJSONAsRoot]  encoding:NSUTF8StringEncoding];
+        NSLog(@"\n\n\n//*\n//****\n//*********\n//****************\n//*************************\n********************************************    Profile JSON    \n//*************************\n//****************\n//*********\n//****\n//*\n\n\n");
+        NSLog(@"%@", m);
+    }
 }
 
 //*
@@ -77,7 +87,12 @@
 //****************
 //*********
 //****
-//*
+//
+
+
+- (Year *)getCurrentYear {
+    return [self getYearObjectForYearDate:_currentYear];
+}
 
 - (Year *)getYearObjectForYearDate:(NSUInteger)date {
     for (Year *year in _yearCollection.years) {
@@ -110,7 +125,7 @@
     return dataArray;
 }
 
-- (NSUInteger)getYearCurrentlyInUseOtherwiseCurrentDateYear {
+- (NSUInteger)getYearDateCurrentlyInUseOtherwiseCurrentDateYear {
     if (_currentYear) return _currentYear;
     else return [Year getCurrentYearDate];
 }
@@ -118,6 +133,11 @@
 - (NSUInteger)getPrimaryNCEALevelForCurrentYear {
     Year *year = [self getYearObjectForYearDate:_currentYear];
     return year.primaryLevelNumber;
+}
+
+- (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment {
+    [[self getCurrentYear].assessmentCollection addAssessmentOrReplaceACurrentOne:assessment];
+    [ApplicationDelegate saveCurrentProfile];
 }
 
 @end

@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    X = 0,
-    Y = 1,
-    Width = 2,
-    Height = 3,
-    ScaleWidth = 4,
-    ScaleHeight = 5,
-    Alpha = 6
-} AnimationObjectTag;
+typedef NS_ENUM(NSInteger, AnimationObjectTag) {
+    X,
+    Y,
+    Width,
+    Height,
+    ScaleWidth,
+    ScaleHeight,
+    Alpha
+} ;
 
 @protocol AnimationObjectDelegate <NSObject>
 @required

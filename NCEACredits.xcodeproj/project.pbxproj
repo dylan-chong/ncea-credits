@@ -18,8 +18,8 @@
 		841DAE0718B3123700626302 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DAE0618B3123700626302 /* AddViewController.m */; };
 		841DAE0A18B312AC00626302 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DAE0918B312AC00626302 /* EditTextViewController.m */; };
 		84265A6C1904A32000141564 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84265A6B1904A32000141564 /* QuartzCore.framework */; };
+		8437DAF51A4245F700E261E2 /* EditAssessmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8437DAF41A4245F700E261E2 /* EditAssessmentViewController.m */; };
 		8445E4081A402344002BDA5E /* ToJSONTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445E4071A402344002BDA5E /* ToJSONTemplate.m */; };
-		8445E40B1A414A6B002BDA5E /* Credits.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445E40A1A414A6B002BDA5E /* Credits.m */; };
 		844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844CA93618AAB15A00D55F11 /* GradesViewController.m */; };
 		8459996D18AC00DE005F3FB1 /* SimpleSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */; };
 		8459E887196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */; };
@@ -100,10 +100,10 @@
 		841DAE0818B312AC00626302 /* EditTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextViewController.h; sourceTree = "<group>"; };
 		841DAE0918B312AC00626302 /* EditTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextViewController.m; sourceTree = "<group>"; };
 		84265A6B1904A32000141564 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8437DAF31A4245F700E261E2 /* EditAssessmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditAssessmentViewController.h; sourceTree = "<group>"; };
+		8437DAF41A4245F700E261E2 /* EditAssessmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAssessmentViewController.m; sourceTree = "<group>"; };
 		8445E4061A402344002BDA5E /* ToJSONTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToJSONTemplate.h; sourceTree = "<group>"; };
 		8445E4071A402344002BDA5E /* ToJSONTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToJSONTemplate.m; sourceTree = "<group>"; };
-		8445E4091A414A6B002BDA5E /* Credits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credits.h; sourceTree = "<group>"; };
-		8445E40A1A414A6B002BDA5E /* Credits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Credits.m; sourceTree = "<group>"; };
 		844CA93518AAB15A00D55F11 /* GradesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradesViewController.h; sourceTree = "<group>"; };
 		844CA93618AAB15A00D55F11 /* GradesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradesViewController.m; sourceTree = "<group>"; };
 		8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSelectionViewController.h; sourceTree = "<group>"; };
@@ -209,8 +209,6 @@
 			children = (
 				8404403A1972781C00CC390E /* DefaultGoals.h */,
 				8404403B1972781C00CC390E /* DefaultGoals.m */,
-				8445E4091A414A6B002BDA5E /* Credits.h */,
-				8445E40A1A414A6B002BDA5E /* Credits.m */,
 			);
 			name = "Goals and Credits";
 			sourceTree = "<group>";
@@ -443,6 +441,8 @@
 				84C7B3BB1943E45400B8DCD8 /* EditTextScreenItemData.m */,
 				841DAE0818B312AC00626302 /* EditTextViewController.h */,
 				841DAE0918B312AC00626302 /* EditTextViewController.m */,
+				8437DAF31A4245F700E261E2 /* EditAssessmentViewController.h */,
+				8437DAF41A4245F700E261E2 /* EditAssessmentViewController.m */,
 			);
 			name = "Edit Text";
 			sourceTree = "<group>";
@@ -597,7 +597,6 @@
 			files = (
 				84B5A2CA1880D93100969952 /* BubbleMain.m in Sources */,
 				84B5A2BB1880D91000969952 /* Styles+Colours.m in Sources */,
-				8445E40B1A414A6B002BDA5E /* Credits.m in Sources */,
 				841DAE0718B3123700626302 /* AddViewController.m in Sources */,
 				84A435CF1966B9E70091905B /* AssessmentCollection.m in Sources */,
 				841DADFF18B0A7D700626302 /* EditTextBubbleContainer.m in Sources */,
@@ -621,6 +620,7 @@
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
 				845C40DE19481350001B1499 /* YearCollection.m in Sources */,
 				84E084A4193F235E00A4DF45 /* FlickScroller.m in Sources */,
+				8437DAF51A4245F700E261E2 /* EditAssessmentViewController.m in Sources */,
 				8404403C1972781C00CC390E /* DefaultGoals.m in Sources */,
 				849D3D231880F2810030D432 /* AnchorView.m in Sources */,
 				84FF925918A08F5B00988F62 /* Profile.m in Sources */,

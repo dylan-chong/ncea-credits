@@ -17,15 +17,13 @@
 #endif
 
 
+#define DEBUG_MODE_ON YES
 
-#define ApplicationDelegate (AppDelegate *)[[UIApplication sharedApplication] delegate]
+
+#define ApplicationDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define CurrentProfile [(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentProfile]
 
 #define AppName [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]
-
-
-#define ItemCredits @"Credits"
-
 
 #define EditTextBoolYes @"Yes"
 #define EditTextBoolNo @"No"

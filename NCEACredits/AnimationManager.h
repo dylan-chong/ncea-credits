@@ -20,8 +20,10 @@
 @property NSArray *animationObjects;
 @property NSTimer *timer;
 @property NSArray *distances;
+@property BOOL animationHasFinished, animationShouldStopMidway;
 
 - (id)initWithAnimationObjects:(NSArray *)a length:(float)length tag:(int)tag andDelegate:(id)d;
 - (void)startAnimation;
+- (void)stopAnimationMidWay;
 
 @end

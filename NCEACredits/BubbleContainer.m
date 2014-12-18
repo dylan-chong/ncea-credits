@@ -8,6 +8,9 @@
 
 #import "BubbleContainer.h"
 #import "Styles.h"
+#import "BubbleMain.h"
+#import "AnimationManager.h"
+
 
 #if 1
 #define bg [UIColor clearColor]

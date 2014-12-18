@@ -6,12 +6,10 @@
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "EditTextViewController.h"
+#import "EditAssessmentViewController.h"
 
-@interface AddViewController : EditTextViewController
+@interface AddViewController : EditAssessmentViewController
 
-- (id)initWithMainBubble:(BubbleContainer *)mainBubble;
-
-+ (NSArray *)getItemData;
+//Yup.
 
 @end

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MainViewController.h"
+#import "Styles.h"
 #import "Profile.h"
 
+@class MainViewController;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

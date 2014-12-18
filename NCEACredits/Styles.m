@@ -36,16 +36,18 @@
 }
 
 + (CGFloat)screenWidth {
-    if ([Styles deviceIsInLandscape])
-        return [[UIScreen mainScreen] bounds].size.height;
-    
-    else return [[UIScreen mainScreen] bounds].size.width;
+//    if ([Styles deviceIsInLandscape])
+//        return [[UIScreen mainScreen] bounds].size.height;
+//    
+//    else
+        return [[UIScreen mainScreen] bounds].size.width;
 }
 + (CGFloat)screenHeight {
-    if ([Styles deviceIsInLandscape])
-        return [[UIScreen mainScreen] bounds].size.width;
-    
-    else return [[UIScreen mainScreen] bounds].size.height;
+//    if ([Styles deviceIsInLandscape])
+//        return [[UIScreen mainScreen] bounds].size.width;
+//    
+//    else
+        return [[UIScreen mainScreen] bounds].size.height;
 }
 + (BOOL)deviceIsInLandscape {
     return UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);

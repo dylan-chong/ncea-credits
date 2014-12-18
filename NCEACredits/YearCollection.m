@@ -23,14 +23,11 @@
     return yc;
 }
 
-- (NSData *)convertToJSON {
+- (NSDictionary *)convertToDictionaryOfProperties {
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
     [properties setObject:[ToJSONTemplate convertArrayOfTemplateSubclassesToJSON:_years] forKey:@"years"];
     
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) NSLog(@"%@", error);
-    return data;
+    return properties;
 }
 
 //*
@@ -44,5 +41,15 @@
 //*********
 //****
 //*
+
+- (Year *)getMostUpToDateYear {
+    Year *recent = CurrentProfile.yearCollection.years[0];
+    for (Year *yearToCheck in CurrentProfile.yearCollection.years) {
+        if (yearToCheck.yearDate > recent.yearDate)
+            recent = yearToCheck;
+    }
+    
+    return recent;
+}
 
 @end

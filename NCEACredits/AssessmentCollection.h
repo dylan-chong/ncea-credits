@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "ToJSONTemplate.h"
+#import "Assessment.h"
 
 @interface AssessmentCollection : ToJSONTemplate
 
 @property NSMutableArray *assessments;
+
+- (BOOL)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment;
+- (NSUInteger)getUnusedAssessmentIdentifier;
 
 @end

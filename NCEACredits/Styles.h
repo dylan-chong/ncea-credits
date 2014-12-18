@@ -9,22 +9,22 @@
 #import <Foundation/Foundation.h>
 
 //corner
-typedef enum {
+typedef NS_ENUM(NSInteger, Corner) {
     TopLeft = 0,
     TopRight = 1,
     BottomLeft = 2,
     BottomRight = 3,
     NotValid = 4
-} Corner;
+} ;
 
 
 //device
-typedef enum {
-    iPad = 0,
+typedef NS_ENUM(NSInteger, Device) {
+    iPad,
 //    iPhone3_5Inch = 1,
 //    iPhone4Inch = 2,
-    iPhone = 3
-} Device;
+    iPhone
+};
 
 //*
 //****
@@ -106,8 +106,8 @@ typedef enum {
 
 @end
 
-#define StandardScrollArrowWidth 35
-#define StandardScrollArrowHeight 10
+#define StandardScrollArrowWidth 45
+#define StandardScrollArrowHeight 15
 #define StandardScrollArrowSpaceFromEdge 25
 
 #define StandardScrollArrowShowAlpha 0.75

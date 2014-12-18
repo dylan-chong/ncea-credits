@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "ToJSONTemplate.h"
 
-typedef enum {
-    FinalGrade = 1,
-    PreliminaryGrade = 2,
-    ExpectedGrade = 3,
-} GradePriorityType;
+typedef NS_ENUM(NSInteger, GradePriorityType) {
+    FinalGrade,
+    PreliminaryGrade,
+    ExpectedGrade,
+};
 
 @interface GradePriority : ToJSONTemplate
 

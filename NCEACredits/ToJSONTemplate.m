@@ -10,16 +10,12 @@
 
 @implementation ToJSONTemplate
 
-- (id)initWithJSONOrNil:(NSData *)json {
-    if (!json) {
+- (id)initWithPropertiesOrNil:(NSDictionary *)properties {
+    if (!properties) {
         //Blank
         self = [self createBlank];
     } else {
         //Load
-        NSError *error;
-        NSDictionary *properties = [NSJSONSerialization JSONObjectWithData:json options:0 error:&error];
-        if (error) NSLog(@"%@", error);
-        
         self = [self loadFromJSONWithProperties:properties];
     }
     
@@ -37,10 +33,23 @@
     return nil;
 }
 
-- (NSData *)convertToJSON {
-    NSAssert(NO, @"You must override the method convertToJSON from class ToJSONTemplate.");
+- (NSDictionary *)convertToDictionaryOfProperties {
+    NSAssert(NO, @"You must override the method convertToDictionaryOfProperties from class ToJSONTemplate. If you are calling this method on the root to convert the whole thing to JSON, call convertToJSONAsRoot instead.");
     return nil;
 }
+
+/* This code must be implemented in place of the convertToDictionaryOfProperties method of all template subclasses below it. This is the method that is called when you want to convert the whole hierarchy into JSON.
+ 
+ - (NSData *)convertToJSONAsRoot {
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    [properties setObject:_profileName forKey:@"profileName"];
+ 
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
+    if (error) NSLog(@"%@", error);
+    return data;
+}
+ */
 
 //------------------------------ Conversion ------------------------------
 
@@ -48,7 +57,7 @@
     NSMutableArray *converted = [[NSMutableArray alloc] init];
     
     for (ToJSONTemplate *obj in array) {
-        [converted addObject:NSDataToNSString([obj convertToJSON])];
+        [converted addObject:[obj convertToDictionaryOfProperties]];
     }
     
     return converted;
@@ -56,8 +65,8 @@
 
 + (NSMutableArray *)convertBackArrayOfJSONObjects:(NSArray *)array toTemplateSubclass:(NSString *)stringOfClassName {
     NSMutableArray *deconverted = [[NSMutableArray alloc] init];
-    for (NSString *obj in array) {
-        [deconverted addObject:[(ToJSONTemplate *)NSClassFromString(stringOfClassName) initWithJSONOrNil:NSStringToNSData(obj)]];
+    for (NSDictionary *obj in array) {
+        [deconverted addObject:[(ToJSONTemplate *)NSClassFromString(stringOfClassName) initWithPropertiesOrNil:obj]];
     }
     
     return deconverted;

@@ -7,24 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AnimationManager.h"
 
-typedef enum {
-    EditTextDataTypeText = 1,
-    EditTextDataTypeGrade = 2,
-    EditTextDataTypeBool = 3,
-    EditTextDataTypeNumber = 4,
-    EditTextDataTypeDate = 5,
-    EditTextDataTypeTypeOfCredits = 6,
-} EditTextDataType;
+@class EditTextBubbleContainer;
+
+typedef NS_ENUM(NSInteger, EditTextDataType) {
+    EditTextDataTypeText,
+    EditTextDataTypeGrade,
+    EditTextDataTypeBool,
+    EditTextDataTypeNumber,
+    EditTextDataTypeDate,
+    EditTextDataTypeTypeOfCredits,
+} ;
 
 @protocol EditTextEditScreenDelegate <NSObject>
 
 - (void)finishedEditing;
 
 @end
-
-@class EditTextBubbleContainer;
 
 @interface EditTextEditScreen : UIView <UITextFieldDelegate>
 

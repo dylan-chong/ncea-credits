@@ -7,6 +7,7 @@
 //
 
 #import "AssessmentCollection.h"
+#import "Grade.h"
 
 @implementation AssessmentCollection
 
@@ -22,16 +23,12 @@
     return a;
 }
 
-- (NSData *)convertToJSON {
+- (NSDictionary *)convertToDictionaryOfProperties {
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
     [properties setObject:[ToJSONTemplate convertArrayOfTemplateSubclassesToJSON:_assessments] forKey:@"assessments"];
     
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) NSLog(@"%@", error);
-    return data;
+    return properties;
 }
-
 
 //*
 //****
@@ -44,5 +41,69 @@
 //*********
 //****
 //*
+
+- (NSUInteger)getUnusedAssessmentIdentifier {
+    NSArray *usedIDs = [self getAllUsedAssessmentIdentifiers];
+    NSUInteger largestID = 0;
+    
+    //Find an identifier larger than the largest being used
+    for (NSNumber *n in usedIDs) {
+        if ([n integerValue] > largestID)
+            largestID = [n integerValue];
+    }
+    
+    return largestID + 1;
+}
+
+- (NSArray *)getAllUsedAssessmentIdentifiers {
+    NSMutableArray *used = [[NSMutableArray alloc] init];
+    
+    if (_assessments.count > 1) {
+        for (int a = 0; a < _assessments.count; a++) {
+            [used addObject:[NSNumber numberWithInteger:((Assessment *)_assessments[a]).identifier]];
+        }
+    }
+    
+    return used;
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (BOOL)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment {
+    //If unit standard, grade can only be achieved
+    if (assessment.isUnitStandard) {
+        if (![assessment.gradeSet.final isEqualToString: GradeTextNotAchieved]) {
+            assessment.gradeSet.final = GradeTextAchieved;
+        }
+        if (![assessment.gradeSet.preliminary isEqualToString: GradeTextNotAchieved]) {
+            assessment.gradeSet.preliminary = GradeTextAchieved;
+        }
+        if (![assessment.gradeSet.expected isEqualToString: GradeTextNotAchieved]) {
+            assessment.gradeSet.expected = GradeTextAchieved;
+        }
+    }
+    
+    //Replace existing?
+    for (int a = 0; a < _assessments.count; a++) {
+        Assessment *existingAssessment = _assessments[a];
+        if (existingAssessment.identifier == assessment.identifier) {
+            _assessments[a] = assessment;
+            return YES;
+        }
+    }
+    
+    [_assessments addObject:assessment];
+    return YES;
+}
 
 @end

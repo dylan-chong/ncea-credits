@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "BubbleContainer.h"
 #import "EditTextBubbleContainer.h"
 
 @interface EditTextBubble : Bubble
@@ -21,5 +20,6 @@
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title text:(NSString *)text placeHolderText:(NSString *)placeholder towardsRightSide:(BOOL)isTowardsRight andType:(EditTextDataType)type;
 - (void)setTextLabelText:(NSString *)text;
++ (UIColor *)placeholderColour;
 
 @end

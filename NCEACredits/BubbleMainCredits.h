@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Grade.h"
 
 @interface BubbleMainCredits : UIView
 
 @property UILabel *header, *credits;
-@property GradeType grade;
+@property NSString *grade;
 
-- (id)initWithFrame:(CGRect)frame andType:(GradeType)grade;
+- (id)initWithFrame:(CGRect)frame andGradeTextType:(NSString*)grade;
 
 @end

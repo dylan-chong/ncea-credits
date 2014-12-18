@@ -12,15 +12,16 @@
 #import "SetupNavigationController.h"
 
 @implementation MainViewController {
-    BOOL tempHasShownSetup;
+    BOOL hasForceShownSetup;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        hasForceShownSetup = NO;
+        self.shouldDelayCreationAnimation = YES;
         [self createBubbleContainers];
-        tempHasShownSetup = NO;
     }
     return self;
 }
@@ -29,21 +30,16 @@
     [super viewDidAppear:animated];
     
     //Show setup window
-    if (!tempHasShownSetup) {
+    if (!hasForceShownSetup) {
         //Hasn't shown setup
         [SetupNavigationController showStoryboardFromViewController:self];
-        tempHasShownSetup = YES;
+        hasForceShownSetup = YES;
     } else {
-        Profile *p = CurrentProfile;
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:NSDataToNSString([p convertToJSON]) preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
+        self.shouldDelayCreationAnimation = NO;
+        [self startChildBubbleCreationAnimation];
     }
     
-    
-    
-    #warning TODO: refresh data (e.g. goals)
+#warning TODO: refresh data (e.g. goals)
 }
 
 - (void)createBubbleContainers {
@@ -96,11 +92,7 @@
     
     [self addControlEventsToBubbleContainers];
     self.mainBubble.animationManager = [self.mainBubble getAnimationManagerForMainBubbleGrowth];
-    [NSTimer scheduledTimerWithTimeInterval:[Styles animationSpeed] / 2
-                                     target:self.mainBubble
-                                   selector:@selector(startGrowingMainBubbleAnimation)
-                                   userInfo:nil
-                                    repeats:NO];
+    
     
     [self startChildBubbleCreationAnimation];
 }
@@ -125,23 +117,26 @@
 //*
 
 - (void)addContainerPressed {
-    BubbleViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer];
+    BubbleViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer andAssessmentOrNil:nil];
     b.delegate = self;
     [self startTransitionToChildBubble:_addContainer andBubbleViewController:b];
 }
 
 - (void)gradesContainerPressed {
+    #warning TODO: make sure number of subjects is at least 1
     BubbleViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer andStaggered:YES];
     b.delegate = self;
     [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
 }
 
 - (void)statsContainerPressed {
-    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Cool stats coming soon!" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)optionsContainerPressed {
-    
+    [CurrentProfile logJSONText];
 }
 
 

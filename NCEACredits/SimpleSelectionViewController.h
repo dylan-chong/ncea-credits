@@ -7,6 +7,7 @@
 //
 
 #import "BubbleViewController.h"
+#import "Styles.h"
 
 @protocol SimpleSelectionDelegate <NSObject>
 - (void)subjectTitleWasPressed:(BubbleContainer *)bubble;

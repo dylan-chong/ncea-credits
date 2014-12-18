@@ -7,8 +7,10 @@
 //
 
 #import "EditTextEditScreen.h"
-#import "EditTextBubbleContainer.h"
 #import "EditTextBubble.h"
+#import "Styles.h"
+#import "EditTextBubbleContainer.h"
+#import "Grade.h"
 
 @implementation EditTextEditScreen
 
@@ -167,7 +169,7 @@
         [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
         [b addTarget:target action:@selector(setTextFieldText:) forControlEvents:UIControlEventTouchUpInside];
         [a addObject:b];
-        [b setBackgroundColor:[Styles greyColour]];
+        [b setBackgroundColor:[UIColor clearColor]];
     }
     
     return a;
@@ -357,6 +359,7 @@
             
             UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
             b.frame = CGRectZero;
+            b.backgroundColor = [UIColor clearColor];
             [b setTitle:s forState:UIControlStateNormal];
             [b.titleLabel setFont:[Styles bigTextFont]];
             [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

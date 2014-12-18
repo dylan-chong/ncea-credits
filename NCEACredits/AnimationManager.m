@@ -7,6 +7,7 @@
 //
 
 #import "AnimationManager.h"
+#import "AnimationObject.h"
 
 @implementation AnimationManager
 
@@ -18,6 +19,8 @@
         _animationTime = length;
         if (d) _delegate = d;
         _tag = tag;
+        _animationHasFinished = NO;
+        _animationShouldStopMidway = NO;
         
         [self setUpDistanceArray];
     }
@@ -53,18 +56,30 @@
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0/[Styles frameRate] target:self selector:@selector(tick) userInfo:nil repeats:YES];
 }
 
+- (void)stopAnimationMidWay {
+    _animationShouldStopMidway = YES;
+    [_timer invalidate];
+}
+
 - (void)tick {
-    _animationStage++;
-    if (_animationStage < _animationTime * [Styles frameRate]) {
-        double d = [self getAnimationDistanceFromArray];
-        
-        for (AnimationObject *a in _animationObjects) {
-            [a setDistanceWithPercentage:d];
+    if (!_animationShouldStopMidway) {
+        _animationStage++;
+        if (_animationStage < _animationTime * [Styles frameRate]) {
+            double d = [self getAnimationDistanceFromArray];
+            
+            for (AnimationObject *a in _animationObjects) {
+                [a setDistanceWithPercentage:d];
+            }
+        } else {
+            [self finishAnimation];
         }
-    } else {
-        [_timer invalidate];
-        [_delegate animationHasFinished:_tag];
     }
+}
+
+- (void)finishAnimation {
+    [_timer invalidate];
+    _animationHasFinished = YES;
+    [_delegate animationHasFinished:_tag];
 }
 
 @end

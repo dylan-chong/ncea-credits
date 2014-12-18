@@ -22,14 +22,11 @@
     return sac;
 }
 
-- (NSData *)convertToJSON {
+- (NSDictionary *)convertToDictionaryOfProperties {
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
     [properties setObject:_subjectsAndColours forKey:@"subjectsAndColours"];
     
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) NSLog(@"%@", error);
-    return data;
+    return properties;
 }
 
 //*

@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Grade.h"
 #import "ToJSONTemplate.h"
-#import "Credits.h"
+
+@class Grade;
 
 @interface Assessment : ToJSONTemplate
 
-
-@property NSUInteger assessmentNumber, creditsWhenAchieved, level;
-@property NSString *assessmentKeyword, *subject, *typeOfCredits;
-@property BOOL isInternal, isUnitStandard;
+//Changing these fields means updating the EditAssessmentVC
+@property NSUInteger assessmentNumber, creditsWhenAchieved, level, identifier;
+@property NSString *quickName, *subject, *typeOfCredits;
+@property BOOL isAnInternal, isUnitStandard;
 @property Grade *gradeSet;
 
 @end

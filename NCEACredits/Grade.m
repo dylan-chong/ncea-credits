@@ -12,30 +12,27 @@
 
 - (Grade *)createBlank {
     Grade *g = [[Grade alloc] init];
-    g.final = GradeNone;
-    g.expected = GradeNone;
-    g.preliminary = GradeNone;
+    g.final = GradeTextNone;
+    g.expected = GradeTextNone;
+    g.preliminary = GradeTextNone;
     return g;
 }
 
 - (Grade *)loadFromJSONWithProperties:(NSDictionary *)properties {
     Grade *g = [[Grade alloc] init];
-    g.final = [[properties objectForKey:@"final"] intValue];
-    g.expected = [[properties objectForKey:@"expected"] intValue];
-    g.preliminary = [[properties objectForKey:@"preliminary"] intValue];
+    g.final = [properties objectForKey:@"final"];
+    g.expected = [properties objectForKey:@"expected"];
+    g.preliminary = [properties objectForKey:@"preliminary"];
     return g;
 }
 
-- (NSData *)convertToJSON {
+- (NSDictionary *)convertToDictionaryOfProperties {
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
-    [properties setObject:[NSNumber numberWithInt:_final] forKey:@"final"];
-    [properties setObject:[NSNumber numberWithInt:_expected] forKey:@"expected"];
-    [properties setObject:[NSNumber numberWithInt:_preliminary] forKey:@"preliminary"];
+    [properties setObject:_final forKey:@"final"];
+    [properties setObject:_expected forKey:@"expected"];
+    [properties setObject:_preliminary forKey:@"preliminary"];
     
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) NSLog(@"%@", error);
-    return data;
+    return properties;
 }
 
 //*

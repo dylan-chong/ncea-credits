@@ -21,4 +21,6 @@
 + (UIColor *)darkGreyColour{        return [UIColor colorWithWhite:100.0/255 alpha:1.0];}
 + (UIColor *)lightGreyColour{       return [UIColor colorWithWhite:230.0/255 alpha:1.0];}
 + (UIColor *)translucentWhite{      return [UIColor colorWithWhite:1.0 alpha:0.97];}
+
+#warning TODO: merge colours with subjects and colorus
 @end

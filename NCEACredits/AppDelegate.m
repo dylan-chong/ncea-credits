@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
 
 @implementation AppDelegate
 
@@ -24,17 +25,15 @@
     if (_currentProfile)
         return _currentProfile;
     else {
-#warning load JSON (and save a file that says which one should be loaded next time)
-        Profile *p = [[Profile alloc] initWithJSONOrNil:nil];
+#warning TODO: load JSON (and save a file that says which one should be loaded next time)
+        Profile *p = [[Profile alloc] initWithPropertiesOrNil:nil];
         _currentProfile = p;
         return p;
     }
 }
 
 - (void)saveCurrentProfile {
-    if (_currentProfile) {
-        
-    }
+   
 }
 
 //*

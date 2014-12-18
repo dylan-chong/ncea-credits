@@ -9,6 +9,7 @@
 #import "SetupRootController.h"
 #import "Year.h"
 #import "DefaultGoals.h"
+#import "TableViewCellData.h"
 
 @interface SetupRootController ()
 
@@ -58,7 +59,7 @@
                                               selected:NO
                                           optionalData:0],
              
-             [[TableViewCellData alloc] initWithDetail:[NSString stringWithFormat:@"%lu", (unsigned long)[CurrentProfile getYearCurrentlyInUseOtherwiseCurrentDateYear]]
+             [[TableViewCellData alloc] initWithDetail:[NSString stringWithFormat:@"%lu", (unsigned long)[CurrentProfile getYearDateCurrentlyInUseOtherwiseCurrentDateYear]]
                                                   text:@"Current Year"
                                                reuseId:@"edit"
                                              accessory:UITableViewCellAccessoryNone
@@ -146,7 +147,7 @@
 }
 
 - (unsigned long)getNewYearDate {
-    unsigned long newDate = [CurrentProfile getYearCurrentlyInUseOtherwiseCurrentDateYear];
+    unsigned long newDate = [CurrentProfile getYearDateCurrentlyInUseOtherwiseCurrentDateYear];
     
     //is newDate already in use? get older dates until you find one not used
     while ([self checkIfYearDateIsAlreadyListed:newDate] == YES) {
@@ -615,6 +616,8 @@
     //Remove add year button so that for-in loops can be used (actual cell isnt removed)
     [_yearCells removeLastObject];
     
+    NSMutableArray *yearsToKeep = [[NSMutableArray alloc] init];//Remove all years that are not in _yearCells
+    
     //Go through existing years, applying changes to NCEA level
     NSMutableArray *existingYears = CurrentProfile.yearCollection.years;
     for (Year *year in existingYears) {
@@ -625,6 +628,7 @@
                 year.yearDate = [data.text integerValue];
                 
                 [_yearCells removeObject:data]; //Remove data as it's job is done
+                [yearsToKeep addObject:year];
                 break;
             }
         }
@@ -632,12 +636,17 @@
     
     //Create blank years for remaining datas
     for (TableViewCellData *dataToCreateYear in _yearCells) {
-        Year *newYear = [[Year alloc] initWithJSONOrNil:nil];
+        Year *newYear = [[Year alloc] initWithPropertiesOrNil:nil];
         newYear.yearDate = [dataToCreateYear.text integerValue];
         newYear.primaryLevelNumber = [[self getLastCharacterOfString:dataToCreateYear.detail] integerValue];
         newYear.identifier = dataToCreateYear.optionalData;
-        [CurrentProfile.yearCollection.years addObject:newYear];
+        [yearsToKeep addObject:newYear];
     }
+    
+    CurrentProfile.yearCollection.years = yearsToKeep;
+    CurrentProfile.currentYear = [CurrentProfile.yearCollection getMostUpToDateYear].yearDate;
+    
+    [ApplicationDelegate saveCurrentProfile];
 }
 
 /*

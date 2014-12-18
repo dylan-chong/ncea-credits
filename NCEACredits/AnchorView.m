@@ -9,6 +9,7 @@
 #import "AnchorView.h"
 #import "Styles.h"
 #import "BubbleContainer.h"
+#import "AnimationObject.h"
 
 @implementation AnchorView
 

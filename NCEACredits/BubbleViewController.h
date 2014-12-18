@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BubbleContainer.h"
-#import "AnchorView.h"
+#import "AnimationManager.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AnchorView.h"
 
 @protocol BubbleViewControllerTransitionDelegate
 //child view controllers will implement the delegate to communicate with the parent
@@ -29,7 +30,7 @@
 @property BOOL disableAnchorReDraw;
 @property BOOL hasStartedGrowingAnimation, isDoingAnimation;
 @property (nonatomic) AnimationManager *animationManager;
-@property BOOL isCurrentViewController;
+@property BOOL isCurrentViewController, shouldDelayCreationAnimation, hasDoneCreationAnimation;
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a;
 - (void)startChildBubbleCreationAnimation;

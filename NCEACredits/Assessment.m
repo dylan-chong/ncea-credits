@@ -7,16 +7,19 @@
 //
 
 #import "Assessment.h"
+#import "Grade.h"
 
 @implementation Assessment
 
 - (Assessment *)createBlank {
+    //These are also the defaults and placeholders used in the Add/edit assessment screens
     Assessment *a = [[Assessment alloc] init];
-    a.gradeSet = [[Grade alloc] initWithJSONOrNil:nil];
+    a.gradeSet = [[Grade alloc] initWithPropertiesOrNil:nil];
     a.creditsWhenAchieved = 4;
     a.typeOfCredits = TypeOfCreditsNormal;
     a.level = [CurrentProfile getPrimaryNCEALevelForCurrentYear];
-    a.isInternal = YES;
+    a.identifier = [[CurrentProfile getCurrentYear].assessmentCollection getUnusedAssessmentIdentifier];
+    a.isAnInternal = YES;
     a.isUnitStandard = NO;
     return a;
 }
@@ -24,33 +27,32 @@
 - (Assessment *)loadFromJSONWithProperties:(NSDictionary *)properties {
     Assessment *a = [[Assessment alloc] init];
     a.assessmentNumber = [[properties objectForKey:@"assessmentNumber"] integerValue];
-    a.assessmentKeyword = [properties objectForKey:@"assessmentKeyword"];
+    a.quickName = [properties objectForKey:@"quickName"];
     a.creditsWhenAchieved = [[properties objectForKey:@"creditsWhenAchieved"] integerValue];
     a.typeOfCredits = [properties objectForKey:@"typeOfCredits"];
     a.level = [[properties objectForKey:@"level"] integerValue];
-    a.isInternal = [[properties objectForKey:@"isInternal"] boolValue];
+    a.identifier = [[properties objectForKey:@"identifier"] integerValue];
+    a.isAnInternal = [[properties objectForKey:@"isAnInternal"] boolValue];
     a.isUnitStandard = [[properties objectForKey:@"isUnitStandard"] boolValue];
-    a.gradeSet = [[Grade alloc] initWithJSONOrNil:NSStringToNSData([properties objectForKey:@"gradeSet"])];
+    a.gradeSet = [[Grade alloc] initWithPropertiesOrNil:[properties objectForKey:@"gradeSet"]];
     return a;
     
     return nil;
 }
 
-- (NSData *)convertToJSON {
+- (NSDictionary *)convertToDictionaryOfProperties {
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
     [properties setObject:[NSNumber numberWithInteger:_assessmentNumber] forKey:@"assessmentNumber"];
-    [properties setObject:_assessmentKeyword forKey:@"assessmentKeyword"];
+    [properties setObject:_quickName forKey:@"quickName"];
     [properties setObject:[NSNumber numberWithInteger:_creditsWhenAchieved] forKey:@"creditsWhenAchieved"];
     [properties setObject:_typeOfCredits forKey:@"typeOfCredits"];
     [properties setObject:[NSNumber numberWithInteger:_level] forKey:@"level"];
-    [properties setObject:[NSNumber numberWithBool:_isInternal] forKey:@"isInternal"];
+    [properties setObject:[NSNumber numberWithInteger:_identifier] forKey:@"identifier"];
+    [properties setObject:[NSNumber numberWithBool:_isAnInternal] forKey:@"isAnInternal"];
     [properties setObject:[NSNumber numberWithBool:_isUnitStandard] forKey:@"isUnitStandard"];
-    [properties setObject:NSDataToNSString([_gradeSet convertToJSON]) forKey:@"gradeSet"];
+    [properties setObject:[_gradeSet convertToDictionaryOfProperties] forKey:@"gradeSet"];
     
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) NSLog(@"%@", error);
-    return data;
+    return properties;
 }
 
 //*

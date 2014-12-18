@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "ToJSONTemplate.h"
+#import "Year.h"
 
 @interface YearCollection : ToJSONTemplate
 
 @property NSMutableArray *years;
+- (Year *)getMostUpToDateYear;
 
 @end

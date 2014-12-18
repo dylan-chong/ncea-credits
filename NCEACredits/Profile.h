@@ -7,26 +7,30 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YearCollection.h"
 #import "GradePriority.h"
-#import "Year.h"
-#import "ToJSONTemplate.h"
+#import "YearCollection.h"
 
 @interface Profile : ToJSONTemplate
 - (BOOL)hasAllNecessaryInformationFromSetup;
 - (NSArray *)getSubjects;
+- (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment;
 
 @property NSString *profileName;
 @property GradePriority *gradePriority;
 
 @property NSUInteger currentYear;
 - (Year *)getYearObjectForYearDate:(NSUInteger)date;
-- (NSUInteger)getYearCurrentlyInUseOtherwiseCurrentDateYear;
+- (Year *)getCurrentYear;
+- (NSUInteger)getYearDateCurrentlyInUseOtherwiseCurrentDateYear;
 - (NSUInteger)getPrimaryNCEALevelForCurrentYear;
 
 @property YearCollection *yearCollection;
 - (NSArray *)getYearsAsTableDatasForSetup;
 
 @property NSString *selectedGoalTitle;
+
+- (NSData *)convertToJSONAsRoot;
+
+- (void)logJSONText;
 
 @end

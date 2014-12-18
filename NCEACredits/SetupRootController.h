@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TableViewCellData.h"
 
 @interface SetupRootController : UITableViewController
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
