@@ -15,11 +15,6 @@
 #define TypeOfCreditsLiteracy @"Literacy"
 #define TypeOfCreditsNumeracy @"Numeracy"
 
-NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
-    if (boolean) return EditTextBoolYes;
-    else return EditTextBoolNo;
-};
-
 //typedef NS_ENUM(NSInteger, GradeType) {
 //    GradeExcellence,
 //    GradeMerit,

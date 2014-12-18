@@ -11,6 +11,7 @@
 #import "AnimationManager.h"
 #import "GoalTitle.h"
 
+
 @class AnimationManager, BubbleMainCredits, GoalTitle;
 @interface BubbleMain : Bubble
 

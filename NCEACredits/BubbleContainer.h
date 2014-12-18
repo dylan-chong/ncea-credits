@@ -13,7 +13,7 @@
 @class AnimationManager;
 
 typedef NS_ENUM(NSInteger, BubbleType) {
-    MainBubble,
+    MainBubble = 1,
     TitleBubble,
     SubtitleBubble
 };

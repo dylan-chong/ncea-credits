@@ -11,6 +11,11 @@
 #import "EditTextScreenItemData.h"
 #import "Grade.h"
 
+NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
+    if (boolean) return EditTextBoolYes;
+    else return EditTextBoolNo;
+};
+
 @interface EditAssessmentViewController ()
 
 @end

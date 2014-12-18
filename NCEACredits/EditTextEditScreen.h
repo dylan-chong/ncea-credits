@@ -11,7 +11,7 @@
 @class EditTextBubbleContainer;
 
 typedef NS_ENUM(NSInteger, EditTextDataType) {
-    EditTextDataTypeText,
+    EditTextDataTypeText = 1,
     EditTextDataTypeGrade,
     EditTextDataTypeBool,
     EditTextDataTypeNumber,

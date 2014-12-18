@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, AnimationObjectTag) {
-    X,
+    X = 1,
     Y,
     Width,
     Height,
