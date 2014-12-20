@@ -91,27 +91,17 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 - (BOOL)textBubbleIsShowingPlaceHolder:(NSString *)title { //I.e. no data entered
     for (EditTextBubbleContainer *b in self.childBubbles) {
         EditTextBubble *bubble = (EditTextBubble *)b.bubble;
-        if ([bubble.titleLabel.text isEqualToString:title]) {
+        if ([bubble.titleLabel.text isEqualToString:[title stringByAppendingString:TitleSuffix]]) {
             UIColor *textColour = bubble.textLabel.textColor;
             UIColor *placeholderColour = [EditTextBubble placeholderColour];
             
-            if ([EditAssessmentViewController colour:textColour isTheSameAsColour:placeholderColour]) {
-                return bubble.isPlaceHolder;
+            if ([Styles colour:textColour isTheSameAsColour:placeholderColour]) {
+                return YES;
             }
         }
     }
     
     return NO;
-}
-
-+ (BOOL)colour:(UIColor *)colourA isTheSameAsColour:(UIColor *)colourB {
-    CGFloat redA, greenA, blueA, alphaA, redB, greenB, blueB, alphaB;
-    [colourA getRed:&redA green:&greenA blue:&blueA alpha:&alphaA];
-    [colourB getRed:&redB green:&greenB blue:&blueB alpha:&alphaB];
-    if (redA == redB && greenA == greenB && blueA == blueB && alphaA == alphaB)
-        return YES;
-    else
-        return NO;
 }
 
 - (void)startReturnScaleAnimation {
@@ -125,7 +115,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     
     if (count == titles.count) {
         //Save
-        
+        [self saveAssessment];
         [super startReturnScaleAnimation];
     } else {
         
@@ -153,10 +143,21 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
         NSString *title = ((EditTextBubble *)bubble.bubble).titleLabel.text;
         NSString *text = ((EditTextBubble *)bubble.bubble).textLabel.text;
         
+        title = [title substringToIndex:title.length - TitleSuffix.length];//Get rid of the colon on the end
+        
+        if ([title containsString:@"Grade"] && [self textBubbleIsShowingPlaceHolder:title]) //Placeholder = no grade
+             text = GradeTextNone;
+        
         if ([title isEqualToString:ItemQuickName]) {
             newOrEditedAssessment.quickName = text;
         } else if ([title isEqualToString:ItemASNumber]) {
-            newOrEditedAssessment.assessmentNumber = [text integerValue];
+            if ([self textBubbleIsShowingPlaceHolder:title]) {
+                //Placeholder? set AS to 0
+                newOrEditedAssessment.assessmentNumber = 0;
+            } else {
+                newOrEditedAssessment.assessmentNumber = [text integerValue];
+            }
+            
         } else if ([title isEqualToString:ItemSubject]) {
             newOrEditedAssessment.subject = text;
         } else if ([title isEqualToString:ItemCredits]) {
@@ -181,6 +182,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
         }
     }
     
+    [CurrentProfile addAssessmentOrReplaceACurrentOne:newOrEditedAssessment];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

@@ -204,13 +204,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8404403D1972782500CC390E /* Goals and Credits */ = {
+		8404403D1972782500CC390E /* Goals */ = {
 			isa = PBXGroup;
 			children = (
 				8404403A1972781C00CC390E /* DefaultGoals.h */,
 				8404403B1972781C00CC390E /* DefaultGoals.m */,
 			);
-			name = "Goals and Credits";
+			name = Goals;
 			sourceTree = "<group>";
 		};
 		840D586E18820C5700DE24B7 /* Animation */ = {
@@ -257,8 +257,6 @@
 			children = (
 				845C40DF19481973001B1499 /* GradePriority.h */,
 				845C40E019481973001B1499 /* GradePriority.m */,
-				84A435D41966C5660091905B /* SubjectsAndColours.h */,
-				84A435D51966C5660091905B /* SubjectsAndColours.m */,
 				845C40DC19481350001B1499 /* YearCollection.h */,
 				845C40DD19481350001B1499 /* YearCollection.m */,
 				84A435C71966B7280091905B /* Year.h */,
@@ -271,6 +269,8 @@
 		84A435C61966B7080091905B /* Year */ = {
 			isa = PBXGroup;
 			children = (
+				84A435D41966C5660091905B /* SubjectsAndColours.h */,
+				84A435D51966C5660091905B /* SubjectsAndColours.m */,
 				84A435CD1966B9E70091905B /* AssessmentCollection.h */,
 				84A435CE1966B9E70091905B /* AssessmentCollection.m */,
 				84A435CA1966B9D70091905B /* Assessment.h */,
@@ -327,7 +327,7 @@
 				84B5A2891880D8AD00969952 /* AppDelegate.m */,
 				84FF925B18A08F7B00988F62 /* Profile Structure */,
 				8459E868196FB456000D1C85 /* Setup */,
-				8404403D1972782500CC390E /* Goals and Credits */,
+				8404403D1972782500CC390E /* Goals */,
 				84B5A2B01880D8F500969952 /* Resources */,
 				84B5A2C01880D91400969952 /* Styles */,
 				84FF925A18A08F6B00988F62 /* UI */,

@@ -34,6 +34,7 @@
     a.identifier = [[properties objectForKey:@"identifier"] integerValue];
     a.isAnInternal = [[properties objectForKey:@"isAnInternal"] boolValue];
     a.isUnitStandard = [[properties objectForKey:@"isUnitStandard"] boolValue];
+    a.subject = [properties objectForKey:@"subject"];
     a.gradeSet = [[Grade alloc] initWithPropertiesOrNil:[properties objectForKey:@"gradeSet"]];
     return a;
     
@@ -50,6 +51,7 @@
     [properties setObject:[NSNumber numberWithInteger:_identifier] forKey:@"identifier"];
     [properties setObject:[NSNumber numberWithBool:_isAnInternal] forKey:@"isAnInternal"];
     [properties setObject:[NSNumber numberWithBool:_isUnitStandard] forKey:@"isUnitStandard"];
+    [properties setObject:_subject forKey:@"subject"];
     [properties setObject:[_gradeSet convertToDictionaryOfProperties] forKey:@"gradeSet"];
     
     return properties;

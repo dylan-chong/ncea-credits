@@ -39,16 +39,12 @@
         _credits.textColor = [Styles mainTextColour];
         _credits.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_credits];
-        
-        [self updateCredits];
     }
     return self;
 }
 
-- (void)updateCredits {
-    if ([_grade isEqualToString: GradeTextExcellence]) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
-    else if ([_grade isEqualToString: GradeTextMerit]) _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
-    else _credits.text = [NSString stringWithFormat:@"%i", arc4random_uniform(100)];
+- (void)setNumberOfCredits:(NSUInteger)credits {
+    _credits.text = [NSString stringWithFormat:@"%i", credits];
 }
 
 + (NSString *)getCharTitleForGradeType:(NSString *)grade {

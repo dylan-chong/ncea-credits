@@ -7,6 +7,7 @@
 //
 
 #import "SetupNavigationController.h"
+#import "SetupRootController.h"
 
 @interface SetupNavigationController ()
 
@@ -21,6 +22,10 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    ((SetupRootController *)self.viewControllers[0]).delegate = _delegateToPassOnToRootController;
 }
 
 - (void)viewDidLoad
@@ -47,13 +52,14 @@
     UIStoryboard *setupStoryboard = [UIStoryboard storyboardWithName:[SetupNavigationController getStoryboardFileName]
                                                               bundle:nil];
     
-    UIViewController *sbvc = [setupStoryboard instantiateInitialViewController];
+    SetupNavigationController *sbvc = [setupStoryboard instantiateInitialViewController];
     vc.modalPresentationStyle = UIModalPresentationFormSheet;
+    sbvc.delegateToPassOnToRootController = vc;
     
     [vc presentViewController:sbvc
                      animated:YES
                    completion:^{}
-     ];
+    ];
 }
 
 /*

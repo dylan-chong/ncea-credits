@@ -77,7 +77,6 @@
 }
 
 - (void)repositionBubbles {
-    _anchors.frame = CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight]);
     [self redrawAnchors];
     
     [self animateRepositionObjects];
@@ -172,7 +171,7 @@
         //return slide
         [self dismissViewControllerAnimated:NO completion:^{
             _parentBubble.bubble.frame = _mainBubble.bubble.frame;
-            [self hasReturnedFromChildViewController];
+            [self.delegate hasReturnedFromChildViewController];
         }];
     }
 }
@@ -330,7 +329,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     if ([Styles deviceIsInLandscape]) [_statusBarFiller setHidden:YES];
     else [_statusBarFiller setHidden:NO];
     if (!_shouldDelayCreationAnimation) [self repositionBubbles];

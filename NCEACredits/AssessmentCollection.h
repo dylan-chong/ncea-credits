@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ToJSONTemplate.h"
 #import "Assessment.h"
+#import "GradePriority.h"
 
 @interface AssessmentCollection : ToJSONTemplate
 
@@ -16,5 +17,8 @@
 
 - (BOOL)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment;
 - (NSUInteger)getUnusedAssessmentIdentifier;
+- (NSArray *)getSubjectsOrNil;
+- (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority;
+- (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText andPriority:(GradePriorityType)priority;
 
 @end

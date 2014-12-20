@@ -7,6 +7,7 @@
 //
 
 #import "Grade.h"
+#import "GradePriority.h"
 
 @implementation Grade
 
@@ -47,5 +48,38 @@
 //****
 //*
 
+- (NSString *)getHighestPriorityExistingGradeText {
+    NSArray *priorities = CurrentProfile.gradePriority.priorityOrder;
+    
+    for (NSNumber *p in priorities) {
+        GradePriorityType priority = [p integerValue];
+        NSString *grade = [self getGradeTextForGradeType:priority];
+        
+        if (![grade isEqualToString:GradeTextNone]) {
+            return grade;
+        }
+    }
+    //All grades are GradeTextNone
+    return GradeTextNone;
+}
+
+- (NSString *)getGradeTextForGradeType:(GradePriorityType)type {
+    switch (type) {
+        case GradePriorityExpectedGrade:
+            return _expected;
+            break;
+            
+        case GradePriorityFinalGrade:
+            return _final;
+            break;
+            
+        case GradePriorityPreliminaryGrade:
+            return _preliminary;
+            break;
+            
+        default:
+            return GradeTextNone;
+    }
+}
 
 @end

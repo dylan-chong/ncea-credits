@@ -128,11 +128,11 @@
     } else {
         //Selection buttons
         if (type == EditTextDataTypeGrade) {
-            titles = @[@"Excellence",
-                       @"Merit",
-                       @"Achieved",
-                       @"Not Achieved",
-                       @"None"];
+            titles = @[GradeTextExcellence,
+                       GradeTextMerit,
+                       GradeTextAchieved,
+                       GradeTextNotAchieved,
+                       GradeTextTitleNone];
             
         } else if (type == EditTextDataTypeBool) {
             titles = @[EditTextBoolYes,
@@ -202,7 +202,7 @@
 }
 
 - (void)setTextFieldText:(UIButton *)sender {
-    if ([sender.titleLabel.text isEqualToString:@"None"]) [_text setText:@""];
+    if ([sender.titleLabel.text isEqualToString:GradeTextTitleNone]) [_text setText:@""];
     else [_text setText:sender.titleLabel.text];
     [self hide];
 }
@@ -237,7 +237,7 @@
                               otherButtonTitles: nil] show];
     } else {
         //Lots of credits
-        if ([[ItemCredits stringByAppendingString:@":"] isEqualToString:_title.text] && [_text.text intValue] > 15)
+        if ([[ItemCredits stringByAppendingString:TitleSuffix] isEqualToString:_title.text] && [_text.text intValue] > 15)
             [[[UIAlertView alloc] initWithTitle:AppName
                                         message:@"Gee that's a lot of credits. I hope you aren't trying to cheat the system.\n\nLuckily for everyone else, it doesn't work like that."
                                        delegate:nil

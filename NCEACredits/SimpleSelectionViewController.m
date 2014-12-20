@@ -76,14 +76,14 @@
     return CGRectMake(origin.x + x - (size.width / 2), origin.y + y - (size.height / 2), size.width, size.height);
 }
 
-+ (NSArray *)getArrayOfBubblesWithTitles:(NSArray *)titles buttonClickSelector:(NSString *)sel target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered andMainBubble:(BubbleContainer *)mainB {
++ (NSArray *)getArrayOfBubblesWithSubjectsWithColoursOrNot:(NSDictionary *)subjectsAndColours buttonClickSelector:(NSString *)sel target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered andMainBubble:(BubbleContainer *)mainB {
     UIColor *c = mainB.colour;
     Corner corner = [Styles getCornerForPoint:mainB.frame.origin];
     
     NSMutableArray *blocks = [[NSMutableArray alloc] init];
-    NSUInteger count = titles.count;
+    NSUInteger count = subjectsAndColours.count;
     CGSize size = mainB.frame.size;
-    for (int a = 0; a < titles.count; a++) {
+    for (int a = 0; a < subjectsAndColours.count; a++) {
         PositionCalculationBlock x = ^{
             return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner andStaggered:staggered];
         };
@@ -92,9 +92,12 @@
     }
     
     NSMutableArray *m = [[NSMutableArray alloc] init];
+    NSArray *allKeys = [subjectsAndColours allKeys];
     
-    for (int a = 0; a < titles.count; a++) {
-        [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:c title:titles[a] frameBubbleForStartingPosition:mainB.frame andDelegate:NO]];
+    for (int a = 0; a < subjectsAndColours.count; a++) {
+        UIColor *overrideColour = [subjectsAndColours objectForKey:allKeys[a]]; //If subjects and colours come with colours use it, otherwise default to main bubble colour
+        if (!overrideColour) overrideColour = c;
+        [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:overrideColour title:allKeys[a] frameBubbleForStartingPosition:mainB.frame andDelegate:NO]];
     }
     
     for (BubbleContainer *b in m) {

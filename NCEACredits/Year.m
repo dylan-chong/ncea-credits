@@ -13,6 +13,7 @@
 - (Year *)createBlank {
     Year *blank = [[Year alloc] init];
     blank.assessmentCollection = [[AssessmentCollection alloc] initWithPropertiesOrNil:nil];
+    blank.subjectsAndColours = [[SubjectsAndColours alloc] initWithPropertiesOrNil:nil];
     return blank;
 }
 
@@ -21,6 +22,7 @@
     year.yearDate = [[properties objectForKey:@"yearDate"] integerValue];
     year.primaryLevelNumber = [[properties objectForKey:@"primaryLevelNumber"] integerValue];
     year.assessmentCollection = [[AssessmentCollection alloc] initWithPropertiesOrNil:[properties objectForKey:@"assessmentCollection"]];
+    year.subjectsAndColours = [[SubjectsAndColours alloc] initWithPropertiesOrNil:[properties objectForKey:@"subjectsAndColours"]];
     year.identifier = [[properties objectForKey:@"identifier"] integerValue];
     
     return year;
@@ -31,6 +33,7 @@
     [properties setObject:[NSNumber numberWithInteger:_yearDate] forKey:@"yearDate"];
     [properties setObject:[NSNumber numberWithInteger:_primaryLevelNumber] forKey:@"primaryLevelNumber"];
     [properties setObject:[_assessmentCollection convertToDictionaryOfProperties] forKey:@"assessmentCollection"];
+    [properties setObject:[_subjectsAndColours convertToDictionaryOfProperties] forKey:@"subjectsAndColours"];
     [properties setObject:[NSNumber numberWithInteger:_identifier] forKey:@"identifier"];
     
     return properties;

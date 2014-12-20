@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ToJSONTemplate.h"
-
-@class Grade;
+#import "Grade.h"
 
 @interface Assessment : ToJSONTemplate
 

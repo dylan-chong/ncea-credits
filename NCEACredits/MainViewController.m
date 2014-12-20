@@ -10,16 +10,14 @@
 #import "AddViewController.h"
 #import "GradesViewController.h"
 #import "SetupNavigationController.h"
+#import "BubbleMain.h"
 
-@implementation MainViewController {
-    BOOL hasForceShownSetup;
-}
+@implementation MainViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        hasForceShownSetup = NO;
         self.shouldDelayCreationAnimation = YES;
         [self createBubbleContainers];
     }
@@ -29,18 +27,71 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [self updateMainBubbleStats];
     //Show setup window
-    if (!hasForceShownSetup) {
+    if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
         //Hasn't shown setup
-        [SetupNavigationController showStoryboardFromViewController:self];
-        hasForceShownSetup = YES;
-    } else {
-        self.shouldDelayCreationAnimation = NO;
-        [self startChildBubbleCreationAnimation];
+        [self showSetupWindow];
     }
     
 #warning TODO: refresh data (e.g. goals)
 }
+
+- (void)setupWillBeDismissed {
+    //Setup VC delegate method
+    if (SHOULD_MAKE_FAKE_ASSESSMENTS) [self makeFakeAssessments];
+    
+    [self updateMainBubbleStats];
+    
+    self.shouldDelayCreationAnimation = NO;
+    [self startChildBubbleCreationAnimation];
+}
+
+- (void)showSetupWindow {
+    [SetupNavigationController showStoryboardFromViewController:self];
+}
+
+- (void)makeFakeAssessments {
+    if (DEBUG_MODE_ON) {
+        NSArray *faketitles = @[@"aaa", @"mmmm", @"tttt", @"hhhh", @"zzzz", @"pppp", @"dddd"];
+        for (NSString *title in faketitles) {
+            Assessment *a = [[Assessment alloc] initWithPropertiesOrNil:nil];
+            a.subject = title;
+            a.quickName = @"name";
+            a.gradeSet.final = GradeTextMerit;
+            
+            [CurrentProfile addAssessmentOrReplaceACurrentOne:a];
+        }
+    }
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
+        [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+        
+        //Reposition main bubble
+        CGRect newPos = self.mainBubble.calulatePosition();
+        self.mainBubble.frame = newPos;
+        _anchors.frame = CGRectMake(0, 0, size.width, size.height);
+    }
+    
+}
+
+- (void)updateMainBubbleStats {
+    [((BubbleMain *)self.mainBubble.bubble) updateStats];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (void)createBubbleContainers {
     PositionCalculationBlock mainBlock = ^(void) {
@@ -117,26 +168,34 @@
 //*
 
 - (void)addContainerPressed {
-    BubbleViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer andAssessmentOrNil:nil];
+    AddViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer andAssessmentOrNil:nil];
     b.delegate = self;
     [self startTransitionToChildBubble:_addContainer andBubbleViewController:b];
 }
 
 - (void)gradesContainerPressed {
-    #warning TODO: make sure number of subjects is at least 1
-    BubbleViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer andStaggered:YES];
-    b.delegate = self;
-    [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
+    if ([CurrentProfile getNumberOfAssessmentsInCurrentYear] > 0) {
+        GradesViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer andStaggered:YES];
+        b.delegate = self;
+        [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
+    } else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Looks like you don't have any assessments yet. Click the Add button on the left to create some. You can then edit them from the Subjects menu." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 - (void)statsContainerPressed {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Cool stats coming soon!" preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
+    //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Cool stats coming soon!" preferredStyle:UIAlertControllerStyleAlert];
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    //    [self presentViewController:alert animated:YES completion:nil];
+    
+    [CurrentProfile logJSONText];
 }
 
 - (void)optionsContainerPressed {
-    [CurrentProfile logJSONText];
+    
+    [self showSetupWindow];
 }
 
 

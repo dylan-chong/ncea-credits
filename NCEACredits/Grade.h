@@ -15,56 +15,18 @@
 #define TypeOfCreditsLiteracy @"Literacy"
 #define TypeOfCreditsNumeracy @"Numeracy"
 
-//typedef NS_ENUM(NSInteger, GradeType) {
-//    GradeExcellence,
-//    GradeMerit,
-//    GradeAchieved,
-//    GradeNotAchieved,
-//    GradeNone
-//};
-
 #define GradeTextExcellence @"Excellence"
 #define GradeTextMerit @"Merit"
 #define GradeTextAchieved @"Achieved"
-#define GradeTextNotAchieved @"NotAchieved"
+#define GradeTextNotAchieved @"Not Achieved"
 #define GradeTextNone @""
-
-//NSInteger (^GradeTextToGradeEnum)(NSString *) = ^(NSString *grade) {
-//    if ([grade isEqualToString:GradeTextExcellence]) return GradeExcellence;
-//    else if ([grade isEqualToString:GradeTextMerit]) return GradeMerit;
-//    else if ([grade isEqualToString:GradeTextAchieved]) return GradeAchieved;
-//    else if ([grade isEqualToString:GradeTextNotAchieved]) return GradeNotAchieved;
-//    else return GradeNone;
-//};
-//
-//NSString *(^GradeEnumToGradeText)(NSInteger) = ^(NSInteger grade) {
-//    switch (grade) {
-//        case GradeExcellence:
-//            return GradeTextExcellence;
-//            break;
-//            
-//        case GradeMerit:
-//            return GradeTextMerit;
-//            break;
-//            
-//        case GradeAchieved:
-//            return GradeTextAchieved;
-//            break;
-//            
-//        case GradeNotAchieved:
-//            return GradeTextNotAchieved;
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-//    return @"";
-//};
+#define GradeTextTitleNone @"None"
 
 @interface Grade : ToJSONTemplate
 
 //If modifying the number of variables below, you must modify AssessmentCollection's addAssessmentOrReplaceACurrentOne: method
 @property NSString *final, *preliminary, *expected;
+- (NSString *)getHighestPriorityExistingGradeText;
+- (NSString *)getGradeTextForGradeType:(GradePriorityType)type;
 
 @end

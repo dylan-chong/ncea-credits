@@ -35,44 +35,7 @@
 //*********
 //****************
 //*************************
-#pragma mark - ***************************************************************
-//*************************
-//****************
-//*********
-//****
-//*
-
-- (NSUInteger)getUnusedAssessmentIdentifier {
-    NSArray *usedIDs = [self getAllUsedAssessmentIdentifiers];
-    NSUInteger largestID = 0;
-    
-    //Find an identifier larger than the largest being used
-    for (NSNumber *n in usedIDs) {
-        if ([n integerValue] > largestID)
-            largestID = [n integerValue];
-    }
-    
-    return largestID + 1;
-}
-
-- (NSArray *)getAllUsedAssessmentIdentifiers {
-    NSMutableArray *used = [[NSMutableArray alloc] init];
-    
-    if (_assessments.count > 1) {
-        for (int a = 0; a < _assessments.count; a++) {
-            [used addObject:[NSNumber numberWithInteger:((Assessment *)_assessments[a]).identifier]];
-        }
-    }
-    
-    return used;
-}
-
-//*
-//****
-//*********
-//****************
-//*************************
-#pragma mark - ***************************************************************
+#pragma mark - ***************************    Assessments    ************************************
 //*************************
 //****************
 //*********
@@ -104,6 +67,109 @@
     
     [_assessments addObject:assessment];
     return YES;
+}
+
+//------------------------------ ID ------------------------------
+- (NSUInteger)getUnusedAssessmentIdentifier {
+    NSArray *usedIDs = [self getAllUsedAssessmentIdentifiers];
+    NSUInteger largestID = 0;
+    
+    //Find an identifier larger than the largest being used
+    for (NSNumber *n in usedIDs) {
+        if ([n integerValue] > largestID)
+            largestID = [n integerValue];
+    }
+    
+    return largestID + 1;
+}
+
+- (NSArray *)getAllUsedAssessmentIdentifiers {
+    NSMutableArray *used = [[NSMutableArray alloc] init];
+    
+    if (_assessments.count > 0) {
+        for (int a = 0; a < _assessments.count; a++) {
+            [used addObject:[NSNumber numberWithInteger:((Assessment *)_assessments[a]).identifier]];
+        }
+    }
+    
+    return used;
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (NSArray *)getSubjectsOrNil {
+    if (_assessments.count == 0)
+        return nil;
+    
+    NSMutableArray *subjectTitles = [[NSMutableArray alloc] init];
+    
+    //Define quick search
+    BOOL (^SubjectTitlesContainsSubject)(NSString *) = ^(NSString *subject) {
+        for (NSString *inSubjectTitles in subjectTitles) {
+            if ([inSubjectTitles isEqualToString:subject]) return YES;
+        }
+        return NO;
+    };
+    
+    for (Assessment *a in _assessments) {
+        if (!SubjectTitlesContainsSubject(a.subject))
+            [subjectTitles addObject:a.subject];
+    }
+    
+    return subjectTitles;
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Credits    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority {
+    NSUInteger exc = [self getNumberOfCreditsForGrade:GradeTextExcellence andPriority:priority];
+    NSUInteger mer = [self getNumberOfCreditsForGrade:GradeTextMerit andPriority:priority];
+    NSUInteger ach = [self getNumberOfCreditsForGrade:GradeTextAchieved andPriority:priority];
+    NSUInteger notach = [self getNumberOfCreditsForGrade:GradeTextNotAchieved andPriority:priority];
+    NSUInteger non = [self getNumberOfCreditsForGrade:GradeTextNone andPriority:priority];
+    NSDictionary *creds = [[NSMutableDictionary alloc] initWithObjects:@[[NSNumber numberWithInteger:exc],
+                                                                         [NSNumber numberWithInteger:mer],
+                                                                         [NSNumber numberWithInteger:ach],
+                                                                         [NSNumber numberWithInteger:notach],
+                                                                         [NSNumber numberWithInteger:non]]
+                                                               forKeys:@[GradeTextExcellence,
+                                                                         GradeTextMerit,
+                                                                         GradeTextAchieved,
+                                                                         GradeTextNotAchieved,
+                                                                         GradeTextNone]];
+    return creds;
+}
+
+- (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText andPriority:(GradePriorityType)priority {
+    NSUInteger total = 0;
+    
+    for (Assessment *assessment in _assessments) {
+        NSString *finalGrade = [assessment.gradeSet getGradeTextForGradeType:priority];
+        if ([finalGrade isEqualToString:gradeText])
+            total += assessment.creditsWhenAchieved;
+    }
+    
+    return total;
 }
 
 @end

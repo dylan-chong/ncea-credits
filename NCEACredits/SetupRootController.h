@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SetupRootControllerDelegate <NSObject>
+
+- (void)setupWillBeDismissed;
+
+@end
+
 @interface SetupRootController : UITableViewController
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property NSArray *generalCells, *goalCells;
 @property NSMutableArray *yearCells;
+
+@property id<SetupRootControllerDelegate>delegate;
+
 @end

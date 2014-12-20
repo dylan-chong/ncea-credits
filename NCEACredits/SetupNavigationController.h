@@ -12,5 +12,6 @@
 
 + (NSString *)getStoryboardFileName;
 + (void)showStoryboardFromViewController:(UIViewController *)vc;
+@property id delegateToPassOnToRootController;
 
 @end

@@ -23,7 +23,7 @@
         
         //title 23-43% height of bubble
         self.title = [[UILabel alloc] initWithFrame:CGRectMake(0, round(d*0.23), d, round(d*0.2))];
-        self.title.text = [NSString stringWithFormat:@"Credits: %i", arc4random_uniform(100)];
+        
         self.title.font = [Styles heading1Font];
         self.title.textColor = [Styles mainTextColour];
         self.title.textAlignment = NSTextAlignmentCenter;
@@ -31,15 +31,15 @@
         //credit labels 45-55% height - E 13-37% width, M 38-62%, A 63-88%
         _excellenceCredits = [[BubbleMainCredits alloc] initWithFrame:
                               CGRectMake(round(d*0.13), round(d*0.45), round(d*0.24), round(d*0.1))
-                                                              andGradeTextType:GradeTextExcellence];
+                                                     andGradeTextType:GradeTextExcellence];
         _meritCredits = [[BubbleMainCredits alloc] initWithFrame:
-                              CGRectMake(round(d*0.38), round(d*0.45), round(d*0.24), round(d*0.1))
-                                                              andGradeTextType:GradeTextMerit];
+                         CGRectMake(round(d*0.38), round(d*0.45), round(d*0.24), round(d*0.1))
+                                                andGradeTextType:GradeTextMerit];
         _achievedCredits = [[BubbleMainCredits alloc] initWithFrame:
-                              CGRectMake(round(d*0.63), round(d*0.45), round(d*0.24), round(d*0.1))
-                                                              andGradeTextType:GradeTextAchieved];
+                            CGRectMake(round(d*0.63), round(d*0.45), round(d*0.24), round(d*0.1))
+                                                   andGradeTextType:GradeTextAchieved];
         
-         //goal 65-85% height
+        //goal 65-85% height
         _goal = [[GoalTitle alloc] initWithFrame:CGRectMake(0, round(d*0.65), d, round(d*0.2))];
         
         
@@ -50,8 +50,6 @@
         [self addSubview:_achievedCredits];
         
         [self addSubview:_goal];
-        
-        [self updateStats];
     }
     return self;
 }
@@ -101,7 +99,23 @@
 //*
 
 - (void)updateStats {
-#warning TODO: main bubble update stats
+    if ([CurrentProfile hasAllNecessaryInformationFromSetup]) {
+        NSDictionary *creds = [CurrentProfile getNumberOfAllCreditsForPriority:GradePriorityFinalGrade];
+        
+        NSUInteger exc = [[creds objectForKey:GradeTextExcellence] integerValue];
+        NSUInteger mer = [[creds objectForKey:GradeTextMerit] integerValue];
+        NSUInteger ach = [[creds objectForKey:GradeTextAchieved] integerValue];
+        
+        [_excellenceCredits setNumberOfCredits:exc];
+        [_meritCredits setNumberOfCredits:mer];
+        [_achievedCredits setNumberOfCredits:ach];
+        
+        [self setTitleCredits:exc + mer + ach];
+    }
+}
+
+- (void)setTitleCredits:(NSUInteger)credits {
+    self.title.text = [NSString stringWithFormat:@"Credits: %i", credits];
 }
 
 

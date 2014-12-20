@@ -42,7 +42,9 @@
 //*
 
 + (NSArray *)defaultPriorityOrder {
-    return @[tNSN(FinalGrade), tNSN(PreliminaryGrade), tNSN(ExpectedGrade)];
+    return @[tNSN(GradePriorityFinalGrade),
+             tNSN(GradePriorityPreliminaryGrade),
+             tNSN(GradePriorityExpectedGrade)];
 }
 
 @end

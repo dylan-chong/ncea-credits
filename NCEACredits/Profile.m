@@ -65,16 +65,29 @@
 //*********
 //****************
 //*************************
-#pragma mark - ***************************************************************
+#pragma mark - ***************************    Subjects and Assessments    ************************************
 //*************************
 //****************
 //*********
 //****
 //*
 
-- (NSArray *)getSubjects {
-    #warning TODO: actually get subjets for year
-    return [[NSArray alloc] initWithObjects:@"Maths", @"Physics", @"Chemistry", @"I.T.", @"English", @"Music", @"Biology", @"Spanish", nil];
+- (NSDictionary *)getSubjectsAndColoursOrNilForCurrentYear {
+    if ([self getNumberOfAssessmentsInCurrentYear] > 0) {
+        Year *currentYear = [self getCurrentYear];
+        NSArray *subjects = [currentYear.assessmentCollection getSubjectsOrNil];
+        return [currentYear.subjectsAndColours getAllSubjectsAndColoursForSubjects:subjects];
+    } else {
+        return nil;
+    }
+}
+
+- (NSArray *)getSubjectsForCurrentYear {
+    return [[self getCurrentYear].assessmentCollection getSubjectsOrNil];
+}
+
+- (NSUInteger)getNumberOfAssessmentsInCurrentYear {
+    return [self getCurrentYear].assessmentCollection.assessments.count;
 }
 
 //*
@@ -138,6 +151,22 @@
 - (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment {
     [[self getCurrentYear].assessmentCollection addAssessmentOrReplaceACurrentOne:assessment];
     [ApplicationDelegate saveCurrentProfile];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Grade    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority {
+    return [[self getCurrentYear].assessmentCollection getNumberOfAllCreditsForPriority:priority];
 }
 
 @end

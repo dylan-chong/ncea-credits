@@ -12,19 +12,20 @@
 
 @interface Profile : ToJSONTemplate
 - (BOOL)hasAllNecessaryInformationFromSetup;
-- (NSArray *)getSubjects;
+- (NSDictionary *)getSubjectsAndColoursOrNilForCurrentYear;
+- (NSUInteger)getNumberOfAssessmentsInCurrentYear;
 - (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment;
 
 @property NSString *profileName;
 @property GradePriority *gradePriority;
+- (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority;
 
 @property NSUInteger currentYear;
+@property YearCollection *yearCollection;
 - (Year *)getYearObjectForYearDate:(NSUInteger)date;
 - (Year *)getCurrentYear;
 - (NSUInteger)getYearDateCurrentlyInUseOtherwiseCurrentDateYear;
 - (NSUInteger)getPrimaryNCEALevelForCurrentYear;
-
-@property YearCollection *yearCollection;
 - (NSArray *)getYearsAsTableDatasForSetup;
 
 @property NSString *selectedGoalTitle;

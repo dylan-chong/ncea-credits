@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define TitleSuffix @":"
+
 @class EditTextBubbleContainer;
 
 typedef NS_ENUM(NSInteger, EditTextDataType) {

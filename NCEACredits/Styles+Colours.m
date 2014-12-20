@@ -22,5 +22,15 @@
 + (UIColor *)lightGreyColour{       return [UIColor colorWithWhite:230.0/255 alpha:1.0];}
 + (UIColor *)translucentWhite{      return [UIColor colorWithWhite:1.0 alpha:0.97];}
 
++ (BOOL)colour:(UIColor *)colourA isTheSameAsColour:(UIColor *)colourB {
+    CGFloat redA, greenA, blueA, alphaA, redB, greenB, blueB, alphaB;
+    [colourA getRed:&redA green:&greenA blue:&blueA alpha:&alphaA];
+    [colourB getRed:&redB green:&greenB blue:&blueB alpha:&alphaB];
+    if (redA == redB && greenA == greenB && blueA == blueB && alphaA == alphaB)
+        return YES;
+    else
+        return NO;
+}
+
 #warning TODO: merge colours with subjects and colorus
 @end

@@ -10,17 +10,17 @@
 
 //corner
 typedef NS_ENUM(NSInteger, Corner) {
-    TopLeft = 0,
-    TopRight = 1,
-    BottomLeft = 2,
-    BottomRight = 3,
-    NotValid = 4
+    TopLeft = 1,
+    TopRight,
+    BottomLeft,
+    BottomRight,
+    NotValid
 } ;
 
 
 //device
 typedef NS_ENUM(NSInteger, Device) {
-    iPad,
+    iPad = 1,
 //    iPhone3_5Inch = 1,
 //    iPhone4Inch = 2,
     iPhone
@@ -103,6 +103,8 @@ typedef NS_ENUM(NSInteger, Device) {
 + (UIColor *)darkGreyColour;
 + (UIColor *)lightGreyColour;
 + (UIColor *)translucentWhite;
+
++ (BOOL)colour:(UIColor *)colourA isTheSameAsColour:(UIColor *)colourB;
 
 @end
 

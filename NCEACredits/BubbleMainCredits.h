@@ -14,5 +14,6 @@
 @property NSString *grade;
 
 - (id)initWithFrame:(CGRect)frame andGradeTextType:(NSString*)grade;
+- (void)setNumberOfCredits:(NSUInteger)credits;
 
 @end

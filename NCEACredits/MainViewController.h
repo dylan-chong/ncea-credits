@@ -7,9 +7,13 @@
 //
 
 #import "BubbleViewController.h"
+#import "SetupRootController.h"
 
-@interface MainViewController : BubbleViewController
+@interface MainViewController : BubbleViewController <SetupRootControllerDelegate>
 
 @property (weak, nonatomic) BubbleContainer *addContainer, *gradesContainer, *statsContainer, *optionsContainer;
+
+- (void)showSetupWindow;
+- (void)updateMainBubbleStats;
 
 @end

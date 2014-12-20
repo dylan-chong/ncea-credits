@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "ToJSONTemplate.h"
 #import "AssessmentCollection.h"
+#import "SubjectsAndColours.h"
 
 @interface Year : ToJSONTemplate 
 
 @property NSUInteger yearDate, primaryLevelNumber, identifier;
 @property AssessmentCollection *assessmentCollection;
+@property SubjectsAndColours *subjectsAndColours;
 
 + (NSUInteger)getCurrentYearDate;
 

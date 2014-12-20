@@ -18,6 +18,7 @@
 
 
 #define DEBUG_MODE_ON YES
+#define SHOULD_MAKE_FAKE_ASSESSMENTS YES
 
 
 #define ApplicationDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])

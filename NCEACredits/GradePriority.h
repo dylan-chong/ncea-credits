@@ -10,9 +10,9 @@
 #import "ToJSONTemplate.h"
 
 typedef NS_ENUM(NSInteger, GradePriorityType) {
-    FinalGrade,
-    PreliminaryGrade,
-    ExpectedGrade,
+    GradePriorityFinalGrade = 1,
+    GradePriorityPreliminaryGrade,
+    GradePriorityExpectedGrade,
 };
 
 @interface GradePriority : ToJSONTemplate

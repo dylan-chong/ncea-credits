@@ -498,6 +498,8 @@
                               style:UIAlertActionStyleCancel
                             handler:nil]];
     
+    alert.popoverPresentationController.sourceRect = [self.tableView rectForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+    alert.popoverPresentationController.sourceView = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -569,6 +571,7 @@
         [self applySettingsToCurrentProfile];
         
         //Dismiss setup window
+        [_delegate setupWillBeDismissed];
         [self dismissViewControllerAnimated:YES completion:nil];
         
     } else {
