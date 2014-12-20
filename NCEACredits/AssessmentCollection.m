@@ -141,27 +141,41 @@
 //****
 //*
 
-- (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority {
-    NSUInteger exc = [self getNumberOfCreditsForGrade:GradeTextExcellence andPriority:priority];
-    NSUInteger mer = [self getNumberOfCreditsForGrade:GradeTextMerit andPriority:priority];
-    NSUInteger ach = [self getNumberOfCreditsForGrade:GradeTextAchieved andPriority:priority];
-    NSUInteger notach = [self getNumberOfCreditsForGrade:GradeTextNotAchieved andPriority:priority];
-    NSUInteger non = [self getNumberOfCreditsForGrade:GradeTextNone andPriority:priority];
-    NSDictionary *creds = [[NSMutableDictionary alloc] initWithObjects:@[[NSNumber numberWithInteger:exc],
-                                                                         [NSNumber numberWithInteger:mer],
-                                                                         [NSNumber numberWithInteger:ach],
-                                                                         [NSNumber numberWithInteger:notach],
-                                                                         [NSNumber numberWithInteger:non]]
-                                                               forKeys:@[GradeTextExcellence,
-                                                                         GradeTextMerit,
-                                                                         GradeTextAchieved,
-                                                                         GradeTextNotAchieved,
-                                                                         GradeTextNone]];
+- (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority andLevel:(NSUInteger)level {
+    NSUInteger exc = [self getNumberOfCreditsForGrade:GradeTextExcellence priority:priority andLevel:level];
+    NSUInteger mer = [self getNumberOfCreditsForGrade:GradeTextMerit priority:priority andLevel:level];
+    NSUInteger ach = [self getNumberOfCreditsForGrade:GradeTextAchieved priority:priority andLevel:level];
+    NSUInteger notach = [self getNumberOfCreditsForGrade:GradeTextNotAchieved priority:priority andLevel:level];
+    NSUInteger non = [self getNumberOfCreditsForGrade:GradeTextNone priority:priority andLevel:level];
+    
+    NSMutableDictionary *creds = [[NSMutableDictionary alloc] initWithObjects:@[[NSNumber numberWithInteger:exc],
+                                                                                [NSNumber numberWithInteger:mer],
+                                                                                [NSNumber numberWithInteger:ach],
+                                                                                [NSNumber numberWithInteger:notach],
+                                                                                [NSNumber numberWithInteger:non]]
+                                                                      forKeys:@[GradeTextExcellence,
+                                                                                GradeTextMerit,
+                                                                                GradeTextAchieved,
+                                                                                GradeTextNotAchieved,
+                                                                                GradeTextNone]];
+    if (level == 1) {
+        //Literacy and numeracy credits only apply to NCEA level 1
+        NSUInteger lit = [self getNumberOfTypeOfCredits:TypeOfCreditsLiteracy priority:priority andLevel:level];
+        NSUInteger num = [self getNumberOfTypeOfCredits:TypeOfCreditsNumeracy priority:priority andLevel:level];
+        [creds setObject:[NSNumber numberWithInteger:lit] forKey:TypeOfCreditsLiteracy];
+        [creds setObject:[NSNumber numberWithInteger:num] forKey:TypeOfCreditsNumeracy];
+    }
+    
     return creds;
 }
 
-- (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText andPriority:(GradePriorityType)priority {
+- (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level {
     NSUInteger total = 0;
+    
+    //Bonus achieved credits in lvl 2/3
+    if ([gradeText isEqualToString:GradeTextAchieved]) {
+        total += [AssessmentCollection getBonusAchievedCreditsForLevel:level];
+    }
     
     for (Assessment *assessment in _assessments) {
         NSString *finalGrade = [assessment.gradeSet getGradeTextForGradeType:priority];
@@ -170,6 +184,44 @@
     }
     
     return total;
+}
+
+- (NSUInteger)getNumberOfTypeOfCredits:(NSString *)typeOfCredits priority:(GradePriorityType)priority andLevel:(NSUInteger)level {
+    NSUInteger total = 0;
+    
+    if (level != 1) {
+        //numeracy/literacy credits for only level 1
+        NSLog(@"Numeracy and Literacy credits are only for Level 1.");
+        return 0;
+    }
+    
+    for (Assessment *assessment in _assessments) {
+        if ([assessment.typeOfCredits isEqualToString: typeOfCredits]) {
+            NSString *finalGrade = [assessment.gradeSet getGradeTextForGradeType:priority];
+            if (![finalGrade isEqualToString:GradeTextNotAchieved] && ![finalGrade isEqualToString:GradeTextNone])
+                total += assessment.creditsWhenAchieved;
+        }
+    }
+    
+    return total;
+}
+
++ (NSUInteger)getBonusAchievedCreditsForLevel:(NSUInteger)level {
+    switch (level) {
+        case 1:
+            return 0;
+            break;
+        case 2:
+            return 20;
+            break;
+        case 3:
+            return 20;
+            break;
+            
+    }
+    
+    NSLog(@"NCEA Credits has no present bonus credits for Level %i.", level);
+    return 0;
 }
 
 @end

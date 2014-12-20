@@ -166,7 +166,7 @@
 //*
 
 - (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority {
-    return [[self getCurrentYear].assessmentCollection getNumberOfAllCreditsForPriority:priority];
+    return [[self getCurrentYear].assessmentCollection getNumberOfAllCreditsForPriority:priority andLevel:[self getPrimaryNCEALevelForCurrentYear]];
 }
 
 @end

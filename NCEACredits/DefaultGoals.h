@@ -7,9 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Goal.h"
+
+#define GoalAchievement @"Achievement"
+#define GoalMeritEndorsement @"Merit Endorsement"
+#define GoalExcellenceEndorsement @"Excellence Endorsement"
 
 @interface DefaultGoals : NSObject
 
-+ (NSArray *)getStringsOfGoalTitles;
++ (NSArray *)getAllGoalTitles;
++ (Goal *)getGoalForTitle:(NSString *)goalTitle;
 
 @end

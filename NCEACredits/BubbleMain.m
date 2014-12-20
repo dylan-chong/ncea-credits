@@ -100,6 +100,7 @@
 
 - (void)updateStats {
     if ([CurrentProfile hasAllNecessaryInformationFromSetup]) {
+        //credit stats
         NSDictionary *creds = [CurrentProfile getNumberOfAllCreditsForPriority:GradePriorityFinalGrade];
         
         NSUInteger exc = [[creds objectForKey:GradeTextExcellence] integerValue];
@@ -111,6 +112,14 @@
         [_achievedCredits setNumberOfCredits:ach];
         
         [self setTitleCredits:exc + mer + ach];
+        
+        //goal
+        NSUInteger credits = 0;
+        NSString *goalTitle = CurrentProfile.selectedGoalTitle;
+        
+        
+        
+        [_goal resetTextWithCredits:credits andTitle:goalTitle];
     }
 }
 

@@ -11,6 +11,8 @@
 #import "EditTextScreenItemData.h"
 #import "Grade.h"
 
+#warning TODO: type of credits only available in lvl1
+
 NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     if (boolean) return EditTextBoolYes;
     else return EditTextBoolNo;

@@ -11,5 +11,9 @@
 @interface GoalTitle : UIView
 
 @property UILabel *toGoLabel, *toGoCredits, *goalNameLabel;
+@property CGSize sizeOfAreaCovered;
+@property float space;
+
+- (void)resetTextWithCredits:(NSUInteger)credits andTitle:(NSString *)title;
 
 @end

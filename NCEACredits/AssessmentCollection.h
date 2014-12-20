@@ -18,7 +18,10 @@
 - (BOOL)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment;
 - (NSUInteger)getUnusedAssessmentIdentifier;
 - (NSArray *)getSubjectsOrNil;
-- (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority;
-- (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText andPriority:(GradePriorityType)priority;
+
+- (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority andLevel:(NSUInteger)level;
+- (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level;
+
++ (NSUInteger)getBonusAchievedCreditsForLevel:(NSUInteger)level;
 
 @end
