@@ -25,6 +25,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     ((SetupRootController *)self.viewControllers[0]).delegate = _delegateToPassOnToRootController;
 }
 
