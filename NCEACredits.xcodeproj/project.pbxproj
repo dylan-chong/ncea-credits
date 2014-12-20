@@ -27,6 +27,9 @@
 		8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E88E196FDB42000D1C85 /* SetupRootController.m */; };
 		845C40DE19481350001B1499 /* YearCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40DD19481350001B1499 /* YearCollection.m */; };
 		845C40E119481973001B1499 /* GradePriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40E019481973001B1499 /* GradePriority.m */; };
+		8482D7F31A4534C200F1CD6D /* GoalMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F21A4534C200F1CD6D /* GoalMain.m */; };
+		8482D7F61A4534FE00F1CD6D /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F51A4534FE00F1CD6D /* Goal.m */; };
+		8482D7FC1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7FB1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m */; };
 		849D3D231880F2810030D432 /* AnchorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D3D221880F2810030D432 /* AnchorView.m */; };
 		84A435C91966B7280091905B /* Year.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435C81966B7280091905B /* Year.m */; };
 		84A435CC1966B9D70091905B /* Assessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435CB1966B9D70091905B /* Assessment.m */; };
@@ -116,6 +119,12 @@
 		845C40DD19481350001B1499 /* YearCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearCollection.m; sourceTree = "<group>"; };
 		845C40DF19481973001B1499 /* GradePriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradePriority.h; sourceTree = "<group>"; };
 		845C40E019481973001B1499 /* GradePriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradePriority.m; sourceTree = "<group>"; };
+		8482D7F11A4534C200F1CD6D /* GoalMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalMain.h; sourceTree = "<group>"; };
+		8482D7F21A4534C200F1CD6D /* GoalMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalMain.m; sourceTree = "<group>"; };
+		8482D7F41A4534FE00F1CD6D /* Goal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goal.h; sourceTree = "<group>"; };
+		8482D7F51A4534FE00F1CD6D /* Goal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Goal.m; sourceTree = "<group>"; };
+		8482D7FA1A4543DC00F1CD6D /* GoalGradeReqAndLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalGradeReqAndLevel.h; sourceTree = "<group>"; };
+		8482D7FB1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalGradeReqAndLevel.m; sourceTree = "<group>"; };
 		849D3D211880F2810030D432 /* AnchorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnchorView.h; sourceTree = "<group>"; };
 		849D3D221880F2810030D432 /* AnchorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnchorView.m; sourceTree = "<group>"; };
 		84A435C71966B7280091905B /* Year.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Year.h; sourceTree = "<group>"; };
@@ -207,8 +216,14 @@
 		8404403D1972782500CC390E /* Goals */ = {
 			isa = PBXGroup;
 			children = (
+				8482D7F11A4534C200F1CD6D /* GoalMain.h */,
+				8482D7F21A4534C200F1CD6D /* GoalMain.m */,
 				8404403A1972781C00CC390E /* DefaultGoals.h */,
 				8404403B1972781C00CC390E /* DefaultGoals.m */,
+				8482D7F41A4534FE00F1CD6D /* Goal.h */,
+				8482D7F51A4534FE00F1CD6D /* Goal.m */,
+				8482D7FA1A4543DC00F1CD6D /* GoalGradeReqAndLevel.h */,
+				8482D7FB1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m */,
 			);
 			name = Goals;
 			sourceTree = "<group>";
@@ -602,6 +617,7 @@
 				841DADFF18B0A7D700626302 /* EditTextBubbleContainer.m in Sources */,
 				8459996D18AC00DE005F3FB1 /* SimpleSelectionViewController.m in Sources */,
 				84A435D61966C5660091905B /* SubjectsAndColours.m in Sources */,
+				8482D7FC1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m in Sources */,
 				845C40E119481973001B1499 /* GradePriority.m in Sources */,
 				84B5A2BC1880D91000969952 /* Styles+Layout.m in Sources */,
 				840D5874188240A700DE24B7 /* GoalTitle.m in Sources */,
@@ -612,6 +628,7 @@
 				84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */,
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
+				8482D7F31A4534C200F1CD6D /* GoalMain.m in Sources */,
 				84B5A2B91880D91000969952 /* Styles.m in Sources */,
 				840440391971FF2100CC390E /* TableViewCellData.m in Sources */,
 				840440331971FAA700CC390E /* SetupNavigationController.m in Sources */,
@@ -630,6 +647,7 @@
 				84A435CC1966B9D70091905B /* Assessment.m in Sources */,
 				84B5A2D31880D96300969952 /* BubbleViewController.m in Sources */,
 				841DAE0A18B312AC00626302 /* EditTextViewController.m in Sources */,
+				8482D7F61A4534FE00F1CD6D /* Goal.m in Sources */,
 				84B64E4618B45B770061ED9D /* EditTextBubble.m in Sources */,
 				8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */,
 				84B5A2CC1880D93100969952 /* BubbleContainer.m in Sources */,

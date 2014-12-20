@@ -51,20 +51,6 @@
     [SetupNavigationController showStoryboardFromViewController:self];
 }
 
-- (void)makeFakeAssessments {
-    if (DEBUG_MODE_ON) {
-        NSArray *faketitles = @[@"aaa", @"mmmm", @"tttt", @"hhhh", @"zzzz", @"pppp", @"dddd"];
-        for (NSString *title in faketitles) {
-            Assessment *a = [[Assessment alloc] initWithPropertiesOrNil:nil];
-            a.subject = title;
-            a.quickName = @"name";
-            a.gradeSet.final = GradeTextMerit;
-            
-            [CurrentProfile addAssessmentOrReplaceACurrentOne:a];
-        }
-    }
-}
-
 - (void)updateMainBubbleStats {
     [((BubbleMain *)self.mainBubble.bubble) updateStats];
 }
@@ -184,6 +170,38 @@
 - (void)optionsContainerPressed {
     
     [self showSetupWindow];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Debug    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)makeFakeAssessments {
+    if (DEBUG_MODE_ON) {
+        NSArray *faketitles = @[@"mmmm", @"tttt", @"hhhh", @"zzzz", @"pppp", @"dddd"];
+        for (NSString *title in faketitles) {
+            Assessment *a = [[Assessment alloc] initWithPropertiesOrNil:nil];
+            a.subject = title;
+            a.quickName = @"name";
+            a.gradeSet.final = [self getRandomGradeText];
+            
+            [CurrentProfile addAssessmentOrReplaceACurrentOne:a];
+        }
+    }
+}
+
+- (NSString *)getRandomGradeText {
+    NSArray *grades = @[GradeTextExcellence, GradeTextMerit, GradeTextAchieved, GradeTextNotAchieved];
+    int a = arc4random_uniform(grades.count);
+    return grades[a];
 }
 
 

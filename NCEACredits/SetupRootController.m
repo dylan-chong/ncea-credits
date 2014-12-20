@@ -8,7 +8,7 @@
 
 #import "SetupRootController.h"
 #import "Year.h"
-#import "DefaultGoals.h"
+#import "GoalMain.h"
 #import "TableViewCellData.h"
 
 @interface SetupRootController ()
@@ -73,7 +73,7 @@
 }
 
 - (NSArray *)getGoalCellDatas {
-    NSArray *titles = [DefaultGoals getStringsOfGoalTitles];
+    NSArray *titles = [DefaultGoals getAllGoalTitles];
     NSMutableArray *datas = [[NSMutableArray alloc] init];
     
     for (NSString *s in titles) {

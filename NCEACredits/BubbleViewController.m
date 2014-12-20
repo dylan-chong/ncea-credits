@@ -368,7 +368,7 @@
     else rect.size.width = screen.height;
     
     _statusBarFiller = [[UIView alloc] initWithFrame:rect];
-    _statusBarFiller.backgroundColor = [Styles lightGreyColour];
+    _statusBarFiller.backgroundColor = [Styles translucentWhite];
     [self.view addSubview:_statusBarFiller];
     _statusBarFiller.layer.zPosition = MAXFLOAT;
 }
