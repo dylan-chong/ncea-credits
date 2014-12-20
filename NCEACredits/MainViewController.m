@@ -65,14 +65,6 @@
     }
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    
-    //Reposition main bubble
-    CGRect newPos = self.mainBubble.calulatePosition();
-    self.mainBubble.frame = newPos;
-}
-
 - (void)updateMainBubbleStats {
     [((BubbleMain *)self.mainBubble.bubble) updateStats];
 }

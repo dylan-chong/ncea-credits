@@ -68,8 +68,7 @@
 }
 
 - (BOOL)deviceIsInLandscape {
-    CGSize screenSize = [AppDelegate getScreenSizeBasedOnCurrentOrientation];
-    if (screenSize.width > screenSize.height) return YES;
+    if (_screenSize.width > _screenSize.height) return YES;
     else return NO;
 }
 
