@@ -66,15 +66,11 @@
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
-        [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-        
-        //Reposition main bubble
-        CGRect newPos = self.mainBubble.calulatePosition();
-        self.mainBubble.frame = newPos;
-        _anchors.frame = CGRectMake(0, 0, size.width, size.height);
-    }
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
+    //Reposition main bubble
+    CGRect newPos = self.mainBubble.calulatePosition();
+    self.mainBubble.frame = newPos;
 }
 
 - (void)updateMainBubbleStats {

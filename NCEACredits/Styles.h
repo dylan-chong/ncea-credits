@@ -41,8 +41,6 @@ typedef NS_ENUM(NSInteger, Device) {
 
 + (float)sizeModifier;
 + (Device)getDevice;
-+ (CGFloat)screenWidth;
-+ (CGFloat)screenHeight;
 + (float)startingScaleFactor;
 + (float)mainBubbleStartingScaleFactor;
 + (float)animationSpeed;
@@ -51,7 +49,6 @@ typedef NS_ENUM(NSInteger, Device) {
 + (BOOL)size:(CGSize)s1 isEqualToSize:(CGSize)s2;
 + (CGFloat)degreesToRadians:(CGFloat)d;
 + (CGFloat)radiansToDegrees:(CGFloat)r;
-+ (BOOL)deviceIsInLandscape;
 + (double)frameRate;
 
 @end

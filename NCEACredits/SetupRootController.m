@@ -23,11 +23,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
-        //Hide the cancel button so that data must be saved using done button
-        [_cancelButton setTitle:@""];
-        [_cancelButton setTarget:nil];
-    }
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,6 +33,13 @@
 }
 
 - (void)createCells {
+    //Viewdidappear doesnt call on ipad, but this method runs at the start anyway
+    if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
+        //Hide the cancel button so that data must be saved using done button
+        [_cancelButton setTitle:@""];
+        [_cancelButton setTarget:nil];
+    }
+    
     if (!_generalCells) {
         //Add general
         _generalCells = [self getGeneralCells];

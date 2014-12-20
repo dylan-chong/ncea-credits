@@ -41,6 +41,43 @@
 //*********
 //****************
 //*************************
+#pragma mark - ***************************    Screen    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (CGSize)getScreenSize {
+    if (!CGSizeEqualToSize(_screenSize, CGSizeZero))
+        return _screenSize;
+    else {
+        _screenSize = [AppDelegate getScreenSizeBasedOnCurrentOrientation];
+        return _screenSize;
+    }
+}
+
++ (CGSize)getScreenSizeBasedOnCurrentOrientation {
+    //Only use if initial _screenSize does not exist
+    return CGSizeMake([[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+}
+
+- (void)setScreenSize:(CGSize)size {
+    //Set this when the viewWillTransitionToSize: withTransitionCoordinator: method is called
+    _screenSize = size;
+}
+
+- (BOOL)deviceIsInLandscape {
+    CGSize screenSize = [AppDelegate getScreenSizeBasedOnCurrentOrientation];
+    if (screenSize.width > screenSize.height) return YES;
+    else return NO;
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
 #pragma mark - ***************************    Delegate    ************************************
 //*************************
 //****************

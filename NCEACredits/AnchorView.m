@@ -14,7 +14,8 @@
 @implementation AnchorView
 
 - (id)initWithStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo {
-    self = [super initWithFrame:CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight])];
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    self = [super initWithFrame:CGRectMake(0, 0, screen.width, screen.height)];
     if (self) {
         _startingPoint = startingPoint;
         _pointsToDrawTo = pointsToDrawTo;

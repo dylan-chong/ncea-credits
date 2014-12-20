@@ -41,12 +41,13 @@
     if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0) && staggered) r *= 0.77;
     
     double sinAns, cosAns;
-    if ([Styles deviceIsInLandscape]) {
-         sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r * ([Styles screenWidth] / [Styles screenHeight]);
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    if ([ApplicationDelegate deviceIsInLandscape]) {
+         sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r * (screen.width / screen.height);
          cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r;
     } else {
          sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r;
-         cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r * ([Styles screenHeight] / [Styles screenWidth]);
+         cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r * (screen.height / screen.width);
     }
     
     double x, y;
@@ -59,18 +60,18 @@
     } else if (corner == TopRight) {
         x = -cosAns;
         y = sinAns;
-        origin.x = [Styles screenWidth] - [Styles spaceFromEdgeOfScreen];
+        origin.x = screen.width - [Styles spaceFromEdgeOfScreen];
         origin.y = [Styles spaceFromEdgeOfScreen];
     } else if (corner == BottomLeft) {
         x = sinAns;
         y = -cosAns;
         origin.x = [Styles spaceFromEdgeOfScreen];
-        origin.y = [Styles screenHeight] - [Styles spaceFromEdgeOfScreen];
+        origin.y = screen.height - [Styles spaceFromEdgeOfScreen];
     } else {
         x = -sinAns;
         y = -cosAns;
-        origin.x = [Styles screenWidth] - [Styles spaceFromEdgeOfScreen];
-        origin.y = [Styles screenHeight] - [Styles spaceFromEdgeOfScreen];
+        origin.x = screen.width - [Styles spaceFromEdgeOfScreen];
+        origin.y = screen.height - [Styles spaceFromEdgeOfScreen];
     }
     
     return CGRectMake(origin.x + x - (size.width / 2), origin.y + y - (size.height / 2), size.width, size.height);
@@ -108,13 +109,12 @@
 }
 
 + (double)getRadius {
-    double w = [Styles screenWidth];
-    double h = [Styles screenHeight];
+    CGSize size = [ApplicationDelegate getScreenSize];
     
-    if (w > h) {
-        return h - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
+    if (size.width > size.height) {
+        return size.height - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
     } else {
-        return w - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
+        return size.width - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
     }
 }
 

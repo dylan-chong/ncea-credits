@@ -76,12 +76,13 @@
 
 + (CGSize)getContainerSize:(UIView *)container {
     CGSize containerSize = container.frame.size;
+    CGSize screen = [ApplicationDelegate getScreenSize];
     
-    if ((containerSize.width == [Styles screenHeight] || containerSize.width == [Styles screenWidth]) &&
-        (containerSize.width == [Styles screenHeight] || containerSize.width == [Styles screenWidth])) {
+    if ((containerSize.width == screen.height || containerSize.width == screen.width) &&
+        (containerSize.width == screen.height || containerSize.width == screen.width)) {
         
-        containerSize.width = [Styles screenWidth];
-        containerSize.height = [Styles screenHeight];
+        containerSize.width = screen.width;
+        containerSize.height = screen.height;
     }
     
     return containerSize;
@@ -100,7 +101,8 @@
 //*
 
 + (NSUInteger)getNumberOfItemsPerPage {
-    return round([Styles numberOfItemsInSelectionViewPer100px] * [Styles screenHeight] / 100);
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    return round([Styles numberOfItemsInSelectionViewPer100px] * screen.height / 100);
 }
 
 + (NSUInteger)getPagesForNumberOfItems:(NSUInteger)items {

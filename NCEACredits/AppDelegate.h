@@ -16,8 +16,12 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) MainViewController *mainViewController;
 @property (nonatomic) Profile *currentProfile;
+@property (nonatomic) CGSize screenSize;
 
 - (Profile *)getCurrentProfile;
 - (void)saveCurrentProfile;
+- (void)setScreenSize:(CGSize)size;
+- (CGSize)getScreenSize;
+- (BOOL)deviceIsInLandscape;
 
 @end

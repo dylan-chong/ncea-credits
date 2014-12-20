@@ -35,24 +35,6 @@
     }
 }
 
-+ (CGFloat)screenWidth {
-//    if ([Styles deviceIsInLandscape])
-//        return [[UIScreen mainScreen] bounds].size.height;
-//    
-//    else
-        return [[UIScreen mainScreen] bounds].size.width;
-}
-+ (CGFloat)screenHeight {
-//    if ([Styles deviceIsInLandscape])
-//        return [[UIScreen mainScreen] bounds].size.width;
-//    
-//    else
-        return [[UIScreen mainScreen] bounds].size.height;
-}
-+ (BOOL)deviceIsInLandscape {
-    return UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
-}
-
 + (float)startingScaleFactor {  return 0.01;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; }
 + (float)animationSpeed {    return 0.6; }

@@ -77,6 +77,8 @@
 }
 
 - (void)repositionBubbles {
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    _anchors.frame = CGRectMake(0, 0, screen.width, screen.height);
     [self redrawAnchors];
     
     [self animateRepositionObjects];
@@ -331,8 +333,12 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    if ([Styles deviceIsInLandscape]) [_statusBarFiller setHidden:YES];
+    
+    [ApplicationDelegate setScreenSize:size];
+    
+    if ([ApplicationDelegate deviceIsInLandscape] && [Styles getDevice] == iPhone) [_statusBarFiller setHidden:YES];
     else [_statusBarFiller setHidden:NO];
+    
     if (!_shouldDelayCreationAnimation) [self repositionBubbles];
 }
 
@@ -347,6 +353,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     _isCurrentViewController = YES;
     if (!_isDoingAnimation && !_shouldDelayCreationAnimation) [self repositionBubbles];
 }
@@ -354,23 +361,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGRect frame = CGRectMake(0, 0, 0, 0);
+    //Make sure status bar filler is large enough for portrait and landscape
+    CGRect rect = [[UIApplication sharedApplication] statusBarFrame];
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    if (screen.width > screen.height) rect.size.width = screen.width;
+    else rect.size.width = screen.height;
     
-    //Bigger - width or height
-    int w = [Styles screenWidth];
-    int h = [Styles screenHeight];
-    if (w > h) frame.size.width = w;
-    else frame.size.width = h;
-    
-    
-    //Smaller - width or height
-    int sw = [[UIApplication sharedApplication] statusBarFrame].size.width;
-    int sh = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    if (sw < sh) frame.size.height = sw;
-    else frame.size.height = sh;
-    
-    _statusBarFiller = [[UIView alloc] initWithFrame:frame];
-    _statusBarFiller.backgroundColor = [Styles translucentWhite];
+    _statusBarFiller = [[UIView alloc] initWithFrame:rect];
+    _statusBarFiller.backgroundColor = [Styles lightGreyColour];
     [self.view addSubview:_statusBarFiller];
     _statusBarFiller.layer.zPosition = MAXFLOAT;
 }

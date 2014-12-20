@@ -14,9 +14,9 @@
 
 + (CGRect)mainContainerRect {
     CGSize size = CGSizeMake(340 * [Styles sizeModifier], 340 * [Styles sizeModifier]);
-    
+    CGSize screen = [ApplicationDelegate getScreenSize];
     //centre of screen
-    CGPoint point = CGPointMake(round(([Styles screenWidth] - size.width) / 2), round(([Styles screenHeight] - size.height) / 2));
+    CGPoint point = CGPointMake(round((screen.width - size.width) / 2), round((screen.height - size.height) / 2));
     
     return CGRectMake(point.x, point.y, size.width, size.height);
 }
@@ -53,12 +53,11 @@
                                           0);
             break;
             
-        case BottomRight:
+        default: //Bottom right
             availableOrigins = CGRectMake([Styles middleXTitleBubblePosition],
                                           [Styles middleYTitleBubblePosition],
                                           0,
                                           0);
-        default:
             break;
     }
     
@@ -77,7 +76,7 @@
     CGSize s;
     CGRect mainRect = [Styles mainContainerRect];
     
-    if ([Styles deviceIsInLandscape]) {
+    if ([ApplicationDelegate deviceIsInLandscape]) {
         s.width = mainRect.origin.x - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
         s.height = mainRect.origin.y + (mainRect.size.height / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
     } else {
@@ -90,7 +89,7 @@
 
 + (float)middleXTitleBubblePosition {
     CGRect mainRect = [Styles mainContainerRect];
-    if ([Styles deviceIsInLandscape]) {
+    if ([ApplicationDelegate deviceIsInLandscape]) {
         return mainRect.origin.x + mainRect.size.width + [Styles spaceFromEdgeOfScreen];
     } else {
         return mainRect.origin.x + (mainRect.size.width / 2) + [Styles spaceFromEdgeOfScreen];
@@ -99,7 +98,7 @@
 
 + (float)middleYTitleBubblePosition {
     CGRect mainRect = [Styles mainContainerRect];
-    if ([Styles deviceIsInLandscape]) {
+    if ([ApplicationDelegate deviceIsInLandscape]) {
         return mainRect.origin.y + (mainRect.size.height / 2) + [Styles spaceFromEdgeOfScreen];
     } else {
         return mainRect.origin.y + mainRect.size.height + [Styles spaceFromEdgeOfScreen];
@@ -147,30 +146,32 @@
 + (CGPoint)getExactOriginForCorner:(Corner)c andSize:(CGSize)size {
     float d = [Styles spaceFromEdgeOfScreen];
     CGPoint p;
+    CGSize screen = [ApplicationDelegate getScreenSize];
     
     if (c == TopLeft) {
         p = CGPointMake(d, d);
     } else if (c == TopRight) {
-        p = CGPointMake([Styles screenWidth] - d - size.width, d);
+        p = CGPointMake(screen.width - d - size.width, d);
     } else if (c == BottomLeft) {
-        p = CGPointMake(d, [Styles screenHeight] - d - size.height);
+        p = CGPointMake(d, screen.height - d - size.height);
     } else {
-        p = CGPointMake([Styles screenWidth] - d - size.width, [Styles screenHeight] - d - size.height);
+        p = CGPointMake(screen.width - d - size.width, screen.height - d - size.height);
     }
     
     return p;
 }
 
 + (Corner)getCornerForPoint:(CGPoint)point {
+    CGSize screen = [ApplicationDelegate getScreenSize];
     
-    if (point.x >= [Styles screenWidth] / 2) {
-        if (point.y >= [Styles screenHeight] / 2) {
+    if (point.x >= screen.width / 2) {
+        if (point.y >= screen.height / 2) {
             return BottomRight;
         } else {
             return TopRight;
         }
     } else {
-        if (point.y >= [Styles screenHeight] / 2) {
+        if (point.y >= screen.height / 2) {
             return BottomLeft;
         } else {
             return TopLeft;

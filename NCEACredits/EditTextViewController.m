@@ -90,8 +90,10 @@
     NSInteger whichPage = [FlickScroller getPageForIndex:index andNumberOfItems:bubbles];
     
     NSInteger thisItemsPage = [flickScroller getCurrentPageIndex];
-    NSInteger xPageMove = (thisItemsPage - whichPage) * xPageMod * [Styles screenWidth];
-    NSInteger yPageMove = (thisItemsPage - whichPage) * yPageMod * [Styles screenHeight];
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    
+    NSInteger xPageMove = (thisItemsPage - whichPage) * xPageMod * screen.width;
+    NSInteger yPageMove = (thisItemsPage - whichPage) * yPageMod * screen.height;
 //    For debugging pages
 //    if (index == 0) NSLog(@"---------------------------");
 //    NSLog(@"Index: %i, WhichPage: %i, ThisPage: %i", index, whichPage, thisItemsPage);
@@ -116,20 +118,21 @@
 
 + (CGPoint)getCorner:(Corner)c withSize:(CGSize)size {
     CGPoint origin;
+    CGSize screen = [ApplicationDelegate getScreenSize];
     
     float space = [Styles spaceFromEdgeOfScreen] * 2;
     if (c == TopLeft) {
-        origin.x = [Styles screenWidth] - space - (size.width / 2);
+        origin.x = screen.width - space - (size.width / 2);
         origin.y = space;
     } else if (c == TopRight) {
         origin.x = space;
         origin.y = space;
     } else if (c == BottomLeft) {
-        origin.x = [Styles screenWidth] - space - (size.width / 2);
-        origin.y = [Styles screenHeight] - space - (size.height / 2);
+        origin.x = screen.width - space - (size.width / 2);
+        origin.y = screen.height - space - (size.height / 2);
     } else {
         origin.x = space;
-        origin.y = [Styles screenHeight] - space - (size.height / 2);
+        origin.y = screen.height - space - (size.height / 2);
     }
     
     return origin;

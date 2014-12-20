@@ -16,7 +16,8 @@
 
 - (id)initWithEditTextBubbleContainerToEdit:(EditTextBubbleContainer *)toEdit
 {
-    self = [super initWithFrame:CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight])];
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    self = [super initWithFrame:CGRectMake(0, 0, screen.width, screen.height)];
     if (self) {
         _viewToEdit = toEdit;
         self.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0];
@@ -53,8 +54,9 @@
 - (void)resetFrameWithAnimation:(BOOL)animated {
     float size = 0.25;
     float middle = 0.5;
+    CGSize screen = [ApplicationDelegate getScreenSize];
     
-    self.frame = CGRectMake(0, 0, [Styles screenWidth], [Styles screenHeight]);
+    self.frame = CGRectMake(0, 0, screen.width, screen.height);
     float t = [Styles animationSpeed];
     if (!animated) t = 0;
     
