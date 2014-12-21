@@ -29,6 +29,8 @@
 		<string>Comfortaa-Bold.ttf</string>
 		<string>Comfortaa-Regular.ttf</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

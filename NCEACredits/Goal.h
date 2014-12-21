@@ -14,6 +14,7 @@
 - (id)initWithGradeText:(NSString *)gpg;
 - (BOOL)addGoalGradeReqsForLevel:(GoalGradeReqAndLevel *)gg;
 - (NSInteger)getCreditsLeftToCompleteWithAllCredits:(NSDictionary *)allCredits atLevel:(NSUInteger)level;
+- (NSUInteger)getRequirementForLevel:(NSUInteger)level;
 
 @property NSArray *availableGoalGradeReqs;
 @property NSString *primaryGrade;

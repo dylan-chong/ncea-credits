@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 PiGuyGames. All rights reserved.
 //
 
-#import "BubbleViewController.h"
-#import "SimpleSelectionViewController.h"
+#import "SubjectsViewController.h"
 
-@interface GradesViewController : SimpleSelectionViewController <SimpleSelectionDelegate>
+@interface GradesViewController : SubjectsViewController
 
 @end

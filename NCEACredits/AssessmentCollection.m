@@ -220,8 +220,28 @@
             
     }
     
-    NSLog(@"NCEA Credits has no present bonus credits for Level %i.", level);
+    NSLog(@"NCEA Credits has no present bonus credits for Level %lu.", (unsigned long)level);
     return 0;
+}
+
+- (NSUInteger)getNumberOfCreditsForGradeIncludingBetterGrades:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level {
+    NSUInteger total = 0;
+    
+    if ([gradeText isEqualToString:GradeTextNotAchieved] || [gradeText isEqualToString:GradeTextNone]) {
+        NSLog(@"You can't get credits including better grades for Not Achieved or None");
+        return 0;
+    }
+    
+    total += [self getNumberOfCreditsForGrade:GradeTextExcellence priority:priority andLevel:level];
+    if (![gradeText isEqualToString:GradeTextExcellence]) {
+        total += [self getNumberOfCreditsForGrade:GradeTextMerit priority:priority andLevel:level];
+        
+        if (![gradeText isEqualToString:GradeTextMerit]) {
+            total += [self getNumberOfCreditsForGrade:GradeTextAchieved priority:priority andLevel:level];
+        }
+    }
+    
+    return total;
 }
 
 @end

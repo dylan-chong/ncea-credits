@@ -11,9 +11,6 @@
 
 @implementation GoalTitle
 
-#warning TODO: reconfigure to show “20 out of 80 (A)” rther than just “60 to go”
-#warning TODO: fix break when no assessments
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -27,14 +24,13 @@
         //toGo 2/3 of height - credits 0-45%, label (45+space)-100%
         _toGoCredits = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, round(h*(2.0/3)))];
         _toGoCredits.textAlignment = NSTextAlignmentRight;
-        _toGoCredits.font = [Styles heading2Font];
+        _toGoCredits.font = [Styles bodyFont];
         _toGoCredits.textColor = [Styles mainTextColour];
         
         _toGoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, round(h*(2.0/3)))];
         _toGoLabel.textAlignment = NSTextAlignmentLeft;
         _toGoLabel.font = [Styles body2Font];
         _toGoLabel.textColor = [Styles mainTextColour];
-        _toGoLabel.text = @"to go";
         
         _goalNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, round(h*(2.0/3)), w, round(h*(1.0/3)))];
         _goalNameLabel.textAlignment = NSTextAlignmentCenter;
@@ -48,9 +44,11 @@
     return self;
 }
 
-- (void)resetTextWithCredits:(NSUInteger)credits andTitle:(NSString *)title {
-    _toGoCredits.text = [NSString stringWithFormat:@"%i", credits];
-    _toGoLabel.text = title;
+- (void)resetTextWithCredits:(NSUInteger)credits outOf:(NSUInteger)outOf grade:(NSString *)grade andTitle:(NSString *)title {
+    _toGoCredits.text = [NSString stringWithFormat:@"%lu", (unsigned long)credits];
+    _toGoLabel.text = [NSString stringWithFormat:@"out of %lu (%@)", (unsigned long)outOf, [grade substringToIndex:1]]; //substring gets first letter of grade (E/M/A)
+    
+    _goalNameLabel.text = title;
     
     [self setWidthOfToGoCreditsAndLabel];
 }
@@ -70,16 +68,7 @@
 }
 
 + (float)getToGoCreditsWidthWithCredits:(NSString *)c {
-    switch (c.length) {
-        case 0:
-            return 0.43;
-        case 1:
-            return 0.41;
-        case 2:
-            return 0.43;
-        default:
-            return 0.45;
-    }
+    return 0.3 + (0.015 * c.length);
 }
 
 @end

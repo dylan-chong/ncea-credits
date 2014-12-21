@@ -169,4 +169,8 @@
     return [[self getCurrentYear].assessmentCollection getNumberOfAllCreditsForPriority:priority andLevel:[self getPrimaryNCEALevelForCurrentYear]];
 }
 
+- (NSUInteger)getNumberOfCreditsForGradeIncludingBetterGrades:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level {
+    return [[self getCurrentYear].assessmentCollection getNumberOfCreditsForGradeIncludingBetterGrades:gradeText priority:priority andLevel:level];
+}
+
 @end

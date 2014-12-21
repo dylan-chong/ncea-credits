@@ -11,7 +11,7 @@
 #import "EditTextScreenItemData.h"
 #import "Grade.h"
 
-#warning TODO: type of credits only available in lvl1
+// type of credits only available in lvl1
 
 NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     if (boolean) return EditTextBoolYes;
@@ -42,8 +42,8 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 + (NSArray *)getItemDataWithAssessmentOrNil:(Assessment *)assessment {
     if (!assessment) assessment = [[Assessment alloc] initWithPropertiesOrNil:nil];
     
-    NSString *credits = [NSString stringWithFormat:@"%i", assessment.creditsWhenAchieved];
-    NSString *level = [NSString stringWithFormat:@"%i", assessment.level];
+    NSString *credits = [NSString stringWithFormat:@"%lu", (unsigned long)assessment.creditsWhenAchieved];
+    NSString *level = [NSString stringWithFormat:@"%lu", (unsigned long)assessment.level];
     NSString *isAnInternal = BOOLToEditTextBool(assessment.isAnInternal);
     NSString *isUnitStandard = BOOLToEditTextBool(assessment.isUnitStandard);
     NSString *typeOfCredits = assessment.typeOfCredits;

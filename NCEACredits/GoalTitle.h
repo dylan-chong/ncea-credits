@@ -14,6 +14,6 @@
 @property CGSize sizeOfAreaCovered;
 @property float space;
 
-- (void)resetTextWithCredits:(NSUInteger)credits andTitle:(NSString *)title;
+- (void)resetTextWithCredits:(NSUInteger)credits outOf:(NSUInteger)outOf grade:(NSString *)grade andTitle:(NSString *)title;
 
 @end

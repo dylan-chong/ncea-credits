@@ -15,6 +15,7 @@
     
     if (self) {
         _primaryGrade = gpg;
+        _availableGoalGradeReqs = [[NSArray alloc] init];
     }
     
     return self;
@@ -43,7 +44,7 @@
     NSInteger required = [self getRequirementForLevel:level];
     NSInteger current = [[allCredits objectForKey:_primaryGrade] integerValue];
     
-    return required;
+    return required - current;
 }
 
 - (NSUInteger)getRequirementForLevel:(NSUInteger)level {
@@ -53,7 +54,7 @@
         }
     }
     
-    NSLog(@"No requirement set for NCEA Level %i", level);
+    NSLog(@"No requirement set for NCEA Level %lu", (unsigned long)level);
     return -1;
 }
 

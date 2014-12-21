@@ -36,7 +36,7 @@
 }
 
 + (float)startingScaleFactor {  return 0.01;    }
-+ (float)mainBubbleStartingScaleFactor {    return 0.25; }
++ (float)mainBubbleStartingScaleFactor {    return 0.25; } //changing this will require changing launch image size (340 * this * sizeModifier * 0.75)
 + (float)animationSpeed {    return 0.6; }
 
 + (double)frameRate {

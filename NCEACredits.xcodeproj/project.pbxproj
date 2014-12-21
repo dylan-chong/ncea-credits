@@ -27,9 +27,12 @@
 		8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E88E196FDB42000D1C85 /* SetupRootController.m */; };
 		845C40DE19481350001B1499 /* YearCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40DD19481350001B1499 /* YearCollection.m */; };
 		845C40E119481973001B1499 /* GradePriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40E019481973001B1499 /* GradePriority.m */; };
+		8470DD2B1A466FC300266654 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8470DD2A1A466FC300266654 /* Launch Screen.xib */; };
 		8482D7F31A4534C200F1CD6D /* GoalMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F21A4534C200F1CD6D /* GoalMain.m */; };
 		8482D7F61A4534FE00F1CD6D /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F51A4534FE00F1CD6D /* Goal.m */; };
 		8482D7FC1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7FB1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m */; };
+		8482D7FF1A46501B00F1CD6D /* SubjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */; };
+		8482D8051A46568300F1CD6D /* Launch-Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8482D8041A46568300F1CD6D /* Launch-Circle.png */; };
 		849D3D231880F2810030D432 /* AnchorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D3D221880F2810030D432 /* AnchorView.m */; };
 		84A435C91966B7280091905B /* Year.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435C81966B7280091905B /* Year.m */; };
 		84A435CC1966B9D70091905B /* Assessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435CB1966B9D70091905B /* Assessment.m */; };
@@ -119,12 +122,16 @@
 		845C40DD19481350001B1499 /* YearCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearCollection.m; sourceTree = "<group>"; };
 		845C40DF19481973001B1499 /* GradePriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradePriority.h; sourceTree = "<group>"; };
 		845C40E019481973001B1499 /* GradePriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradePriority.m; sourceTree = "<group>"; };
+		8470DD2A1A466FC300266654 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "Launch Screen.xib"; path = "NCEACredits/Launch Screen.xib"; sourceTree = "<group>"; };
 		8482D7F11A4534C200F1CD6D /* GoalMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalMain.h; sourceTree = "<group>"; };
 		8482D7F21A4534C200F1CD6D /* GoalMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalMain.m; sourceTree = "<group>"; };
 		8482D7F41A4534FE00F1CD6D /* Goal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goal.h; sourceTree = "<group>"; };
 		8482D7F51A4534FE00F1CD6D /* Goal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Goal.m; sourceTree = "<group>"; };
 		8482D7FA1A4543DC00F1CD6D /* GoalGradeReqAndLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalGradeReqAndLevel.h; sourceTree = "<group>"; };
 		8482D7FB1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalGradeReqAndLevel.m; sourceTree = "<group>"; };
+		8482D7FD1A46501B00F1CD6D /* SubjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectsViewController.h; sourceTree = "<group>"; };
+		8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectsViewController.m; sourceTree = "<group>"; };
+		8482D8041A46568300F1CD6D /* Launch-Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch-Circle.png"; sourceTree = "<group>"; };
 		849D3D211880F2810030D432 /* AnchorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnchorView.h; sourceTree = "<group>"; };
 		849D3D221880F2810030D432 /* AnchorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnchorView.m; sourceTree = "<group>"; };
 		84A435C71966B7280091905B /* Year.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Year.h; sourceTree = "<group>"; };
@@ -242,10 +249,10 @@
 		844BCACA1881126000FC132E /* Main Bubble */ = {
 			isa = PBXGroup;
 			children = (
-				84B5A2C11880D93100969952 /* BubbleMainCredits.h */,
-				84B5A2C21880D93100969952 /* BubbleMainCredits.m */,
 				84B5A2C31880D93100969952 /* BubbleMain.h */,
 				84B5A2C41880D93100969952 /* BubbleMain.m */,
+				84B5A2C11880D93100969952 /* BubbleMainCredits.h */,
+				84B5A2C21880D93100969952 /* BubbleMainCredits.m */,
 				840D5872188240A700DE24B7 /* GoalTitle.h */,
 				840D5873188240A700DE24B7 /* GoalTitle.m */,
 			);
@@ -307,6 +314,7 @@
 		84B5A26D1880D8AD00969952 = {
 			isa = PBXGroup;
 			children = (
+				8470DD2A1A466FC300266654 /* Launch Screen.xib */,
 				84B5A27F1880D8AD00969952 /* NCEACredits */,
 				84B5A2981880D8AD00969952 /* NCEACreditsTests */,
 				84B5A2781880D8AD00969952 /* Frameworks */,
@@ -383,6 +391,7 @@
 		84B5A2B01880D8F500969952 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8482D8041A46568300F1CD6D /* Launch-Circle.png */,
 				84B5A28B1880D8AD00969952 /* Images.xcassets */,
 				84B5A2B61880D91000969952 /* Comfortaa-Bold.ttf */,
 				84B64E4718B46CD10061ED9D /* Comfortaa-Regular.ttf */,
@@ -428,6 +437,8 @@
 				8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */,
 				8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */,
 				84FCB2E61902765C00BBE4B0 /* Edit Text */,
+				8482D7FD1A46501B00F1CD6D /* SubjectsViewController.h */,
+				8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */,
 			);
 			name = "Screen Templates";
 			sourceTree = "<group>";
@@ -584,8 +595,10 @@
 			files = (
 				84B5A2AC1880D8F100969952 /* Add.png in Resources */,
 				84B5A2AF1880D8F100969952 /* Subjects.png in Resources */,
+				8482D8051A46568300F1CD6D /* Launch-Circle.png in Resources */,
 				8459E887196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard in Resources */,
 				840D587618834B0300DE24B7 /* Stats.png in Resources */,
+				8470DD2B1A466FC300266654 /* Launch Screen.xib in Resources */,
 				84B5A2841880D8AD00969952 /* InfoPlist.strings in Resources */,
 				84B64E4818B46CD10061ED9D /* Comfortaa-Regular.ttf in Resources */,
 				8459E88C196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard in Resources */,
@@ -643,6 +656,7 @@
 				84FF925918A08F5B00988F62 /* Profile.m in Sources */,
 				840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */,
 				84A435D21966BDFA0091905B /* Grade.m in Sources */,
+				8482D7FF1A46501B00F1CD6D /* SubjectsViewController.m in Sources */,
 				84B5A2BA1880D91000969952 /* Styles+Fonts.m in Sources */,
 				84A435CC1966B9D70091905B /* Assessment.m in Sources */,
 				84B5A2D31880D96300969952 /* BubbleViewController.m in Sources */,
@@ -770,7 +784,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dylan Chong (262U3VUXJD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCEACredits/NCEACredits-Prefix.pch";
@@ -786,7 +799,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: SoLing Chin (3P7Z8WYXB9)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCEACredits/NCEACredits-Prefix.pch";

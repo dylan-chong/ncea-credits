@@ -44,7 +44,7 @@
 }
 
 - (void)setNumberOfCredits:(NSUInteger)credits {
-    _credits.text = [NSString stringWithFormat:@"%i", credits];
+    _credits.text = [NSString stringWithFormat:@"%lu", (unsigned long)credits];
 }
 
 + (NSString *)getCharTitleForGradeType:(NSString *)grade {

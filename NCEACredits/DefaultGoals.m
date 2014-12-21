@@ -19,41 +19,33 @@
 //Define all default goals here
 + (Goal *)getGoalForTitle:(NSString *)goalTitle {
     Goal *newGoal;
+#define GoalGradeReq(creds, level) [newGoal addGoalGradeReqsForLevel:[[GoalGradeReqAndLevel alloc] initWithCreditsRequired:creds NCEALevel:level]]
     
-    //level 1 always aims to get lit/num credits
-    GoalGradeReqAndLevel *level1Ach = [[GoalGradeReqAndLevel alloc] initWithCreditsRequired:0 NCEALevel:1];
-    level1Ach.literacyCredits = 10;
-    level1Ach.numeracyCredits = 10;
+    //level 1 always aims to get lit/num credits (set by default in init method)
     
     if ([goalTitle isEqualToString:GoalAchievement]) {
         newGoal = [[Goal alloc] initWithGradeText:GradeTextAchieved];
         
         int achReq = 80;
-        level1Ach.creditsRequired = achReq;
-        [newGoal addGoalGradeReqsForLevel:level1Ach];
-        
-        [newGoal addGoalGradeReqsForLevel:[[GoalGradeReqAndLevel alloc] initWithCreditsRequired:achReq NCEALevel:2]];
-        [newGoal addGoalGradeReqsForLevel:[[GoalGradeReqAndLevel alloc] initWithCreditsRequired:achReq NCEALevel:3]];
+        GoalGradeReq(achReq, 1);
+        GoalGradeReq(achReq, 2);
+        GoalGradeReq(achReq, 3);
         
     } else if ([goalTitle isEqualToString:GoalMeritEndorsement]) {
         newGoal = [[Goal alloc] initWithGradeText:GradeTextMerit];
         
         int merReq = 50;
-        level1Ach.creditsRequired = merReq;
-        [newGoal addGoalGradeReqsForLevel:level1Ach];
-        
-        [newGoal addGoalGradeReqsForLevel:[[GoalGradeReqAndLevel alloc] initWithCreditsRequired:merReq NCEALevel:2]];
-        [newGoal addGoalGradeReqsForLevel:[[GoalGradeReqAndLevel alloc] initWithCreditsRequired:merReq NCEALevel:3]];
+        GoalGradeReq(merReq, 1);
+        GoalGradeReq(merReq, 2);
+        GoalGradeReq(merReq, 3);
         
     } else if ([goalTitle isEqualToString:GoalExcellenceEndorsement]) {
         newGoal = [[Goal alloc] initWithGradeText:GradeTextExcellence];
         
         int exReq = 50;
-        level1Ach.creditsRequired = exReq;
-        [newGoal addGoalGradeReqsForLevel:level1Ach];
-        
-        [newGoal addGoalGradeReqsForLevel:[[GoalGradeReqAndLevel alloc] initWithCreditsRequired:exReq NCEALevel:2]];
-        [newGoal addGoalGradeReqsForLevel:[[GoalGradeReqAndLevel alloc] initWithCreditsRequired:exReq NCEALevel:3]];
+        GoalGradeReq(exReq, 1);
+        GoalGradeReq(exReq, 2);
+        GoalGradeReq(exReq, 3);
         
     } else {
         NSLog(@"No Goal found for title");

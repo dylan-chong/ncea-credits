@@ -19,6 +19,7 @@
 @property NSString *profileName;
 @property GradePriority *gradePriority;
 - (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority;
+- (NSUInteger)getNumberOfCreditsForGradeIncludingBetterGrades:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level;
 
 @property NSUInteger currentYear;
 @property YearCollection *yearCollection;

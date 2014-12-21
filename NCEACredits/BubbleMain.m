@@ -9,6 +9,7 @@
 #import "BubbleMain.h"
 #import "Styles.h"
 #import "Grade.h"
+#import "GoalMain.h"
 
 @implementation BubbleMain
 
@@ -65,7 +66,7 @@
     
     //chord
     [[UIColor whiteColor] setStroke];
-    CGContextSetLineWidth(c, 2.0f);
+    CGContextSetLineWidth(c, 2.0 * [Styles sizeModifier]);
     CGPoint left = [BubbleMain getChordVerticeWithRadius:self.bounds.size.width/2 andLeft:YES];
     CGPoint right = [BubbleMain getChordVerticeWithRadius:self.bounds.size.width/2 andLeft:NO];
     CGContextMoveToPoint(c, left.x - 1, left.y);
@@ -114,17 +115,19 @@
         [self setTitleCredits:exc + mer + ach];
         
         //goal
-        NSUInteger credits = 0;
         NSString *goalTitle = CurrentProfile.selectedGoalTitle;
+        Goal *goal = [DefaultGoals getGoalForTitle:goalTitle];
+        NSString *grade = goal.primaryGrade;
+        NSUInteger level = [CurrentProfile getPrimaryNCEALevelForCurrentYear];
+        NSUInteger credits = [CurrentProfile getNumberOfCreditsForGradeIncludingBetterGrades:grade priority:GradePriorityFinalGrade andLevel:level];
+        NSUInteger creditReq = [goal getRequirementForLevel:level];
         
-        
-        
-        [_goal resetTextWithCredits:credits andTitle:goalTitle];
+        [_goal resetTextWithCredits:credits outOf:creditReq grade:grade andTitle:goalTitle];
     }
 }
 
 - (void)setTitleCredits:(NSUInteger)credits {
-    self.title.text = [NSString stringWithFormat:@"Credits: %i", credits];
+    self.title.text = [NSString stringWithFormat:@"Credits: %lu", (unsigned long)credits];
 }
 
 

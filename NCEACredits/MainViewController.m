@@ -31,10 +31,9 @@
     //Show setup window
     if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
         //Hasn't shown setup
-        [self showSetupWindow];
+//        [self showSetupWindow];
     }
     
-#warning TODO: refresh data (e.g. goals)
 }
 
 - (void)setupWillBeDismissed {
@@ -199,8 +198,8 @@
 }
 
 - (NSString *)getRandomGradeText {
-    NSArray *grades = @[GradeTextExcellence, GradeTextMerit, GradeTextAchieved, GradeTextNotAchieved];
-    int a = arc4random_uniform(grades.count);
+    NSArray *grades = @[GradeTextExcellence, GradeTextMerit, GradeTextAchieved];
+    int a = arc4random_uniform((u_int32_t)grades.count);
     return grades[a];
 }
 
