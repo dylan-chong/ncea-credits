@@ -327,16 +327,7 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            //Name
-            UIAlertView *a = [[UIAlertView alloc] initWithTitle:AppName
-                                                        message:@"Please enter your name."
-                                                       delegate:self
-                                              cancelButtonTitle:@"Done"
-                                              otherButtonTitles:nil];
-            a.alertViewStyle = UIAlertViewStylePlainTextInput;
-            a.tag = indexPath.row;
-            [a textFieldAtIndex:0].text = [self getTableViewCellDataAtIndexPath:indexPath].detail;
-            [a show];
+            [self namePressed];
         } else {
             //Current year cell
             [self currentYearSelected];
@@ -375,6 +366,25 @@
             }
         }
     }
+}
+
+- (void)namePressed {
+    //Name
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please enter your name." preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = ((TableViewCellData *)_generalCells[0]).detail;
+        textField.placeholder = @"Your name";
+    }];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSString *name = ((UITextField *)alert.textFields[0]).text;
+        ((TableViewCellData *)_generalCells[0]).detail = name;
+        
+        //Update cell
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        cell.detailTextLabel.text = name;
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 //------------------------------ Add ------------------------------

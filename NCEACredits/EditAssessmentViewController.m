@@ -93,7 +93,8 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 - (BOOL)textBubbleIsShowingPlaceHolder:(NSString *)title { //I.e. no data entered
     for (EditTextBubbleContainer *b in self.childBubbles) {
         EditTextBubble *bubble = (EditTextBubble *)b.bubble;
-        if ([bubble.title.text isEqualToString:[title stringByAppendingString:TitleSuffix]]) {
+
+        if ([bubble.titleLabel.text isEqualToString:[title stringByAppendingString:TitleSuffix]]) {
             UIColor *textColour = bubble.textLabel.textColor;
             UIColor *placeholderColour = [EditTextBubble placeholderColour];
             
@@ -142,7 +143,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     NSArray *editTextBubbleContainers = self.childBubbles;
     
     for (EditTextBubbleContainer *bubble in editTextBubbleContainers) {
-        NSString *title = ((EditTextBubble *)bubble.bubble).title.text;
+        NSString *title = ((EditTextBubble *)bubble.bubble).titleLabel.text;
         NSString *text = ((EditTextBubble *)bubble.bubble).textLabel.text;
         
         title = [title substringToIndex:title.length - TitleSuffix.length];//Get rid of the colon on the end

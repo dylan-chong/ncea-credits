@@ -24,7 +24,7 @@
         
         _title = [[UILabel alloc] initWithFrame:CGRectZero];
         _title.font = [Styles heading2Font];
-        _title.text = ((EditTextBubble *)(toEdit.bubble)).title.text;
+        _title.text = ((EditTextBubble *)(toEdit.bubble)).titleLabel.text;
         _title.textAlignment = NSTextAlignmentRight;
         [self addSubview:_title];
         

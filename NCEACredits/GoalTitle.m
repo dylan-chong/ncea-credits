@@ -22,20 +22,21 @@
         _space = 6 * [Styles sizeModifier];
         
         //toGo 2/3 of height - credits 0-45%, label (45+space)-100%
-        _toGoCredits = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, round(h*(2.0/3)))];
+        _toGoCredits = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, h*(2.0/3))];
         _toGoCredits.textAlignment = NSTextAlignmentRight;
         _toGoCredits.font = [Styles bodyFont];
         _toGoCredits.textColor = [Styles mainTextColour];
         
-        _toGoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, round(h*(2.0/3)))];
+        _toGoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, h*(2.0/3))];
         _toGoLabel.textAlignment = NSTextAlignmentLeft;
         _toGoLabel.font = [Styles body2Font];
         _toGoLabel.textColor = [Styles mainTextColour];
         
-        _goalNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, round(h*(2.0/3)), w, round(h*(1.0/3)))];
+        _goalNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(w*(0.5/3), h*(2.1/3), w*(2.0/3), h*(1.2/3))];
         _goalNameLabel.textAlignment = NSTextAlignmentCenter;
         _goalNameLabel.font = [Styles captionFont];
         _goalNameLabel.textColor = [Styles mainTextColour];
+        _goalNameLabel.adjustsFontSizeToFitWidth = YES;
         
         [self addSubview:_toGoCredits];
         [self addSubview:_toGoLabel];

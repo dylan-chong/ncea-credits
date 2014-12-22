@@ -10,8 +10,8 @@
 #import "Goal.h"
 
 #define GoalAchievement @"Achievement"
-#define GoalMeritEndorsement @"Merit Endorsement"
-#define GoalExcellenceEndorsement @"Excellence Endorsement"
+#define GoalMeritEndorsement @"Mrt. Endors."
+#define GoalExcellenceEndorsement @"Excel. Endors."
 
 @interface DefaultGoals : NSObject
 
