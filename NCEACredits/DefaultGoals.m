@@ -26,7 +26,7 @@
     if ([goalTitle isEqualToString:GoalAchievement]) {
         newGoal = [[Goal alloc] initWithGradeText:GradeTextAchieved];
         
-        int achReq = 80;
+        NSInteger achReq = 80;
         GoalGradeReq(achReq, 1);
         GoalGradeReq(achReq, 2);
         GoalGradeReq(achReq, 3);
@@ -34,7 +34,7 @@
     } else if ([goalTitle isEqualToString:GoalMeritEndorsement]) {
         newGoal = [[Goal alloc] initWithGradeText:GradeTextMerit];
         
-        int merReq = 50;
+        NSInteger merReq = 50;
         GoalGradeReq(merReq, 1);
         GoalGradeReq(merReq, 2);
         GoalGradeReq(merReq, 3);
@@ -42,7 +42,7 @@
     } else if ([goalTitle isEqualToString:GoalExcellenceEndorsement]) {
         newGoal = [[Goal alloc] initWithGradeText:GradeTextExcellence];
         
-        int exReq = 50;
+        NSInteger exReq = 50;
         GoalGradeReq(exReq, 1);
         GoalGradeReq(exReq, 2);
         GoalGradeReq(exReq, 3);

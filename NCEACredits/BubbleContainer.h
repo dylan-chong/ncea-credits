@@ -43,7 +43,9 @@ typedef CGRect (^PositionCalculationBlock) (void);
 
 - (AnimationManager *)getAnimationManagerForMainBubbleGrowth;
 - (void)startGrowingMainBubbleAnimation;
-- (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif;
 - (NSArray *)getAnimationObjectsForSlidingAnimation;
+
+- (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif;
+- (NSArray *)getAnimationObjectsToGoToOrigin:(CGPoint)origin;
 
 @end

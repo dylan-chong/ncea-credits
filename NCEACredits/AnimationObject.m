@@ -8,6 +8,7 @@
 
 #import "AnimationObject.h"
 #import "Styles.h"
+#import "BubbleContainer.h"
 
 @implementation AnimationObject
 
@@ -28,6 +29,14 @@
 
 - (void)setDistanceWithPercentage:(float)percent {
     [self.delegate useDistanceFromBase:_baseNumber + ((percent / 100) * _finalDistance) tag:(AnimationObjectTag)_tag];
+}
+
++ (CGPoint)getOriginOfWhereBubble:(BubbleContainer *)bubble willBeWithXTransitionDif:(float)xDif andYTransitionDif:(float)yDif {
+    CGPoint pos = bubble.frame.origin;
+    pos.x += xDif;
+    pos.y += yDif;
+    
+    return pos;
 }
 
 @end

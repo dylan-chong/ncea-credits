@@ -185,4 +185,13 @@
             nil];
 }
 
+- (NSArray *)getAnimationObjectsToGoToOrigin:(CGPoint)origin {
+    return [[NSArray alloc] initWithObjects:
+            
+            [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.x endingPoint:origin.x tag:X andDelegate:self],
+            [[AnimationObject alloc] initWithStartingPoint:self.frame.origin.y endingPoint:origin.y tag:Y andDelegate:self],
+            
+            nil];
+}
+
 @end

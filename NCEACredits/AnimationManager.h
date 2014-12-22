@@ -15,7 +15,7 @@
 @interface AnimationManager : NSObject
 
 @property double animationTime;
-@property int animationStage, tag;
+@property NSInteger animationStage, tag;
 @property id<AnimationManagerDelegate> delegate;
 @property NSArray *animationObjects;
 @property NSTimer *timer;

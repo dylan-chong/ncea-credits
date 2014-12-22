@@ -25,4 +25,6 @@
 
 + (NSUInteger)getBonusAchievedCreditsForLevel:(NSUInteger)level;
 
+- (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject;
+
 @end

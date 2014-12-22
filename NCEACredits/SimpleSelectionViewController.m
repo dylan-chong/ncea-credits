@@ -14,11 +14,12 @@
 
 @implementation SimpleSelectionViewController
 
-- (id)initWithMainBubble:(BubbleContainer *)mainBubble andStaggered:(BOOL)staggered {
+- (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andStaggered:(BOOL)staggered {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
         self.staggered = staggered;
+        self.delegate = delegate;
         [self setMainBubbleSimilarToBubble:mainBubble];
         [self createBubbleContainers];
         [self createAnchors];
@@ -27,12 +28,45 @@
 }
 
 - (void)createBubbleContainers {
-    
+    NSAssert(NO, @"You must override this method");
 }
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a {
     self.mainBubble = m;
     self.childBubbles = a;
+}
+
++ (NSArray *)getArrayOfBubblesWithSubjectsWithColoursOrNot:(NSDictionary *)subjectsAndColours target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered andMainBubble:(BubbleContainer *)mainB {
+    UIColor *c = mainB.colour;
+    Corner corner = [Styles getCornerForPoint:mainB.frame.origin];
+    
+    NSMutableArray *blocks = [[NSMutableArray alloc] init];
+    NSUInteger count = subjectsAndColours.count;
+    CGSize size = mainB.frame.size;
+    for (int a = 0; a < subjectsAndColours.count; a++) {
+        PositionCalculationBlock x = ^{
+            return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner andStaggered:staggered];
+        };
+        
+        [blocks addObject:x];
+    }
+    
+    NSMutableArray *m = [[NSMutableArray alloc] init];
+    NSArray *allKeys = [subjectsAndColours allKeys];
+    
+    for (int a = 0; a < subjectsAndColours.count; a++) {
+        UIColor *overrideColour = [subjectsAndColours objectForKey:allKeys[a]]; //If subjects and colours come with colours use it, otherwise default to main bubble colour
+        if ([overrideColour class] == [NSNull class]) overrideColour = c;
+        [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:overrideColour title:allKeys[a] frameBubbleForStartingPosition:mainB.frame andDelegate:NO]];
+    }
+    
+    for (BubbleContainer *b in m) {
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:target action:@selector(bubbleWasPressedByGestureRecogniser:)];
+        tap.delegate = target;
+        [b addGestureRecognizer:tap];
+    }
+    
+    return m;
 }
 
 + (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andStaggered:(BOOL)staggered {
@@ -77,35 +111,8 @@
     return CGRectMake(origin.x + x - (size.width / 2), origin.y + y - (size.height / 2), size.width, size.height);
 }
 
-+ (NSArray *)getArrayOfBubblesWithSubjectsWithColoursOrNot:(NSDictionary *)subjectsAndColours buttonClickSelector:(NSString *)sel target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered andMainBubble:(BubbleContainer *)mainB {
-    UIColor *c = mainB.colour;
-    Corner corner = [Styles getCornerForPoint:mainB.frame.origin];
-    
-    NSMutableArray *blocks = [[NSMutableArray alloc] init];
-    NSUInteger count = subjectsAndColours.count;
-    CGSize size = mainB.frame.size;
-    for (int a = 0; a < subjectsAndColours.count; a++) {
-        PositionCalculationBlock x = ^{
-            return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner andStaggered:staggered];
-        };
-        
-        [blocks addObject:x];
-    }
-    
-    NSMutableArray *m = [[NSMutableArray alloc] init];
-    NSArray *allKeys = [subjectsAndColours allKeys];
-    
-    for (int a = 0; a < subjectsAndColours.count; a++) {
-        UIColor *overrideColour = [subjectsAndColours objectForKey:allKeys[a]]; //If subjects and colours come with colours use it, otherwise default to main bubble colour
-        if (!overrideColour) overrideColour = c;
-        [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:overrideColour title:allKeys[a] frameBubbleForStartingPosition:mainB.frame andDelegate:NO]];
-    }
-    
-    for (BubbleContainer *b in m) {
-        [b addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:target action:NSSelectorFromString(sel)]];
-    }
-    
-    return m;
+- (void)bubbleWasPressedByGestureRecogniser:(UIGestureRecognizer *)sender {
+    [self bubbleWasPressed:(BubbleContainer *)sender.view];
 }
 
 + (double)getRadius {
@@ -121,5 +128,6 @@
 - (NSUInteger)getIndexOfBubble:(BubbleContainer *)b {
     return [self.childBubbles indexOfObject:b];
 }
+
 
 @end

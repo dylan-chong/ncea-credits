@@ -11,6 +11,8 @@
 #import "Assessment.h"
 #import "MainViewController.h"
 
+#define MAIN_BUBBLE_TRANSITION_MOVE_MULTIPLIER 2.0
+
 @implementation BubbleViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -22,9 +24,9 @@
     return self;
 }
 
-- (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container {
+- (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container  {
     _parentBubble = container;
-    Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:container.center]];
+    Corner c = [self getCornerOfChildVCNewMainBubbleFrame:container];
     CGSize s = container.frame.size;
     
     PositionCalculationBlock p = ^{
@@ -203,14 +205,21 @@
 //*
 - (void)startTransitionToChildBubble:(BubbleContainer *)b andBubbleViewController:(BubbleViewController *)bubbleViewController {
     _childBubbleViewController = bubbleViewController;
-    [self setTransitionDifsWithBubbleContainerFrame:b.frame];
+    [self setTransitionDifsWithBubbleContainer:b inBubbleVC:self];
     [self disableChildButtons];
     _isDoingAnimation = YES;
     
-    NSArray *a = [_mainBubble getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif];
+    NSArray *a = [_mainBubble getAnimationObjectsForXDif:_transitionXDif * MAIN_BUBBLE_TRANSITION_MOVE_MULTIPLIER andYDif:_transitionYDif * MAIN_BUBBLE_TRANSITION_MOVE_MULTIPLIER];
+    CGPoint mainEndPos = [AnimationObject getOriginOfWhereBubble:_mainBubble willBeWithXTransitionDif:_transitionXDif * MAIN_BUBBLE_TRANSITION_MOVE_MULTIPLIER andYTransitionDif:_transitionYDif * MAIN_BUBBLE_TRANSITION_MOVE_MULTIPLIER];
     
-    for (BubbleContainer *b in _childBubbles) {
-        a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif]];
+    for (BubbleContainer *bub in _childBubbles) {
+        //move all except tapped to same position as main
+        if (bub == b) {
+            //tapped bubble container
+            a = [a arrayByAddingObjectsFromArray:[bub getAnimationObjectsForXDif:_transitionXDif andYDif:_transitionYDif]];
+        } else {
+            a = [a arrayByAddingObjectsFromArray:[bub getAnimationObjectsToGoToOrigin:mainEndPos]];
+        }
     }
     
     [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:3 andDelegate:self]];
@@ -271,16 +280,51 @@
     [_animationManager startAnimation];
 }
 
-- (void)setTransitionDifsWithBubbleContainerFrame:(CGRect)b {
-    Corner opposite = [Styles getOppositeCornerToCorner:[Styles getCornerWithTitleContainerFrame:b]];
+//------------------------------ Transition Corners and Difs ------------------------------
+- (Corner)getCornerOfParentMainBubbleIfItHadTransitioned {
+    if (self.delegate) {//If current has a parent
+        return [Styles getCornerForPoint:_mainBubble.center];
+    } else {
+        return [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.lastTappedBubble.center]];
+    }
+}
+
+- (Corner)getCornerOfChildVCNewMainBubbleFrame:(BubbleContainer *)bubble {
+    if (self.delegate) { //has parent vc
+        return [self.delegate getCornerOfParentMainBubbleIfItHadTransitioned];
+    } else {
+        //Is root of mindmap (i.e. mainvc)
+        return [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.lastTappedBubble.center]];
+    }
+}
+
+- (Corner)getCornerWhereTappedBubbleWillTransitionTo {
+    if (self.delegate) { //Has parent bubble vc
+        return [Styles getCornerForPoint:_mainBubble.center];
+    } else {
+        //Doesnt have parent - root
+        return [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.lastTappedBubble.center]];
+    }
+}
+
+- (void)setTransitionDifsWithBubbleContainer:(BubbleContainer *)b inBubbleVC:(BubbleViewController *)bvc {
+    BOOL hasParent = NO;
+    if (bvc.delegate) hasParent = YES;
     
-    CGPoint newPoint = [Styles getExactOriginForCorner:opposite andSize:b.size];
-    CGPoint oldPoint = b.origin;
+    Corner c = [self getCornerWhereTappedBubbleWillTransitionTo];
+    
+    CGPoint newPoint = [Styles getExactOriginForCorner:c andSize:b.frame.size];
+    CGPoint oldPoint = b.frame.origin;
     
     _transitionXDif = newPoint.x - oldPoint.x;
     _transitionYDif = newPoint.y - oldPoint.y;
 }
 
+- (void)bubbleWasPressed:(BubbleContainer *)container {
+    self.lastTappedBubble = container;
+}
+
+//------------------------------ Wiggle ------------------------------
 - (void)disableWiggleForTransition {
     _mainBubble.bubble.disableWiggleForTransition = YES;
     for (BubbleContainer *b in _childBubbles) {

@@ -24,7 +24,7 @@
         
         _title = [[UILabel alloc] initWithFrame:CGRectZero];
         _title.font = [Styles heading2Font];
-        _title.text = ((EditTextBubble *)(toEdit.bubble)).titleLabel.text;
+        _title.text = ((EditTextBubble *)(toEdit.bubble)).title.text;
         _title.textAlignment = NSTextAlignmentRight;
         [self addSubview:_title];
         
@@ -282,9 +282,9 @@
     if (date.length != 8) return NO; //Wrong length
     
     NSArray *dateParts = [date componentsSeparatedByString:@"/"];
-    int day = [dateParts[0] intValue];
-    int month = [dateParts[1] intValue];
-    int year = [dateParts[2] intValue];
+    NSInteger day = [dateParts[0] integerValue];
+    NSInteger month = [dateParts[1] integerValue];
+    NSInteger year = [dateParts[2] integerValue];
     
     if (day > 31 || day == 0) return NO; //Impossible date
     if (month == 0 || month > 12) return NO; //Impossible month

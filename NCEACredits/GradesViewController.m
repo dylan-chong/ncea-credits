@@ -10,11 +10,5 @@
 
 @implementation GradesViewController
 
-- (void)subjectTitleWasPressed:(BubbleContainer *)sender {
-    
-}
-
-
-
 
 @end

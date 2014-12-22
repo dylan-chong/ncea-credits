@@ -69,6 +69,17 @@
     return YES;
 }
 
+- (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject {
+    NSMutableArray *assessmentsForSubject = [[NSMutableArray alloc] init];
+    
+    for (Assessment *assess in _assessments) {
+        if ([assess.subject isEqualToString:subject])
+            [assessmentsForSubject addObject:assess.quickName];
+    }
+    
+    return assessmentsForSubject;
+}
+
 //------------------------------ ID ------------------------------
 - (NSUInteger)getUnusedAssessmentIdentifier {
     NSArray *usedIDs = [self getAllUsedAssessmentIdentifiers];

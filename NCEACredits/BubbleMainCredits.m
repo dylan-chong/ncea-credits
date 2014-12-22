@@ -17,8 +17,8 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         _grade = grade;
-        int halfOfSpaceBetweenLabels = [Styles sizeModifier];
-        int distanceFromTop = round(4 * [Styles sizeModifier]);
+        NSInteger halfOfSpaceBetweenLabels = [Styles sizeModifier];
+        NSInteger distanceFromTop = round(4 * [Styles sizeModifier]);
         
         _header = [[UILabel alloc] initWithFrame:CGRectMake(0,
                                                             0,

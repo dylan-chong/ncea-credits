@@ -14,6 +14,8 @@
 
 @implementation MainViewController
 
+#warning TODO: check multiple yearing once save is done
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,7 +33,7 @@
     //Show setup window
     if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
         //Hasn't shown setup
-//        [self showSetupWindow];
+        [self showSetupWindow];
     }
     
 }
@@ -141,15 +143,18 @@
 //*
 
 - (void)addContainerPressed {
+    [self bubbleWasPressed:_addContainer];
+    
     AddViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer andAssessmentOrNil:nil];
     b.delegate = self;
     [self startTransitionToChildBubble:_addContainer andBubbleViewController:b];
 }
 
 - (void)gradesContainerPressed {
+    [self bubbleWasPressed:_gradesContainer];
+    
     if ([CurrentProfile getNumberOfAssessmentsInCurrentYear] > 0) {
-        GradesViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer andStaggered:YES];
-        b.delegate = self;
+        GradesViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer delegate:self andStaggered:YES];
         [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
     } else {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Looks like you don't have any assessments yet. Click the Add button on the left to create some. You can then edit them from the Subjects menu." preferredStyle:UIAlertControllerStyleAlert];
@@ -159,6 +164,8 @@
 }
 
 - (void)statsContainerPressed {
+    [self bubbleWasPressed:_statsContainer];
+    
     //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Cool stats coming soon!" preferredStyle:UIAlertControllerStyleAlert];
     //    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
     //    [self presentViewController:alert animated:YES completion:nil];
@@ -167,6 +174,7 @@
 }
 
 - (void)optionsContainerPressed {
+    [self bubbleWasPressed:_optionsContainer];
     
     [self showSetupWindow];
 }
@@ -199,7 +207,7 @@
 
 - (NSString *)getRandomGradeText {
     NSArray *grades = @[GradeTextExcellence, GradeTextMerit, GradeTextAchieved];
-    int a = arc4random_uniform((u_int32_t)grades.count);
+    NSInteger a = arc4random_uniform((u_int32_t)grades.count);
     return grades[a];
 }
 

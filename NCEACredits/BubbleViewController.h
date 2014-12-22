@@ -12,14 +12,15 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AnchorView.h"
 
-@protocol BubbleViewControllerTransitionDelegate
+@protocol BubbleViewControllerDelegate
 //child view controllers will implement the delegate to communicate with the parent
 - (void)hasReturnedFromChildViewController;
+- (Corner)getCornerOfParentMainBubbleIfItHadTransitioned;
 @end
 
-@interface BubbleViewController : UIViewController <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerTransitionDelegate>
+@interface BubbleViewController : UIViewController <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerDelegate>
 
-@property id<BubbleViewControllerTransitionDelegate> delegate;
+@property id<BubbleViewControllerDelegate> delegate;
 @property UIView *statusBarFiller;
 
 @property (nonatomic) NSArray *childBubbles;
@@ -44,6 +45,8 @@
 @property (weak, nonatomic) BubbleContainer *transitionBubble;
 @property float transitionXDif, transitionYDif;
 - (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container;
+@property BubbleContainer *lastTappedBubble;
+- (void)bubbleWasPressed:(BubbleContainer *)container;
 
 - (void)enableChildButtons;
 - (void)disableChildButtons;

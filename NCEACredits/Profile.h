@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "GradePriority.h"
 #import "YearCollection.h"
+#import "CustomGoals.h"
 
 @interface Profile : ToJSONTemplate
 - (BOOL)hasAllNecessaryInformationFromSetup;
 - (NSDictionary *)getSubjectsAndColoursOrNilForCurrentYear;
 - (NSUInteger)getNumberOfAssessmentsInCurrentYear;
 - (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment;
+- (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject;
 
 @property NSString *profileName;
 @property GradePriority *gradePriority;
@@ -31,8 +33,9 @@
 
 @property NSString *selectedGoalTitle;
 
-- (NSData *)convertToJSONAsRoot;
+@property CustomGoals *customGoals;
 
+- (NSData *)convertToJSONAsRoot;
 - (void)logJSONText;
 
 @end

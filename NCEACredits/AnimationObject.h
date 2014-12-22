@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class BubbleContainer;
+
 typedef NS_ENUM(NSInteger, AnimationObjectTag) {
     X = 1,
     Y,
@@ -31,5 +33,6 @@ typedef NS_ENUM(NSInteger, AnimationObjectTag) {
 
 - (id)initWithStartingPoint:(double)s endingPoint:(double)e tag:(AnimationObjectTag)tag andDelegate:(id)d;
 - (void)setDistanceWithPercentage:(float)percent;
++ (CGPoint)getOriginOfWhereBubble:(BubbleContainer *)bubble willBeWithXTransitionDif:(float)xDif andYTransitionDif:(float)yDif;
 
 @end

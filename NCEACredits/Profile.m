@@ -15,6 +15,7 @@
     Profile *p = [[Profile alloc] init];
     p.gradePriority = [[GradePriority alloc] initWithPropertiesOrNil:nil];
     p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:nil];
+    p.customGoals = [[CustomGoals alloc] initWithPropertiesOrNil:nil];
     return p;
 }
 
@@ -25,6 +26,7 @@
     p.selectedGoalTitle = [properties objectForKey:@"selectedGoalTitle"];
     p.gradePriority = [[GradePriority alloc] initWithPropertiesOrNil:[properties objectForKey:@"gradePriority"]];
     p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:[properties objectForKey:@"yearCollection"]];
+    p.customGoals = [[CustomGoals alloc] initWithPropertiesOrNil:[properties objectForKey:@"customGoals"]];
     return p;
 }
 
@@ -35,6 +37,7 @@
     [properties setObject:_selectedGoalTitle forKey:@"selectedGoalTitle"];
     [properties setObject:[_gradePriority convertToDictionaryOfProperties] forKey:@"gradePriority"];
     [properties setObject:[_yearCollection convertToDictionaryOfProperties] forKey:@"yearCollection"];
+    [properties setObject:[_customGoals convertToDictionaryOfProperties] forKey:@"customGoals"];
     
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
@@ -148,9 +151,25 @@
     return year.primaryLevelNumber;
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Assessments    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
 - (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment {
     [[self getCurrentYear].assessmentCollection addAssessmentOrReplaceACurrentOne:assessment];
     [ApplicationDelegate saveCurrentProfile];
+}
+
+- (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject {
+    return [[self getCurrentYear].assessmentCollection getAssessmentTitlesForSubject:subject];
 }
 
 //*

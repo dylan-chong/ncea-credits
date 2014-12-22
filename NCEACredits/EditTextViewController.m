@@ -57,7 +57,7 @@
     }
     
     //Shift for page
-    int xPageMod, yPageMod;
+    NSInteger xPageMod, yPageMod;
     yPageMod = -1; //Negative because shift, same with negative
     
     double x, y;

@@ -1,5 +1,5 @@
 //
-//  SubjectsViewController.h
+//  AssessmentsForSubjectViewController.h
 //  NCEACredits
 //
 //  Created by Dylan Chong on 21/12/14.
@@ -8,6 +8,6 @@
 
 #import "SimpleSelectionViewController.h"
 
-@interface SubjectsViewController : SimpleSelectionViewController
+@interface AssessmentsForSubjectViewController : SimpleSelectionViewController
 
 @end
