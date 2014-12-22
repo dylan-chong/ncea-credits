@@ -28,6 +28,8 @@
 		845C40DE19481350001B1499 /* YearCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40DD19481350001B1499 /* YearCollection.m */; };
 		845C40E119481973001B1499 /* GradePriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40E019481973001B1499 /* GradePriority.m */; };
 		8470DD2B1A466FC300266654 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8470DD2A1A466FC300266654 /* Launch Screen.xib */; };
+		8470DD2E1A46708800266654 /* CustomGoals.m in Sources */ = {isa = PBXBuildFile; fileRef = 8470DD2D1A46708800266654 /* CustomGoals.m */; };
+		8470DD311A46736900266654 /* AssessmentsForSubjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8470DD301A46736900266654 /* AssessmentsForSubjectViewController.m */; };
 		8482D7F31A4534C200F1CD6D /* GoalMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F21A4534C200F1CD6D /* GoalMain.m */; };
 		8482D7F61A4534FE00F1CD6D /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F51A4534FE00F1CD6D /* Goal.m */; };
 		8482D7FC1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7FB1A4543DC00F1CD6D /* GoalGradeReqAndLevel.m */; };
@@ -123,6 +125,10 @@
 		845C40DF19481973001B1499 /* GradePriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradePriority.h; sourceTree = "<group>"; };
 		845C40E019481973001B1499 /* GradePriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradePriority.m; sourceTree = "<group>"; };
 		8470DD2A1A466FC300266654 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "Launch Screen.xib"; path = "NCEACredits/Launch Screen.xib"; sourceTree = "<group>"; };
+		8470DD2C1A46708800266654 /* CustomGoals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGoals.h; sourceTree = "<group>"; };
+		8470DD2D1A46708800266654 /* CustomGoals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomGoals.m; sourceTree = "<group>"; };
+		8470DD2F1A46736900266654 /* AssessmentsForSubjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssessmentsForSubjectViewController.h; sourceTree = "<group>"; };
+		8470DD301A46736900266654 /* AssessmentsForSubjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssessmentsForSubjectViewController.m; sourceTree = "<group>"; };
 		8482D7F11A4534C200F1CD6D /* GoalMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalMain.h; sourceTree = "<group>"; };
 		8482D7F21A4534C200F1CD6D /* GoalMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalMain.m; sourceTree = "<group>"; };
 		8482D7F41A4534FE00F1CD6D /* Goal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goal.h; sourceTree = "<group>"; };
@@ -277,6 +283,8 @@
 		845C40E219481981001B1499 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				8470DD2C1A46708800266654 /* CustomGoals.h */,
+				8470DD2D1A46708800266654 /* CustomGoals.m */,
 				845C40DF19481973001B1499 /* GradePriority.h */,
 				845C40E019481973001B1499 /* GradePriority.m */,
 				845C40DC19481350001B1499 /* YearCollection.h */,
@@ -436,9 +444,11 @@
 				84B5A2D11880D96300969952 /* BubbleViewController.m */,
 				8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */,
 				8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */,
-				84FCB2E61902765C00BBE4B0 /* Edit Text */,
+				8470DD2F1A46736900266654 /* AssessmentsForSubjectViewController.h */,
+				8470DD301A46736900266654 /* AssessmentsForSubjectViewController.m */,
 				8482D7FD1A46501B00F1CD6D /* SubjectsViewController.h */,
 				8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */,
+				84FCB2E61902765C00BBE4B0 /* Edit Text */,
 			);
 			name = "Screen Templates";
 			sourceTree = "<group>";
@@ -636,6 +646,7 @@
 				840D5874188240A700DE24B7 /* GoalTitle.m in Sources */,
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
 				84C7B3BC1943E45400B8DCD8 /* EditTextScreenItemData.m in Sources */,
+				8470DD311A46736900266654 /* AssessmentsForSubjectViewController.m in Sources */,
 				8445E4081A402344002BDA5E /* ToJSONTemplate.m in Sources */,
 				84A435C91966B7280091905B /* Year.m in Sources */,
 				84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */,
@@ -646,6 +657,7 @@
 				840440391971FF2100CC390E /* TableViewCellData.m in Sources */,
 				840440331971FAA700CC390E /* SetupNavigationController.m in Sources */,
 				84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */,
+				8470DD2E1A46708800266654 /* CustomGoals.m in Sources */,
 				844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */,
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
 				845C40DE19481350001B1499 /* YearCollection.m in Sources */,
