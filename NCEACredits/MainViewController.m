@@ -34,18 +34,29 @@
     if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
         //Hasn't shown setup
         [self showSetupWindow];
+    } else {
+        [self startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup];
     }
     
 }
 
-- (void)setupWillBeDismissed {
-    //Setup VC delegate method
+- (void)hasReturnedFromChildViewController {
+    [super hasReturnedFromChildViewController];
+    [self updateMainBubbleStats];
+}
+
+- (void)startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup {
     if (SHOULD_MAKE_FAKE_ASSESSMENTS) [self makeFakeAssessments];
     
     [self updateMainBubbleStats];
     
     self.shouldDelayCreationAnimation = NO;
     [self startChildBubbleCreationAnimation];
+}
+
+- (void)setupWillBeDismissed {
+    //Setup VC delegate method
+    [self startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup];
 }
 
 - (void)showSetupWindow {
@@ -97,7 +108,7 @@
     [self setMainBubble:self.mainBubble
         andChildBubbles:[NSArray arrayWithObjects:
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:addBlock colour:[Styles greenColour] iconName:@"Add.png" title:@"Add" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
-                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:subjectsBlock colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Grades" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:subjectsBlock colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Edit" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:statsBlock colour:[Styles blueColour] iconName:@"Stats.png" title:@"Stats" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:optionsBlock colour:[Styles orangeColour] iconName:@"Options.png" title:@"Options" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
                          nil]];
@@ -145,8 +156,7 @@
 - (void)addContainerPressed {
     [self bubbleWasPressed:_addContainer];
     
-    AddViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer andAssessmentOrNil:nil];
-    b.delegate = self;
+    AddViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer delegate:self andAssessmentOrNil:nil];
     [self startTransitionToChildBubble:_addContainer andBubbleViewController:b];
 }
 
@@ -174,6 +184,8 @@
 }
 
 - (void)optionsContainerPressed {
+    
+    #warning TODO: test profile name conflict and show buttons for setup, switch profile, animation speed?
     [self bubbleWasPressed:_optionsContainer];
     
     [self showSetupWindow];

@@ -20,6 +20,7 @@
 		84265A6C1904A32000141564 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84265A6B1904A32000141564 /* QuartzCore.framework */; };
 		8437DAF51A4245F700E261E2 /* EditAssessmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8437DAF41A4245F700E261E2 /* EditAssessmentViewController.m */; };
 		8442D2E31A482930003C0C2D /* GoalGradeReqAndLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8442D2E21A482930003C0C2D /* GoalGradeReqAndLevel.m */; };
+		8442D2E61A48D81C003C0C2D /* AppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8442D2E51A48D81C003C0C2D /* AppSettings.m */; };
 		8445E4081A402344002BDA5E /* ToJSONTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445E4071A402344002BDA5E /* ToJSONTemplate.m */; };
 		844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844CA93618AAB15A00D55F11 /* GradesViewController.m */; };
 		8459996D18AC00DE005F3FB1 /* SimpleSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */; };
@@ -112,6 +113,8 @@
 		8437DAF41A4245F700E261E2 /* EditAssessmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAssessmentViewController.m; sourceTree = "<group>"; };
 		8442D2E11A482930003C0C2D /* GoalGradeReqAndLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalGradeReqAndLevel.h; sourceTree = "<group>"; };
 		8442D2E21A482930003C0C2D /* GoalGradeReqAndLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalGradeReqAndLevel.m; sourceTree = "<group>"; };
+		8442D2E41A48D81C003C0C2D /* AppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSettings.h; sourceTree = "<group>"; };
+		8442D2E51A48D81C003C0C2D /* AppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettings.m; sourceTree = "<group>"; };
 		8445E4061A402344002BDA5E /* ToJSONTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToJSONTemplate.h; sourceTree = "<group>"; };
 		8445E4071A402344002BDA5E /* ToJSONTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToJSONTemplate.m; sourceTree = "<group>"; };
 		844CA93518AAB15A00D55F11 /* GradesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradesViewController.h; sourceTree = "<group>"; };
@@ -356,6 +359,8 @@
 			children = (
 				84B5A2881880D8AD00969952 /* AppDelegate.h */,
 				84B5A2891880D8AD00969952 /* AppDelegate.m */,
+				8442D2E41A48D81C003C0C2D /* AppSettings.h */,
+				8442D2E51A48D81C003C0C2D /* AppSettings.m */,
 				84FF925B18A08F7B00988F62 /* Profile Structure */,
 				8459E868196FB456000D1C85 /* Setup */,
 				8404403D1972782500CC390E /* Goals */,
@@ -642,6 +647,7 @@
 				84A435D61966C5660091905B /* SubjectsAndColours.m in Sources */,
 				845C40E119481973001B1499 /* GradePriority.m in Sources */,
 				84B5A2BC1880D91000969952 /* Styles+Layout.m in Sources */,
+				8442D2E61A48D81C003C0C2D /* AppSettings.m in Sources */,
 				840D5874188240A700DE24B7 /* GoalTitle.m in Sources */,
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
 				84C7B3BC1943E45400B8DCD8 /* EditTextScreenItemData.m in Sources */,

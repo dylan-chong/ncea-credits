@@ -11,7 +11,7 @@
 #import "Assessment.h"
 #import "MainViewController.h"
 
-#define MAIN_BUBBLE_TRANSITION_MOVE_MULTIPLIER 2.0
+#define MAIN_BUBBLE_TRANSITION_MOVE_MULTIPLIER 1.5
 
 @implementation BubbleViewController
 
@@ -26,7 +26,7 @@
 
 - (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container  {
     _parentBubble = container;
-    Corner c = [self getCornerOfChildVCNewMainBubbleFrame:container];
+    Corner c = [self getCornerOfChildVCNewMainBubble:container];
     CGSize s = container.frame.size;
     
     PositionCalculationBlock p = ^{
@@ -281,7 +281,7 @@
 }
 
 //------------------------------ Transition Corners and Difs ------------------------------
-- (Corner)getCornerOfParentMainBubbleIfItHadTransitioned {
+- (Corner)getCornerOfParentMainBubble {
     if (self.delegate) {//If current has a parent
         return [Styles getCornerForPoint:_mainBubble.center];
     } else {
@@ -289,9 +289,9 @@
     }
 }
 
-- (Corner)getCornerOfChildVCNewMainBubbleFrame:(BubbleContainer *)bubble {
+- (Corner)getCornerOfChildVCNewMainBubble:(BubbleContainer *)bubble {
     if (self.delegate) { //has parent vc
-        return [self.delegate getCornerOfParentMainBubbleIfItHadTransitioned];
+        return [self.delegate getCornerOfParentMainBubble];
     } else {
         //Is root of mindmap (i.e. mainvc)
         return [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.lastTappedBubble.center]];
