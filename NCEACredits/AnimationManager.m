@@ -9,6 +9,8 @@
 #import "AnimationManager.h"
 #import "AnimationObject.h"
 
+#define EXTRA_FRAMES -1
+
 @implementation AnimationManager
 
 - (id)initWithAnimationObjects:(NSArray *)a length:(float)length tag:(int)tag andDelegate:(id)d {
@@ -30,7 +32,7 @@
 
 - (void)setUpDistanceArray {
     NSMutableArray *m = [[NSMutableArray alloc] init];
-    for (int a = 1; a <= _animationTime * [Styles frameRate] + 1; a++) {
+    for (int a = 0; a <= _animationTime * [Styles frameRate] + EXTRA_FRAMES; a++) {
         [m addObject:
          [NSNumber numberWithDouble:
           [self getAnimationDistanceForStage:a]]];
@@ -59,12 +61,13 @@
 - (void)stopAnimationMidWay {
     _animationShouldStopMidway = YES;
     [_timer invalidate];
+    [self putEverythingInTheirFinalPlaces];
 }
 
 - (void)tick {
+    _animationStage++;
     if (!_animationShouldStopMidway) {
-        _animationStage++;
-        if (_animationStage < _animationTime * [Styles frameRate]) {
+        if (_animationStage < _distances.count) {
             double d = [self getAnimationDistanceFromArray];
             
             for (AnimationObject *a in _animationObjects) {
@@ -78,8 +81,15 @@
 
 - (void)finishAnimation {
     [_timer invalidate];
+    [self putEverythingInTheirFinalPlaces];
     _animationHasFinished = YES;
     [_delegate animationHasFinished:_tag];
+}
+
+- (void)putEverythingInTheirFinalPlaces {
+    for (AnimationObject *a in _animationObjects) {
+        [a setDistanceWithPercentage:100];
+    }
 }
 
 @end

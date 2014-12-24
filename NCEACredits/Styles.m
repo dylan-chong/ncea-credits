@@ -37,10 +37,13 @@
 
 + (float)startingScaleFactor {  return 0.01;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; } //changing this will require changing launch image size (340 * this * sizeModifier * 0.75)
-+ (float)animationSpeed {    return 0.5; }
++ (float)animationSpeed {
+    if (SPEED_MODE) return 0.1;
+    else return 0.4;
+}
 
 + (double)frameRate {
-    return 30.0; //Do not chance unless you alter animation class formula
+    return 30.0; //Do not change unless you alter animation class formula
 }
 
 + (BOOL)rect:(CGRect)r1 isEqualToRect:(CGRect)r2 {

@@ -24,13 +24,14 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 
 @implementation EditAssessmentViewController
 
-- (id)initWithMainBubble:(BubbleContainer *)mainBubble andAssessmentOrNil:(Assessment *)assessment {
+- (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andAssessmentOrNil:(Assessment *)assessment {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
         if (!assessment) assessment = [[Assessment alloc] initWithPropertiesOrNil:nil];
         _assessment = assessment;
         self.staggered = NO;
+        self.delegate = delegate;
         [self setMainBubbleSimilarToBubble:mainBubble];
         [self createBubbleContainers];
         [self createAnchors];
@@ -70,7 +71,11 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 - (void)createBubbleContainers {
     NSArray *itemData = [EditAssessmentViewController getItemDataWithAssessmentOrNil:_assessment];
     
-    self.childBubbles = [EditTextViewController getEditBubblesWithEditTextScreenItemDataArray:itemData delegate:self towardsRightSide:NO flickScroller:[self getFlickScroller] andMainBubble:self.mainBubble];
+    Corner c = [self getCornerOfChildVCNewMainBubble:self.mainBubble];
+    BOOL towardsRightSide = NO;
+    if (c == TopLeft || c == BottomLeft) towardsRightSide = YES;
+    
+    self.childBubbles = [EditTextViewController getEditBubblesWithEditTextScreenItemDataArray:itemData delegate:self towardsRightSide:towardsRightSide flickScroller:[self getFlickScroller] corner:c andMainBubble:self.mainBubble];
     [self getFlickScroller].items = self.childBubbles.count;
     
     for (BubbleContainer *b in self.childBubbles) {
@@ -90,51 +95,83 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 //****
 //*
 
-- (BOOL)textBubbleIsShowingPlaceHolder:(NSString *)title { //I.e. no data entered
+- (NSString *)getTextOfEditTextBubbleContainerWithTitle:(NSString *)title {
+    EditTextBubbleContainer *b = [self getEditTextBubbleContainerForTitle:title];
+    if (b) return ((EditTextBubble *)b.bubble).textLabel.text;
+    else return nil;
+}
+
+- (EditTextBubbleContainer *)getEditTextBubbleContainerForTitle:(NSString *)title {
     for (EditTextBubbleContainer *b in self.childBubbles) {
         EditTextBubble *bubble = (EditTextBubble *)b.bubble;
-
+        
         if ([bubble.titleLabel.text isEqualToString:[title stringByAppendingString:TitleSuffix]]) {
-            UIColor *textColour = bubble.textLabel.textColor;
-            UIColor *placeholderColour = [EditTextBubble placeholderColour];
-            
-            if ([Styles colour:textColour isTheSameAsColour:placeholderColour]) {
-                return YES;
-            }
+            return b;
         }
     }
+    
+    NSLog(@"There is no EditTextBubbleContainer for title '%@'.", title);
+    return nil;
+}
+
+- (BOOL)textBubbleIsShowingPlaceHolder:(NSString *)title { //I.e. no data entered
+    EditTextBubbleContainer *bubbleContainer = [self getEditTextBubbleContainerForTitle:title];
+    if (!bubbleContainer) {
+        return NO;
+    }
+    
+    EditTextBubble *bubble = (EditTextBubble *)bubbleContainer.bubble;
+    UIColor *textColour = bubble.textLabel.textColor;
+    UIColor *placeholderColour = [EditTextBubble placeholderColour];
+    
+    if ([Styles colour:textColour isTheSameAsColour:placeholderColour]) {
+        return YES;
+    }
+    
     
     return NO;
 }
 
 - (void)startReturnScaleAnimation {
-    NSInteger count = 0;
-    //Required fields
-    NSArray *titles = @[ItemNCEALevel, ItemQuickName, ItemSubject, ItemCredits];
+    NSString *subjectText = [self getTextOfEditTextBubbleContainerWithTitle:ItemSubject];
+    NSString *quickName = [self getTextOfEditTextBubbleContainerWithTitle:ItemQuickName];
     
-    for (NSString *t in titles) {
-        if (![self textBubbleIsShowingPlaceHolder:t]) count++;
-    }
-    
-    if (count == titles.count) {
-        //Save
-        [self saveAssessment];
-        [super startReturnScaleAnimation];
+    if ([CurrentProfile isAlreadyAssessmentForSubject:subjectText quickName:quickName andDifferentIdentifier:_assessment.identifier]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName
+                                                                       message:@"There is already an assessment by this name and subject."
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
     } else {
         
-        //Add requirements to messages
-        NSString *message = @"You must at least enter details for the ";
-        for (int a = 0; a < titles.count - 1; a++) {
-            message = [message stringByAppendingString:
-                       [NSString stringWithFormat:@"'%@', ", titles[a]]];
+        NSInteger count = 0;
+        //Required fields
+        NSArray *titles = @[ItemNCEALevel, ItemQuickName, ItemSubject, ItemCredits];
+        
+        for (NSString *t in titles) {
+            if (![self textBubbleIsShowingPlaceHolder:t]) count++;
         }
-        message = [message stringByAppendingString:@"and '"];
-        message = [message stringByAppendingString:titles[titles.count - 1]];
-        message = [message stringByAppendingString:@"' fields."];
         
-        
-        UIAlertView *a = [[UIAlertView alloc] initWithTitle:AppName message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Don't Save", nil];
-        [a show];
+        if (count == titles.count) {
+            //Save
+            [self saveAssessment];
+            [super startReturnScaleAnimation];
+        } else {
+            
+            //Add requirements to messages
+            NSString *message = @"You must at least enter details for the ";
+            for (int a = 0; a < titles.count - 1; a++) {
+                message = [message stringByAppendingString:
+                           [NSString stringWithFormat:@"'%@', ", titles[a]]];
+            }
+            message = [message stringByAppendingString:@"and '"];
+            message = [message stringByAppendingString:titles[titles.count - 1]];
+            message = [message stringByAppendingString:@"' fields."];
+            
+            
+            UIAlertView *a = [[UIAlertView alloc] initWithTitle:AppName message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Don't Save", nil];
+            [a show];
+        }
     }
 }
 
@@ -149,7 +186,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
         title = [title substringToIndex:title.length - TitleSuffix.length];//Get rid of the colon on the end
         
         if ([title containsString:@"Grade"] && [self textBubbleIsShowingPlaceHolder:title]) //Placeholder = no grade
-             text = GradeTextNone;
+            text = GradeTextNone;
         
         if ([title isEqualToString:ItemQuickName]) {
             newOrEditedAssessment.quickName = text;
@@ -165,7 +202,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
             newOrEditedAssessment.subject = text;
         } else if ([title isEqualToString:ItemCredits]) {
             newOrEditedAssessment.creditsWhenAchieved = [text integerValue];
-
+            
         } else if ([title isEqualToString:ItemIsAnInternal]) {
             newOrEditedAssessment.isAnInternal = [text boolValue];
             
