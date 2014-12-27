@@ -20,7 +20,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
         
         _viewContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width / 2, self.frame.size.height / 2)];
-        if (_isTowardsRight) _viewContainer.frame = CGRectMake(self.frame.size.width / 2, 0, self.frame.size.width, self.frame.size.height);
+        if (_isTowardsRight) _viewContainer.frame = CGRectMake(self.frame.size.width / 2, 0, self.frame.size.width / 2, self.frame.size.height / 2);
         [self addSubview:_viewContainer];
         
         _placeholder = placeholder;

@@ -18,8 +18,12 @@
 
 @implementation EditTextViewController
 
-+ (NSArray *)getEditBubblesWithEditTextScreenItemDataArray:(NSArray *)itemData delegate:(SimpleSelectionViewController *)delegate towardsRightSide:(BOOL)towardsRightSide flickScroller:(FlickScroller *)flickScroller andMainBubble:(BubbleContainer *)mainB {
-    Corner corner = [Styles getCornerForPoint:mainB.frame.origin];
+- (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container {
+    [super setMainBubbleSimilarToBubble:container];
+    self.mainBubble.bubble.title.text = @"Save";
+}
+
++ (NSArray *)getEditBubblesWithEditTextScreenItemDataArray:(NSArray *)itemData delegate:(SimpleSelectionViewController *)delegate towardsRightSide:(BOOL)towardsRightSide flickScroller:(FlickScroller *)flickScroller corner:(Corner)cornerOfMainBubble andMainBubble:(BubbleContainer *)mainB {
     
     NSMutableArray *blocks = [[NSMutableArray alloc] init];
     NSUInteger count = itemData.count;
@@ -28,7 +32,7 @@
     
     for (int a = 0; a < count; a++) {
         PositionCalculationBlock x = ^{
-            return [EditTextViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner andFlickScroller:flickS];
+            return [EditTextViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:cornerOfMainBubble andFlickScroller:flickS towardsRightSide:towardsRightSide];
         };
         
         [blocks addObject:x];
@@ -43,9 +47,9 @@
     return m;
 }
 
-+ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andFlickScroller:(FlickScroller *)flickScroller  {
-    
-    CGPoint difs = [EditTextViewController getXandYDifsWithBubbles:bubbles andSize:size];
++ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andFlickScroller:(FlickScroller *)flickScroller towardsRightSide:(BOOL)towardsRight {
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGPoint difs = [EditTextViewController getXandYDifsWithBubbles:bubbles andSize:size withStartingCorner:[EditAssessmentViewController getCornerOriginForCorner:corner] towardsRightSide:towardsRight];
     double xDif = difs.x;
     double yDif = difs.y;
     
@@ -62,10 +66,10 @@
     
     double x, y;
     CGPoint origin;
-    if (corner == BottomLeft || corner == BottomRight)
-        origin = [EditTextViewController getCorner:[Styles getOppositeCornerToCorner:corner] withSize:size];
-    else
-        origin = [EditTextViewController getCorner:corner withSize:size];
+//    if (corner == BottomLeft || corner == BottomRight)
+//        origin = [EditTextViewController getCorner:[Styles getOppositeCornerToCorner:corner] withSize:size];
+//    else
+        origin = [EditTextViewController getCorner:[EditAssessmentViewController getCornerOriginForCorner:corner] withSize:size towardsRightSide:towardsRight];
     
     if (corner == TopLeft || corner == BottomRight) {
         x = -xDif;
@@ -79,6 +83,7 @@
         xPageMod = -1;
     }
     
+    
     if (bubbles > perPage) {
         x *= indexOnPage / (perPage - 1.0);
         y *= indexOnPage / (perPage - 1.0);
@@ -87,55 +92,92 @@
         y *= indexOnPage / (bubbles - 1.0);
     }
     
+//    if (x > 0) {
+//        x -= screen.width;
+//    } else {
+//        x += screen.width;
+//    }
+    
     NSInteger whichPage = [FlickScroller getPageForIndex:index andNumberOfItems:bubbles];
     
     NSInteger thisItemsPage = [flickScroller getCurrentPageIndex];
-    CGSize screen = [ApplicationDelegate getScreenSize];
     
     NSInteger xPageMove = (thisItemsPage - whichPage) * xPageMod * screen.width;
     NSInteger yPageMove = (thisItemsPage - whichPage) * yPageMod * screen.height;
-//    For debugging pages
-//    if (index == 0) NSLog(@"---------------------------");
-//    NSLog(@"Index: %i, WhichPage: %i, ThisPage: %i", index, whichPage, thisItemsPage);
+    //    For debugging pages
+//        if (index == 0) NSLog(@"---------------------------");
+//        NSLog(@"Index: %i, WhichPage: %i, ThisPage: %i", index, whichPage, thisItemsPage);
     
     return CGRectMake(origin.x + x + xPageMove, origin.y + y + yPageMove, size.width, size.height);
 }
 
-+ (CGPoint)getXandYDifsWithBubbles:(NSUInteger)bubbles andSize:(CGSize)size {
-    CGPoint startP = [EditTextViewController getCorner:TopLeft withSize:size];
-    CGPoint endP = [EditTextViewController getCorner:BottomRight withSize:size];
++ (CGPoint)getXandYDifsWithBubbles:(NSUInteger)bubbles andSize:(CGSize)size withStartingCorner:(Corner)startingCorner towardsRightSide:(BOOL)towardsRight {
+    CGPoint startP = [EditTextViewController getCorner:startingCorner withSize:size towardsRightSide:towardsRight];
+    CGPoint endP = [EditTextViewController getCorner:[Styles getOppositeCornerToCorner:startingCorner] withSize:size towardsRightSide:towardsRight];
     
     double xDif = startP.x - endP.x;
-    double yDif = endP.y - startP.y;
+    double yDif = startP.y - endP.y;
     
     if (xDif < 0) xDif *= -1;
     if (yDif < 0) yDif *= -1;
     
-    yDif -= 15;
-    
     return CGPointMake(xDif, yDif);
 }
 
-+ (CGPoint)getCorner:(Corner)c withSize:(CGSize)size {
++ (CGPoint)getCorner:(Corner)c withSize:(CGSize)size towardsRightSide:(BOOL)towardsRight {
     CGPoint origin;
     CGSize screen = [ApplicationDelegate getScreenSize];
+    float space = [Styles spaceFromEdgeOfScreen];
     
-    float space = [Styles spaceFromEdgeOfScreen] * 2;
-    if (c == TopLeft) {
-        origin.x = screen.width - space - (size.width / 2);
-        origin.y = space;
-    } else if (c == TopRight) {
-        origin.x = space;
-        origin.y = space;
-    } else if (c == BottomLeft) {
-        origin.x = screen.width - space - (size.width / 2);
-        origin.y = screen.height - space - (size.height / 2);
+    float left = space  ;
+    float right = screen.width - space ;
+    float top = space + [Styles statusBarHeight];
+    float bottom = screen.height - space - size.height;
+    
+    if (towardsRight) {
+        left -= (size.width / 2);
+        right -= size.width;
     } else {
-        origin.x = space;
-        origin.y = screen.height - space - (size.height / 2);
+        right -= (size.width / 2);
     }
     
+    if (c == TopLeft) {
+        origin.x = left;
+        origin.y = top;
+    } else if (c == TopRight) {
+        origin.x = right;
+        origin.y = top;
+    } else if (c == BottomLeft) {
+        origin.x = left;
+        origin.y = bottom;
+    } else { //Bottom right
+        origin.x = right;
+        origin.y = bottom;
+    }
+    
+    //backup
+    //    if (c == TopLeft) {
+    //        origin.x = screen.width - space - (size.width / 2);
+    //        origin.y = space;
+    //    } else if (c == TopRight) {
+    //        origin.x = space;
+    //        origin.y = space;
+    //    } else if (c == BottomLeft) {
+    //        origin.x = screen.width - space - (size.width / 2);
+    //        origin.y = screen.height - space - (size.height / 2);
+    //    } else {
+    //        origin.x = space;
+    //        origin.y = screen.height - space - (size.height / 2);
+    //    }
+    
     return origin;
+}
+
++ (Corner)getCornerOriginForCorner:(Corner)c {
+    if (c == TopLeft) return TopRight;
+    else if (c == TopRight) return TopLeft;
+    else if (c == BottomLeft) return TopLeft;
+    else return TopRight; //c == bottom right
 }
 
 //*

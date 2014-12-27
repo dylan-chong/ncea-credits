@@ -56,6 +56,12 @@
         }
     }
     
+    //Check for duplicate name and subject
+    if ([self isAlreadyAssessmentForSubject:assessment.subject quickName:assessment.quickName andDifferentIdentifier:assessment.identifier]) {
+        NSLog(@"There is already an assessment with subject '%@' and quick name '%@'.", assessment.subject, assessment.quickName);
+        return NO;
+    }
+    
     //Replace existing?
     for (int a = 0; a < _assessments.count; a++) {
         Assessment *existingAssessment = _assessments[a];
@@ -69,6 +75,16 @@
     return YES;
 }
 
+- (BOOL)isAlreadyAssessmentForSubject:(NSString *)subject quickName:(NSString *)quickName andDifferentIdentifier:(NSUInteger)identifier {
+    for (Assessment *a in _assessments) {
+        if ([a.subject isEqualToString:subject] && [a.quickName isEqualToString:quickName] && identifier != a.identifier) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject {
     NSMutableArray *assessmentsForSubject = [[NSMutableArray alloc] init];
     
@@ -78,6 +94,40 @@
     }
     
     return assessmentsForSubject;
+}
+
+- (Assessment *)getAssessmentForQuickName:(NSString *)qn andSubject:(NSString *)sub {
+    for (Assessment *possibleAssessment in _assessments) {
+        if ([possibleAssessment.subject isEqualToString:sub] && [possibleAssessment.quickName isEqualToString:qn]) {
+            //Match
+            return possibleAssessment;
+        }
+    }
+    
+    //No match
+    NSLog(@"There is no assessment for quick name '%@' and subject '%@'.", qn, sub);
+    return nil;
+}
+
+- (BOOL)assessmentExists:(Assessment *)assess {
+    for (Assessment *a in _assessments) {
+        if (a.identifier == assess.identifier) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (void)deleteAssessment:(Assessment *)assess {
+    for (Assessment *a in _assessments) {
+        if (a.identifier == assess.identifier) {
+            [_assessments removeObject:a];
+            break;
+        }
+    }
+    
+    NSLog(@"Assessment for quick name '%@' and subject '%@' does not exist. Cannot be deleted", assess.quickName, assess.subject);
 }
 
 //------------------------------ ID ------------------------------

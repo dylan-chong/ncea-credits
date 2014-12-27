@@ -23,8 +23,14 @@
 - (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level;
 - (NSUInteger)getNumberOfCreditsForGradeIncludingBetterGrades:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level;
 
+- (BOOL)isAlreadyAssessmentForSubject:(NSString *)subject quickName:(NSString *)quickName andDifferentIdentifier:(NSUInteger)identifier;
+
 + (NSUInteger)getBonusAchievedCreditsForLevel:(NSUInteger)level;
 
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject;
+- (Assessment *)getAssessmentForQuickName:(NSString *)qn andSubject:(NSString *)sub;
+
+- (BOOL)assessmentExists:(Assessment *)assess;
+- (void)deleteAssessment:(Assessment *)assess;
 
 @end

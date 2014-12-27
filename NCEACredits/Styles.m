@@ -38,7 +38,7 @@
 + (float)startingScaleFactor {  return 0.01;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; } //changing this will require changing launch image size (340 * this * sizeModifier * 0.75)
 + (float)animationSpeed {
-    if (SPEED_MODE) return 0.1;
+    if (SPEED_MODE && DEBUG_MODE_ON) return 0.2;
     else return 0.4;
 }
 

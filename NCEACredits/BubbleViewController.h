@@ -15,7 +15,7 @@
 @protocol BubbleViewControllerDelegate
 //child view controllers will implement the delegate to communicate with the parent
 - (void)hasReturnedFromChildViewController;
-- (Corner)getCornerOfParentMainBubbleIfItHadTransitioned;
+- (Corner)getCornerOfParentMainBubble;
 @end
 
 @interface BubbleViewController : UIViewController <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerDelegate>
@@ -50,4 +50,7 @@
 
 - (void)enableChildButtons;
 - (void)disableChildButtons;
+
+- (Corner)getCornerOfChildVCNewMainBubble:(BubbleContainer *)bubble;
+
 @end

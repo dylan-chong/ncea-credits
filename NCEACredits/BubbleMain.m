@@ -43,7 +43,6 @@
         //goal 65-85% height
         _goal = [[GoalTitle alloc] initWithFrame:CGRectMake(0, round(d*0.65), d, round(d*0.2))];
         
-        
         [self addSubview:self.title];
         
         [self addSubview:_excellenceCredits];

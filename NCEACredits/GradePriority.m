@@ -43,8 +43,8 @@
 
 + (NSArray *)defaultPriorityOrder {
     return @[tNSN(GradePriorityFinalGrade),
-             tNSN(GradePriorityPreliminaryGrade),
-             tNSN(GradePriorityExpectedGrade)];
+             tNSN(GradePriorityExpectedGrade),
+             tNSN(GradePriorityPreliminaryGrade),];
 }
 
 @end

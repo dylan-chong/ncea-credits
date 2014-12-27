@@ -17,6 +17,10 @@
 - (NSUInteger)getNumberOfAssessmentsInCurrentYear;
 - (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment;
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject;
+- (BOOL)isAlreadyAssessmentForSubject:(NSString *)subject quickName:(NSString *)quickName andDifferentIdentifier:(NSUInteger)identifier;
+- (Assessment *)getAssessmentForQuickName:(NSString *)qn andSubject:(NSString *)sub;
+- (BOOL)assessmentExists:(Assessment *)assess;
+- (void)deleteAssessment:(Assessment *)assess;
 
 @property NSString *profileName;
 @property GradePriority *gradePriority;

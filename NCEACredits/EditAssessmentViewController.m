@@ -10,6 +10,7 @@
 #import "EditTextBubble.h"
 #import "EditTextScreenItemData.h"
 #import "Grade.h"
+#import <QuartzCore/QuartzCore.h>
 
 // type of credits only available in lvl1
 
@@ -35,37 +36,10 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
         [self setMainBubbleSimilarToBubble:mainBubble];
         [self createBubbleContainers];
         [self createAnchors];
+        [self createDeleteButton];
     }
     
     return self;
-}
-
-+ (NSArray *)getItemDataWithAssessmentOrNil:(Assessment *)assessment {
-    if (!assessment) assessment = [[Assessment alloc] initWithPropertiesOrNil:nil];
-    
-    NSString *credits = [NSString stringWithFormat:@"%lu", (unsigned long)assessment.creditsWhenAchieved];
-    NSString *level = [NSString stringWithFormat:@"%lu", (unsigned long)assessment.level];
-    NSString *isAnInternal = BOOLToEditTextBool(assessment.isAnInternal);
-    NSString *isUnitStandard = BOOLToEditTextBool(assessment.isUnitStandard);
-    NSString *typeOfCredits = assessment.typeOfCredits;
-    
-    //ItemData(theTitle, theText (i.e. default), thePlaceholder, theType)
-    return @[
-             ItemData(ItemQuickName,        @"",                        @"Mechanics",               tNSN(EditTextDataTypeText)),
-             ItemData(ItemASNumber,         @"",                        @"901234 (optional)",                  tNSN(EditTextDataTypeNumber)),
-             ItemData(ItemSubject,           @"",                        @"Science",                 tNSN(EditTextDataTypeText)),
-             ItemData(ItemCredits,          credits,                    @"Usually 3 or 4",                    tNSN(EditTextDataTypeNumber)),
-             
-             ItemData(ItemIsAnInternal,    isAnInternal,               isAnInternal,               tNSN(EditTextDataTypeBool)),
-             
-             ItemData(ItemFinalGrade,       @"",                        @"If you have it",          tNSN(EditTextDataTypeGrade)),
-             ItemData(ItemExpectedGrade,    @"",                        @"To predict results",      tNSN(EditTextDataTypeGrade)),
-             ItemData(ItemPreliminaryGrade,  @"",                        @"Latest practice",         tNSN(EditTextDataTypeGrade)),
-             
-             ItemData(ItemIsUnitStandard,  isUnitStandard,             @"Probably not",             tNSN(EditTextDataTypeBool)),
-             ItemData(ItemNCEALevel,        level,                      level,                      tNSN(EditTextDataTypeNumber)),
-             ItemData(ItemTypeOfCredits,   typeOfCredits,              @"Look it up?",              tNSN(EditTextDataTypeTypeOfCredits)),
-             ];
 }
 
 - (void)createBubbleContainers {
@@ -81,6 +55,43 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     for (BubbleContainer *b in self.childBubbles) {
         [self.view addSubview:b];
     }
+}
+
++ (NSArray *)getItemDataWithAssessmentOrNil:(Assessment *)assessment {
+    if (!assessment) assessment = [[Assessment alloc] initWithPropertiesOrNil:nil];
+    
+    NSString *quickName = (assessment.quickName) ? assessment.quickName : @"";
+    NSString *ASNum = (assessment.assessmentNumber) ? [NSString stringWithFormat:@"%lu", (unsigned long)assessment.assessmentNumber] : @"";
+    NSString *subj = (assessment.subject) ? assessment.subject : @"";
+    NSString *credits = [NSString stringWithFormat:@"%lu", (unsigned long)assessment.creditsWhenAchieved];
+    
+    NSString *isAnInternal = BOOLToEditTextBool(assessment.isAnInternal);
+    
+    NSString *finalGrade = (assessment.gradeSet.final) ? assessment.gradeSet.final : GradeTextNone;
+    NSString *expectGrade = (assessment.gradeSet.expected) ? assessment.gradeSet.expected : GradeTextNone;
+    NSString *prelimGrade = (assessment.gradeSet.preliminary) ? assessment.gradeSet.preliminary : GradeTextNone;
+    
+    NSString *isUnitStandard = BOOLToEditTextBool(assessment.isUnitStandard);
+    NSString *level = [NSString stringWithFormat:@"%lu", (unsigned long)assessment.level];
+    NSString *typeOfCredits = assessment.typeOfCredits;
+    
+    //ItemData(theTitle, theText (i.e. default), thePlaceholder, theType)
+    return @[
+             ItemData(ItemQuickName,        quickName,                        @"E.g. Algebra",               tNSN(EditTextDataTypeText)),
+             ItemData(ItemASNumber,         ASNum,                        @"901234 (optional)",                  tNSN(EditTextDataTypeNumber)),
+             ItemData(ItemSubject,           subj,                        @"E.g. Maths",                 tNSN(EditTextDataTypeText)),
+             ItemData(ItemCredits,          credits,                    @"Usually 3 or 4",                    tNSN(EditTextDataTypeNumber)),
+             
+             ItemData(ItemIsAnInternal,    isAnInternal,               isAnInternal,               tNSN(EditTextDataTypeBool)),
+             
+             ItemData(ItemFinalGrade,       finalGrade,                        @"If you have it",          tNSN(EditTextDataTypeGrade)),
+             ItemData(ItemExpectedGrade,    expectGrade,                        @"To predict results",      tNSN(EditTextDataTypeGrade)),
+             ItemData(ItemPreliminaryGrade,  prelimGrade,                        @"Latest practice",         tNSN(EditTextDataTypeGrade)),
+             
+             ItemData(ItemIsUnitStandard,  isUnitStandard,             @"Probably not",             tNSN(EditTextDataTypeBool)),
+             ItemData(ItemNCEALevel,        level,                      level,                      tNSN(EditTextDataTypeNumber)),
+             ItemData(ItemTypeOfCredits,   typeOfCredits,              @"Look it up?",              tNSN(EditTextDataTypeTypeOfCredits)),
+             ];
 }
 
 //*
@@ -132,6 +143,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     return NO;
 }
 
+//Call [super startReturnScaleAnimation] to exit without saving
 - (void)startReturnScaleAnimation {
     NSString *subjectText = [self getTextOfEditTextBubbleContainerWithTitle:ItemSubject];
     NSString *quickName = [self getTextOfEditTextBubbleContainerWithTitle:ItemQuickName];
@@ -176,7 +188,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 }
 
 - (void)saveAssessment {
-    Assessment *newOrEditedAssessment = [[Assessment alloc] initWithPropertiesOrNil:nil];
+    Assessment *newOrEditedAssessment = (_assessment) ? _assessment : [[Assessment alloc] initWithPropertiesOrNil:nil];
     NSArray *editTextBubbleContainers = self.childBubbles;
     
     for (EditTextBubbleContainer *bubble in editTextBubbleContainers) {
@@ -234,5 +246,58 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     }
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Delete    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)createDeleteButton {
+    if (!_deleteButton) {
+        CGRect f = CGRectZero;
+        f.size = CGSizeMake(70 * [Styles sizeModifier], 30 * [Styles sizeModifier]);
+        f.origin = [Styles getExactOriginForCorner:[Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]] andSize:f.size];
+        f.origin.y += [Styles statusBarHeight];
+        
+        UIButton *d = [[UIButton alloc]initWithFrame:f];
+        [d addTarget:self action:@selector(deletePressed) forControlEvents:UIControlEventTouchUpInside];
+        [d setTitle:@"Delete" forState:UIControlStateNormal];
+        [d setTitleColor:[Styles redColour] forState:UIControlStateNormal];
+        [d.titleLabel setFont:[UIFont systemFontOfSize:15 * [Styles sizeModifier]]];
+        d.titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        [[d layer] setBorderWidth:1.0 * [Styles sizeModifier]];
+        [[d layer] setBorderColor:[[Styles redColour] CGColor]];
+        [[d layer] setCornerRadius:6.0 * [Styles sizeModifier]];
+        
+        _deleteButton = d;
+        [self.view addSubview:d];
+    }
+}
+
+- (void)deletePressed {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Are you sure you want to delete this assessment?" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *a) {
+        //Delete
+        [self deleteAssessment];
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)deleteAssessment {
+    //Delete if it exists, otherwise exit without saving
+    if ([CurrentProfile assessmentExists:_assessment]) {
+        [CurrentProfile deleteAssessment:_assessment];
+    }
+    
+    [super startReturnScaleAnimation];
+}
 
 @end

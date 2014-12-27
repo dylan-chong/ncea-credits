@@ -36,16 +36,15 @@
     self.childBubbles = a;
 }
 
-+ (NSArray *)getArrayOfBubblesWithSubjectsWithColoursOrNot:(NSDictionary *)subjectsAndColours target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered andMainBubble:(BubbleContainer *)mainB {
++ (NSArray *)getArrayOfBubblesWithSubjectsWithColoursOrNot:(NSDictionary *)subjectsAndColours target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered corner:(Corner)cornerOfMainBubble andMainBubble:(BubbleContainer *)mainB {
     UIColor *c = mainB.colour;
-    Corner corner = [Styles getCornerForPoint:mainB.frame.origin];
     
     NSMutableArray *blocks = [[NSMutableArray alloc] init];
     NSUInteger count = subjectsAndColours.count;
     CGSize size = mainB.frame.size;
     for (int a = 0; a < subjectsAndColours.count; a++) {
         PositionCalculationBlock x = ^{
-            return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:corner andStaggered:staggered];
+            return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:cornerOfMainBubble andStaggered:staggered];
         };
         
         [blocks addObject:x];

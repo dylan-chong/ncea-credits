@@ -139,5 +139,6 @@ typedef NS_ENUM(NSInteger, Device) {
 + (CGSize)editTextBubbleSize;
 + (float)numberOfItemsInSelectionViewPer100px;
 + (NSUInteger)minimumItemsPerSelectionPage;
++ (CGFloat)statusBarHeight;
 
 @end
