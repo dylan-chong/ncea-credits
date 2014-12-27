@@ -46,7 +46,7 @@
  
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) NSLog(@"%@", error);
+    if (error) NSLog(@"%@", [error localizedDescription]);
     return data;
 }
  */
@@ -65,8 +65,10 @@
 
 + (NSMutableArray *)convertBackArrayOfJSONObjects:(NSArray *)array toTemplateSubclass:(NSString *)stringOfClassName {
     NSMutableArray *deconverted = [[NSMutableArray alloc] init];
+    
     for (NSDictionary *obj in array) {
-        [deconverted addObject:[(ToJSONTemplate *)NSClassFromString(stringOfClassName) initWithPropertiesOrNil:obj]];
+        ToJSONTemplate *converted = [[NSClassFromString(stringOfClassName) alloc] initWithPropertiesOrNil:obj];
+        [deconverted addObject:converted];
     }
     
     return deconverted;

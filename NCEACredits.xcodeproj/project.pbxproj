@@ -42,6 +42,7 @@
 		84A435CF1966B9E70091905B /* AssessmentCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435CE1966B9E70091905B /* AssessmentCollection.m */; };
 		84A435D21966BDFA0091905B /* Grade.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435D11966BDFA0091905B /* Grade.m */; };
 		84A435D61966C5660091905B /* SubjectsAndColours.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435D51966C5660091905B /* SubjectsAndColours.m */; };
+		84AD67DE1A4E23B300F58333 /* Loading-Text.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AD67DD1A4E23B300F58333 /* Loading-Text.png */; };
 		84B5A27A1880D8AD00969952 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A2791880D8AD00969952 /* Foundation.framework */; };
 		84B5A27C1880D8AD00969952 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A27B1880D8AD00969952 /* CoreGraphics.framework */; };
 		84B5A27E1880D8AD00969952 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A27D1880D8AD00969952 /* UIKit.framework */; };
@@ -129,7 +130,7 @@
 		845C40DD19481350001B1499 /* YearCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearCollection.m; sourceTree = "<group>"; };
 		845C40DF19481973001B1499 /* GradePriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradePriority.h; sourceTree = "<group>"; };
 		845C40E019481973001B1499 /* GradePriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradePriority.m; sourceTree = "<group>"; };
-		8470DD2A1A466FC300266654 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "Launch Screen.xib"; path = "NCEACredits/Launch Screen.xib"; sourceTree = "<group>"; };
+		8470DD2A1A466FC300266654 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		8470DD2C1A46708800266654 /* CustomGoals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGoals.h; sourceTree = "<group>"; };
 		8470DD2D1A46708800266654 /* CustomGoals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomGoals.m; sourceTree = "<group>"; };
 		8470DD2F1A46736900266654 /* AssessmentsForSubjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssessmentsForSubjectViewController.h; sourceTree = "<group>"; };
@@ -153,6 +154,7 @@
 		84A435D11966BDFA0091905B /* Grade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grade.m; sourceTree = "<group>"; };
 		84A435D41966C5660091905B /* SubjectsAndColours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectsAndColours.h; sourceTree = "<group>"; };
 		84A435D51966C5660091905B /* SubjectsAndColours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectsAndColours.m; sourceTree = "<group>"; };
+		84AD67DD1A4E23B300F58333 /* Loading-Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Loading-Text.png"; sourceTree = "<group>"; };
 		84B5A2761880D8AD00969952 /* NCEACredits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NCEACredits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84B5A2791880D8AD00969952 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84B5A27B1880D8AD00969952 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -325,7 +327,7 @@
 		84B5A26D1880D8AD00969952 = {
 			isa = PBXGroup;
 			children = (
-				8470DD2A1A466FC300266654 /* Launch Screen.xib */,
+				84B5A2B01880D8F500969952 /* Resources */,
 				84B5A27F1880D8AD00969952 /* NCEACredits */,
 				84B5A2981880D8AD00969952 /* NCEACreditsTests */,
 				84B5A2781880D8AD00969952 /* Frameworks */,
@@ -364,7 +366,6 @@
 				84FF925B18A08F7B00988F62 /* Profile Structure */,
 				8459E868196FB456000D1C85 /* Setup */,
 				8404403D1972782500CC390E /* Goals */,
-				84B5A2B01880D8F500969952 /* Resources */,
 				84B5A2C01880D91400969952 /* Styles */,
 				84FF925A18A08F6B00988F62 /* UI */,
 				84B5A2801880D8AD00969952 /* Supporting Files */,
@@ -404,6 +405,8 @@
 		84B5A2B01880D8F500969952 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84AD67DD1A4E23B300F58333 /* Loading-Text.png */,
+				8470DD2A1A466FC300266654 /* Launch Screen.xib */,
 				8482D8041A46568300F1CD6D /* Launch-Circle.png */,
 				84B5A28B1880D8AD00969952 /* Images.xcassets */,
 				84B5A2B61880D91000969952 /* Comfortaa-Bold.ttf */,
@@ -414,6 +417,7 @@
 				84B5A2AB1880D8F100969952 /* Subjects.png */,
 			);
 			name = Resources;
+			path = NCEACredits;
 			sourceTree = "<group>";
 		};
 		84B5A2C01880D91400969952 /* Styles */ = {
@@ -615,6 +619,7 @@
 				840D587618834B0300DE24B7 /* Stats.png in Resources */,
 				8470DD2B1A466FC300266654 /* Launch Screen.xib in Resources */,
 				84B5A2841880D8AD00969952 /* InfoPlist.strings in Resources */,
+				84AD67DE1A4E23B300F58333 /* Loading-Text.png in Resources */,
 				84B64E4818B46CD10061ED9D /* Comfortaa-Regular.ttf in Resources */,
 				8459E88C196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard in Resources */,
 				84B5A2AD1880D8F100969952 /* Options.png in Resources */,

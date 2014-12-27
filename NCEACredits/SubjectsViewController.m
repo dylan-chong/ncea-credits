@@ -14,17 +14,24 @@
 - (void)createBubbleContainers {
     NSDictionary *subjectTitles = [CurrentProfile getSubjectsAndColoursOrNilForCurrentYear];
     
-    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithSubjectsWithColoursOrNot:subjectTitles target:self staggered:self.staggered andMainBubble:self.mainBubble];
+    Corner c = [self getCornerOfChildVCNewMainBubble:self.mainBubble];
+    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithSubjectsWithColoursOrNot:subjectTitles target:self staggered:self.staggered corner:c andMainBubble:self.mainBubble];
     
     for (BubbleContainer *b in self.childBubbles) {
         [self.view addSubview:b];
     }
 }
 
-- (void)bubbleWasPressed:(BubbleContainer *)container {
-    AssessmentsForSubjectViewController *childVC = [[AssessmentsForSubjectViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
-    [childVC createBubbleContainers];
-    [self startTransitionToChildBubble:container andBubbleViewController:childVC];
+//Uncomment to show assessment list on tap
+//- (void)bubbleWasPressed:(BubbleContainer *)container {
+//    [super bubbleWasPressed:container];
+//    AssessmentsForSubjectViewController *childVC = [[AssessmentsForSubjectViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
+//    [childVC createBubbleContainers];
+//    [self startTransitionToChildBubble:container andBubbleViewController:childVC];
+//}
+
+- (void)startTransitionToChildBubble:(BubbleContainer *)b andBubbleViewController:(BubbleViewController *)bubbleViewController {
+    if (bubbleViewController.childBubbles) [super startTransitionToChildBubble:b andBubbleViewController:bubbleViewController];
 }
 
 @end

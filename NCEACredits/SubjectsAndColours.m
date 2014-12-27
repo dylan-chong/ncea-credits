@@ -131,6 +131,7 @@
     }
     
     [self sortSubjectsAlphabetically];
+    [ApplicationDelegate saveCurrentProfileAndAppSettings];
 }
 
 - (NSDictionary *)getAllSubjectsAndColoursForSubjects:(NSArray *)subjectsOfAssessments {

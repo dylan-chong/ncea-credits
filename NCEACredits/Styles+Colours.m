@@ -22,14 +22,34 @@
 + (UIColor *)lightGreyColour{       return [UIColor colorWithWhite:230.0/255 alpha:1.0];}
 + (UIColor *)translucentWhite{      return [UIColor colorWithWhite:1.0 alpha:0.97];}
 
+
+#define DEFAULT_DP 3
+#define ROUNDCGFLOAT(varName) varName = [self floatVar:varName showOnlyDP: DEFAULT_DP];
 + (BOOL)colour:(UIColor *)colourA isTheSameAsColour:(UIColor *)colourB {
     CGFloat redA, greenA, blueA, alphaA, redB, greenB, blueB, alphaB;
     [colourA getRed:&redA green:&greenA blue:&blueA alpha:&alphaA];
     [colourB getRed:&redB green:&greenB blue:&blueB alpha:&alphaB];
+    
+    ROUNDCGFLOAT(redA);
+    ROUNDCGFLOAT(greenA);
+    ROUNDCGFLOAT(blueA);
+    ROUNDCGFLOAT(alphaA);
+    ROUNDCGFLOAT(redB);
+    ROUNDCGFLOAT(greenB);
+    ROUNDCGFLOAT(blueB);
+    ROUNDCGFLOAT(alphaB);
+    
     if (redA == redB && greenA == greenB && blueA == blueB && alphaA == alphaB)
         return YES;
     else
         return NO;
+}
+
+
++ (float)floatVar:(float)f showOnlyDP:(NSInteger)dp {
+    float new = f * powf(10, dp);
+    new = roundf(new);
+    return new;
 }
 
 #warning TODO: merge colours with subjects and colorus

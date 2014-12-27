@@ -17,12 +17,16 @@
 #endif
 
 
+//Disabling debug mode should disable all others too
 #define DEBUG_MODE_ON YES
-#define SHOULD_MAKE_FAKE_ASSESSMENTS YES
+#define SHOULD_MAKE_FAKE_ASSESSMENTS NO
+#define SPEED_MODE YES
+#define LOG_PROFILE_WHEN_TAPPING_STATS YES
 
 
 #define ApplicationDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define CurrentProfile [(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentProfile]
+#define CurrentAppSettings [(AppDelegate *)[[UIApplication sharedApplication] delegate] getAppSettings]
 
 #define AppName [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]
 

@@ -374,9 +374,13 @@
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.text = ((TableViewCellData *)_generalCells[0]).detail;
         textField.placeholder = @"Your name";
+        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSString *name = ((UITextField *)alert.textFields[0]).text;
+        name = [name stringByReplacingOccurrencesOfString:@"\\" withString:@"_"];
+        name = [name stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+        
         ((TableViewCellData *)_generalCells[0]).detail = name;
         
         //Update cell
@@ -518,7 +522,7 @@
 
 - (void)setCurrentYear:(unsigned long)indexFromYears {
     NSString *text = [self getYearDatesOfListedYears][indexFromYears];
-    ((TableViewCellData *)_generalCells[1]).text = text;
+    ((TableViewCellData *)_generalCells[1]).detail = text;
     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]].detailTextLabel.text = text;
 }
 
@@ -574,19 +578,37 @@
 //****
 //*
 
-- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
+- (void)closeSetupWithoutFurtherAdo {
+    [_delegate setupWillBeDismissed];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
+    [self closeSetupWithoutFurtherAdo];
 }
 
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
     if (![self checkForDuplicateYears]) {
+        BOOL shouldShowHelp = ![CurrentProfile hasAllNecessaryInformationFromSetup];
+        
         //Modify current profile
-        [self applySettingsToCurrentProfile];
+        BOOL wasAbleToSave = [self applySettingsToCurrentProfile];
         
         //Dismiss setup window
-        [_delegate setupWillBeDismissed];
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
+        if (wasAbleToSave) {
+            
+            if (shouldShowHelp) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Welcome to %@!", AppName]
+                                                                               message:@"Tap the green add button to create an assessment, and enter details like its subject and name. Then, tap the add button again to save. Don't forget that certain things, like grades and the AS Number are optional - you can always set it later.\n\nHappy credit counting!"
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    [self closeSetupWithoutFurtherAdo];
+                }]];
+                [self presentViewController:alert animated:YES completion:nil];
+            } else {
+                [self closeSetupWithoutFurtherAdo];
+            }
+        }
     } else {
         //Duplicate alert
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You seem to have duplicate years. Duplicate NCEA levels are allowed, but not years." preferredStyle:UIAlertControllerStyleAlert];
@@ -615,9 +637,33 @@
     return NO;
 }
 
-- (void)applySettingsToCurrentProfile {
+- (BOOL)applySettingsToCurrentProfile {
+    NSString *newName = ((TableViewCellData *)_generalCells[0]).detail;
+    
+    if ([CurrentProfile hasAllNecessaryInformationFromSetup]) {
+        //not initial setup
+        
+        NSString *oldName = CurrentProfile.profileName;
+        if (![newName isEqualToString:oldName]) {
+            //name changed, must delete old file
+            [ApplicationDelegate deleteProfileWithProfileName:oldName];
+        }
+    } else {
+        //make sure there is no file conflict
+        NSArray *profileNames = [ApplicationDelegate getUsedProfileNames];
+        for (NSString *name in profileNames) {
+            if ([name isEqualToString:newName]) {
+                //name is already used - avoid file conflict
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"There is already a profile with this name." preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+                [self presentViewController:alert animated:YES completion:nil];
+                return NO;
+            }
+        }
+    }
+    
     //Apply general things first
-    CurrentProfile.profileName = ((TableViewCellData *)_generalCells[0]).detail;
+    CurrentProfile.profileName = newName;
     CurrentProfile.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
     
     //Apply selected goal
@@ -660,9 +706,11 @@
     }
     
     CurrentProfile.yearCollection.years = yearsToKeep;
-    CurrentProfile.currentYear = [CurrentProfile.yearCollection getMostUpToDateYear].yearDate;
+    CurrentProfile.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
     
-    [ApplicationDelegate saveCurrentProfile];
+    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    
+    return YES;
 }
 
 /*

@@ -12,7 +12,9 @@
 #import "SetupNavigationController.h"
 #import "BubbleMain.h"
 
-@implementation MainViewController
+@implementation MainViewController {
+    BOOL hasAlreadyMadeFakeAssessments;
+}
 
 #warning TODO: check multiple yearing once save is done
 
@@ -22,6 +24,7 @@
     if (self) {
         self.shouldDelayCreationAnimation = YES;
         [self createBubbleContainers];
+        hasAlreadyMadeFakeAssessments = NO;
     }
     return self;
 }
@@ -46,7 +49,7 @@
 }
 
 - (void)startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup {
-    if (SHOULD_MAKE_FAKE_ASSESSMENTS) [self makeFakeAssessments];
+    if (SHOULD_MAKE_FAKE_ASSESSMENTS && DEBUG_MODE_ON) [self makeFakeAssessments];
     
     [self updateMainBubbleStats];
     
@@ -135,6 +138,8 @@
 }
 
 - (void)addControlEventsToBubbleContainers {
+    
+    [self.mainBubble addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)]];
     [_addContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addContainerPressed)]];
     [_gradesContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gradesContainerPressed)]];
     [_statsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statsContainerPressed)]];
@@ -152,6 +157,12 @@
 //*********
 //****
 //*
+
+- (void)tapped:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Credits:\nThis counts the number of credits of assessments with final grades. You can tap the blue 'Stats' tab to view more information.\n\nGoals:\nThis shows the number of credits required to reach the required goal (e.g. Excellence Endorsement). You can change this in the setup screen by tapping the orange 'Options' tab, then 'Show Setup'. Note that in NCEA Level 1, 10 literacy and 10 numeracy credits are also required (see the 'Stats' tab to see the number of these credits)." preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 - (void)addContainerPressed {
     [self bubbleWasPressed:_addContainer];
@@ -180,12 +191,11 @@
     //    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
     //    [self presentViewController:alert animated:YES completion:nil];
     
-    [CurrentProfile logJSONText];
+    if (DEBUG_MODE_ON && LOG_PROFILE_WHEN_TAPPING_STATS) [CurrentProfile logJSONText];
 }
 
 - (void)optionsContainerPressed {
-    
-    #warning TODO: test profile name conflict and show buttons for setup, switch profile, animation speed?
+#warning TODO: test profile name conflict and show buttons for setup, switch profile, animation speed?
     [self bubbleWasPressed:_optionsContainer];
     
     [self showSetupWindow];
@@ -204,16 +214,21 @@
 //*
 
 - (void)makeFakeAssessments {
-    if (DEBUG_MODE_ON) {
+    if (!hasAlreadyMadeFakeAssessments) {
         NSArray *faketitles = @[@"mmmm", @"tttt", @"hhhh", @"zzzz", @"pppp", @"dddd"];
+        int x = arc4random_uniform(5) + 1;
         for (NSString *title in faketitles) {
-            Assessment *a = [[Assessment alloc] initWithPropertiesOrNil:nil];
-            a.subject = title;
-            a.quickName = @"name";
-            a.gradeSet.final = [self getRandomGradeText];
-            
-            [CurrentProfile addAssessmentOrReplaceACurrentOne:a];
+            for (int a = 0; a < x; a ++) {
+                Assessment *a = [[Assessment alloc] initWithPropertiesOrNil:nil];
+                a.subject = title;
+                a.quickName = [NSString stringWithFormat:@"%i", arc4random_uniform(999999)];
+                a.gradeSet.final = [self getRandomGradeText];
+                
+                [CurrentProfile addAssessmentOrReplaceACurrentOne:a];
+            }
         }
+        
+        hasAlreadyMadeFakeAssessments = YES;
     }
 }
 

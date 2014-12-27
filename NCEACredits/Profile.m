@@ -41,7 +41,7 @@
     
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
-    if (error) NSLog(@"%@", error);
+    if (error) NSLog(@"%@", [error localizedDescription]);
     return data;
 }
 
@@ -91,6 +91,22 @@
 
 - (NSUInteger)getNumberOfAssessmentsInCurrentYear {
     return [self getCurrentYear].assessmentCollection.assessments.count;
+}
+
+- (BOOL)isAlreadyAssessmentForSubject:(NSString *)subject quickName:(NSString *)quickName andDifferentIdentifier:(NSUInteger)identifier {
+    return [[self getCurrentYear].assessmentCollection isAlreadyAssessmentForSubject:subject quickName:quickName andDifferentIdentifier:identifier];
+}
+
+- (Assessment *)getAssessmentForQuickName:(NSString *)qn andSubject:(NSString *)sub {
+    return [[self getCurrentYear].assessmentCollection getAssessmentForQuickName:qn andSubject:sub];
+}
+
+- (BOOL)assessmentExists:(Assessment *)assess {
+    return [[self getCurrentYear].assessmentCollection assessmentExists:assess];
+}
+
+- (void)deleteAssessment:(Assessment *)assess {
+    [[self getCurrentYear].assessmentCollection deleteAssessment:assess];
 }
 
 //*
@@ -165,7 +181,7 @@
 
 - (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment {
     [[self getCurrentYear].assessmentCollection addAssessmentOrReplaceACurrentOne:assessment];
-    [ApplicationDelegate saveCurrentProfile];
+    [ApplicationDelegate saveCurrentProfileAndAppSettings];
 }
 
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject {
