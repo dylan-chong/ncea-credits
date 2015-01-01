@@ -14,6 +14,8 @@
 		840D5871188216B200DE24B7 /* AnimationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5870188216B200DE24B7 /* AnimationObject.m */; };
 		840D5874188240A700DE24B7 /* GoalTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5873188240A700DE24B7 /* GoalTitle.m */; };
 		840D587618834B0300DE24B7 /* Stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D587518834B0300DE24B7 /* Stats.png */; };
+		841B883E1A53621700E86DCC /* StatsCreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841B883D1A53621700E86DCC /* StatsCreditsViewController.m */; };
+		841B88411A54E76000E86DCC /* SubjectColourPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 841B88401A54E76000E86DCC /* SubjectColourPair.m */; };
 		841DADFF18B0A7D700626302 /* EditTextBubbleContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DADFE18B0A7D700626302 /* EditTextBubbleContainer.m */; };
 		841DAE0718B3123700626302 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DAE0618B3123700626302 /* AddViewController.m */; };
 		841DAE0A18B312AC00626302 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DAE0918B312AC00626302 /* EditTextViewController.m */; };
@@ -43,6 +45,9 @@
 		84A435D21966BDFA0091905B /* Grade.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435D11966BDFA0091905B /* Grade.m */; };
 		84A435D61966C5660091905B /* SubjectsAndColours.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A435D51966C5660091905B /* SubjectsAndColours.m */; };
 		84AD67DE1A4E23B300F58333 /* Loading-Text.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AD67DD1A4E23B300F58333 /* Loading-Text.png */; };
+		84AD67E11A4E808100F58333 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD67E01A4E808100F58333 /* OptionsViewController.m */; };
+		84AD67E41A50E4DE00F58333 /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD67E31A50E4DE00F58333 /* StatsViewController.m */; };
+		84AD67EB1A51281100F58333 /* StatsSubjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD67EA1A51281100F58333 /* StatsSubjectsViewController.m */; };
 		84B5A27A1880D8AD00969952 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A2791880D8AD00969952 /* Foundation.framework */; };
 		84B5A27C1880D8AD00969952 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A27B1880D8AD00969952 /* CoreGraphics.framework */; };
 		84B5A27E1880D8AD00969952 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B5A27D1880D8AD00969952 /* UIKit.framework */; };
@@ -102,6 +107,10 @@
 		840D5872188240A700DE24B7 /* GoalTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalTitle.h; sourceTree = "<group>"; };
 		840D5873188240A700DE24B7 /* GoalTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalTitle.m; sourceTree = "<group>"; };
 		840D587518834B0300DE24B7 /* Stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stats.png; sourceTree = "<group>"; };
+		841B883C1A53621700E86DCC /* StatsCreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsCreditsViewController.h; sourceTree = "<group>"; };
+		841B883D1A53621700E86DCC /* StatsCreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsCreditsViewController.m; sourceTree = "<group>"; };
+		841B883F1A54E76000E86DCC /* SubjectColourPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectColourPair.h; sourceTree = "<group>"; };
+		841B88401A54E76000E86DCC /* SubjectColourPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectColourPair.m; sourceTree = "<group>"; };
 		841DADFD18B0A7D700626302 /* EditTextBubbleContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextBubbleContainer.h; sourceTree = "<group>"; };
 		841DADFE18B0A7D700626302 /* EditTextBubbleContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextBubbleContainer.m; sourceTree = "<group>"; };
 		841DAE0218B30EF200626302 /* EditTextBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextBubble.h; sourceTree = "<group>"; };
@@ -155,6 +164,12 @@
 		84A435D41966C5660091905B /* SubjectsAndColours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectsAndColours.h; sourceTree = "<group>"; };
 		84A435D51966C5660091905B /* SubjectsAndColours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectsAndColours.m; sourceTree = "<group>"; };
 		84AD67DD1A4E23B300F58333 /* Loading-Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Loading-Text.png"; sourceTree = "<group>"; };
+		84AD67DF1A4E808100F58333 /* OptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
+		84AD67E01A4E808100F58333 /* OptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
+		84AD67E21A50E4DE00F58333 /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
+		84AD67E31A50E4DE00F58333 /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
+		84AD67E91A51281100F58333 /* StatsSubjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsSubjectsViewController.h; sourceTree = "<group>"; };
+		84AD67EA1A51281100F58333 /* StatsSubjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsSubjectsViewController.m; sourceTree = "<group>"; };
 		84B5A2761880D8AD00969952 /* NCEACredits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NCEACredits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84B5A2791880D8AD00969952 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84B5A27B1880D8AD00969952 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -324,6 +339,19 @@
 			name = Assessment;
 			sourceTree = "<group>";
 		};
+		84AD67E81A5127F700F58333 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				84AD67E21A50E4DE00F58333 /* StatsViewController.h */,
+				84AD67E31A50E4DE00F58333 /* StatsViewController.m */,
+				84AD67E91A51281100F58333 /* StatsSubjectsViewController.h */,
+				84AD67EA1A51281100F58333 /* StatsSubjectsViewController.m */,
+				841B883C1A53621700E86DCC /* StatsCreditsViewController.h */,
+				841B883D1A53621700E86DCC /* StatsCreditsViewController.m */,
+			);
+			name = Stats;
+			sourceTree = "<group>";
+		};
 		84B5A26D1880D8AD00969952 = {
 			isa = PBXGroup;
 			children = (
@@ -453,6 +481,8 @@
 				84B5A2D11880D96300969952 /* BubbleViewController.m */,
 				8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */,
 				8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */,
+				841B883F1A54E76000E86DCC /* SubjectColourPair.h */,
+				841B88401A54E76000E86DCC /* SubjectColourPair.m */,
 				8470DD2F1A46736900266654 /* AssessmentsForSubjectViewController.h */,
 				8470DD301A46736900266654 /* AssessmentsForSubjectViewController.m */,
 				8482D7FD1A46501B00F1CD6D /* SubjectsViewController.h */,
@@ -465,12 +495,15 @@
 		84B5A2DB1880D98D00969952 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				84B5A2D51880D98200969952 /* MainViewController.h */,
+				84B5A2D61880D98200969952 /* MainViewController.m */,
 				841DAE0518B3123700626302 /* AddViewController.h */,
 				841DAE0618B3123700626302 /* AddViewController.m */,
 				844CA93518AAB15A00D55F11 /* GradesViewController.h */,
 				844CA93618AAB15A00D55F11 /* GradesViewController.m */,
-				84B5A2D51880D98200969952 /* MainViewController.h */,
-				84B5A2D61880D98200969952 /* MainViewController.m */,
+				84AD67DF1A4E808100F58333 /* OptionsViewController.h */,
+				84AD67E01A4E808100F58333 /* OptionsViewController.m */,
+				84AD67E81A5127F700F58333 /* Stats */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -645,14 +678,17 @@
 			files = (
 				84B5A2CA1880D93100969952 /* BubbleMain.m in Sources */,
 				84B5A2BB1880D91000969952 /* Styles+Colours.m in Sources */,
+				84AD67E41A50E4DE00F58333 /* StatsViewController.m in Sources */,
 				841DAE0718B3123700626302 /* AddViewController.m in Sources */,
 				84A435CF1966B9E70091905B /* AssessmentCollection.m in Sources */,
 				841DADFF18B0A7D700626302 /* EditTextBubbleContainer.m in Sources */,
 				8459996D18AC00DE005F3FB1 /* SimpleSelectionViewController.m in Sources */,
 				84A435D61966C5660091905B /* SubjectsAndColours.m in Sources */,
+				841B883E1A53621700E86DCC /* StatsCreditsViewController.m in Sources */,
 				845C40E119481973001B1499 /* GradePriority.m in Sources */,
 				84B5A2BC1880D91000969952 /* Styles+Layout.m in Sources */,
 				8442D2E61A48D81C003C0C2D /* AppSettings.m in Sources */,
+				84AD67EB1A51281100F58333 /* StatsSubjectsViewController.m in Sources */,
 				840D5874188240A700DE24B7 /* GoalTitle.m in Sources */,
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
 				84C7B3BC1943E45400B8DCD8 /* EditTextScreenItemData.m in Sources */,
@@ -672,6 +708,7 @@
 				844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */,
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
 				845C40DE19481350001B1499 /* YearCollection.m in Sources */,
+				84AD67E11A4E808100F58333 /* OptionsViewController.m in Sources */,
 				84E084A4193F235E00A4DF45 /* FlickScroller.m in Sources */,
 				8437DAF51A4245F700E261E2 /* EditAssessmentViewController.m in Sources */,
 				8404403C1972781C00CC390E /* DefaultGoals.m in Sources */,
@@ -685,6 +722,7 @@
 				84B5A2D31880D96300969952 /* BubbleViewController.m in Sources */,
 				841DAE0A18B312AC00626302 /* EditTextViewController.m in Sources */,
 				8482D7F61A4534FE00F1CD6D /* Goal.m in Sources */,
+				841B88411A54E76000E86DCC /* SubjectColourPair.m in Sources */,
 				84B64E4618B45B770061ED9D /* EditTextBubble.m in Sources */,
 				8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */,
 				84B5A2CC1880D93100969952 /* BubbleContainer.m in Sources */,
