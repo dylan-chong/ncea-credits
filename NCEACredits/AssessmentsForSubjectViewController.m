@@ -11,24 +11,21 @@
 
 @implementation AssessmentsForSubjectViewController
 
-- (void)createBubbleContainers {
+- (void)createBubbleContainersAndAddAsSubviews {
     NSString *subject = [self getTitleOfMainBubble];
     
     NSArray *assessmentTitles = [CurrentProfile getAssessmentTitlesForSubject:subject];
     
-    NSMutableArray *nulls = [[NSMutableArray alloc] init];
-    
-    //Don't need individual colours for each bubble
-    NSNull *n = [[NSNull alloc] init];
-    for (int a = 0; a < assessmentTitles.count; a++) {
-        [nulls addObject:n];
+    NSMutableArray *pairs = [[NSMutableArray alloc] init];
+    for (NSString *t in assessmentTitles) {
+        [pairs addObject:[SubjectColourPair pairWithSubject:t andColour:nil]]; //nil colour - defaults to main bubble colour
     }
     
-    NSDictionary *assessmentTitlesDict = [NSDictionary dictionaryWithObjects:nulls forKeys:assessmentTitles];
+    pairs = [[SubjectColourPair sortArrayOfSubjectColourPairs:pairs] mutableCopy];
     
     Corner c = [self getCornerOfChildVCNewMainBubble:self.mainBubble];
     
-    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithSubjectsWithColoursOrNot:assessmentTitlesDict target:self staggered:self.staggered corner:c andMainBubble:self.mainBubble];
+    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithSubjectColourPairs:pairs target:self staggered:self.staggered corner:c andMainBubble:self.mainBubble];
     
     for (BubbleContainer *b in self.childBubbles) {
         [self.view addSubview:b];

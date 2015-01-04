@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Styles.h"
 #import "Profile.h"
+#import "AppSettings.h"
 
 @class MainViewController, AppSettings;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -20,8 +21,12 @@
 @property (nonatomic) AppSettings *appSettings;
 
 - (Profile *)getCurrentProfile;
+- (AppSettings *)getAppSettings;
+
+- (NSString *)getDocumentsDirectory;
 - (void)saveCurrentProfileAndAppSettings;
 - (void)deleteProfileWithProfileName:(NSString *)pName;
+- (void)switchToProfile:(NSString *)name;
 - (NSArray *)getUsedProfileNames;
 - (void)setScreenSize:(CGSize)size;
 - (CGSize)getScreenSize;

@@ -109,7 +109,7 @@
     return nil;
 }
 
-- (BOOL)assessmentExists:(Assessment *)assess {
+- (BOOL)assessmentExistsByIdentifier:(Assessment *)assess {
     for (Assessment *a in _assessments) {
         if (a.identifier == assess.identifier) {
             return YES;
@@ -123,11 +123,10 @@
     for (Assessment *a in _assessments) {
         if (a.identifier == assess.identifier) {
             [_assessments removeObject:a];
+            NSLog(@"Assessment with quick name '%@', subject '%@', and identifier '%lu' was deleted.", assess.quickName, assess.subject, (unsigned long)assess.identifier);
             break;
         }
     }
-    
-    NSLog(@"Assessment for quick name '%@' and subject '%@' does not exist. Cannot be deleted", assess.quickName, assess.subject);
 }
 
 //------------------------------ ID ------------------------------
@@ -239,7 +238,7 @@
     }
     
     for (Assessment *assessment in _assessments) {
-        NSString *finalGrade = [assessment.gradeSet getGradeTextForGradeType:priority];
+        NSString *finalGrade = [assessment.gradeSet getGradeTextForPriorityOrHigher:priority];
         if ([finalGrade isEqualToString:gradeText])
             total += assessment.creditsWhenAchieved;
     }
@@ -258,7 +257,7 @@
     
     for (Assessment *assessment in _assessments) {
         if ([assessment.typeOfCredits isEqualToString: typeOfCredits]) {
-            NSString *finalGrade = [assessment.gradeSet getGradeTextForGradeType:priority];
+            NSString *finalGrade = [assessment.gradeSet getGradeTextForPriorityOrHigher:priority];
             if (![finalGrade isEqualToString:GradeTextNotAchieved] && ![finalGrade isEqualToString:GradeTextNone])
                 total += assessment.creditsWhenAchieved;
         }
@@ -299,6 +298,68 @@
         
         if (![gradeText isEqualToString:GradeTextMerit]) {
             total += [self getNumberOfCreditsForGrade:GradeTextAchieved priority:priority andLevel:level];
+        }
+    }
+    
+    return total;
+}
+
+//------------------------------ Credits per subject ------------------------------
+
+- (NSDictionary *)getNumberCreditsForPriority:(GradePriorityType)priority subject:(NSString *)subject andLevel:(NSUInteger)level {
+    NSUInteger exc = [self getNumberOfCreditsForGrade:GradeTextExcellence priority:priority subject:subject andLevel:level];
+    NSUInteger mer = [self getNumberOfCreditsForGrade:GradeTextMerit priority:priority subject:subject andLevel:level];
+    NSUInteger ach = [self getNumberOfCreditsForGrade:GradeTextAchieved priority:priority subject:subject andLevel:level];
+    NSUInteger notach = [self getNumberOfCreditsForGrade:GradeTextNotAchieved priority:priority subject:subject andLevel:level];
+    NSUInteger non = [self getNumberOfCreditsForGrade:GradeTextNone priority:priority subject:subject andLevel:level];
+    
+    NSMutableDictionary *creds = [[NSMutableDictionary alloc] initWithObjects:@[[NSNumber numberWithInteger:exc],
+                                                                                [NSNumber numberWithInteger:mer],
+                                                                                [NSNumber numberWithInteger:ach],
+                                                                                [NSNumber numberWithInteger:notach],
+                                                                                [NSNumber numberWithInteger:non]]
+                                                                      forKeys:@[GradeTextExcellence,
+                                                                                GradeTextMerit,
+                                                                                GradeTextAchieved,
+                                                                                GradeTextNotAchieved,
+                                                                                GradeTextNone]];
+    if (level == 1) {
+        //Literacy and numeracy credits only apply to NCEA level 1
+        NSUInteger lit = [self getNumberOfTypeOfCredits:TypeOfCreditsLiteracy priority:priority subject:subject andLevel:level];
+        NSUInteger num = [self getNumberOfTypeOfCredits:TypeOfCreditsNumeracy priority:priority subject:subject andLevel:level];
+        [creds setObject:[NSNumber numberWithInteger:lit] forKey:TypeOfCreditsLiteracy];
+        [creds setObject:[NSNumber numberWithInteger:num] forKey:TypeOfCreditsNumeracy];
+    }
+    
+    return creds;
+}
+
+- (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText priority:(GradePriorityType)priority subject:(NSString *)subject andLevel:(NSUInteger)level {
+    NSUInteger total = 0;
+
+    for (Assessment *assessment in _assessments) {
+        NSString *finalGrade = [assessment.gradeSet getGradeTextForPriorityOrHigher:priority];
+        if ([finalGrade isEqualToString:gradeText] && [assessment.subject isEqualToString:subject])
+            total += assessment.creditsWhenAchieved;
+    }
+    
+    return total;
+}
+
+- (NSUInteger)getNumberOfTypeOfCredits:(NSString *)typeOfCredits priority:(GradePriorityType)priority subject:(NSString *)subject andLevel:(NSUInteger)level {
+    NSUInteger total = 0;
+    
+    if (level != 1) {
+        //numeracy/literacy credits for only level 1
+        NSLog(@"Numeracy and Literacy credits are only for Level 1.");
+        return 0;
+    }
+    
+    for (Assessment *assessment in _assessments) {
+        if ([assessment.typeOfCredits isEqualToString: typeOfCredits]) {
+            NSString *finalGrade = [assessment.gradeSet getGradeTextForPriorityOrHigher:priority];
+            if (![finalGrade isEqualToString:GradeTextNotAchieved] && ![finalGrade isEqualToString:GradeTextNone])
+                total += assessment.creditsWhenAchieved;
         }
     }
     

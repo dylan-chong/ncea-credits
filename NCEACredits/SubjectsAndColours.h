@@ -13,7 +13,6 @@
 
 @property NSMutableDictionary *subjectsAndColours;
 
-- (NSArray *)getSortedDefaultColours;
 - (NSDictionary *)getAllSubjectsAndColoursForSubjects:(NSArray *)subjectsOfAssessments;
 
 @end

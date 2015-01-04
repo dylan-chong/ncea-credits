@@ -9,6 +9,7 @@
 #import "Goal.h"
 
 @implementation Goal
+#warning TODO: custom goals
 
 - (id)initWithGradeText:(NSString *)gpg {
     self = [super init];

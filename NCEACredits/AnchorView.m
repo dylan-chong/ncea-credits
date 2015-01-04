@@ -36,7 +36,7 @@
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    [[Styles greyColour] setStroke];
+    [[Styles mediumLightGreyColour] setStroke];
     CGContextSetLineWidth(context, 1.25);
     
     for (NSValue *v in _pointsToDrawTo) {

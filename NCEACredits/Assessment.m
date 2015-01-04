@@ -15,12 +15,16 @@
     //These are also the defaults and placeholders used in the Add/edit assessment screens
     Assessment *a = [[Assessment alloc] init];
     a.gradeSet = [[Grade alloc] initWithPropertiesOrNil:nil];
+    
     a.creditsWhenAchieved = 4;
     a.typeOfCredits = TypeOfCreditsNormal;
     a.level = [CurrentProfile getPrimaryNCEALevelForCurrentYear];
     a.identifier = [[CurrentProfile getCurrentYear].assessmentCollection getUnusedAssessmentIdentifier];
-    a.isAnInternal = YES;
+    a.isAnInternal = CurrentAppSettings.lastEnteredWasInternal;
     a.isUnitStandard = NO;
+    
+    if (CurrentAppSettings.lastEnteredSubject.length > 0) a.subject = CurrentAppSettings.lastEnteredSubject;
+    
     return a;
 }
 

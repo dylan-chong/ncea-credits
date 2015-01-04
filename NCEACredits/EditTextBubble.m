@@ -76,7 +76,7 @@
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    [[Styles greyColour] setStroke];
+    [[Styles mediumLightGreyColour] setStroke];
     CGContextSetLineWidth(context, 1.0);
     CGContextMoveToPoint(context, self.bounds.size.width / 2, self.bounds.size.height / 2);
     
@@ -107,7 +107,7 @@
 }
 
 + (UIColor *)placeholderColour {
-    return [Styles greyColour];
+    return [Styles lightGreyColour];
 }
 
 @end

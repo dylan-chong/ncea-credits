@@ -27,6 +27,6 @@
 //If modifying the number of variables below, you must modify AssessmentCollection's addAssessmentOrReplaceACurrentOne: method
 @property NSString *final, *preliminary, *expected;
 - (NSString *)getHighestPriorityExistingGradeText;
-- (NSString *)getGradeTextForGradeType:(GradePriorityType)type;
+- (NSString *)getGradeTextForPriorityOrHigher:(GradePriorityType)type;
 
 @end

@@ -53,8 +53,11 @@
 }
 
 - (NSArray *)getGeneralCells {
+    NSString *name = @"John Appleseed";
+    if (CurrentProfile.profileName) name = CurrentProfile.profileName;
+    
     return @[
-             [[TableViewCellData alloc] initWithDetail:@"John Appleseed"
+             [[TableViewCellData alloc] initWithDetail:name
                                                   text:@"Name"
                                                reuseId:@"edit"
                                              accessory:UITableViewCellAccessoryNone
@@ -330,7 +333,7 @@
             [self namePressed];
         } else {
             //Current year cell
-            [self currentYearSelected];
+            [self currentYearSelectedAndAllowCancelButton:YES];
             
         }
     } else if (indexPath.section == 1) {
@@ -476,6 +479,31 @@
         }]];
         [self presentViewController:invalidityAlert animated:YES completion:nil];
     }
+    
+    [self makeSureValidCurrentYearIsSelected];
+}
+
+- (BOOL)makeSureValidCurrentYearIsSelected {
+    NSInteger currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
+    
+    for (int a = 0; a < _yearCells.count - 1; a++) {
+        NSInteger thisYear = [((TableViewCellData *)_yearCells[a]).text integerValue];
+        if (currentYear == thisYear) {
+            return YES;
+            //Current year exists
+        }
+    }
+    
+    //Current year doesn't exist
+    if (_yearCells.count - 1 > 1) {
+        [self currentYearSelectedAndAllowCancelButton:NO];
+    } else {
+        NSInteger onlyYear = [((TableViewCellData *)_yearCells[0]).text integerValue];
+        NSString *onlyYearString = [NSString stringWithFormat:@"%i", onlyYear];
+        ((TableViewCellData *)_generalCells[1]).detail = onlyYearString;
+        [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]].detailTextLabel.text = onlyYearString;
+    }
+    return NO;
 }
 
 - (BOOL)isString:(NSString *)string NumbersOnlyAndHasCertainNumberOfCharacters:(NSUInteger)number {
@@ -491,10 +519,14 @@
 }
 
 //------------------------------ Selecting current year ------------------------------
-- (void)currentYearSelected { //Current Year button (second item)
+- (void)currentYearSelectedAndAllowCancelButton:(BOOL)allowCancel { //Current Year button (second item)
+    NSString *message;
+    if (allowCancel) message = @"Choose the current year\n(or close this and add a new one).";
+    else message = @"Choose the current year.";
+    
     UIAlertController *alert = [UIAlertController
                                 alertControllerWithTitle:AppName
-                                message:@"Choose your year\n(or close this and add a new one)."
+                                message:message
                                 preferredStyle:UIAlertControllerStyleActionSheet];
     
     for (int a = 0; a < _yearCells.count - 1; a++) { // -1 cos last item in _year cells is add year
@@ -509,18 +541,19 @@
         [alert addAction:action];
     }
     
-    
+    if (allowCancel) {
     [alert addAction:
      [UIAlertAction actionWithTitle:@"Cancel"
                               style:UIAlertActionStyleCancel
                             handler:nil]];
-    
+    }
+        
     alert.popoverPresentationController.sourceRect = [self.tableView rectForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
     alert.popoverPresentationController.sourceView = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)setCurrentYear:(unsigned long)indexFromYears {
+- (void)setCurrentYear:(NSInteger)indexFromYears {
     NSString *text = [self getYearDatesOfListedYears][indexFromYears];
     ((TableViewCellData *)_generalCells[1]).detail = text;
     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]].detailTextLabel.text = text;
@@ -563,6 +596,8 @@
         //Delete pressed
         [_yearCells removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        [self makeSureValidCurrentYearIsSelected];
     }
 }
 
@@ -598,8 +633,9 @@
         if (wasAbleToSave) {
             
             if (shouldShowHelp) {
+                //Welcome message
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Welcome to %@!", AppName]
-                                                                               message:@"Tap the green add button to create an assessment, and enter details like its subject and name. Then, tap the add button again to save. Don't forget that certain things, like grades and the AS Number are optional - you can always set it later.\n\nHappy credit counting!"
+                                                                               message:@"- Tap the green add button to create an assessment\n- Enter details like its subject and name\n- Then, tap the add button again to save.\n\nDon't forget that grades and the AS Number are optional - you can always set them later.\n\nHappy credit counting!"
                                                                         preferredStyle:UIAlertControllerStyleAlert];
                 [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                     [self closeSetupWithoutFurtherAdo];
@@ -609,6 +645,8 @@
                 [self closeSetupWithoutFurtherAdo];
             }
         }
+        
+        CurrentAppSettings.setupState = SETUP_STATE_BLANK;
     } else {
         //Duplicate alert
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You seem to have duplicate years. Duplicate NCEA levels are allowed, but not years." preferredStyle:UIAlertControllerStyleAlert];
@@ -640,36 +678,33 @@
 - (BOOL)applySettingsToCurrentProfile {
     NSString *newName = ((TableViewCellData *)_generalCells[0]).detail;
     
-    if ([CurrentProfile hasAllNecessaryInformationFromSetup]) {
+    Profile *p = CurrentProfile;
+    
+    if (CurrentAppSettings.setupState == SETUP_STATE_NEW_PROFILE_NOT_INITIAL) {
+        if ([self checkForFileConflictWithNewName:newName]) {
+            return NO;
+        } else {
+            p = [[Profile alloc] initWithPropertiesOrNil:nil];
+        }
+    } else if (CurrentAppSettings.setupState == SETUP_STATE_EDIT_PROFILE) {
         //not initial setup
-        
         NSString *oldName = CurrentProfile.profileName;
         if (![newName isEqualToString:oldName]) {
             //name changed, must delete old file
             [ApplicationDelegate deleteProfileWithProfileName:oldName];
         }
     } else {
-        //make sure there is no file conflict
-        NSArray *profileNames = [ApplicationDelegate getUsedProfileNames];
-        for (NSString *name in profileNames) {
-            if ([name isEqualToString:newName]) {
-                //name is already used - avoid file conflict
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"There is already a profile with this name." preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alert animated:YES completion:nil];
-                return NO;
-            }
-        }
+        //SETUP_STATE_NEW_PROFILE_INITIAL
     }
     
     //Apply general things first
-    CurrentProfile.profileName = newName;
-    CurrentProfile.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
+    p.profileName = newName;
+    p.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
     
     //Apply selected goal
     for (TableViewCellData *goalData in _goalCells) {
         if (goalData.accessory == UITableViewCellAccessoryCheckmark) {
-            CurrentProfile.selectedGoalTitle = goalData.text;
+            p.selectedGoalTitle = goalData.text;
             break;
         }
     }
@@ -681,7 +716,7 @@
     NSMutableArray *yearsToKeep = [[NSMutableArray alloc] init];//Remove all years that are not in _yearCells
     
     //Go through existing years, applying changes to NCEA level
-    NSMutableArray *existingYears = CurrentProfile.yearCollection.years;
+    NSMutableArray *existingYears = p.yearCollection.years;
     for (Year *year in existingYears) {
         //Make sure to find the right year
         for (TableViewCellData *data in _yearCells) {
@@ -705,12 +740,28 @@
         [yearsToKeep addObject:newYear];
     }
     
-    CurrentProfile.yearCollection.years = yearsToKeep;
-    CurrentProfile.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
+    p.yearCollection.years = yearsToKeep;
+    p.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
     
+    if (CurrentAppSettings.setupState) [ApplicationDelegate setCurrentProfile:p];
     [ApplicationDelegate saveCurrentProfileAndAppSettings];
     
     return YES;
+}
+
+- (BOOL)checkForFileConflictWithNewName:(NSString *)newName {
+    NSArray *profileNames = [ApplicationDelegate getUsedProfileNames];
+    for (NSString *name in profileNames) {
+        if ([name isEqualToString:newName]) {
+            //name is already used - avoid file conflict
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"There is already a profile with this name." preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 /*

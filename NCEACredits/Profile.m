@@ -55,11 +55,22 @@
 
 - (void)logJSONText {
     //Logs profile JSON
-    if (DEBUG_MODE_ON && ApplicationDelegate.currentProfile) {
+    if (ApplicationDelegate.currentProfile) {
         Profile *p = CurrentProfile;
         NSString *m = [[NSString alloc] initWithData:[p convertToJSONAsRoot]  encoding:NSUTF8StringEncoding];
         NSLog(@"\n\n\n//*\n//****\n//*********\n//****************\n//*************************\n********************************************    Profile JSON    \n//*************************\n//****************\n//*********\n//****\n//*\n\n\n");
         NSLog(@"%@", m);
+        
+        //Log files
+        NSArray *fileNames = [ApplicationDelegate getUsedProfileNames];
+        NSMutableString *files = [[NSMutableString alloc] initWithString:@"\n\n\n//Existing Profiles:"];
+        
+        for (NSString *name in fileNames) {
+            [files appendString:@"\n - "];
+            [files appendString:name];
+        }
+        
+        NSLog(@"%@", files);
     }
 }
 
@@ -101,12 +112,13 @@
     return [[self getCurrentYear].assessmentCollection getAssessmentForQuickName:qn andSubject:sub];
 }
 
-- (BOOL)assessmentExists:(Assessment *)assess {
-    return [[self getCurrentYear].assessmentCollection assessmentExists:assess];
+- (BOOL)assessmentExistsByIdentifier:(Assessment *)assess {
+    return [[self getCurrentYear].assessmentCollection assessmentExistsByIdentifier:assess];
 }
 
 - (void)deleteAssessment:(Assessment *)assess {
     [[self getCurrentYear].assessmentCollection deleteAssessment:assess];
+    [ApplicationDelegate saveCurrentProfileAndAppSettings];
 }
 
 //*
@@ -206,6 +218,10 @@
 
 - (NSUInteger)getNumberOfCreditsForGradeIncludingBetterGrades:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level {
     return [[self getCurrentYear].assessmentCollection getNumberOfCreditsForGradeIncludingBetterGrades:gradeText priority:priority andLevel:level];
+}
+
+- (NSDictionary *)getNumberOfCreditsForPriority:(GradePriorityType)priority andSubject:(NSString *)subject {
+    return [[self getCurrentYear].assessmentCollection getNumberCreditsForPriority:priority subject:subject andLevel:[self getPrimaryNCEALevelForCurrentYear]];
 }
 
 @end

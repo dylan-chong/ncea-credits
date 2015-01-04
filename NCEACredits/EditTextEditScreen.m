@@ -12,6 +12,9 @@
 #import "EditTextBubbleContainer.h"
 #import "Grade.h"
 
+#define NEW_SUBJECT_TITLE @"New Subject"
+#define TOO_LONG_CHARACTERS 14
+
 @implementation EditTextEditScreen
 
 - (id)initWithEditTextBubbleContainerToEdit:(EditTextBubbleContainer *)toEdit
@@ -44,7 +47,6 @@
         } else {
             [self setButtonsWithType:toEdit.type];
         }
-        
         
         [self resetFrameWithAnimation:NO];
     }
@@ -84,9 +86,17 @@
 }
 
 - (void)show {
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:[Styles animationSpeed] animations:^{
         self.backgroundColor = [Styles translucentWhite];
     }];
+    
+    //Type of credits warning
+    NSString *title = ((EditTextBubble *)_viewToEdit.bubble).titleLabel.text;
+    if ([[title substringToIndex:title.length - TitleSuffix.length] isEqualToString:ItemTypeOfCredits]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Remember that literacy and numeracy credits are only for NCEA Level 1." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self.delegate showAlert:alert];
+    }
 }
 
 - (void)hide {
@@ -96,9 +106,17 @@
     EditTextBubble *b = ((EditTextBubble *)(_viewToEdit.bubble));
     [b setTextLabelText:_text.text];
     
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:[Styles animationSpeed] animations:^{
         self.alpha = 0.0;
     }];
+}
+
+- (void)showAlertIfTooLong:(NSString *)textToCheck {
+    if (textToCheck.length > TOO_LONG_CHARACTERS) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"The name you chose is quite long; you may want to shorten it." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self.delegate showAlert:alert];
+    }
 }
 
 //*
@@ -144,6 +162,11 @@
             titles = @[TypeOfCreditsNormal,
                        TypeOfCreditsLiteracy,
                        TypeOfCreditsNumeracy];
+            
+        } else if (type == EditTextDataTypeSubject) {
+            titles = [[CurrentProfile getSubjectsAndColoursOrNilForCurrentYear] allKeys]; //Subjects are keys
+            titles = [Styles sortArray:titles];
+            titles = [titles arrayByAddingObject: NEW_SUBJECT_TITLE];
         } else {
             //Non-existent type
             NSException *e = [[NSException alloc] initWithName:@"EditTextEditScreen type" reason:@"No valid type" userInfo:nil];
@@ -169,7 +192,7 @@
         [b.titleLabel setFont:[Styles bodyFont]];
         [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
-        [b addTarget:target action:@selector(setTextFieldText:) forControlEvents:UIControlEventTouchUpInside];
+        [b addTarget:target action:@selector(multiChoiceButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [a addObject:b];
         [b setBackgroundColor:[UIColor clearColor]];
     }
@@ -194,6 +217,8 @@
 //*
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([((EditTextBubble *)_viewToEdit.bubble).titleLabel.text isEqualToString:[ItemQuickName stringByAppendingString:TitleSuffix]])
+        [self showAlertIfTooLong:textField.text];
     [self hide];
     return YES;
 }
@@ -203,10 +228,60 @@
     return YES;
 }
 
-- (void)setTextFieldText:(UIButton *)sender {
-    if ([sender.titleLabel.text isEqualToString:GradeTextTitleNone]) [_text setText:@""];
-    else [_text setText:sender.titleLabel.text];
+- (void)multiChoiceButtonPressed:(UIButton *)sender {
+    if ([sender.titleLabel.text isEqualToString:GradeTextTitleNone]) {
+        [_text setText:@""];
+        [self hide];
+    }
+    else if ([sender.titleLabel.text isEqualToString:NEW_SUBJECT_TITLE]) [self newSubjectPressed];
+    else [self setTextFieldText:sender.titleLabel.text];
+}
+
+- (void)setTextFieldText:(NSString *)t {
+    [_text setText:t];
     [self hide];
+}
+
+- (void)newSubjectPressed {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please enter the subject" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"New subject";
+    }];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self newSubjectTyped:((UITextField *)alert.textFields[0]).text];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [self.delegate showAlert:alert];
+}
+
+- (BOOL)newSubjectTyped:(NSString *)newSub {
+    //make sure subject doesn't already exist
+    NSArray *existingSubs = [[CurrentProfile getSubjectsAndColoursOrNilForCurrentYear] allKeys];
+    for (NSString *sub in existingSubs) {
+        if ([sub isEqualToString:newSub]) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"This subject already exists." preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+            [self.delegate showAlert:alert];
+            
+            return NO;
+        }
+    }
+    
+    //make sure isn't blank
+    if (newSub.length == 0) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"The subject cannot be blank." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self.delegate showAlert:alert];
+        
+        return NO;
+    }
+    
+    [self showAlertIfTooLong:newSub];
+    
+    [self setTextFieldText:newSub];
+    return YES;
 }
 
 //*
@@ -241,7 +316,7 @@
         //Lots of credits
         if ([[ItemCredits stringByAppendingString:TitleSuffix] isEqualToString:_title.text] && [_text.text intValue] > 15)
             [[[UIAlertView alloc] initWithTitle:AppName
-                                        message:@"Gee that's a lot of credits. I hope you aren't trying to cheat the system.\n\nLuckily for everyone else, it doesn't work like that."
+                                        message:@"Gee that's a lot of credits. I hope you aren't trying to cheat the system...\n\nHave fun with that."
                                        delegate:nil
                               cancelButtonTitle:@"Sigh"
                               otherButtonTitles: nil] show];

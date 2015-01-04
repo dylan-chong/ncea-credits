@@ -38,8 +38,8 @@
 + (float)startingScaleFactor {  return 0.01;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; } //changing this will require changing launch image size (340 * this * sizeModifier * 0.75)
 + (float)animationSpeed {
-    if (SPEED_MODE && DEBUG_MODE_ON) return 0.2;
-    else return 0.4;
+    if (SPEED_MODE && DEBUG_MODE_ON) return 0.15;
+    else return 0.3;
 }
 
 + (double)frameRate {
@@ -70,6 +70,10 @@
 
 + (CGFloat)radiansToDegrees:(CGFloat)r {
     return r * 180 / M_PI;
+}
+
++ (NSArray *)sortArray:(NSArray *)array {
+    return [array sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 
 @end

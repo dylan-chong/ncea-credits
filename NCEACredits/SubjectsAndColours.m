@@ -13,8 +13,8 @@
 #define blueKey @"blue"
 #define alphaKey @"alpha"
 
-
 @implementation SubjectsAndColours
+//Default list of colours now in Styles+Colours.m
 
 - (SubjectsAndColours *)createBlank {
     SubjectsAndColours *sac = [[SubjectsAndColours alloc] init];
@@ -84,16 +84,6 @@
 //****
 //*
 
-#warning TODO: keys sort but dictionary doesnt
-- (void)sortSubjectsAlphabetically {
-//    NSArray *sortedKeys = [[_subjectsAndColours allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-//    NSMutableDictionary *sortedDictionary = [[NSMutableDictionary alloc] init];
-//    for (NSString *key in sortedKeys) {
-//        [sortedDictionary setObject:[_subjectsAndColours objectForKey:key] forKey:key];
-//    }
-//    _subjectsAndColours = sortedDictionary;
-}
-
 - (void)checkOverSubjectsAndColoursWithSubjects:(NSArray *)subjectsOfAssessments {
     //Remove subjects that do not exist anymore in assessments
     NSMutableArray *subjectsAndColoursToRemove = [[NSMutableArray alloc] init];
@@ -130,7 +120,6 @@
         }
     }
     
-    [self sortSubjectsAlphabetically];
     [ApplicationDelegate saveCurrentProfileAndAppSettings];
 }
 
@@ -140,7 +129,7 @@
 }
 
 - (UIColor *)getUnusedColourFromDefaults {
-    NSArray *colours = [self getSortedDefaultColours];
+    NSArray *colours = [Styles getSortedDefaultColours];
     for (UIColor *possibleColour in colours) {
         //Make sure colour isnt used
         BOOL colourIsUsed = NO;
@@ -160,23 +149,6 @@
 
 - (void)setColour:(UIColor *)colour forSubject:(NSString *)subject {
     [_subjectsAndColours setObject:colour forKey:subject];
-}
-
-- (NSArray *)getSortedDefaultColours {
-#define RGB(redLevel, greenLevel, blueLevel) [UIColor colorWithRed:redLevel/255.0 green:greenLevel/255.0 blue:blueLevel/255.5 alpha:1.0]
-    //Returns the order (and colours) for them to be automatically set
-    return @[RGB(205, 20, 20), //red
-             RGB(144, 217, 75), //lime green
-             RGB(24, 94, 189), //darkish blue
-             RGB(255, 153, 42), //orange
-             RGB(242, 99, 131), //pink/magenta
-             RGB(51, 172, 227), //light blue (cyanish)
-             RGB(140, 140, 140), //medium grey
-             RGB(77, 74, 74), //dark grey (blackish)
-             RGB(177, 177, 177), //light grey
-             RGB(109, 107, 104), //medium-dark grey
-             RGB(154, 152, 147), //medium-light grey
-             ];
 }
 
 @end

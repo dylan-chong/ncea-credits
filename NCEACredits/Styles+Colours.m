@@ -10,26 +10,30 @@
 
 @implementation Styles (Colours)
 
+#define RGB(redLevel, greenLevel, blueLevel) [UIColor colorWithRed:redLevel/255.0 green:greenLevel/255.0 blue:blueLevel/255.5 alpha:1.0]
 + (UIColor *)mainTextColour {       return [UIColor whiteColor];}
-+ (UIColor *)cyanColour{            return [UIColor colorWithRed:51.0/255 green:172.0/255 blue:227.0/255 alpha:1.0];}
-+ (UIColor *)greenColour{           return [UIColor colorWithRed:144.0/255 green:217.0/255 blue:75.0/255 alpha:1.0];}
-+ (UIColor *)orangeColour{          return [UIColor colorWithRed:255.0/255 green:153.0/255 blue:42.0/255 alpha:1.0];}
-+ (UIColor *)pinkColour{            return [UIColor colorWithRed:242.0/255 green:99.0/255 blue:131.0/255 alpha:1.0];}
-+ (UIColor *)blueColour{            return [UIColor colorWithRed:24.0/255 green:94.0/255 blue:189.0/255 alpha:1.0];}
-+ (UIColor *)redColour{             return [UIColor colorWithRed:205.0/255 green:20.0/255 blue:20.0/255 alpha:1.0];}
-+ (UIColor *)greyColour{            return [UIColor colorWithRed:190.0/255 green:190.0/255 blue:190.0/255 alpha:1.0];}
-+ (UIColor *)darkGreyColour{        return [UIColor colorWithWhite:100.0/255 alpha:1.0];}
-+ (UIColor *)lightGreyColour{       return [UIColor colorWithWhite:230.0/255 alpha:1.0];}
++ (UIColor *)cyanColour{            return RGB(51, 172, 227);}
++ (UIColor *)greenColour{           return RGB(144, 217, 75);}
++ (UIColor *)orangeColour{          return RGB(255, 153, 42);}
++ (UIColor *)pinkColour{            return RGB(242, 99, 131);}
++ (UIColor *)blueColour{            return RGB(24, 94, 189);}
++ (UIColor *)redColour{             return RGB(205, 20, 20);}
+
++ (UIColor *)darkGreyColour{        return [UIColor colorWithWhite:75/255.0 alpha:1.0];}
++ (UIColor *)mediumDarkGreyColour{  return [UIColor colorWithWhite:107/255.0 alpha:1.0];}
++ (UIColor *)greyColour{            return [UIColor colorWithWhite:140/255.0 alpha:1.0];}
++ (UIColor *)mediumLightGreyColour{ return [UIColor colorWithWhite:170/255.0 alpha:1.0];}
++ (UIColor *)lightGreyColour{       return [UIColor colorWithWhite:215/255.0 alpha:1.0];}
+
 + (UIColor *)translucentWhite{      return [UIColor colorWithWhite:1.0 alpha:0.97];}
++ (UIColor *)lightBlueColour{       return RGB(51, 172, 227);}
 
-
-#define DEFAULT_DP 3
-#define ROUNDCGFLOAT(varName) varName = [self floatVar:varName showOnlyDP: DEFAULT_DP];
+#define ROUNDCGFLOAT(varName) varName = roundf(varName * 255);
 + (BOOL)colour:(UIColor *)colourA isTheSameAsColour:(UIColor *)colourB {
     CGFloat redA, greenA, blueA, alphaA, redB, greenB, blueB, alphaB;
     [colourA getRed:&redA green:&greenA blue:&blueA alpha:&alphaA];
     [colourB getRed:&redB green:&greenB blue:&blueB alpha:&alphaB];
-    
+
     ROUNDCGFLOAT(redA);
     ROUNDCGFLOAT(greenA);
     ROUNDCGFLOAT(blueA);
@@ -46,11 +50,21 @@
 }
 
 
-+ (float)floatVar:(float)f showOnlyDP:(NSInteger)dp {
-    float new = f * powf(10, dp);
-    new = roundf(new);
-    return new;
++ (NSArray *)getSortedDefaultColours {
+    
+    //Returns the order (and colours) for them to be automatically set
+    return @[[Styles redColour], //red
+             [Styles greenColour], //lime green
+             [Styles blueColour], //darkish blue
+             [Styles orangeColour], //orange
+             [Styles pinkColour], //pink/magenta
+             [Styles lightBlueColour], //light blue (cyanish)
+             [Styles greyColour], //medium grey
+             [Styles darkGreyColour], //dark grey (blackish)
+             [Styles lightGreyColour], //light grey
+             [Styles mediumDarkGreyColour], //medium-dark grey
+             [Styles mediumLightGreyColour], //medium-light grey
+             ];
 }
 
-#warning TODO: merge colours with subjects and colorus
 @end

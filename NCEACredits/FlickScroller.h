@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "ScrollArrowView.h"
 
+#define StandardScrollArrowWidth 45
+#define StandardScrollArrowHeight 15
+#define StandardScrollArrowSpaceFromEdge 25
+#define StandardScrollArrowShowAlpha 0.75
+
 @protocol FlickScrollerDelegate <NSObject>
 @required
 - (void)pageFlicked;

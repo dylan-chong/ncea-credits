@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, Device) {
 + (CGFloat)degreesToRadians:(CGFloat)d;
 + (CGFloat)radiansToDegrees:(CGFloat)r;
 + (double)frameRate;
++ (NSArray *)sortArray:(NSArray *)array;
 
 @end
 
@@ -100,16 +101,14 @@ typedef NS_ENUM(NSInteger, Device) {
 + (UIColor *)darkGreyColour;
 + (UIColor *)lightGreyColour;
 + (UIColor *)translucentWhite;
++ (UIColor *)lightBlueColour;
++ (UIColor *)mediumDarkGreyColour;
++ (UIColor *)mediumLightGreyColour;
 
 + (BOOL)colour:(UIColor *)colourA isTheSameAsColour:(UIColor *)colourB;
++ (NSArray *)getSortedDefaultColours;
 
 @end
-
-#define StandardScrollArrowWidth 45
-#define StandardScrollArrowHeight 15
-#define StandardScrollArrowSpaceFromEdge 25
-
-#define StandardScrollArrowShowAlpha 0.75
 
 //*
 //****

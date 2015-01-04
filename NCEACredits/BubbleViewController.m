@@ -322,6 +322,7 @@
 
 - (void)bubbleWasPressed:(BubbleContainer *)container {
     self.lastTappedBubble = container;
+    NSLog(@"Bubble '%@' was pressed in '%@'.", container.bubble.title.text, NSStringFromClass([self class]));
 }
 
 //------------------------------ Wiggle ------------------------------
@@ -356,6 +357,9 @@
     [self repositionBubbles];
 }
 
+- (NSString *)getTitleOfMainBubble {
+    return _mainBubble.bubble.title.text;
+}
 
 //*
 //****

@@ -23,7 +23,7 @@
     } else {
         
         AssessmentsForSubjectViewController *childVC = [[AssessmentsForSubjectViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
-        [childVC createBubbleContainers];
+        [childVC createBubbleContainersAndAddAsSubviews];
         [self startTransitionToChildBubble:container andBubbleViewController:childVC];
     }
 }

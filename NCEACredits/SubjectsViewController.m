@@ -11,11 +11,19 @@
 
 @implementation SubjectsViewController
 
-- (void)createBubbleContainers {
+- (void)createBubbleContainersAndAddAsSubviews {
     NSDictionary *subjectTitles = [CurrentProfile getSubjectsAndColoursOrNilForCurrentYear];
     
+    NSMutableArray *pairs = [[NSMutableArray alloc] init];
+    for (NSString *t in subjectTitles.allKeys) {
+        [pairs addObject:[SubjectColourPair pairWithSubject:t andColour:[subjectTitles objectForKey:t]]]; //nil colour - defaults to main bubble colour
+    }
+    
+    pairs = [[SubjectColourPair sortArrayOfSubjectColourPairs:pairs] mutableCopy];
+    
     Corner c = [self getCornerOfChildVCNewMainBubble:self.mainBubble];
-    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithSubjectsWithColoursOrNot:subjectTitles target:self staggered:self.staggered corner:c andMainBubble:self.mainBubble];
+    
+    self.childBubbles = [SimpleSelectionViewController getArrayOfBubblesWithSubjectColourPairs:pairs target:self staggered:self.staggered corner:c andMainBubble:self.mainBubble];
     
     for (BubbleContainer *b in self.childBubbles) {
         [self.view addSubview:b];

@@ -8,6 +8,8 @@
 
 #import "SimpleSelectionViewController.h"
 
+#define SIMPLE_SELECTION_STAGGER_AMOUNT 0.73
+
 @interface SimpleSelectionViewController ()
 
 @end
@@ -21,14 +23,14 @@
         self.staggered = staggered;
         self.delegate = delegate;
         [self setMainBubbleSimilarToBubble:mainBubble];
-        [self createBubbleContainers];
+        [self createBubbleContainersAndAddAsSubviews];
         [self createAnchors];
     }
     return self;
 }
 
-- (void)createBubbleContainers {
-    NSAssert(NO, @"You must override this method");
+- (void)createBubbleContainersAndAddAsSubviews {
+    NSAssert(NO, @"You must override this method. Use the getArrayOfBubblesWithTitlesWithColoursOrNSNulls:... method (with [self getCornerOfChildVCNewMainBubble] for the corner).");
 }
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a {
@@ -36,13 +38,13 @@
     self.childBubbles = a;
 }
 
-+ (NSArray *)getArrayOfBubblesWithSubjectsWithColoursOrNot:(NSDictionary *)subjectsAndColours target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered corner:(Corner)cornerOfMainBubble andMainBubble:(BubbleContainer *)mainB {
++ (NSArray *)getArrayOfBubblesWithSubjectColourPairs:(NSArray *)subjectOptionalColourPairs target:(SimpleSelectionViewController *)target staggered:(BOOL)staggered corner:(Corner)cornerOfMainBubble andMainBubble:(BubbleContainer *)mainB {
     UIColor *c = mainB.colour;
     
     NSMutableArray *blocks = [[NSMutableArray alloc] init];
-    NSUInteger count = subjectsAndColours.count;
+    NSUInteger count = subjectOptionalColourPairs.count;
     CGSize size = mainB.frame.size;
-    for (int a = 0; a < subjectsAndColours.count; a++) {
+    for (int a = 0; a < subjectOptionalColourPairs.count; a++) {
         PositionCalculationBlock x = ^{
             return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:cornerOfMainBubble andStaggered:staggered];
         };
@@ -51,12 +53,15 @@
     }
     
     NSMutableArray *m = [[NSMutableArray alloc] init];
-    NSArray *allKeys = [subjectsAndColours allKeys];
     
-    for (int a = 0; a < subjectsAndColours.count; a++) {
-        UIColor *overrideColour = [subjectsAndColours objectForKey:allKeys[a]]; //If subjects and colours come with colours use it, otherwise default to main bubble colour
-        if ([overrideColour class] == [NSNull class]) overrideColour = c;
-        [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:overrideColour title:allKeys[a] frameBubbleForStartingPosition:mainB.frame andDelegate:NO]];
+    for (int a = 0; a < subjectOptionalColourPairs.count; a++) {
+        SubjectColourPair *pair = subjectOptionalColourPairs[a];  //If comes with colours use it, otherwise default to main bubble colour
+        UIColor *colourToUse;
+        
+        if (pair.colour) colourToUse = pair.colour;
+        else colourToUse = c;
+    
+        [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:colourToUse title:pair.subject frameBubbleForStartingPosition:mainB.frame andDelegate:NO]];
     }
     
     for (BubbleContainer *b in m) {
@@ -70,8 +75,11 @@
 
 + (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andStaggered:(BOOL)staggered {
     double angleFromOrigin = 90.0 * ((index + 1.0) / (bubbles + 1.0));
+    if (corner == TopLeft || corner == TopRight) //Order appears backwards when mainbubble is at top - flip order
+        angleFromOrigin = 90 - angleFromOrigin;
+    
     double r = [SimpleSelectionViewController getRadius];
-    if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0) && staggered) r *= 0.77;
+    if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0) && staggered) r *= SIMPLE_SELECTION_STAGGER_AMOUNT;
     
     double sinAns, cosAns;
     CGSize screen = [ApplicationDelegate getScreenSize];
@@ -86,13 +94,13 @@
     double x, y;
     CGPoint origin;
     if (corner == TopLeft) {
-        x = cosAns;
-        y = sinAns;
+        x = sinAns;
+        y = cosAns;
         origin.x = [Styles spaceFromEdgeOfScreen];
         origin.y = [Styles spaceFromEdgeOfScreen];
     } else if (corner == TopRight) {
-        x = -cosAns;
-        y = sinAns;
+        x = -sinAns;
+        y = cosAns;
         origin.x = screen.width - [Styles spaceFromEdgeOfScreen];
         origin.y = [Styles spaceFromEdgeOfScreen];
     } else if (corner == BottomLeft) {

@@ -16,6 +16,11 @@
     g.final = GradeTextNone;
     g.expected = GradeTextNone;
     g.preliminary = GradeTextNone;
+    
+    if (CurrentAppSettings.lastEnteredFinalGrade.length > 0) g.final = CurrentAppSettings.lastEnteredFinalGrade;
+    if (CurrentAppSettings.lastEnteredExpectGrade.length > 0) g.expected = CurrentAppSettings.lastEnteredExpectGrade;
+    if (CurrentAppSettings.lastEnteredPrelimGrade.length > 0) g.preliminary = CurrentAppSettings.lastEnteredPrelimGrade;
+    
     return g;
 }
 
@@ -53,7 +58,7 @@
     
     for (NSNumber *p in priorities) {
         GradePriorityType priority = [p integerValue];
-        NSString *grade = [self getGradeTextForGradeType:priority];
+        NSString *grade = [self getGradeForPriority:priority];
         
         if (![grade isEqualToString:GradeTextNone]) {
             return grade;
@@ -63,8 +68,22 @@
     return GradeTextNone;
 }
 
-- (NSString *)getGradeTextForGradeType:(GradePriorityType)type {
-    switch (type) {
+- (NSString *)getGradeTextForPriorityOrHigher:(GradePriorityType)type {
+    GradePriority *order = CurrentProfile.gradePriority;
+    NSInteger lowPriIndex = [order getIndexOfPriority:type];
+    
+    for (NSInteger a = 0; a <= lowPriIndex; a++) {
+        NSString *possibleGrade = [self getGradeForPriority:[order.priorityOrder[a] integerValue]];
+        if (![possibleGrade isEqualToString:GradeTextNone]) {
+            return possibleGrade;
+        }
+    }
+    
+    return GradeTextNone;
+}
+
+- (NSString *)getGradeForPriority:(GradePriorityType)p {
+    switch (p) {
         case GradePriorityExpectedGrade:
             return _expected;
             break;

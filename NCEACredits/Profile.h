@@ -19,12 +19,13 @@
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject;
 - (BOOL)isAlreadyAssessmentForSubject:(NSString *)subject quickName:(NSString *)quickName andDifferentIdentifier:(NSUInteger)identifier;
 - (Assessment *)getAssessmentForQuickName:(NSString *)qn andSubject:(NSString *)sub;
-- (BOOL)assessmentExists:(Assessment *)assess;
+- (BOOL)assessmentExistsByIdentifier:(Assessment *)assess;
 - (void)deleteAssessment:(Assessment *)assess;
 
 @property NSString *profileName;
 @property GradePriority *gradePriority;
 - (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority;
+- (NSDictionary *)getNumberOfCreditsForPriority:(GradePriorityType)priority andSubject:(NSString *)subject;
 - (NSUInteger)getNumberOfCreditsForGradeIncludingBetterGrades:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level;
 
 @property NSUInteger currentYear;

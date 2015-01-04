@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, GradePriorityType) {
 
 @interface GradePriority : ToJSONTemplate
 
+- (NSInteger)getIndexOfPriority:(GradePriorityType)priority;
 @property NSArray *priorityOrder;
 //First is high priority
 

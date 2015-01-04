@@ -9,14 +9,12 @@
 #import "MainViewController.h"
 #import "AddViewController.h"
 #import "GradesViewController.h"
+#import "OptionsViewController.h"
+#import "StatsViewController.h"
 #import "SetupNavigationController.h"
 #import "BubbleMain.h"
 
-@implementation MainViewController {
-    BOOL hasAlreadyMadeFakeAssessments;
-}
-
-#warning TODO: check multiple yearing once save is done
+@implementation MainViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,7 +22,6 @@
     if (self) {
         self.shouldDelayCreationAnimation = YES;
         [self createBubbleContainers];
-        hasAlreadyMadeFakeAssessments = NO;
     }
     return self;
 }
@@ -36,6 +33,7 @@
     //Show setup window
     if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
         //Hasn't shown setup
+        CurrentAppSettings.setupState = SETUP_STATE_NEW_PROFILE_INITIAL;
         [self showSetupWindow];
     } else {
         [self startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup];
@@ -49,7 +47,7 @@
 }
 
 - (void)startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup {
-    if (SHOULD_MAKE_FAKE_ASSESSMENTS && DEBUG_MODE_ON) [self makeFakeAssessments];
+    if (MAKE_FAKE_ASSESSMENTS && DEBUG_MODE_ON) [self makeFakeAssessments];
     
     [self updateMainBubbleStats];
     
@@ -133,13 +131,12 @@
     [self addControlEventsToBubbleContainers];
     self.mainBubble.animationManager = [self.mainBubble getAnimationManagerForMainBubbleGrowth];
     
-    
     [self startChildBubbleCreationAnimation];
 }
 
 - (void)addControlEventsToBubbleContainers {
     
-    [self.mainBubble addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)]];
+    [self.mainBubble addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mainBubbleTapped:)]];
     [_addContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addContainerPressed)]];
     [_gradesContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gradesContainerPressed)]];
     [_statsContainer addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(statsContainerPressed)]];
@@ -158,10 +155,15 @@
 //****
 //*
 
-- (void)tapped:(id)sender {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Credits:\nThis counts the number of credits of assessments with final grades. You can tap the blue 'Stats' tab to view more information.\n\nGoals:\nThis shows the number of credits required to reach the required goal (e.g. Excellence Endorsement). You can change this in the setup screen by tapping the orange 'Options' tab, then 'Show Setup'. Note that in NCEA Level 1, 10 literacy and 10 numeracy credits are also required (see the 'Stats' tab to see the number of these credits)." preferredStyle:UIAlertControllerStyleAlert];
+- (void)mainBubbleTapped:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Credits:\nThis counts the number of credits of assessments with final grades. (For NCEA Levels 2 and 3, you start with an extra 20 credits.) You can tap the blue 'Stats' tab to view more information like predictions about the number of credits you expect to have (make sure to set an 'Expected Grade' in the 'Add' screen).\n\nGoals:\nThis shows the number of credits required to reach the required goal (e.g. Excellence Endorsement). You can change this in the setup screen by tapping the orange 'Options' tab, then 'Show Setup'. Note that in NCEA Level 1, 10 literacy and 10 numeracy credits are also required (see the 'Stats' tab to see the number of these credits)." preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
+    
+    //Log
+    [CurrentProfile logJSONText];
+    [CurrentAppSettings logJSONText];
+    [self logAssessmentGrades];
 }
 
 - (void)addContainerPressed {
@@ -178,27 +180,44 @@
         GradesViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer delegate:self andStaggered:YES];
         [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
     } else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Looks like you don't have any assessments yet. Click the Add button on the left to create some. You can then edit them from the Subjects menu." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
+        [self noAssessmentsAlert];
     }
 }
 
 - (void)statsContainerPressed {
     [self bubbleWasPressed:_statsContainer];
     
-    //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Cool stats coming soon!" preferredStyle:UIAlertControllerStyleAlert];
-    //    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
-    //    [self presentViewController:alert animated:YES completion:nil];
-    
-    if (DEBUG_MODE_ON && LOG_PROFILE_WHEN_TAPPING_STATS) [CurrentProfile logJSONText];
+    if ([CurrentProfile getNumberOfAssessmentsInCurrentYear] > 0) {
+        StatsViewController *b = [[StatsViewController alloc] initWithMainBubble:_statsContainer delegate:self andStaggered:YES];
+        [self startTransitionToChildBubble:_statsContainer andBubbleViewController:b];
+    } else {
+        [self noAssessmentsAlert];
+    }
 }
 
 - (void)optionsContainerPressed {
-#warning TODO: test profile name conflict and show buttons for setup, switch profile, animation speed?
     [self bubbleWasPressed:_optionsContainer];
     
-    [self showSetupWindow];
+    OptionsViewController *opt = [[OptionsViewController alloc] initWithMainBubble:_optionsContainer delegate:self andStaggered:YES];
+    [self startTransitionToChildBubble:_optionsContainer andBubbleViewController:opt];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Other    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)noAssessmentsAlert {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Looks like you don't have any assessments yet. Click the Add button on the left to create some. You can then edit them from the Subjects menu." preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 //*
@@ -214,28 +233,44 @@
 //*
 
 - (void)makeFakeAssessments {
-    if (!hasAlreadyMadeFakeAssessments) {
+    //Make fakes only when no assessments
+    
+    if ([CurrentProfile getCurrentYear].assessmentCollection.assessments.count == 0) {
         NSArray *faketitles = @[@"mmmm", @"tttt", @"hhhh", @"zzzz", @"pppp", @"dddd"];
-        int x = arc4random_uniform(5) + 1;
+        
         for (NSString *title in faketitles) {
+            int x = arc4random_uniform(5) + 3;
+            
             for (int a = 0; a < x; a ++) {
                 Assessment *a = [[Assessment alloc] initWithPropertiesOrNil:nil];
                 a.subject = title;
                 a.quickName = [NSString stringWithFormat:@"%i", arc4random_uniform(999999)];
                 a.gradeSet.final = [self getRandomGradeText];
+                a.gradeSet.preliminary = [self getRandomGradeText];
+                a.gradeSet.expected = [self getRandomGradeText];
                 
                 [CurrentProfile addAssessmentOrReplaceACurrentOne:a];
             }
         }
-        
-        hasAlreadyMadeFakeAssessments = YES;
     }
 }
 
 - (NSString *)getRandomGradeText {
-    NSArray *grades = @[GradeTextExcellence, GradeTextMerit, GradeTextAchieved];
+    NSArray *grades = @[GradeTextExcellence, GradeTextMerit, GradeTextAchieved, GradeTextNotAchieved, GradeTextNone];
     NSInteger a = arc4random_uniform((u_int32_t)grades.count);
+    NSLog(@"Grade: %@", grades[a]);
     return grades[a];
+}
+
+- (void)logAssessmentGrades {
+    NSArray *assess = [CurrentProfile getCurrentYear].assessmentCollection.assessments;
+    NSMutableString *log = [[NSMutableString alloc] initWithString:@"\n\n\n//*\n//****\n//*********\n//****************\n//*************************\n//********************************************    Assessment Grades    \n//*************************\n//****************\n//*********\n//****\n//*\n\n\n"];
+#define FC(string) (string.length > 0) ? [string substringToIndex:1] : @" "
+    for (Assessment *a in assess) {
+        [log appendString: [NSString stringWithFormat:@"- Sub '%@', Qn '%@' \t| FG '%@', PG '%@', EG '%@' \n", a.subject, a.quickName, FC(a.gradeSet.final), FC(a.gradeSet.preliminary), FC(a.gradeSet.expected)]];
+    }
+    
+    NSLog(@"%@", log);
 }
 
 

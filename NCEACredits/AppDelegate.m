@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
-#import "AppSettings.h"
 
 #define FILE_EXTENSION_INCLUDING_DOT @".json"
 
@@ -29,23 +28,8 @@
     if (_currentProfile)
         return _currentProfile;
     else {
-        
-        NSData *data = [self loadProfileWithFileName:CurrentAppSettings.lastProfileFileName];
-        Profile *p;
-        if (data) {
-            NSError *e;
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&e];
-            if (e)
-                NSLog(@"%@", [e localizedDescription]);
-            
-            p = [[Profile alloc] initWithPropertiesOrNil:dict];
-            NSLog(@"Profile '%@' was loaded", CurrentAppSettings.lastProfileFileName);
-        } else {
-            p = [[Profile alloc] initWithPropertiesOrNil:nil];
-            NSLog(@"New Profile was created");
-        }
-        _currentProfile = p;
-        return p;
+        [self loadProfileWithFileName:CurrentAppSettings.lastProfileFileName];
+        return _currentProfile;
     }
 }
 
@@ -53,52 +37,9 @@
     if (_appSettings)
         return _appSettings;
     else {
-        NSData *data = [self loadAppSettings];
-        AppSettings *a;
-        if (data) {
-            NSError *e;
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&e];
-            if (e)
-                NSLog(@"%@", [e localizedDescription]);
-            
-            a = [[AppSettings alloc] initWithPropertiesOrNil:dict];
-            NSLog(@"App Settings was loaded");
-        } else {
-            a = [[AppSettings alloc] initWithPropertiesOrNil:nil];
-            NSLog(@"New App Settings was created");
-        }
-        _appSettings = a;
-        return a;
+        [self loadAppSettings];
+        return _appSettings;
     }
-}
-
-- (void)deleteProfileWithProfileName:(NSString *)pName {
-    NSString *docDir = [self getDocumentsDirectory];
-    NSString *fileName = [self getFileNameWithProfileName:pName];
-    NSString *path = [NSString stringWithFormat:@"%@/%@", docDir, fileName];
-    
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSError *e;
-    [manager removeItemAtPath:path error:&e];
-    if (e) NSLog(@"%@", [e localizedDescription]);
-}
-
-- (NSArray *)getUsedProfileNames {
-    NSString *docsDir = [self getDocumentsDirectory];
-    
-    NSError *e;
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSArray *fileNames = [manager contentsOfDirectoryAtPath:docsDir error:&e];
-    if (e) NSLog(@"%@", [e localizedDescription]);
-    
-    NSMutableArray *profileNames = [[NSMutableArray alloc] init];
-    for (NSString *name in fileNames) {
-        if ([name containsString:FILE_EXTENSION_INCLUDING_DOT]) {
-            [profileNames addObject:[name substringToIndex:name.length - FILE_EXTENSION_INCLUDING_DOT.length]];
-        }
-    }
-    
-    return profileNames;
 }
 
 //*
@@ -146,20 +87,89 @@
 }
 
 //------------------------------ Load ------------------------------
-- (NSData *)loadAppSettings {
+- (void)loadAppSettings {
     NSString *docDir = [self getDocumentsDirectory];
     NSString *filePath = [NSString stringWithFormat:@"%@/%@", docDir, APP_SETTINGS_FILE_NAME_WITH_EXT];
     
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-    return data; //may be nil
+
+    AppSettings *a;
+    if (data) {
+        NSError *e;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&e];
+        if (e)
+            NSLog(@"%@", [e localizedDescription]);
+        
+        a = [[AppSettings alloc] initWithPropertiesOrNil:dict];
+        NSLog(@"App Settings was loaded");
+    } else {
+        a = [[AppSettings alloc] initWithPropertiesOrNil:nil];
+        NSLog(@"New App Settings was created");
+    }
+    
+    _appSettings = a;
 }
 
-- (NSData *)loadProfileWithFileName:(NSString *)fileName {
+- (void)loadProfileWithFileName:(NSString *)fileName {
     NSString *docDir = [self getDocumentsDirectory];
     NSString *filePath = [NSString stringWithFormat:@"%@/%@", docDir, fileName];
     
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-    return data; //may be nil
+    
+    Profile *p;
+    if (data) {
+        NSError *e;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&e];
+        if (e)
+            NSLog(@"%@", [e localizedDescription]);
+        
+        p = [[Profile alloc] initWithPropertiesOrNil:dict];
+        NSLog(@"Profile '%@' was loaded", CurrentAppSettings.lastProfileFileName);
+    } else {
+        p = [[Profile alloc] initWithPropertiesOrNil:nil];
+        NSLog(@"New Profile was created");
+    }
+    
+    _currentProfile = p;
+}
+
+//------------------------------ Other ------------------------------
+- (void)deleteProfileWithProfileName:(NSString *)pName {
+    NSString *docDir = [self getDocumentsDirectory];
+    NSString *fileName = [self getFileNameWithProfileName:pName];
+    NSString *path = [NSString stringWithFormat:@"%@/%@", docDir, fileName];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSError *e;
+    [manager removeItemAtPath:path error:&e];
+    if (e) NSLog(@"%@", [e localizedDescription]);
+}
+
+- (NSArray *)getUsedProfileNames {
+    NSString *docsDir = [self getDocumentsDirectory];
+    
+    NSError *e;
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSArray *fileNames = [manager contentsOfDirectoryAtPath:docsDir error:&e];
+    if (e) NSLog(@"%@", [e localizedDescription]);
+    
+    NSMutableArray *profileNames = [[NSMutableArray alloc] init];
+    for (NSString *name in fileNames) {
+        if ([name containsString:FILE_EXTENSION_INCLUDING_DOT]) {
+            [profileNames addObject:[name substringToIndex:name.length - FILE_EXTENSION_INCLUDING_DOT.length]];
+        }
+    }
+    
+    return profileNames;
+}
+
+- (void)switchToProfile:(NSString *)name {
+    [self saveCurrentProfileAndAppSettings];
+    
+    NSString *fileName = [self getFileNameWithProfileName:name];
+    [self loadProfileWithFileName:fileName];
+    CurrentAppSettings.lastProfileFileName = fileName;
+    [ApplicationDelegate saveCurrentProfileAndAppSettings];
 }
 
 //*
@@ -194,7 +204,8 @@
 }
 
 - (BOOL)deviceIsInLandscape {
-    if (_screenSize.width > _screenSize.height) return YES;
+    CGSize size = [self getScreenSize];
+    if (size.width > size.height) return YES;
     else return NO;
 }
 

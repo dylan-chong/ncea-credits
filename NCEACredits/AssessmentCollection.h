@@ -20,6 +20,7 @@
 - (NSArray *)getSubjectsOrNil;
 
 - (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority andLevel:(NSUInteger)level;
+- (NSDictionary *)getNumberCreditsForPriority:(GradePriorityType)priority subject:(NSString *)subject andLevel:(NSUInteger)level;
 - (NSUInteger)getNumberOfCreditsForGrade:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level;
 - (NSUInteger)getNumberOfCreditsForGradeIncludingBetterGrades:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level;
 
@@ -30,7 +31,7 @@
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject;
 - (Assessment *)getAssessmentForQuickName:(NSString *)qn andSubject:(NSString *)sub;
 
-- (BOOL)assessmentExists:(Assessment *)assess;
+- (BOOL)assessmentExistsByIdentifier:(Assessment *)assess;
 - (void)deleteAssessment:(Assessment *)assess;
 
 @end

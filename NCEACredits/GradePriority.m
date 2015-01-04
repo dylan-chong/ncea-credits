@@ -10,6 +10,8 @@
 
 @implementation GradePriority
 
+//Class is useless now, no need for priority
+
 - (GradePriority *)createBlank {
     GradePriority *gp = [[GradePriority alloc] init];
     gp.priorityOrder = [GradePriority defaultPriorityOrder];
@@ -45,6 +47,15 @@
     return @[tNSN(GradePriorityFinalGrade),
              tNSN(GradePriorityExpectedGrade),
              tNSN(GradePriorityPreliminaryGrade),];
+}
+
+- (NSInteger)getIndexOfPriority:(GradePriorityType)priority {
+    for (int a = 0; a < _priorityOrder.count; a++) {
+        NSNumber *n = _priorityOrder[a];
+        if ([n integerValue] == priority) return a;
+    }
+    
+    return -1;
 }
 
 @end

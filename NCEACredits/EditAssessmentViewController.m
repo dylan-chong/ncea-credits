@@ -18,6 +18,10 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     if (boolean) return EditTextBoolYes;
     else return EditTextBoolNo;
 };
+BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
+    if ([edit isEqualToString:EditTextBoolYes]) return YES;
+    else return NO;
+};
 
 @interface EditAssessmentViewController ()
 
@@ -34,7 +38,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
         self.staggered = NO;
         self.delegate = delegate;
         [self setMainBubbleSimilarToBubble:mainBubble];
-        [self createBubbleContainers];
+        [self createBubbleContainersAndAddAsSubviews];
         [self createAnchors];
         [self createDeleteButton];
     }
@@ -42,7 +46,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     return self;
 }
 
-- (void)createBubbleContainers {
+- (void)createBubbleContainersAndAddAsSubviews {
     NSArray *itemData = [EditAssessmentViewController getItemDataWithAssessmentOrNil:_assessment];
     
     Corner c = [self getCornerOfChildVCNewMainBubble:self.mainBubble];
@@ -79,7 +83,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
     return @[
              ItemData(ItemQuickName,        quickName,                        @"E.g. Algebra",               tNSN(EditTextDataTypeText)),
              ItemData(ItemASNumber,         ASNum,                        @"901234 (optional)",                  tNSN(EditTextDataTypeNumber)),
-             ItemData(ItemSubject,           subj,                        @"E.g. Maths",                 tNSN(EditTextDataTypeText)),
+             ItemData(ItemSubject,           subj,                        @"E.g. Maths",                 tNSN(EditTextDataTypeSubject)),
              ItemData(ItemCredits,          credits,                    @"Usually 3 or 4",                    tNSN(EditTextDataTypeNumber)),
              
              ItemData(ItemIsAnInternal,    isAnInternal,               isAnInternal,               tNSN(EditTextDataTypeBool)),
@@ -190,6 +194,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 - (void)saveAssessment {
     Assessment *newOrEditedAssessment = (_assessment) ? _assessment : [[Assessment alloc] initWithPropertiesOrNil:nil];
     NSArray *editTextBubbleContainers = self.childBubbles;
+    BOOL isNewAssessment = ![CurrentProfile assessmentExistsByIdentifier:newOrEditedAssessment];
     
     for (EditTextBubbleContainer *bubble in editTextBubbleContainers) {
         NSString *title = ((EditTextBubble *)bubble.bubble).titleLabel.text;
@@ -202,6 +207,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
         
         if ([title isEqualToString:ItemQuickName]) {
             newOrEditedAssessment.quickName = text;
+            
         } else if ([title isEqualToString:ItemASNumber]) {
             if ([self textBubbleIsShowingPlaceHolder:title]) {
                 //Placeholder? set AS to 0
@@ -210,25 +216,38 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
                 newOrEditedAssessment.assessmentNumber = [text integerValue];
             }
             
+            
         } else if ([title isEqualToString:ItemSubject]) {
             newOrEditedAssessment.subject = text;
+            if (isNewAssessment) CurrentAppSettings.lastEnteredSubject = text;
+            
         } else if ([title isEqualToString:ItemCredits]) {
             newOrEditedAssessment.creditsWhenAchieved = [text integerValue];
             
+            
         } else if ([title isEqualToString:ItemIsAnInternal]) {
             newOrEditedAssessment.isAnInternal = [text boolValue];
+            if (isNewAssessment) CurrentAppSettings.lastEnteredWasInternal = EditTextBoolToBOOL(text);
             
         } else if ([title isEqualToString:ItemFinalGrade]) {
             newOrEditedAssessment.gradeSet.final = text;
+            if (isNewAssessment) CurrentAppSettings.lastEnteredFinalGrade = text;
+            
         } else if ([title isEqualToString:ItemExpectedGrade]) {
             newOrEditedAssessment.gradeSet.expected = text;
+            if (isNewAssessment) CurrentAppSettings.lastEnteredExpectGrade = text;
+            
         } else if ([title isEqualToString:ItemPreliminaryGrade]) {
             newOrEditedAssessment.gradeSet.preliminary = text;
+            if (isNewAssessment) CurrentAppSettings.lastEnteredPrelimGrade = text;
+            
             
         } else if ([title isEqualToString:ItemIsUnitStandard]) {
             newOrEditedAssessment.isUnitStandard = [text boolValue];
+            
         } else if ([title isEqualToString:ItemNCEALevel]) {
             newOrEditedAssessment.level = [text integerValue];
+            
         } else if ([title isEqualToString:ItemTypeOfCredits]) {
             newOrEditedAssessment.typeOfCredits = text;
         }
@@ -293,7 +312,7 @@ NSString *(^BOOLToEditTextBool) (BOOL) = ^(BOOL boolean) {
 
 - (void)deleteAssessment {
     //Delete if it exists, otherwise exit without saving
-    if ([CurrentProfile assessmentExists:_assessment]) {
+    if ([CurrentProfile assessmentExistsByIdentifier:_assessment]) {
         [CurrentProfile deleteAssessment:_assessment];
     }
     

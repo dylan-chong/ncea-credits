@@ -16,6 +16,7 @@
 //child view controllers will implement the delegate to communicate with the parent
 - (void)hasReturnedFromChildViewController;
 - (Corner)getCornerOfParentMainBubble;
+- (NSString *)getTitleOfMainBubble;
 @end
 
 @interface BubbleViewController : UIViewController <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerDelegate>
@@ -37,6 +38,7 @@
 - (void)startChildBubbleCreationAnimation;
 - (void)startReturnScaleAnimation;
 - (void)startReturnSlideAnimation;
+- (void)hasTransitionedFromParentViewController;
 
 - (void)repositionBubbles;
 

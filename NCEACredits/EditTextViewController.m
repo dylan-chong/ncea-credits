@@ -194,7 +194,7 @@
 
 - (void)editTheTextView:(EditTextBubbleContainer *)editTextView {
     _editScreen = [[EditTextEditScreen alloc] initWithEditTextBubbleContainerToEdit:editTextView];
-    
+    _editScreen.delegate = self;
     [self.view addSubview:_editScreen];
     [self.view bringSubviewToFront:_editScreen];
     [_editScreen show];
@@ -202,6 +202,15 @@
 
 - (void)finishedEditing {
     [_editScreen removeFromSuperview];
+}
+
+- (void)showAlert:(UIAlertController *)alert {
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [_editScreen hide];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 //*

@@ -19,11 +19,12 @@ typedef NS_ENUM(NSInteger, EditTextDataType) {
     EditTextDataTypeNumber,
     EditTextDataTypeDate,
     EditTextDataTypeTypeOfCredits,
+    EditTextDataTypeSubject
 } ;
 
 @protocol EditTextEditScreenDelegate <NSObject>
 
-- (void)finishedEditing;
+- (void)showAlert:(UIAlertController *)alert;
 
 @end
 
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSInteger, EditTextDataType) {
 @property NSArray *buttons;
 @property EditTextDataType type;
 @property (weak) EditTextBubbleContainer *viewToEdit;
+@property id<EditTextEditScreenDelegate>delegate;
 
 - (void)show;
 - (void)hide;
