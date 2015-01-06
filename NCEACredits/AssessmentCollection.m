@@ -189,6 +189,21 @@
     return subjectTitles;
 }
 
+- (NSArray *)getAssessmentsForSubjectOrNilForAll:(NSString *)subjectOrNil gradeText:(NSString *)gradeText gradePriorityOrFinal:(GradePriorityType)gradePriorityOrFinal {
+    NSMutableArray *assessments = [[NSMutableArray alloc] init];
+    
+    for (Assessment *a in _assessments) {
+        NSString *grade = [a.gradeSet getGradeTextForFinalOrPriority:gradePriorityOrFinal];
+        if ([grade isEqualToString:gradeText]) { //Grade must be same as assessment's final or chosen priority grade
+            if (!subjectOrNil || [subjectOrNil isEqualToString:a.subject]) {
+                [assessments addObject:a];
+            }
+        }
+    }
+    
+    return assessments;
+}
+
 //*
 //****
 //*********
@@ -238,7 +253,7 @@
     }
     
     for (Assessment *assessment in _assessments) {
-        NSString *finalGrade = [assessment.gradeSet getGradeTextForPriorityOrHigher:priority];
+        NSString *finalGrade = [assessment.gradeSet getGradeTextForFinalOrPriority:priority];
         if ([finalGrade isEqualToString:gradeText])
             total += assessment.creditsWhenAchieved;
     }
@@ -257,7 +272,7 @@
     
     for (Assessment *assessment in _assessments) {
         if ([assessment.typeOfCredits isEqualToString: typeOfCredits]) {
-            NSString *finalGrade = [assessment.gradeSet getGradeTextForPriorityOrHigher:priority];
+            NSString *finalGrade = [assessment.gradeSet getGradeTextForFinalOrPriority:priority];
             if (![finalGrade isEqualToString:GradeTextNotAchieved] && ![finalGrade isEqualToString:GradeTextNone])
                 total += assessment.creditsWhenAchieved;
         }
@@ -338,7 +353,7 @@
     NSUInteger total = 0;
 
     for (Assessment *assessment in _assessments) {
-        NSString *finalGrade = [assessment.gradeSet getGradeTextForPriorityOrHigher:priority];
+        NSString *finalGrade = [assessment.gradeSet getGradeTextForFinalOrPriority:priority];
         if ([finalGrade isEqualToString:gradeText] && [assessment.subject isEqualToString:subject])
             total += assessment.creditsWhenAchieved;
     }
@@ -357,7 +372,7 @@
     
     for (Assessment *assessment in _assessments) {
         if ([assessment.typeOfCredits isEqualToString: typeOfCredits]) {
-            NSString *finalGrade = [assessment.gradeSet getGradeTextForPriorityOrHigher:priority];
+            NSString *finalGrade = [assessment.gradeSet getGradeTextForFinalOrPriority:priority];
             if (![finalGrade isEqualToString:GradeTextNotAchieved] && ![finalGrade isEqualToString:GradeTextNone])
                 total += assessment.creditsWhenAchieved;
         }

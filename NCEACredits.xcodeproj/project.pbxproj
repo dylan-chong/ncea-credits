@@ -30,7 +30,6 @@
 		8459E88C196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */; };
 		8459E88F196FDB42000D1C85 /* SetupRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459E88E196FDB42000D1C85 /* SetupRootController.m */; };
 		845C40DE19481350001B1499 /* YearCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40DD19481350001B1499 /* YearCollection.m */; };
-		845C40E119481973001B1499 /* GradePriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C40E019481973001B1499 /* GradePriority.m */; };
 		8470DD2B1A466FC300266654 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8470DD2A1A466FC300266654 /* Launch Screen.xib */; };
 		8470DD2E1A46708800266654 /* CustomGoals.m in Sources */ = {isa = PBXBuildFile; fileRef = 8470DD2D1A46708800266654 /* CustomGoals.m */; };
 		8470DD311A46736900266654 /* AssessmentsForSubjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8470DD301A46736900266654 /* AssessmentsForSubjectViewController.m */; };
@@ -137,8 +136,6 @@
 		8459E88E196FDB42000D1C85 /* SetupRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupRootController.m; sourceTree = "<group>"; };
 		845C40DC19481350001B1499 /* YearCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearCollection.h; sourceTree = "<group>"; };
 		845C40DD19481350001B1499 /* YearCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearCollection.m; sourceTree = "<group>"; };
-		845C40DF19481973001B1499 /* GradePriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradePriority.h; sourceTree = "<group>"; };
-		845C40E019481973001B1499 /* GradePriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradePriority.m; sourceTree = "<group>"; };
 		8470DD2A1A466FC300266654 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		8470DD2C1A46708800266654 /* CustomGoals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGoals.h; sourceTree = "<group>"; };
 		8470DD2D1A46708800266654 /* CustomGoals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomGoals.m; sourceTree = "<group>"; };
@@ -305,8 +302,6 @@
 			children = (
 				8470DD2C1A46708800266654 /* CustomGoals.h */,
 				8470DD2D1A46708800266654 /* CustomGoals.m */,
-				845C40DF19481973001B1499 /* GradePriority.h */,
-				845C40E019481973001B1499 /* GradePriority.m */,
 				845C40DC19481350001B1499 /* YearCollection.h */,
 				845C40DD19481350001B1499 /* YearCollection.m */,
 				84A435C71966B7280091905B /* Year.h */,
@@ -685,7 +680,6 @@
 				8459996D18AC00DE005F3FB1 /* SimpleSelectionViewController.m in Sources */,
 				84A435D61966C5660091905B /* SubjectsAndColours.m in Sources */,
 				841B883E1A53621700E86DCC /* StatsCreditsViewController.m in Sources */,
-				845C40E119481973001B1499 /* GradePriority.m in Sources */,
 				84B5A2BC1880D91000969952 /* Styles+Layout.m in Sources */,
 				8442D2E61A48D81C003C0C2D /* AppSettings.m in Sources */,
 				84AD67EB1A51281100F58333 /* StatsSubjectsViewController.m in Sources */,

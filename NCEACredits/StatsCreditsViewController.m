@@ -10,6 +10,14 @@
 #import "StatsViewController.h"
 #import "StatsSubjectsViewController.h"
 
+NSString *(^GradeTextForAbbreviatedGrade) (NSString *) = ^(NSString *abb) {
+    if ([abb isEqualToString:@"E"]) return GradeTextExcellence;
+    else if ([abb isEqualToString:@"M"]) return GradeTextMerit;
+    else if ([abb isEqualToString:@"A"]) return GradeTextAchieved;
+    else if ([abb isEqualToString:@"NA"]) return GradeTextNotAchieved;
+    else return GradeTextNone;
+};
+
 @interface StatsCreditsViewController ()
 
 @end
@@ -35,9 +43,9 @@
     
     exc = [NSString stringWithFormat:@"E: %li", (long)eCred];
     mer = [NSString stringWithFormat:@"M: %li", (long)mCred];
-    em = [NSString stringWithFormat:@"M+E: %i", eCred + mCred];
+    em = [NSString stringWithFormat:@"M+E: %li", eCred + mCred];
     ach = [NSString stringWithFormat:@"A: %li", (long)aCred];
-    ame = [NSString stringWithFormat:@"A+M+E: %i", eCred + mCred + aCred];
+    ame = [NSString stringWithFormat:@"A+M+E: %li", eCred + mCred + aCred];
     not = [NSString stringWithFormat:@"NA: %li", (long)[[creds objectForKey:GradeTextNotAchieved] integerValue]];
     non = [NSString stringWithFormat:@"None: %li", (long)[[creds objectForKey:GradeTextNone] integerValue]];
     
@@ -60,10 +68,16 @@
     [super bubbleWasPressed:container];
     
     #warning TODO: list all assessments that fit criteria
-//    GradePriorityType priority = [StatsCreditsViewController getGradePriorityEnumFromString:[self.delegate getTitleOfMainBubble]];
-//    NSString *subjectOrTotal = container.bubble.title.text;
-//    
-//    
+    GradePriorityType priority = [StatsCreditsViewController getGradePriorityEnumFromString:[self.delegate getTitleOfMainBubble]];
+    NSString *subjectOrTotal = self.mainBubble.bubble.title.text;
+    if ([subjectOrTotal isEqualToString:STATS_SUBJECTS_TOTAL]) subjectOrTotal = nil;
+    NSString *grade = [container.bubble.title.text componentsSeparatedByString:@":"][0];//Get text before colon
+    
+    if (![grade containsString:@"+"]) {//Ignore A+M+E and M+E
+        NSArray *assessments = [CurrentProfile getAssessmentsForSubjectOrNilForAll:subjectOrTotal gradeText:GradeTextForAbbreviatedGrade(grade) gradePriorityOrFinal:priority];
+        
+        
+    }
 }
 
 

@@ -165,8 +165,13 @@
             
         } else if (type == EditTextDataTypeSubject) {
             titles = [[CurrentProfile getSubjectsAndColoursOrNilForCurrentYear] allKeys]; //Subjects are keys
-            titles = [Styles sortArray:titles];
-            titles = [titles arrayByAddingObject: NEW_SUBJECT_TITLE];
+            if (titles) {
+                titles = [Styles sortArray:titles];
+                titles = [titles arrayByAddingObject: NEW_SUBJECT_TITLE];
+            } else {
+                titles = @[NEW_SUBJECT_TITLE];
+            }
+            
         } else {
             //Non-existent type
             NSException *e = [[NSException alloc] initWithName:@"EditTextEditScreen type" reason:@"No valid type" userInfo:nil];
@@ -247,6 +252,7 @@
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"New subject";
+        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

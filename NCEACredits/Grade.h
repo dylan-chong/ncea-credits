@@ -22,11 +22,16 @@
 #define GradeTextNone @""
 #define GradeTextTitleNone @"None"
 
+typedef NS_ENUM(NSInteger, GradePriorityType) {
+    GradePriorityFinalGrade = 1,
+    GradePriorityPreliminaryGrade,
+    GradePriorityExpectedGrade,
+};
+
 @interface Grade : ToJSONTemplate
 
 //If modifying the number of variables below, you must modify AssessmentCollection's addAssessmentOrReplaceACurrentOne: method
 @property NSString *final, *preliminary, *expected;
-- (NSString *)getHighestPriorityExistingGradeText;
-- (NSString *)getGradeTextForPriorityOrHigher:(GradePriorityType)type;
+- (NSString *)getGradeTextForFinalOrPriority:(GradePriorityType)type;
 
 @end

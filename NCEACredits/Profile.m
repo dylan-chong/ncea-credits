@@ -13,7 +13,6 @@
 
 - (Profile *)createBlank {
     Profile *p = [[Profile alloc] init];
-    p.gradePriority = [[GradePriority alloc] initWithPropertiesOrNil:nil];
     p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:nil];
     p.customGoals = [[CustomGoals alloc] initWithPropertiesOrNil:nil];
     return p;
@@ -24,7 +23,6 @@
     p.profileName = [properties objectForKey:@"profileName"];
     p.currentYear = [[properties objectForKey:@"currentYear"] integerValue];
     p.selectedGoalTitle = [properties objectForKey:@"selectedGoalTitle"];
-    p.gradePriority = [[GradePriority alloc] initWithPropertiesOrNil:[properties objectForKey:@"gradePriority"]];
     p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:[properties objectForKey:@"yearCollection"]];
     p.customGoals = [[CustomGoals alloc] initWithPropertiesOrNil:[properties objectForKey:@"customGoals"]];
     return p;
@@ -35,7 +33,6 @@
     [properties setObject:_profileName forKey:@"profileName"];
     [properties setObject:[NSNumber numberWithInteger:_currentYear] forKey:@"currentYear"];
     [properties setObject:_selectedGoalTitle forKey:@"selectedGoalTitle"];
-    [properties setObject:[_gradePriority convertToDictionaryOfProperties] forKey:@"gradePriority"];
     [properties setObject:[_yearCollection convertToDictionaryOfProperties] forKey:@"yearCollection"];
     [properties setObject:[_customGoals convertToDictionaryOfProperties] forKey:@"customGoals"];
     
@@ -198,6 +195,10 @@
 
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject {
     return [[self getCurrentYear].assessmentCollection getAssessmentTitlesForSubject:subject];
+}
+
+- (NSArray *)getAssessmentsForSubjectOrNilForAll:(NSString *)subjectOrNil gradeText:(NSString *)gradeText gradePriorityOrFinal:(GradePriorityType)gradePriorityOrFinal {
+    return [[self getCurrentYear].assessmentCollection getAssessmentsForSubjectOrNilForAll:subjectOrNil gradeText:gradeText gradePriorityOrFinal:gradePriorityOrFinal];
 }
 
 //*

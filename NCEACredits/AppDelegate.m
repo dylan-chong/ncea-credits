@@ -61,23 +61,27 @@
 }
 
 - (void)saveCurrentProfileAndAppSettings {
-    NSData *data = [CurrentProfile convertToJSONAsRoot];
-    
-    NSString *documentsDir = [self getDocumentsDirectory];
-    NSString *currentProfileFileName = [self getFileNameWithProfileName:CurrentProfile.profileName];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDir, currentProfileFileName];
-    
-    BOOL savedProfile = [data writeToFile:filePath atomically:YES];
-    NSLog(@"Profile '%@' %@ saved.", currentProfileFileName, (savedProfile) ? @"was" : @"was not");
-    
-    //Save app settings
-    NSString *appSettingsPath = [NSString stringWithFormat:@"%@/%@", documentsDir, APP_SETTINGS_FILE_NAME_WITH_EXT];
-    CurrentAppSettings.lastProfileFileName = currentProfileFileName;
-    NSData *appSettData = [CurrentAppSettings convertToJSONAsRoot];
-    [appSettData writeToFile:appSettingsPath atomically:YES];
-    
-    BOOL savedAppSettings = [data writeToFile:filePath atomically:YES];
-    NSLog(@"App Settings %@ saved.", (savedAppSettings) ? @"was" : @"was not");
+    if (!(DEBUG_MODE_ON && NO_SAVE_MODE)) {
+        NSData *data = [CurrentProfile convertToJSONAsRoot];
+        
+        NSString *documentsDir = [self getDocumentsDirectory];
+        NSString *currentProfileFileName = [self getFileNameWithProfileName:CurrentProfile.profileName];
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDir, currentProfileFileName];
+        
+        BOOL savedProfile = [data writeToFile:filePath atomically:YES];
+        NSLog(@"Profile '%@' %@ saved.", currentProfileFileName, (savedProfile) ? @"was" : @"was not");
+        
+        //Save app settings
+        NSString *appSettingsPath = [NSString stringWithFormat:@"%@/%@", documentsDir, APP_SETTINGS_FILE_NAME_WITH_EXT];
+        CurrentAppSettings.lastProfileFileName = currentProfileFileName;
+        NSData *appSettData = [CurrentAppSettings convertToJSONAsRoot];
+        [appSettData writeToFile:appSettingsPath atomically:YES];
+        
+        BOOL savedAppSettings = [data writeToFile:filePath atomically:YES];
+        NSLog(@"App Settings %@ saved.", (savedAppSettings) ? @"was" : @"was not");
+    } else {
+        NSLog(@"Didn't save - No save mode is on.");
+    }
 }
 
 - (NSString *)getFileNameWithProfileName:(NSString *)profile {
@@ -92,7 +96,7 @@
     NSString *filePath = [NSString stringWithFormat:@"%@/%@", docDir, APP_SETTINGS_FILE_NAME_WITH_EXT];
     
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-
+    
     AppSettings *a;
     if (data) {
         NSError *e;

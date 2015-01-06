@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GradePriority.h"
 #import "YearCollection.h"
 #import "CustomGoals.h"
+#import "Grade.h"
 
 @interface Profile : ToJSONTemplate
 - (BOOL)hasAllNecessaryInformationFromSetup;
@@ -23,10 +23,11 @@
 - (void)deleteAssessment:(Assessment *)assess;
 
 @property NSString *profileName;
-@property GradePriority *gradePriority;
 - (NSDictionary *)getNumberOfAllCreditsForPriority:(GradePriorityType)priority;
 - (NSDictionary *)getNumberOfCreditsForPriority:(GradePriorityType)priority andSubject:(NSString *)subject;
 - (NSUInteger)getNumberOfCreditsForGradeIncludingBetterGrades:(NSString *)gradeText priority:(GradePriorityType)priority andLevel:(NSUInteger)level;
+
+- (NSArray *)getAssessmentsForSubjectOrNilForAll:(NSString *)subjectOrNil gradeText:(NSString *)gradeText gradePriorityOrFinal:(GradePriorityType)gradePriorityOrFinal;
 
 @property NSUInteger currentYear;
 @property YearCollection *yearCollection;

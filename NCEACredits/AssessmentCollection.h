@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ToJSONTemplate.h"
 #import "Assessment.h"
-#import "GradePriority.h"
+#import "Grade.h"
 
 @interface AssessmentCollection : ToJSONTemplate
 
@@ -30,6 +30,7 @@
 
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject;
 - (Assessment *)getAssessmentForQuickName:(NSString *)qn andSubject:(NSString *)sub;
+- (NSArray *)getAssessmentsForSubjectOrNilForAll:(NSString *)subjectOrNil gradeText:(NSString *)gradeText gradePriorityOrFinal:(GradePriorityType)gradePriorityOrFinal;
 
 - (BOOL)assessmentExistsByIdentifier:(Assessment *)assess;
 - (void)deleteAssessment:(Assessment *)assess;
