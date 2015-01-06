@@ -91,7 +91,20 @@
          ];
     }
     
-    ((TableViewCellData *) datas[0]).accessory = UITableViewCellAccessoryCheckmark;
+    BOOL goalHasBeenSelected = NO;
+    if (CurrentProfile.selectedGoalTitle) {
+        for (TableViewCellData *data in datas) {
+            if ([data.text isEqualToString:CurrentProfile.selectedGoalTitle]) {
+                data.selected = YES;
+                goalHasBeenSelected = YES;
+            }
+        }
+    }
+    
+    if (!goalHasBeenSelected) {
+        ((TableViewCellData *) datas[0]).accessory = UITableViewCellAccessoryCheckmark;
+        goalHasBeenSelected = YES;
+    }
     
     return datas;
 }
@@ -542,12 +555,12 @@
     }
     
     if (allowCancel) {
-    [alert addAction:
-     [UIAlertAction actionWithTitle:@"Cancel"
-                              style:UIAlertActionStyleCancel
-                            handler:nil]];
+        [alert addAction:
+         [UIAlertAction actionWithTitle:@"Cancel"
+                                  style:UIAlertActionStyleCancel
+                                handler:nil]];
     }
-        
+    
     alert.popoverPresentationController.sourceRect = [self.tableView rectForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
     alert.popoverPresentationController.sourceView = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
     [self presentViewController:alert animated:YES completion:nil];
