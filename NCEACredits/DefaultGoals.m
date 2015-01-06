@@ -10,7 +10,7 @@
 
 @implementation DefaultGoals
 
-+ (NSArray *)getAllGoalTitles {
++ (NSArray *)getDefaultGoalTitles {
     return @[GoalAchievement,
              GoalMeritEndorsement,
              GoalExcellenceEndorsement];

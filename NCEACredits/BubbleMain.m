@@ -29,15 +29,15 @@
         self.title.textColor = [Styles mainTextColour];
         self.title.textAlignment = NSTextAlignmentCenter;
         
-        //credit labels 45-55% height - E 13-37% width, M 38-62%, A 63-88%
+        //credit labels 45-55% height - E 9-36% width, M 36-63%, A 63-90%
         _excellenceCredits = [[BubbleMainCredits alloc] initWithFrame:
-                              CGRectMake(round(d*0.13), round(d*0.45), round(d*0.24), round(d*0.1))
+                              CGRectMake(round(d*0.09), round(d*0.45), round(d*0.27), round(d*0.1))
                                                      andGradeTextType:GradeTextExcellence];
         _meritCredits = [[BubbleMainCredits alloc] initWithFrame:
-                         CGRectMake(round(d*0.38), round(d*0.45), round(d*0.24), round(d*0.1))
+                         CGRectMake(round(d*0.36), round(d*0.45), round(d*0.27), round(d*0.1))
                                                 andGradeTextType:GradeTextMerit];
         _achievedCredits = [[BubbleMainCredits alloc] initWithFrame:
-                            CGRectMake(round(d*0.63), round(d*0.45), round(d*0.24), round(d*0.1))
+                            CGRectMake(round(d*0.63), round(d*0.45), round(d*0.27), round(d*0.1))
                                                    andGradeTextType:GradeTextAchieved];
         
         //goal 65-85% height

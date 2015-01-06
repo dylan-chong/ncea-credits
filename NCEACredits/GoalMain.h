@@ -11,6 +11,6 @@
 
 @interface GoalMain : NSObject
 
-
++ (NSArray *)getAllGoalTitles;
 
 @end

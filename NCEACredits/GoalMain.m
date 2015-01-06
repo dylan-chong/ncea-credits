@@ -12,4 +12,9 @@
 
 @implementation GoalMain
 
++ (NSArray *)getAllGoalTitles {
+    return [DefaultGoals getDefaultGoalTitles];
+    #warning TODO: return custom goals too
+}
+
 @end

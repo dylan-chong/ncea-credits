@@ -15,7 +15,7 @@
 
 @interface DefaultGoals : NSObject
 
-+ (NSArray *)getAllGoalTitles;
++ (NSArray *)getDefaultGoalTitles;
 + (Goal *)getGoalForTitle:(NSString *)goalTitle;
 
 @end

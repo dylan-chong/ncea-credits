@@ -76,7 +76,7 @@
 }
 
 - (NSArray *)getGoalCellDatas {
-    NSArray *titles = [DefaultGoals getAllGoalTitles];
+    NSArray *titles = [GoalMain getAllGoalTitles];
     NSMutableArray *datas = [[NSMutableArray alloc] init];
     
     for (NSString *s in titles) {
@@ -95,7 +95,7 @@
     if (CurrentProfile.selectedGoalTitle) {
         for (TableViewCellData *data in datas) {
             if ([data.text isEqualToString:CurrentProfile.selectedGoalTitle]) {
-                data.selected = YES;
+                data.accessory = UITableViewCellAccessoryCheckmark;
                 goalHasBeenSelected = YES;
             }
         }
