@@ -43,9 +43,9 @@ NSString *(^GradeTextForAbbreviatedGrade) (NSString *) = ^(NSString *abb) {
     
     exc = [NSString stringWithFormat:@"E: %li", (long)eCred];
     mer = [NSString stringWithFormat:@"M: %li", (long)mCred];
-    em = [NSString stringWithFormat:@"M+E: %li", eCred + mCred];
+    em = [NSString stringWithFormat:@"M+E: %i", eCred + mCred];
     ach = [NSString stringWithFormat:@"A: %li", (long)aCred];
-    ame = [NSString stringWithFormat:@"A+M+E: %li", eCred + mCred + aCred];
+    ame = [NSString stringWithFormat:@"A+M+E: %i", eCred + mCred + aCred];
     not = [NSString stringWithFormat:@"NA: %li", (long)[[creds objectForKey:GradeTextNotAchieved] integerValue]];
     non = [NSString stringWithFormat:@"None: %li", (long)[[creds objectForKey:GradeTextNone] integerValue]];
     
