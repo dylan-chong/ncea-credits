@@ -66,7 +66,14 @@
 }
 
 - (void)changeColourNavVCWillClose {
-    #warning TODO: reset subject colours
+    NSDictionary *subAndCol = [CurrentProfile getCurrentYear].subjectsAndColours.subjectsAndColours;
+    
+    for (BubbleContainer *b in self.childBubbles) {
+        UIColor *c = [subAndCol objectForKey:b.bubble.title.text];
+        b.bubble.colour = c;
+        b.colour = c;
+        [b.bubble setNeedsDisplay];
+    }
 }
 
 @end

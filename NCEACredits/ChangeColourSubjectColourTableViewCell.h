@@ -11,6 +11,7 @@
 @interface ChangeColourSubjectColourTableViewCell : UITableViewCell
 
 @property UIView *colourView;
+@property UIColor *colour;
 - (void)setColourViewColour:(UIColor *)colour;
 
 @end
