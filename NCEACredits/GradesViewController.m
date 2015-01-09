@@ -9,6 +9,9 @@
 #import "GradesViewController.h"
 #import "AssessmentsForSubjectViewController.h"
 
+#define SET_COLOUR_TITLE @"Change Colours"
+#define SET_COLOUR_COLOUR [Styles pinkColour]
+
 @implementation GradesViewController
 
 - (void)bubbleWasPressed:(BubbleContainer *)container {
@@ -21,11 +24,49 @@
         [self presentViewController:alert animated:YES completion:nil];
         
     } else {
-        
         AssessmentsForSubjectViewController *childVC = [[AssessmentsForSubjectViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
         [childVC createBubbleContainersAndAddAsSubviews];
         [self startTransitionToChildBubble:container andBubbleViewController:childVC];
     }
+}
+
+- (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andStaggered:(BOOL)staggered {
+    self = [super initWithMainBubble:mainBubble delegate:delegate andStaggered:staggered];
+    
+    if (self) {
+        //Create set colour button
+        Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
+        _setColourButton = [CornerButton cornerButtonWithTitle:SET_COLOUR_TITLE width:170 corner:c colour:SET_COLOUR_COLOUR target:self selector:@selector(setColourBubblePressed)];
+        [self.view addSubview:_setColourButton];
+    }
+    
+    return self;
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Set Colour    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)setColourBubblePressed {
+    //Show popup
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ChangeColourStoryboard" bundle:nil];
+    ChangeColourNavViewController *viewController = [storyboard instantiateInitialViewController];
+    viewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    viewController.delegateForWillCloseMethod = self;
+    
+    [self presentViewController:viewController animated:YES completion:nil];
+}
+
+- (void)changeColourNavVCWillClose {
+    #warning TODO: reset subject colours
 }
 
 @end
