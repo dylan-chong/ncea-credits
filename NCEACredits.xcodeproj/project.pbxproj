@@ -289,15 +289,13 @@
 		842C90071A5F43DA00393758 /* Grades */ = {
 			isa = PBXGroup;
 			children = (
+				842C90221A5F96F400393758 /* Extra */,
 				844CA93518AAB15A00D55F11 /* GradesViewController.h */,
 				844CA93618AAB15A00D55F11 /* GradesViewController.m */,
-				842C90171A5F5B6600393758 /* ChangeColourStoryboard.storyboard */,
 				842C90141A5F5B1500393758 /* ChangeColourNavViewController.h */,
 				842C90151A5F5B1500393758 /* ChangeColourNavViewController.m */,
 				842C90191A5F5B8C00393758 /* ChangeColourRootTableViewController.h */,
 				842C901A1A5F5B8C00393758 /* ChangeColourRootTableViewController.m */,
-				842C901F1A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.h */,
-				842C90201A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.m */,
 				842C901C1A5F5BB100393758 /* ChangeColourSetColourViewController.h */,
 				842C901D1A5F5BB100393758 /* ChangeColourSetColourViewController.m */,
 			);
@@ -313,6 +311,16 @@
 				841B88401A54E76000E86DCC /* SubjectColourPair.m */,
 			);
 			name = "Additional Files";
+			sourceTree = "<group>";
+		};
+		842C90221A5F96F400393758 /* Extra */ = {
+			isa = PBXGroup;
+			children = (
+				842C90171A5F5B6600393758 /* ChangeColourStoryboard.storyboard */,
+				842C901F1A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.h */,
+				842C90201A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.m */,
+			);
+			name = Extra;
 			sourceTree = "<group>";
 		};
 		844BCACA1881126000FC132E /* Main Bubble */ = {
