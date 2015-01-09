@@ -10,7 +10,6 @@
 #import "EditTextBubble.h"
 #import "EditTextScreenItemData.h"
 #import "Grade.h"
-#import <QuartzCore/QuartzCore.h>
 
 // type of credits only available in lvl1
 
@@ -279,24 +278,9 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
 
 - (void)createDeleteButton {
     if (!_deleteButton) {
-        CGRect f = CGRectZero;
-        f.size = CGSizeMake(70 * [Styles sizeModifier], 30 * [Styles sizeModifier]);
-        f.origin = [Styles getExactOriginForCorner:[Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]] andSize:f.size];
-        f.origin.y += [Styles statusBarHeight];
-        
-        UIButton *d = [[UIButton alloc]initWithFrame:f];
-        [d addTarget:self action:@selector(deletePressed) forControlEvents:UIControlEventTouchUpInside];
-        [d setTitle:@"Delete" forState:UIControlStateNormal];
-        [d setTitleColor:[Styles redColour] forState:UIControlStateNormal];
-        [d.titleLabel setFont:[UIFont systemFontOfSize:15 * [Styles sizeModifier]]];
-        d.titleLabel.textAlignment = NSTextAlignmentCenter;
-        
-        [[d layer] setBorderWidth:1.0 * [Styles sizeModifier]];
-        [[d layer] setBorderColor:[[Styles redColour] CGColor]];
-        [[d layer] setCornerRadius:6.0 * [Styles sizeModifier]];
-        
-        _deleteButton = d;
-        [self.view addSubview:d];
+        Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
+        _deleteButton = [CornerButton cornerButtonWithTitle:@"Delete" width:100 corner:c colour:[Styles redColour] target:self selector:@selector(deletePressed)];
+        [self.view addSubview:_deleteButton];
     }
 }
 

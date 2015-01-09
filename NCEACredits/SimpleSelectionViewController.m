@@ -7,6 +7,7 @@
 //
 
 #import "SimpleSelectionViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define SIMPLE_SELECTION_STAGGER_AMOUNT 0.73
 

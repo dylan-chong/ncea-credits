@@ -9,6 +9,7 @@
 #import "BubbleViewController.h"
 #import "Styles.h"
 #import "SubjectColourPair.h"
+#import "CornerButton.h"
 
 @interface SimpleSelectionViewController : BubbleViewController <UIGestureRecognizerDelegate>
 
