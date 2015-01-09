@@ -7,7 +7,10 @@
 //
 
 #import "SubjectsViewController.h"
+#import "ChangeColourNavViewController.h"
 
-@interface GradesViewController : SubjectsViewController
+@interface GradesViewController : SubjectsViewController <ChangeColourNavViewControllerDelegate>
+
+@property UIButton *setColourButton;
 
 @end

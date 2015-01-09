@@ -64,21 +64,22 @@ NSString *(^GradeTextForAbbreviatedGrade) (NSString *) = ^(NSString *abb) {
     }
 }
 
-- (void)bubbleWasPressed:(BubbleContainer *)container {
-    [super bubbleWasPressed:container];
-    
-    #warning TODO: list all assessments that fit criteria
-    GradePriorityType priority = [StatsCreditsViewController getGradePriorityEnumFromString:[self.delegate getTitleOfMainBubble]];
-    NSString *subjectOrTotal = self.mainBubble.bubble.title.text;
-    if ([subjectOrTotal isEqualToString:STATS_SUBJECTS_TOTAL]) subjectOrTotal = nil;
-    NSString *grade = [container.bubble.title.text componentsSeparatedByString:@":"][0];//Get text before colon
-    
-    if (![grade containsString:@"+"]) {//Ignore A+M+E and M+E
-        NSArray *assessments = [CurrentProfile getAssessmentsForSubjectOrNilForAll:subjectOrTotal gradeText:GradeTextForAbbreviatedGrade(grade) gradePriorityOrFinal:priority];
-        
-        
-    }
-}
+#warning TODO: list all assessments that fit criteria
+//- (void)bubbleWasPressed:(BubbleContainer *)container {
+//    [super bubbleWasPressed:container];
+//    
+//    
+//    GradePriorityType priority = [StatsCreditsViewController getGradePriorityEnumFromString:[self.delegate getTitleOfMainBubble]];
+//    NSString *subjectOrTotal = self.mainBubble.bubble.title.text;
+//    if ([subjectOrTotal isEqualToString:STATS_SUBJECTS_TOTAL]) subjectOrTotal = nil;
+//    NSString *grade = [container.bubble.title.text componentsSeparatedByString:@":"][0];//Get text before colon
+//    
+//    if (![grade containsString:@"+"]) {//Ignore A+M+E and M+E
+//        NSArray *assessments = [CurrentProfile getAssessmentsForSubjectOrNilForAll:subjectOrTotal gradeText:GradeTextForAbbreviatedGrade(grade) gradePriorityOrFinal:priority];
+//        
+//        
+//    }
+//}
 
 
 //*

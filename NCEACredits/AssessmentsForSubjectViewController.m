@@ -50,5 +50,4 @@
         [self startTransitionToChildBubble:container andBubbleViewController:childVC];
     }
 }
-
 @end

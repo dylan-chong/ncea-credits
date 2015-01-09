@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--NCEA Credits - Setup-->
+        <!--Setup-->
         <scene sceneID="ptf-e1-Is2">
             <objects>
                 <tableViewController modalPresentationStyle="formSheet" id="nB5-29-M5A" customClass="SetupRootController" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                             <outlet property="delegate" destination="nB5-29-M5A" id="res-t6-1K1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="NCEA Credits - Setup" id="ecC-Kq-T9n">
+                    <navigationItem key="navigationItem" title="Setup" id="ecC-Kq-T9n">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="s7D-XJ-THv">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="nB5-29-M5A" id="h9v-w2-4s6"/>

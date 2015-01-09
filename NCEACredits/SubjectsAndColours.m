@@ -84,6 +84,7 @@
 //****
 //*
 
+#warning TODO: allow changing colour
 - (void)checkOverSubjectsAndColoursWithSubjects:(NSArray *)subjectsOfAssessments {
     //Remove subjects that do not exist anymore in assessments
     NSMutableArray *subjectsAndColoursToRemove = [[NSMutableArray alloc] init];
