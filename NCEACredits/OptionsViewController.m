@@ -21,7 +21,6 @@
 
 - (void)createBubbleContainersAndAddAsSubviews {
     NSArray *titles = @[OptionsBubbleTitleShowSetup,
-                        #warning TODO: delete profile
                         OptionsBubbleTitleSwitchProfile,
                         OptionsBubbleTitleNewProfile,
                         OptionsBubbleTitleDeleteProfile,

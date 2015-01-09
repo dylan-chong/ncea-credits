@@ -19,17 +19,6 @@
     // Initialization code
     [self layoutIfNeeded];
     
-    //    //Colour View
-    //    //Size
-    //    CGRect rect;
-    //    rect.size.height = self.frame.size.height * COLOUR_HEIGHT_DECIMAL; //80% height
-    //    rect.size.width = rect.size.height;
-    //
-    //    //Position
-    //    CGFloat gap = self.frame.size.height * (1 - COLOUR_HEIGHT_DECIMAL) / 2;
-    //    rect.origin.y = gap;
-    //    rect.origin.x = self.frame.size.width - rect.size.width - gap;
-    
     UIView *c = [[UIView alloc] init];
     c.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:c];
@@ -71,11 +60,15 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    
     // Configure the view for the selected state
+    CGFloat r, g, b, a;
+    [_colour getRed:&r green:&g blue:&b alpha:&a];
+    NSLog(@"%f, %f, %f", r, g, b);
+    [_colourView setBackgroundColor:_colour];
 }
 
 - (void)setColourViewColour:(UIColor *)colour {
+    _colour = colour;
     [_colourView setBackgroundColor:colour];
 }
 

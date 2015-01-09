@@ -149,6 +149,7 @@
 }
 
 - (void)setColour:(UIColor *)colour forSubject:(NSString *)subject {
+    if ([_subjectsAndColours objectForKey:subject]) [_subjectsAndColours removeObjectForKey:subject];
     [_subjectsAndColours setObject:colour forKey:subject];
 }
 

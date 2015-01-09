@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3DC-WZ-GOd">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Subject/Colour Picker-->
@@ -42,16 +43,21 @@
                                 <action selector="cancelButtonPressed:" destination="5M5-Dm-5rs" id="dDd-VC-IUa"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="b6S-4V-zXG">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="5M5-Dm-5rs" id="Miv-qO-52Y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1aH-uk-XDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="777" y="392"/>
         </scene>
-        <!--View Controller-->
+        <!--Some subject will appear here-->
         <scene sceneID="2CA-f0-4tC">
             <objects>
-                <viewController id="4do-o3-ZqU" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="4do-o3-ZqU" customClass="ChangeColourSetColourViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EiI-IW-TYI"/>
                         <viewControllerLayoutGuide type="bottom" id="fhQ-rk-9kv"/>
@@ -59,8 +65,23 @@
                     <view key="view" contentMode="scaleToFill" id="Y2M-WM-SGW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Of5-gb-6EO">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fhQ-rk-9kv" firstAttribute="top" secondItem="Of5-gb-6EO" secondAttribute="bottom" id="2Og-lq-dov"/>
+                            <constraint firstItem="Of5-gb-6EO" firstAttribute="top" secondItem="EiI-IW-TYI" secondAttribute="bottom" id="679-Ru-AZ5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Of5-gb-6EO" secondAttribute="trailing" constant="-16" id="Bxc-2w-GIV"/>
+                            <constraint firstItem="Of5-gb-6EO" firstAttribute="leading" secondItem="Y2M-WM-SGW" secondAttribute="leadingMargin" constant="-16" id="nl3-cx-zHZ"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Some subject will appear here" id="t9z-Ml-4Dk"/>
+                    <connections>
+                        <outlet property="colourView" destination="Of5-gb-6EO" id="CPd-nx-Znc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQc-D4-D8W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

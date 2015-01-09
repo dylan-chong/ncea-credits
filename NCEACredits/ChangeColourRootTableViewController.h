@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ChangeColourSetColourViewController.h"
 
-@interface ChangeColourRootTableViewController : UITableViewController
+@interface ChangeColourRootTableViewController : UITableViewController <ChangeColourSetColourViewControllerDelegate>
 
-@property (weak) NSDictionary *subAndCol;
+@property (weak) NSMutableDictionary *subAndCol;
 @property NSArray *subjects;
 
 @end

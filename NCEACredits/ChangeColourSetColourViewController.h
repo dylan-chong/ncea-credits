@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ChangeColourSetColourViewControllerDelegate <NSObject>
+
+- (void)setColourVCWillCloseWithSelectedColour:(UIColor *)colour andSubject:(NSString *)subject;
+
+@end
+
 @interface ChangeColourSetColourViewController : UIViewController
+
+@property NSArray *colourButtons;
+@property id<ChangeColourSetColourViewControllerDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UIScrollView *colourView;
 
 @end

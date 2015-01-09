@@ -13,6 +13,7 @@
 #import "Grade.h"
 
 #define NEW_SUBJECT_TITLE @"New Subject"
+#define CANCEL_BUTTON_TITLE @"Cancel"
 #define TOO_LONG_CHARACTERS 14
 
 @implementation EditTextEditScreen
@@ -178,6 +179,8 @@
             [e raise];
         }
         
+        titles = [titles arrayByAddingObject:CANCEL_BUTTON_TITLE];
+        
         _buttons = [EditTextEditScreen getArrayOfControlsWithTexts:titles andTarget:self];
     }
     
@@ -238,7 +241,11 @@
         [_text setText:@""];
         [self hide];
     }
-    else if ([sender.titleLabel.text isEqualToString:NEW_SUBJECT_TITLE]) [self newSubjectPressed];
+    else if ([sender.titleLabel.text isEqualToString:NEW_SUBJECT_TITLE])
+        [self newSubjectPressed];
+    else if ([sender.titleLabel.text isEqualToString:CANCEL_BUTTON_TITLE]) {
+        //Do nothing on cancel
+    }
     else [self setTextFieldText:sender.titleLabel.text];
 }
 
@@ -283,6 +290,18 @@
         
         return NO;
     }
+    
+    //they typed in new subject
+    if ([newSub isEqualToString:NEW_SUBJECT_TITLE] ||
+        [newSub isEqualToString:CANCEL_BUTTON_TITLE] ||
+        [newSub isEqualToString:GradeTextTitleNone]) {
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"OK. You're very lucky I thought about this before you did. Imagine what could've happened if I didn't! You could've broken the VERY FOUNDATIONS of NCEA Credits! You would be completely screwed! And so would the whole world for that matter. Then what would you do?\n\n Very lucky." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self.delegate showAlert:alert];
+        return NO;
+    }
+
     
     [self showAlertIfTooLong:newSub];
     

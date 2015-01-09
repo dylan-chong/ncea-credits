@@ -15,5 +15,6 @@
 @interface ChangeColourNavViewController : UINavigationController
 
 @property id<ChangeColourNavViewControllerDelegate> delegateForWillCloseMethod;
+- (void)callDelegateForWillClose;
 
 @end
