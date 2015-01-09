@@ -243,9 +243,8 @@
     }
     else if ([sender.titleLabel.text isEqualToString:NEW_SUBJECT_TITLE])
         [self newSubjectPressed];
-    else if ([sender.titleLabel.text isEqualToString:CANCEL_BUTTON_TITLE]) {
-        //Do nothing on cancel
-    }
+    else if ([sender.titleLabel.text isEqualToString:CANCEL_BUTTON_TITLE])
+        [self hide];
     else [self setTextFieldText:sender.titleLabel.text];
 }
 
