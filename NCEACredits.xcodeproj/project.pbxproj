@@ -20,6 +20,12 @@
 		841DAE0718B3123700626302 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DAE0618B3123700626302 /* AddViewController.m */; };
 		841DAE0A18B312AC00626302 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DAE0918B312AC00626302 /* EditTextViewController.m */; };
 		84265A6C1904A32000141564 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84265A6B1904A32000141564 /* QuartzCore.framework */; };
+		842C90131A5F532400393758 /* CornerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C90121A5F532400393758 /* CornerButton.m */; };
+		842C90161A5F5B1500393758 /* ChangeColourNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C90151A5F5B1500393758 /* ChangeColourNavViewController.m */; };
+		842C90181A5F5B6600393758 /* ChangeColourStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842C90171A5F5B6600393758 /* ChangeColourStoryboard.storyboard */; };
+		842C901B1A5F5B8C00393758 /* ChangeColourRootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C901A1A5F5B8C00393758 /* ChangeColourRootTableViewController.m */; };
+		842C901E1A5F5BB100393758 /* ChangeColourSetColourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C901D1A5F5BB100393758 /* ChangeColourSetColourViewController.m */; };
+		842C90211A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 842C90201A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.m */; };
 		8437DAF51A4245F700E261E2 /* EditAssessmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8437DAF41A4245F700E261E2 /* EditAssessmentViewController.m */; };
 		8442D2E31A482930003C0C2D /* GoalGradeReqAndLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8442D2E21A482930003C0C2D /* GoalGradeReqAndLevel.m */; };
 		8442D2E61A48D81C003C0C2D /* AppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8442D2E51A48D81C003C0C2D /* AppSettings.m */; };
@@ -118,6 +124,17 @@
 		841DAE0818B312AC00626302 /* EditTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextViewController.h; sourceTree = "<group>"; };
 		841DAE0918B312AC00626302 /* EditTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextViewController.m; sourceTree = "<group>"; };
 		84265A6B1904A32000141564 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		842C90111A5F532400393758 /* CornerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CornerButton.h; sourceTree = "<group>"; };
+		842C90121A5F532400393758 /* CornerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CornerButton.m; sourceTree = "<group>"; };
+		842C90141A5F5B1500393758 /* ChangeColourNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeColourNavViewController.h; sourceTree = "<group>"; };
+		842C90151A5F5B1500393758 /* ChangeColourNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeColourNavViewController.m; sourceTree = "<group>"; };
+		842C90171A5F5B6600393758 /* ChangeColourStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeColourStoryboard.storyboard; sourceTree = "<group>"; };
+		842C90191A5F5B8C00393758 /* ChangeColourRootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeColourRootTableViewController.h; sourceTree = "<group>"; };
+		842C901A1A5F5B8C00393758 /* ChangeColourRootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeColourRootTableViewController.m; sourceTree = "<group>"; };
+		842C901C1A5F5BB100393758 /* ChangeColourSetColourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeColourSetColourViewController.h; sourceTree = "<group>"; };
+		842C901D1A5F5BB100393758 /* ChangeColourSetColourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeColourSetColourViewController.m; sourceTree = "<group>"; };
+		842C901F1A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeColourSubjectColourTableViewCell.h; sourceTree = "<group>"; };
+		842C90201A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeColourSubjectColourTableViewCell.m; sourceTree = "<group>"; };
 		8437DAF31A4245F700E261E2 /* EditAssessmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditAssessmentViewController.h; sourceTree = "<group>"; };
 		8437DAF41A4245F700E261E2 /* EditAssessmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAssessmentViewController.m; sourceTree = "<group>"; };
 		8442D2E11A482930003C0C2D /* GoalGradeReqAndLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalGradeReqAndLevel.h; sourceTree = "<group>"; };
@@ -267,6 +284,35 @@
 				840D5870188216B200DE24B7 /* AnimationObject.m */,
 			);
 			name = Animation;
+			sourceTree = "<group>";
+		};
+		842C90071A5F43DA00393758 /* Grades */ = {
+			isa = PBXGroup;
+			children = (
+				844CA93518AAB15A00D55F11 /* GradesViewController.h */,
+				844CA93618AAB15A00D55F11 /* GradesViewController.m */,
+				842C90171A5F5B6600393758 /* ChangeColourStoryboard.storyboard */,
+				842C90141A5F5B1500393758 /* ChangeColourNavViewController.h */,
+				842C90151A5F5B1500393758 /* ChangeColourNavViewController.m */,
+				842C90191A5F5B8C00393758 /* ChangeColourRootTableViewController.h */,
+				842C901A1A5F5B8C00393758 /* ChangeColourRootTableViewController.m */,
+				842C901F1A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.h */,
+				842C90201A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.m */,
+				842C901C1A5F5BB100393758 /* ChangeColourSetColourViewController.h */,
+				842C901D1A5F5BB100393758 /* ChangeColourSetColourViewController.m */,
+			);
+			name = Grades;
+			sourceTree = "<group>";
+		};
+		842C90101A5F530700393758 /* Additional Files */ = {
+			isa = PBXGroup;
+			children = (
+				842C90111A5F532400393758 /* CornerButton.h */,
+				842C90121A5F532400393758 /* CornerButton.m */,
+				841B883F1A54E76000E86DCC /* SubjectColourPair.h */,
+				841B88401A54E76000E86DCC /* SubjectColourPair.m */,
+			);
+			name = "Additional Files";
 			sourceTree = "<group>";
 		};
 		844BCACA1881126000FC132E /* Main Bubble */ = {
@@ -476,8 +522,7 @@
 				84B5A2D11880D96300969952 /* BubbleViewController.m */,
 				8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */,
 				8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */,
-				841B883F1A54E76000E86DCC /* SubjectColourPair.h */,
-				841B88401A54E76000E86DCC /* SubjectColourPair.m */,
+				842C90101A5F530700393758 /* Additional Files */,
 				8470DD2F1A46736900266654 /* AssessmentsForSubjectViewController.h */,
 				8470DD301A46736900266654 /* AssessmentsForSubjectViewController.m */,
 				8482D7FD1A46501B00F1CD6D /* SubjectsViewController.h */,
@@ -494,10 +539,9 @@
 				84B5A2D61880D98200969952 /* MainViewController.m */,
 				841DAE0518B3123700626302 /* AddViewController.h */,
 				841DAE0618B3123700626302 /* AddViewController.m */,
-				844CA93518AAB15A00D55F11 /* GradesViewController.h */,
-				844CA93618AAB15A00D55F11 /* GradesViewController.m */,
 				84AD67DF1A4E808100F58333 /* OptionsViewController.h */,
 				84AD67E01A4E808100F58333 /* OptionsViewController.m */,
+				842C90071A5F43DA00393758 /* Grades */,
 				84AD67E81A5127F700F58333 /* Stats */,
 			);
 			name = "View Controllers";
@@ -647,6 +691,7 @@
 				840D587618834B0300DE24B7 /* Stats.png in Resources */,
 				8470DD2B1A466FC300266654 /* Launch Screen.xib in Resources */,
 				84B5A2841880D8AD00969952 /* InfoPlist.strings in Resources */,
+				842C90181A5F5B6600393758 /* ChangeColourStoryboard.storyboard in Resources */,
 				84AD67DE1A4E23B300F58333 /* Loading-Text.png in Resources */,
 				84B64E4818B46CD10061ED9D /* Comfortaa-Regular.ttf in Resources */,
 				8459E88C196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard in Resources */,
@@ -683,8 +728,10 @@
 				84B5A2BC1880D91000969952 /* Styles+Layout.m in Sources */,
 				8442D2E61A48D81C003C0C2D /* AppSettings.m in Sources */,
 				84AD67EB1A51281100F58333 /* StatsSubjectsViewController.m in Sources */,
+				842C90211A5F704A00393758 /* ChangeColourSubjectColourTableViewCell.m in Sources */,
 				840D5874188240A700DE24B7 /* GoalTitle.m in Sources */,
 				84B5A2CB1880D93100969952 /* Bubble.m in Sources */,
+				842C90161A5F5B1500393758 /* ChangeColourNavViewController.m in Sources */,
 				84C7B3BC1943E45400B8DCD8 /* EditTextScreenItemData.m in Sources */,
 				8470DD311A46736900266654 /* AssessmentsForSubjectViewController.m in Sources */,
 				8445E4081A402344002BDA5E /* ToJSONTemplate.m in Sources */,
@@ -693,6 +740,7 @@
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
 				8442D2E31A482930003C0C2D /* GoalGradeReqAndLevel.m in Sources */,
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
+				842C90131A5F532400393758 /* CornerButton.m in Sources */,
 				8482D7F31A4534C200F1CD6D /* GoalMain.m in Sources */,
 				84B5A2B91880D91000969952 /* Styles.m in Sources */,
 				840440391971FF2100CC390E /* TableViewCellData.m in Sources */,
@@ -704,8 +752,10 @@
 				845C40DE19481350001B1499 /* YearCollection.m in Sources */,
 				84AD67E11A4E808100F58333 /* OptionsViewController.m in Sources */,
 				84E084A4193F235E00A4DF45 /* FlickScroller.m in Sources */,
+				842C901B1A5F5B8C00393758 /* ChangeColourRootTableViewController.m in Sources */,
 				8437DAF51A4245F700E261E2 /* EditAssessmentViewController.m in Sources */,
 				8404403C1972781C00CC390E /* DefaultGoals.m in Sources */,
+				842C901E1A5F5BB100393758 /* ChangeColourSetColourViewController.m in Sources */,
 				849D3D231880F2810030D432 /* AnchorView.m in Sources */,
 				84FF925918A08F5B00988F62 /* Profile.m in Sources */,
 				840D586D18820C5200DE24B7 /* AnimationManager.m in Sources */,
