@@ -21,7 +21,7 @@
 #define DEBUG_MODE_ON YES
 #define MAKE_FAKE_ASSESSMENTS NO
 #define SPEED_MODE NO //speed mode takes precedence over slow
-#define SLOW_MODE NO
+#define SLOW_MODE YES
 #define NO_SAVE_MODE NO
 
 
