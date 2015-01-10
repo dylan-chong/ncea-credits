@@ -131,7 +131,7 @@
     
     float left = space  ;
     float right = screen.width - space ;
-    float top = space + [Styles statusBarHeight];
+    float top = space + [ApplicationDelegate getStatusBarHeight];
     float bottom = screen.height - space - size.height;
     
     if (towardsRight) {

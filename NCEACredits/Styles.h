@@ -104,6 +104,7 @@ typedef NS_ENUM(NSInteger, Device) {
 + (UIColor *)lightBlueColour;
 + (UIColor *)mediumDarkGreyColour;
 + (UIColor *)mediumLightGreyColour;
++ (UIColor *)goldColour;
 
 + (BOOL)colour:(UIColor *)colourA isTheSameAsColour:(UIColor *)colourB;
 + (NSArray *)getSortedDefaultColours;
@@ -138,6 +139,5 @@ typedef NS_ENUM(NSInteger, Device) {
 + (CGSize)editTextBubbleSize;
 + (float)numberOfItemsInSelectionViewPer100px;
 + (NSUInteger)minimumItemsPerSelectionPage;
-+ (CGFloat)statusBarHeight;
 
 @end

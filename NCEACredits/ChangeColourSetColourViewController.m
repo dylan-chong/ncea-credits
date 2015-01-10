@@ -12,8 +12,9 @@
 
 //Must be 2 out of 3 - n per row, gap size, width
 //#define COLOURS_PER_ROW 4
-#define COLOUR_WIDTH 120 * [Styles sizeModifier]
+#define COLOUR_WIDTH 60 //* [Styles sizeModifier]
 #define GAP_SIZE 30 * [Styles sizeModifier]
+
 
 @interface ChangeColourSetColourViewController ()
 

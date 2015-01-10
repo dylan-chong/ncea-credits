@@ -202,8 +202,4 @@
     //Don't set too high other wise it may be impossible to get a number of items per page
 }
 
-+ (CGFloat)statusBarHeight {
-    return [[UIApplication sharedApplication] statusBarFrame].size.height;
-}
-
 @end

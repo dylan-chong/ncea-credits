@@ -11,6 +11,8 @@
 @interface CornerButton : UIButton
 
 + (CornerButton *)cornerButtonWithTitle:(NSString *)title width:(CGFloat)width corner:(Corner)corner colour:(UIColor *)colour target:(id)target selector:(SEL)selector;
+- (void)reposition;
+@property Corner buttonCorner;
 @property UIColor *colour;
 
 @end

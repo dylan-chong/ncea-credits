@@ -11,6 +11,6 @@
 
 @interface GradesViewController : SubjectsViewController <ChangeColourNavViewControllerDelegate>
 
-@property UIButton *setColourButton;
+@property CornerButton *setColourButton;
 
 @end

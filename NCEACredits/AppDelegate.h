@@ -19,6 +19,7 @@
 @property (nonatomic) Profile *currentProfile;
 @property (nonatomic) CGSize screenSize;
 @property (nonatomic) AppSettings *appSettings;
+@property CGFloat statusBarHeight;
 
 - (Profile *)getCurrentProfile;
 - (AppSettings *)getAppSettings;
@@ -31,5 +32,6 @@
 - (void)setScreenSize:(CGSize)size;
 - (CGSize)getScreenSize;
 - (BOOL)deviceIsInLandscape;
+- (CGFloat)getStatusBarHeight;
 
 @end

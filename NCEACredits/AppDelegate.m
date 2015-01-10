@@ -213,6 +213,19 @@
     else return NO;
 }
 
+- (CGFloat)getStatusBarHeight {
+    //try any store height if possible
+    if ((_statusBarHeight && _statusBarHeight == 0) || !_statusBarHeight) {
+        _statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    }
+    
+    if ([self deviceIsInLandscape] && [Styles getDevice] == iPhone) {
+        return 0;
+    } else {
+        return _statusBarHeight;
+    }
+}
+
 //*
 //****
 //*********

@@ -15,9 +15,10 @@
     CGRect f = CGRectZero;
     f.size = CGSizeMake(width * [Styles sizeModifier], 40 * [Styles sizeModifier]);
     f.origin = [Styles getExactOriginForCorner:corner andSize:f.size];
-    f.origin.y += [Styles statusBarHeight];
+    f.origin.y += [ApplicationDelegate getStatusBarHeight];
     
     CornerButton *cornerB = [[CornerButton alloc] initWithFrame:f andColour:colour];
+    cornerB.buttonCorner = corner;
     //Highlight colour and other events
     [cornerB setBackgroundColor:[UIColor whiteColor]];
     [cornerB addTarget:cornerB action:@selector(highlight) forControlEvents:UIControlEventTouchDown];
@@ -60,6 +61,13 @@
     [UIView animateWithDuration:0.1 animations:^{
         [self setBackgroundColor:[UIColor whiteColor]];
     }];
+}
+
+- (void)reposition {
+    CGRect f = self.frame;
+    f.origin = [Styles getExactOriginForCorner:_buttonCorner andSize:f.size];
+    f.origin.y += [ApplicationDelegate getStatusBarHeight];
+    self.frame = f;
 }
 
 @end
