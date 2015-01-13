@@ -43,9 +43,9 @@ NSString *(^GradeTextForAbbreviatedGrade) (NSString *) = ^(NSString *abb) {
     
     exc = [NSString stringWithFormat:@"E: %li", (long)eCred];
     mer = [NSString stringWithFormat:@"M: %li", (long)mCred];
-    em = [NSString stringWithFormat:@"M+E: %i", eCred + mCred];
+    em = [NSString stringWithFormat:@"M+E: %li", (long)eCred + mCred];
     ach = [NSString stringWithFormat:@"A: %li", (long)aCred];
-    ame = [NSString stringWithFormat:@"A+M+E: %i", eCred + mCred + aCred];
+    ame = [NSString stringWithFormat:@"A+M+E: %li", (long)eCred + mCred + aCred];
     not = [NSString stringWithFormat:@"NA: %li", (long)[[creds objectForKey:GradeTextNotAchieved] integerValue]];
     non = [NSString stringWithFormat:@"None: %li", (long)[[creds objectForKey:GradeTextNone] integerValue]];
     
@@ -65,21 +65,34 @@ NSString *(^GradeTextForAbbreviatedGrade) (NSString *) = ^(NSString *abb) {
 }
 
 #warning TODO: list all assessments that fit criteria
-//- (void)bubbleWasPressed:(BubbleContainer *)container {
-//    [super bubbleWasPressed:container];
-//    
-//    
-//    GradePriorityType priority = [StatsCreditsViewController getGradePriorityEnumFromString:[self.delegate getTitleOfMainBubble]];
-//    NSString *subjectOrTotal = self.mainBubble.bubble.title.text;
-//    if ([subjectOrTotal isEqualToString:STATS_SUBJECTS_TOTAL]) subjectOrTotal = nil;
-//    NSString *grade = [container.bubble.title.text componentsSeparatedByString:@":"][0];//Get text before colon
-//    
-//    if (![grade containsString:@"+"]) {//Ignore A+M+E and M+E
-//        NSArray *assessments = [CurrentProfile getAssessmentsForSubjectOrNilForAll:subjectOrTotal gradeText:GradeTextForAbbreviatedGrade(grade) gradePriorityOrFinal:priority];
-//        
-//        
-//    }
-//}
+- (void)bubbleWasPressed:(BubbleContainer *)container {
+    [super bubbleWasPressed:container];
+    
+    
+    GradePriorityType priority = [StatsCreditsViewController getGradePriorityEnumFromString:[self.delegate getTitleOfMainBubble]];
+    NSString *subjectOrTotal = self.mainBubble.bubble.title.text;
+    NSString *grade = [container.bubble.title.text componentsSeparatedByString:@":"][0];//Get text before colon
+    
+    if (![grade containsString:@"+"]) {//Ignore A+M+E and M+E
+        
+        if ([subjectOrTotal isEqualToString:STATS_SUBJECTS_TOTAL])
+            subjectOrTotal = nil;
+        
+        
+    }
+    
+    NSArray *assessments = [CurrentProfile getAssessmentsForSubjectOrNilForAll:subjectOrTotal gradeText:GradeTextForAbbreviatedGrade(grade) gradePriorityOrFinal:priority];
+    
+    if (assessments && assessments.count > 0) {
+        //Assessments
+        
+    } else {
+        //No assessments
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"It appears you don't have any assessments for this grade." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
 
 
 //*

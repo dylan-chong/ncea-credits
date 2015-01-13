@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol AnimationManagerDelegate <NSObject>
-- (void)animationHasFinished:(int)tag;
+- (void)animationHasFinished:(NSInteger)tag;
 @end
 
 @interface AnimationManager : NSObject
@@ -22,7 +22,7 @@
 @property NSArray *distances;
 @property BOOL animationHasFinished, animationShouldStopMidway;
 
-- (id)initWithAnimationObjects:(NSArray *)a length:(float)length tag:(int)tag andDelegate:(id)d;
+- (id)initWithAnimationObjects:(NSArray *)a length:(float)length tag:(NSInteger)tag andDelegate:(id)d;
 - (void)startAnimation;
 - (void)stopAnimationMidWay;
 

@@ -38,9 +38,24 @@
 + (float)startingScaleFactor {  return 0.01;    }
 + (float)mainBubbleStartingScaleFactor {    return 0.25; } //changing this will require changing launch image size (340 * this * sizeModifier * 0.75)
 + (float)animationSpeed {
-    if (SPEED_MODE && DEBUG_MODE_ON) return 0.15;
-    else if (SLOW_MODE && DEBUG_MODE_ON) return 0.5;
-    else return 0.3;
+    return [Styles getAnimationSpeedWithSelection:CurrentAppSettings.animationSpeed];
+}
+
++ (float)getAnimationSpeedWithSelection:(AnimationSpeedSelection)selection {
+    switch (selection) {
+        case AnimationSpeedSelectionFaster:
+            return ANIMATION_SPEED_SELECTION_NORMAL - (2 * ANIMATION_SPEED_SELECTION_INCREMENT);
+        case AnimationSpeedSelectionFast:
+            return ANIMATION_SPEED_SELECTION_NORMAL - (1 * ANIMATION_SPEED_SELECTION_INCREMENT);
+            
+        case AnimationSpeedSelectionSlow:
+            return ANIMATION_SPEED_SELECTION_NORMAL + (1 * ANIMATION_SPEED_SELECTION_INCREMENT);
+        case AnimationSpeedSelectionSlower:
+            return ANIMATION_SPEED_SELECTION_NORMAL + (2 * ANIMATION_SPEED_SELECTION_INCREMENT);
+            
+        default:
+            return ANIMATION_SPEED_SELECTION_NORMAL;
+    }
 }
 
 + (double)frameRate {

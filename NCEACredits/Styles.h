@@ -26,6 +26,16 @@ typedef NS_ENUM(NSInteger, Device) {
     iPhone
 };
 
+#define ANIMATION_SPEED_SELECTION_INCREMENT 0.1
+#define ANIMATION_SPEED_SELECTION_NORMAL 0.3
+typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
+    AnimationSpeedSelectionNormal = 1,
+    AnimationSpeedSelectionFaster,
+    AnimationSpeedSelectionFast,
+    AnimationSpeedSelectionSlow,
+    AnimationSpeedSelectionSlower
+};
+
 //*
 //****
 //*********
@@ -91,7 +101,6 @@ typedef NS_ENUM(NSInteger, Device) {
 @interface Styles (Colours)
 
 + (UIColor *)mainTextColour;
-+ (UIColor *)cyanColour;
 + (UIColor *)greenColour;
 + (UIColor *)orangeColour;
 + (UIColor *)pinkColour;

@@ -409,7 +409,7 @@
     return YES;
 }
 
-+ (BOOL)yearIsPrime:(int)year {
++ (BOOL)yearIsPrime:(NSInteger)year {
     double divided = year / 4.0;
     
     if (round(divided) == divided)
@@ -478,7 +478,7 @@
     return array;
 }
 
-+ (CGRect)getNumpadButtonFrameWithIndex:(int)index andSize:(CGSize)size {
++ (CGRect)getNumpadButtonFrameWithIndex:(NSInteger)index andSize:(CGSize)size {
     CGRect r;
     
     float cols = 5;

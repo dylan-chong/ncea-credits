@@ -74,7 +74,7 @@
     return m;
 }
 
-+ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andStaggered:(BOOL)staggered {
++ (CGRect)getPositionOfObjectAtIndex:(NSInteger)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andStaggered:(BOOL)staggered {
     double angleFromOrigin = 90.0 * ((index + 1.0) / (bubbles + 1.0));
     if (corner == TopLeft || corner == TopRight) //Order appears backwards when mainbubble is at top - flip order
         angleFromOrigin = 90 - angleFromOrigin;

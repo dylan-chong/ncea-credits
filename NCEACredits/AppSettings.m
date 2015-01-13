@@ -22,6 +22,8 @@
     as.lastEnteredSubject = @"";
     as.lastEnteredWasInternal = YES;
     
+    as.animationSpeed = AnimationSpeedSelectionNormal;
+    
     return as;
 }
 
@@ -37,6 +39,11 @@
     as.lastEnteredSubject = [properties objectForKey:@"lastEnteredSubject"];
     as.lastEnteredWasInternal = [[properties objectForKey:@"lastEnteredWasInternal"] boolValue];
     
+    //animation speed is new so must account for not existing
+    NSNumber *animSpeed = [properties objectForKey:@"animationSpeed"];
+    if (animSpeed) as.animationSpeed = [animSpeed integerValue];
+    else as.animationSpeed = AnimationSpeedSelectionNormal;
+    
     return as;
 }
 
@@ -51,6 +58,8 @@
     [properties setObject:_lastEnteredPrelimGrade forKey:@"lastEnteredPrelimGrade"];
     [properties setObject:_lastEnteredSubject forKey:@"lastEnteredSubject"];
     [properties setObject:[NSNumber numberWithBool:_lastEnteredWasInternal] forKey:@"lastEnteredWasInternal"];
+    
+    [properties setObject:[NSNumber numberWithBool:_animationSpeed] forKey:@"animationSpeed"];
     
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];

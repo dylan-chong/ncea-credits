@@ -55,7 +55,7 @@
     [self startChildBubbleCreationAnimation];
 }
 
-- (void)setupWillBeDismissed {
+- (void)setuphasBeenDismissed {
     //Setup VC delegate method
     [self startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup];
 }

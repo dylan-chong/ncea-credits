@@ -18,10 +18,8 @@
 
 
 //Disabling debug mode should disable all others too
-#define DEBUG_MODE_ON YES
+#define DEBUG_MODE_ON NO
 #define MAKE_FAKE_ASSESSMENTS NO
-#define SPEED_MODE NO //speed mode takes precedence over slow
-#define SLOW_MODE YES
 #define NO_SAVE_MODE NO
 
 

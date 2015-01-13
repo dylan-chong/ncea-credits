@@ -21,6 +21,7 @@
     _shouldDelayCreationAnimation = NO;
     _isDoingAnimation = YES; //Stops the automatic reposition bubbles animation, but not the creation animation
     _hasDoneCreationAnimation = NO;
+    _hasInitiatedCreationAnimation = NO;
     return self;
 }
 
@@ -79,11 +80,13 @@
 }
 
 - (void)repositionBubbles {
-    CGSize screen = [ApplicationDelegate getScreenSize];
-    _anchors.frame = CGRectMake(0, 0, screen.width, screen.height);
-    [self redrawAnchors];
-    
-    [self animateRepositionObjects];
+//    if (_hasDoneCreationAnimation) {
+        CGSize screen = [ApplicationDelegate getScreenSize];
+        _anchors.frame = CGRectMake(0, 0, screen.width, screen.height);
+        [self redrawAnchors];
+        
+        [self animateRepositionObjects];
+//    }
 }
 
 - (void)setAnimationManager:(AnimationManager *)animationManager {
@@ -109,7 +112,9 @@
 //*
 
 - (void)startChildBubbleCreationAnimation {
-    if (!_shouldDelayCreationAnimation && !_hasDoneCreationAnimation) {
+    if (!_shouldDelayCreationAnimation && !_hasDoneCreationAnimation && !_hasInitiatedCreationAnimation) {
+        _hasInitiatedCreationAnimation = YES;
+        
         NSArray *a = [[NSArray alloc] init];
         for (BubbleContainer *b in _childBubbles) {
             a = [a arrayByAddingObjectsFromArray:[b getAnimationObjectsForSlidingAnimation]];
@@ -122,11 +127,11 @@
         
         //Only works on main vc
         if ([self class] == [MainViewController class])
-        [NSTimer scheduledTimerWithTimeInterval:[Styles animationSpeed] / 2
-                                         target:self.mainBubble
-                                       selector:@selector(startGrowingMainBubbleAnimation)
-                                       userInfo:nil
-                                        repeats:NO];
+            [NSTimer scheduledTimerWithTimeInterval:[Styles animationSpeed] / 2
+                                             target:self.mainBubble
+                                           selector:@selector(startGrowingMainBubbleAnimation)
+                                           userInfo:nil
+                                            repeats:NO];
     }
 }
 
@@ -148,7 +153,7 @@
     }
 }
 
-- (void)animationHasFinished:(int)tag {
+- (void)animationHasFinished:(NSInteger)tag {
     if (tag == 1) {
         [self startGrowingAnimation];
     } else if (tag == 2) {

@@ -10,7 +10,7 @@
 
 @protocol SetupRootControllerDelegate <NSObject>
 
-- (void)setupWillBeDismissed;
+- (void)setuphasBeenDismissed;
 
 @end
 

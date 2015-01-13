@@ -13,7 +13,7 @@
 
 @implementation AnimationManager
 
-- (id)initWithAnimationObjects:(NSArray *)a length:(float)length tag:(int)tag andDelegate:(id)d {
+- (id)initWithAnimationObjects:(NSArray *)a length:(float)length tag:(NSInteger)tag andDelegate:(id)d {
     self = [super init];
     
     if (self) {
@@ -32,7 +32,7 @@
 
 - (void)setUpDistanceArray {
     NSMutableArray *m = [[NSMutableArray alloc] init];
-    for (int a = 0; a <= _animationTime * [Styles frameRate] + EXTRA_FRAMES; a++) {
+    for (NSInteger a = 0; a <= _animationTime * [Styles frameRate] + EXTRA_FRAMES; a++) {
         [m addObject:
          [NSNumber numberWithDouble:
           [self getAnimationDistanceForStage:a]]];
@@ -41,7 +41,7 @@
     _distances = m;
 }
 
-- (double)getAnimationDistanceForStage:(int)stage {
+- (double)getAnimationDistanceForStage:(NSInteger)stage {
     if (stage < _animationTime * 15) {
         return (2.0/9)*pow(stage, 2)*pow(1.0/_animationTime, 2);
     } else {

@@ -512,7 +512,7 @@
         [self currentYearSelectedAndAllowCancelButton:NO];
     } else {
         NSInteger onlyYear = [((TableViewCellData *)_yearCells[0]).text integerValue];
-        NSString *onlyYearString = [NSString stringWithFormat:@"%i", onlyYear];
+        NSString *onlyYearString = [NSString stringWithFormat:@"%li", (long)onlyYear];
         ((TableViewCellData *)_generalCells[1]).detail = onlyYearString;
         [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]].detailTextLabel.text = onlyYearString;
     }
@@ -626,13 +626,18 @@
 //****
 //*
 
-- (void)closeSetupWithoutFurtherAdo {
-    [_delegate setupWillBeDismissed];
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)closeSetupWithoutFurtherAdoAndHasSaved:(BOOL)saved {
+    if (saved) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [_delegate setuphasBeenDismissed];
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
-    [self closeSetupWithoutFurtherAdo];
+    [self closeSetupWithoutFurtherAdoAndHasSaved:NO];
 }
 
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
@@ -648,14 +653,14 @@
             if (shouldShowHelp) {
                 //Welcome message
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Welcome to %@!", AppName]
-                                                                               message:@"- Tap the green add button to create an assessment\n- Enter details like its subject and name\n- Then, tap the add button again to save.\n\nDon't forget that grades and the AS Number are optional - you can always set them later.\n\nHappy credit counting!"
+                                                                               message:@"- Tap the green add button to create an assessment\n- Enter details like its subject and name\n- Then, tap save.\n\nDon't forget that grades and the AS Number are optional - you can always set them later.\n\nHappy credit counting!"
                                                                         preferredStyle:UIAlertControllerStyleAlert];
                 [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                    [self closeSetupWithoutFurtherAdo];
+                    [self closeSetupWithoutFurtherAdoAndHasSaved:YES];
                 }]];
                 [self presentViewController:alert animated:YES completion:nil];
             } else {
-                [self closeSetupWithoutFurtherAdo];
+                [self closeSetupWithoutFurtherAdoAndHasSaved:YES];
             }
         }
         
@@ -671,7 +676,7 @@
 //------------------------------ Subfunctions of done ------------------------------
 - (BOOL)checkForDuplicateYears {
     //Shortcut to get year without having to cast to type each time
-    TableViewCellData * (^Year)(int) = ^(int index) {
+    TableViewCellData * (^Year)(NSInteger) = ^(NSInteger index) {
         return _yearCells[index];
     };
     

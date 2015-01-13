@@ -32,7 +32,7 @@
 @property BOOL disableAnchorReDraw;
 @property BOOL hasStartedGrowingAnimation, isDoingAnimation;
 @property (nonatomic) AnimationManager *animationManager;
-@property BOOL isCurrentViewController, shouldDelayCreationAnimation, hasDoneCreationAnimation;
+@property BOOL isCurrentViewController, shouldDelayCreationAnimation, hasDoneCreationAnimation, hasInitiatedCreationAnimation;
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a;
 - (void)startChildBubbleCreationAnimation;

@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Styles.h"
+
 #define APP_SETTINGS_FILE_NAME_WITH_EXT @"App_Settings.sett"
 
 #define SETUP_STATE_BLANK 0
@@ -22,6 +24,8 @@
 
 @property NSString *lastEnteredFinalGrade, *lastEnteredPrelimGrade, *lastEnteredExpectGrade, *lastEnteredSubject;
 @property BOOL lastEnteredWasInternal;
+
+@property AnimationSpeedSelection animationSpeed;
 
 - (NSData *)convertToJSONAsRoot;
 - (void)logJSONText;

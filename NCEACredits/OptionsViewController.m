@@ -24,7 +24,7 @@
                         OptionsBubbleTitleSwitchProfile,
                         OptionsBubbleTitleNewProfile,
                         OptionsBubbleTitleDeleteProfile,
-//                        OptionsBubbleTitleAnimationSpeed
+                        OptionsBubbleTitleAnimationSpeed
                         ];
     
     NSMutableArray *pairs = [[NSMutableArray alloc] init];
@@ -76,10 +76,6 @@
 - (void)newProfilePressed {
     CurrentAppSettings.setupState = SETUP_STATE_NEW_PROFILE_NOT_INITIAL;
     [SetupNavigationController showStoryboardFromViewController:self];
-}
-
-- (void)animationSpeedPressed {
-   
 }
 
 //*
@@ -188,6 +184,52 @@
 //*********
 //****************
 //*************************
+#pragma mark - ***************************    Animation Speed    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)animationSpeedPressed {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick the speed for the transitions." preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Faster" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self setAnimationSpeed:AnimationSpeedSelectionFaster withTitle:action.title];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Fast" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self setAnimationSpeed:AnimationSpeedSelectionFast withTitle:action.title];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Medium (Default)" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self setAnimationSpeed:AnimationSpeedSelectionNormal withTitle:action.title];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Slow" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self setAnimationSpeed:AnimationSpeedSelectionSlow withTitle:action.title];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Slower" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self setAnimationSpeed:AnimationSpeedSelectionSlower withTitle:action.title];
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+- (void)setAnimationSpeed:(AnimationSpeedSelection)selection withTitle:(NSString *)title {
+    CurrentAppSettings.animationSpeed = selection;
+    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    
+    NSString *mess = [NSString stringWithFormat:@"Animation Speed set to '%@'.", title];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
 #pragma mark - ***************************    Return from profile    ************************************
 //*************************
 //****************
@@ -195,8 +237,12 @@
 //****
 //*
 
-- (void)setupWillBeDismissed {
-    //Don't delete - delegate method must exist
+//Delegate method
+- (void)setuphasBeenDismissed {
+    NSString *mess = [NSString stringWithFormat:@"Profile '%@' was saved", CurrentProfile.profileName];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

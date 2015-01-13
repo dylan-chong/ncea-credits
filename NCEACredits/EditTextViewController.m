@@ -47,7 +47,7 @@
     return m;
 }
 
-+ (CGRect)getPositionOfObjectAtIndex:(int)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andFlickScroller:(FlickScroller *)flickScroller towardsRightSide:(BOOL)towardsRight {
++ (CGRect)getPositionOfObjectAtIndex:(NSInteger)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andFlickScroller:(FlickScroller *)flickScroller towardsRightSide:(BOOL)towardsRight {
     CGSize screen = [ApplicationDelegate getScreenSize];
     CGPoint difs = [EditTextViewController getXandYDifsWithBubbles:bubbles andSize:size withStartingCorner:[EditAssessmentViewController getCornerOriginForCorner:corner] towardsRightSide:towardsRight];
     double xDif = difs.x;
