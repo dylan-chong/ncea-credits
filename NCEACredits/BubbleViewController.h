@@ -21,8 +21,11 @@
 
 @interface BubbleViewController : UIViewController <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerDelegate>
 
+- (NSString *)GET_CHILD_MAIN_BUBBLE_OVERRIDE_TITLE;
+
 @property id<BubbleViewControllerDelegate> delegate;
 @property UIView *statusBarFiller;
+@property CGSize initiallyThoughtScreenSize;
 
 @property (nonatomic) NSArray *childBubbles;
 @property (nonatomic, strong) BubbleContainer *mainBubble;
@@ -39,6 +42,7 @@
 - (void)startReturnScaleAnimation;
 - (void)startReturnSlideAnimation;
 - (void)hasTransitionedFromParentViewController;
+- (void)creationAnimationHasFinished;
 
 - (void)repositionBubbles;
 

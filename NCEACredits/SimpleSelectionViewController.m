@@ -44,7 +44,7 @@
     
     NSMutableArray *blocks = [[NSMutableArray alloc] init];
     NSUInteger count = subjectOptionalColourPairs.count;
-    CGSize size = mainB.frame.size;
+    CGSize size = [Styles subtitleContainerSize];
     for (int a = 0; a < subjectOptionalColourPairs.count; a++) {
         PositionCalculationBlock x = ^{
             return [SimpleSelectionViewController getPositionOfObjectAtIndex:a outOfBubbles:count size:size fromCorner:cornerOfMainBubble andStaggered:staggered];
@@ -74,13 +74,25 @@
     return m;
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Get Position    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
 + (CGRect)getPositionOfObjectAtIndex:(NSInteger)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andStaggered:(BOOL)staggered {
     double angleFromOrigin = 90.0 * ((index + 1.0) / (bubbles + 1.0));
     if (corner == TopLeft || corner == TopRight) //Order appears backwards when mainbubble is at top - flip order
         angleFromOrigin = 90 - angleFromOrigin;
     
     double r = [SimpleSelectionViewController getRadius];
-    if (bubbles > 5 && (index + 1) / 2.0 == round((index + 1) / 2.0) && staggered) r *= SIMPLE_SELECTION_STAGGER_AMOUNT;
+    if (bubbles > 4 && (index + 1) / 2.0 == round((index + 1) / 2.0) && staggered) r *= SIMPLE_SELECTION_STAGGER_AMOUNT;
     
     double sinAns, cosAns;
     CGSize screen = [ApplicationDelegate getScreenSize];
@@ -137,5 +149,31 @@
     return [self.childBubbles indexOfObject:b];
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Corner Button    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self repositionCornerButton];
+}
+
+- (void)repositionCornerButton {
+    if (_cornerButton) [_cornerButton reposition];
+}
+
+- (void)createCornerButtonWithTitle:(NSString *)title colour:(UIColor *)colour width:(CGFloat)width target:(id)target selector:(SEL)selector {
+    Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
+    _cornerButton = [CornerButton cornerButtonWithTitle:title width:width corner:c colour:colour target:target selector:selector];
+    [self.view addSubview:_cornerButton];
+}
 
 @end

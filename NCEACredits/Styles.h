@@ -150,3 +150,23 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 + (NSUInteger)minimumItemsPerSelectionPage;
 
 @end
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Flasher    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+#define FLASH_DEFAULT_TIMES 1
+@interface Styles (Flasher)
+
++ (void)flashStartWithView:(UIView *)view numberOfTimes:(NSUInteger)times sizeIncreaseMultiplierOr0ForDefault:(CGFloat)sizeMultiplier;
++ (CGFloat)getDurationOfAnimationWithFlashTimes:(NSUInteger)times;
+
+@end

@@ -18,9 +18,12 @@
 
 @implementation EditTextViewController
 
+- (NSString *)GET_CHILD_MAIN_BUBBLE_OVERRIDE_TITLE {
+    return @"Tap to Save";
+}
+
 - (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container {
     [super setMainBubbleSimilarToBubble:container];
-    self.mainBubble.bubble.title.text = @"Save";
 }
 
 + (NSArray *)getEditBubblesWithEditTextScreenItemDataArray:(NSArray *)itemData delegate:(SimpleSelectionViewController *)delegate towardsRightSide:(BOOL)towardsRightSide flickScroller:(FlickScroller *)flickScroller corner:(Corner)cornerOfMainBubble andMainBubble:(BubbleContainer *)mainB {
@@ -49,9 +52,6 @@
 
 + (CGRect)getPositionOfObjectAtIndex:(NSInteger)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andFlickScroller:(FlickScroller *)flickScroller towardsRightSide:(BOOL)towardsRight {
     CGSize screen = [ApplicationDelegate getScreenSize];
-    CGPoint difs = [EditTextViewController getXandYDifsWithBubbles:bubbles andSize:size withStartingCorner:[EditAssessmentViewController getCornerOriginForCorner:corner] towardsRightSide:towardsRight];
-    double xDif = difs.x;
-    double yDif = difs.y;
     
     //Calculate position on position in page
     NSUInteger perPage = [FlickScroller getNumberOfItemsPerPage];
@@ -66,11 +66,12 @@
     
     double x, y;
     CGPoint origin;
-//    if (corner == BottomLeft || corner == BottomRight)
-//        origin = [EditTextViewController getCorner:[Styles getOppositeCornerToCorner:corner] withSize:size];
-//    else
-        origin = [EditTextViewController getCorner:[EditAssessmentViewController getCornerOriginForCorner:corner] withSize:size towardsRightSide:towardsRight];
     
+    origin = [EditTextViewController getCorner:[EditAssessmentViewController getCornerOriginForCorner:corner] withSize:size towardsRightSide:towardsRight];
+    
+    CGPoint difs = [EditTextViewController getXandYDifsWithBubbles:bubbles andSize:size withStartingCorner:[EditAssessmentViewController getCornerOriginForCorner:corner] towardsRightSide:towardsRight];
+    double xDif = difs.x;
+    double yDif = difs.y;
     if (corner == TopLeft || corner == BottomRight) {
         x = -xDif;
         y = yDif;
@@ -92,12 +93,7 @@
         y *= indexOnPage / (bubbles - 1.0);
     }
     
-//    if (x > 0) {
-//        x -= screen.width;
-//    } else {
-//        x += screen.width;
-//    }
-    
+    //Position adjustment due to paging
     NSInteger whichPage = [FlickScroller getPageForIndex:index andNumberOfItems:bubbles];
     
     NSInteger thisItemsPage = [flickScroller getCurrentPageIndex];
@@ -105,21 +101,45 @@
     NSInteger xPageMove = (thisItemsPage - whichPage) * xPageMod * screen.width;
     NSInteger yPageMove = (thisItemsPage - whichPage) * yPageMod * screen.height;
     //    For debugging pages
-//        if (index == 0) NSLog(@"---------------------------");
-//        NSLog(@"Index: %i, WhichPage: %i, ThisPage: %i", index, whichPage, thisItemsPage);
+    //        if (index == 0) NSLog(@"---------------------------");
+    //        NSLog(@"Index: %i, WhichPage: %i, ThisPage: %i", index, whichPage, thisItemsPage);
     
     return CGRectMake(origin.x + x + xPageMove, origin.y + y + yPageMove, size.width, size.height);
+}
+
++ (BOOL)mainBubbleCoversUpEditBubble {
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    
+    CGFloat space = screen.width - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
+    if (([Styles editTextBubbleSize].width / 2) > space) {
+        return YES;
+    }
+    
+    return NO;
+}
+
++ (CGFloat)getSpaceRemovalDueToPossibleMainBubbleBlockingEditBubbles {
+    CGFloat spaceRemoval = 0;
+    if ([EditTextViewController mainBubbleCoversUpEditBubble]) {
+        spaceRemoval = [Styles spaceFromEdgeOfScreen] * 2 + ([Styles subtitleContainerSize].height / 2);
+    }
+    
+    return spaceRemoval;
 }
 
 + (CGPoint)getXandYDifsWithBubbles:(NSUInteger)bubbles andSize:(CGSize)size withStartingCorner:(Corner)startingCorner towardsRightSide:(BOOL)towardsRight {
     CGPoint startP = [EditTextViewController getCorner:startingCorner withSize:size towardsRightSide:towardsRight];
     CGPoint endP = [EditTextViewController getCorner:[Styles getOppositeCornerToCorner:startingCorner] withSize:size towardsRightSide:towardsRight];
     
-    double xDif = startP.x - endP.x;
-    double yDif = startP.y - endP.y;
+    CGFloat xDif = startP.x - endP.x;
+    CGFloat yDif = startP.y - endP.y;
+    
     
     if (xDif < 0) xDif *= -1;
     if (yDif < 0) yDif *= -1;
+    
+    //Main bubble may cover up edit bubbles, make space
+    yDif -= [EditTextViewController getSpaceRemovalDueToPossibleMainBubbleBlockingEditBubbles];
     
     return CGPointMake(xDif, yDif);
 }
@@ -232,7 +252,7 @@
 
 - (void)makeFlickScroller {
     if (!_flickScroller) {
-        _flickScroller = [[FlickScroller alloc] initWithItems:self.childBubbles.count container:self.view andDelegate:self];
+        _flickScroller = [[FlickScroller alloc] initWithItems:self.childBubbles.count container:self.view andFlickScrollerAndScrollArrowViewDelegate:self];
         [_flickScroller show];
     }
 }
@@ -254,9 +274,30 @@
     [_flickScroller resetArrowPositions];
 }
 
-- (void)startReturnSlideAnimation {
-    [super startReturnSlideAnimation];
+- (void)creationAnimationHasFinished {
+    [super creationAnimationHasFinished];
+    
+    [_flickScroller flashYESForUpNOForDownArrow:NO afterTimes:FLASH_DEFAULT_TIMES];
+    
+    [self.view bringSubviewToFront:_flickScroller.downArrow];
+    [self.view bringSubviewToFront:_flickScroller.upArrow];
 }
+
+- (void)showAlertControllerAlert:(UIAlertController *)alert {
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Other    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (void)pageFlicked {
     [self repositionBubbles];

@@ -15,11 +15,11 @@
 #define ItemSubject @"Subject"
 #define ItemCredits @"Credits"
 
-#define ItemIsAnInternal @"Is an Internal"
+#define ItemIsAnInternal @"Internally assessed?"
 
 #define ItemFinalGrade @"Final Grade"
 #define ItemExpectedGrade @"Expected Grade"
-#define ItemPreliminaryGrade @"Prelminary Grade"
+#define ItemPreliminaryGrade @"Preliminary Grade"
 
 #define ItemIsUnitStandard @"Is Unit Standard"
 #define ItemNCEALevel @"NCEA Level"

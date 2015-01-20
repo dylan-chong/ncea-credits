@@ -20,7 +20,7 @@
 #define GradeTextAchieved @"Achieved"
 #define GradeTextNotAchieved @"Not Achieved"
 #define GradeTextNone @""
-#define GradeTextTitleNone @"None"
+#define GradeTextTitleNone @"No Grade"
 
 typedef NS_ENUM(NSInteger, GradePriorityType) {
     GradePriorityFinalGrade = 1,
