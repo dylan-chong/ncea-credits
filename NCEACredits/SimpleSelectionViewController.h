@@ -24,4 +24,7 @@
 @property Corner mainBubbleCorner;
 @property BOOL staggered;
 
+@property CornerButton *cornerButton;
+- (void)createCornerButtonWithTitle:(NSString *)title colour:(UIColor *)colour width:(CGFloat)width target:(id)target selector:(SEL)selector;
+
 @end
