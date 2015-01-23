@@ -192,7 +192,7 @@
 //*
 
 - (void)animationSpeedPressed {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick the speed for the transitions." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick the speed for the animations." preferredStyle:UIAlertControllerStyleAlert];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Faster" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self setAnimationSpeed:AnimationSpeedSelectionFaster withTitle:action.title];
@@ -219,7 +219,7 @@
     CurrentAppSettings.animationSpeed = selection;
     [ApplicationDelegate saveCurrentProfileAndAppSettings];
     
-    NSString *mess = [NSString stringWithFormat:@"Animation Speed set to '%@'.", title];
+    NSString *mess = [NSString stringWithFormat:@"Animation speed set to '%@'.", title];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];

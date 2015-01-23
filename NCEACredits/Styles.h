@@ -84,6 +84,7 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 + (UIFont *)body2Font;
 + (UIFont *)bigTextFont;
 + (UIFont *)captionFont;
++ (CGFloat)minimumFontSize;
 
 @end
 
@@ -98,12 +99,16 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 //*********
 //****
 //*
+
+#define ANCHOR_THICKNESS 3.0
+
 @interface Styles (Colours)
 
 + (UIColor *)mainTextColour;
 + (UIColor *)greenColour;
 + (UIColor *)orangeColour;
 + (UIColor *)pinkColour;
++ (UIColor *)purpleColour;
 + (UIColor *)blueColour;
 + (UIColor *)redColour;
 + (UIColor *)greyColour;
@@ -139,7 +144,7 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 + (CGSize)titleContainerSize;
 + (CGSize)subtitleContainerSize;
 + (float)spaceFromEdgeOfScreen;
-+ (CGRect)getBubbleFrameWithContainerFrame:(CGRect)frame;
++ (CGRect)getBubbleFrameWithContainerSize:(CGSize)size;
 + (Corner)getOppositeCornerToCorner:(Corner)c;
 + (Corner)getCornerWithTitleContainerFrame:(CGRect)r;
 + (CGPoint)getExactOriginForCorner:(Corner)c andSize:(CGSize)size;
@@ -163,7 +168,8 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 //****
 //*
 
-#define FLASH_DEFAULT_TIMES 1
+#define FLASH_DEFAULT_TIMES 2
+#define FLASH_BUBBLE_VC_MAIN_BUBBLE_TIMES FLASH_DEFAULT_TIMES - 1
 @interface Styles (Flasher)
 
 + (void)flashStartWithView:(UIView *)view numberOfTimes:(NSUInteger)times sizeIncreaseMultiplierOr0ForDefault:(CGFloat)sizeMultiplier;

@@ -14,7 +14,7 @@
 
 #define NEW_SUBJECT_TITLE @"New Subject"
 #define CANCEL_BUTTON_TITLE @"Cancel"
-#define TOO_LONG_CHARACTERS 14
+//#define TOO_LONG_CHARACTERS 14
 
 @implementation EditTextEditScreen
 
@@ -101,7 +101,6 @@
 }
 
 - (void)hide {
-    [_text resignFirstResponder];
     _text.text = [_text.text stringByReplacingOccurrencesOfString:@"\"" withString:@"-"];
     
     EditTextBubble *b = ((EditTextBubble *)(_viewToEdit.bubble));
@@ -113,9 +112,10 @@
 }
 
 - (void)showAlertIfTooLong:(NSString *)textToCheck {
-    if (textToCheck.length > TOO_LONG_CHARACTERS) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"The name you chose is quite long; you may want to shorten it." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    if ([BubbleText textContainsWordsThatWillBeTooLargeForSubtitleBubble:textToCheck]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"A word in the name you just entered will be a little too long to display. You should shorten it to approximately 12-15 characters or less." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }]];
         [self.delegate showAlert:alert];
     }
 }
@@ -197,12 +197,14 @@
         UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
         b.frame = CGRectZero; //set in reeset layout
         [b setTitle:texts[x] forState:UIControlStateNormal];
-        [b.titleLabel setFont:[Styles bodyFont]];
         [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b setTitleColor:[Styles darkGreyColour] forState:UIControlStateHighlighted];
         [b addTarget:target action:@selector(multiChoiceButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [a addObject:b];
         [b setBackgroundColor:[UIColor clearColor]];
+        
+        [b.titleLabel setFont:[Styles bodyFont]];
+        
     }
     
     return a;
@@ -225,6 +227,8 @@
 //*
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [_text resignFirstResponder];
+    
     if ([((EditTextBubble *)_viewToEdit.bubble).titleLabel.text isEqualToString:[ItemQuickName stringByAppendingString:TitleSuffix]])
         [self showAlertIfTooLong:textField.text];
     [self hide];
@@ -254,10 +258,10 @@
 }
 
 - (void)newSubjectPressed {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please enter the subject" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please enter your new subject." preferredStyle:UIAlertControllerStyleAlert];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"New subject";
+        textField.placeholder = @"Subject";
         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }];
     

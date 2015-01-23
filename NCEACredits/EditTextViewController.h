@@ -13,7 +13,7 @@
 #define EditTextScrollingNumberOfBubbles 7
 #define EditTextScrollingExtraDiagonalFractionalSpaceBetweenBubbles 0.03
 
-@interface EditTextViewController : SimpleSelectionViewController <EditTextBubbleContainerDelegate, EditTextEditScreenDelegate, UIAlertViewDelegate, FlickScrollerDelegate>
+@interface EditTextViewController : SimpleSelectionViewController <EditTextBubbleContainerDelegate, EditTextEditScreenDelegate, UIAlertViewDelegate, FlickScrollerDelegate, ScrollArrowViewDelegate>
 
 + (NSArray *)getEditBubblesWithEditTextScreenItemDataArray:(NSArray *)itemData delegate:(SimpleSelectionViewController *)delegate towardsRightSide:(BOOL)towardsRightSide flickScroller:(FlickScroller *)flickScroller corner:(Corner)cornerOfMainBubble andMainBubble:(BubbleContainer *)mainB;
 + (CGRect)getPositionOfObjectAtIndex:(NSInteger)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andFlickScroller:(FlickScroller *)flickScroller towardsRightSide:(BOOL)towardsRight;
@@ -23,5 +23,7 @@
 @property (nonatomic) double lastCurrentScrollValue, scrollValueOffSet;
 @property FlickScroller *flickScroller;
 - (FlickScroller *)getFlickScroller;
+
++ (BOOL)mainBubbleCoversUpEditBubble;
 
 @end

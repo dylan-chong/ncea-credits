@@ -15,6 +15,10 @@
 
 @implementation BubbleViewController
 
+- (NSString *)GET_CHILD_MAIN_BUBBLE_OVERRIDE_TITLE {
+    return @"Back";
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -22,6 +26,8 @@
     _isDoingAnimation = YES; //Stops the automatic reposition bubbles animation, but not the creation animation
     _hasDoneCreationAnimation = NO;
     _hasInitiatedCreationAnimation = NO;
+    
+    _initiallyThoughtScreenSize = [ApplicationDelegate getScreenSize]; //Device may rotate during transition, reposition after if needed
     return self;
 }
 
@@ -37,11 +43,18 @@
         return r;
     };
     
+    NSString *overrideTitle = [self GET_CHILD_MAIN_BUBBLE_OVERRIDE_TITLE];
+    NSString *title;
+    if (overrideTitle)
+        title = overrideTitle;
+    else
+        title = container.bubble.title.text;
+    
     if (container.bubbleType == TitleBubble) {
-        _mainBubble = [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:p colour:container.colour iconName:container.imageName title:container.bubble.title.text frameBubbleForStartingPosition:CGRectZero andDelegate:YES];
+        _mainBubble = [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:p colour:container.colour iconName:container.imageName title:title frameBubbleForStartingPosition:CGRectZero andDelegate:YES];
         _mainBubble.delegate = self;
     } else if (container.bubbleType == SubtitleBubble) {
-        _mainBubble = [[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:p colour:container.colour title:container.bubble.title.text frameBubbleForStartingPosition:CGRectZero andDelegate:YES];
+        _mainBubble = [[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:p colour:container.colour title:title frameBubbleForStartingPosition:CGRectZero andDelegate:YES];
         _mainBubble.delegate = self;
     }
     
@@ -80,13 +93,17 @@
 }
 
 - (void)repositionBubbles {
-//    if (_hasDoneCreationAnimation) {
-        CGSize screen = [ApplicationDelegate getScreenSize];
-        _anchors.frame = CGRectMake(0, 0, screen.width, screen.height);
-        [self redrawAnchors];
-        
-        [self animateRepositionObjects];
-//    }
+    self.initiallyThoughtScreenSize = [ApplicationDelegate getScreenSize];
+    CGSize screen = [ApplicationDelegate getScreenSize];
+    _anchors.frame = CGRectMake(0, 0, screen.width, screen.height);
+    [self redrawAnchors];
+    
+    [self animateRepositionObjects];
+}
+
+- (void)hasRepositionedBubbles {
+    if (!CGSizeEqualToSize(_initiallyThoughtScreenSize, [ApplicationDelegate getScreenSize]))
+        [self repositionBubbles];
 }
 
 - (void)setAnimationManager:(AnimationManager *)animationManager {
@@ -95,6 +112,7 @@
             [_animationManager stopAnimationMidWay];
         }
         
+        _isDoingAnimation = YES;
         _animationManager = animationManager;
     }
 }
@@ -154,12 +172,13 @@
 }
 
 - (void)animationHasFinished:(NSInteger)tag {
+    _isDoingAnimation = NO;
+    
     if (tag == 1) {
         [self startGrowingAnimation];
     } else if (tag == 2) {
         //Growing finished
-        _hasDoneCreationAnimation = YES;
-        [self enableChildButtons];
+        [self creationAnimationHasFinished];
     } else if (tag == 3) {
         //transition
         [self presentViewController:_childBubbleViewController animated:NO completion:nil];
@@ -170,9 +189,9 @@
         [_childBubbleViewController hasTransitionedFromParentViewController];
         _isCurrentViewController = NO;
     } else if (tag == 4) {
-        //transition reverse
+        //reposition bubbles or transition reverse
         [self enableChildButtons];
-        _isDoingAnimation = NO;
+        [self hasRepositionedBubbles];
     } else if (tag == 5) {
         //return scale
         [self startReturnSlideAnimation];
@@ -183,6 +202,18 @@
             [self.delegate hasReturnedFromChildViewController];
         }];
     }
+}
+
+- (void)creationAnimationHasFinished {
+    _hasDoneCreationAnimation = YES;
+    [self enableChildButtons];
+    
+    //Dont flash if has no parent
+    if (self.delegate)
+        [Styles flashStartWithView:_mainBubble numberOfTimes:FLASH_BUBBLE_VC_MAIN_BUBBLE_TIMES sizeIncreaseMultiplierOr0ForDefault:0];
+    
+    //Reposition if needed
+    if (!CGSizeEqualToSize(_initiallyThoughtScreenSize, [ApplicationDelegate getScreenSize])) [self repositionBubbles];
 }
 
 - (void)disableChildButtons {
@@ -392,7 +423,7 @@
     if ([ApplicationDelegate deviceIsInLandscape] && [Styles getDevice] == iPhone) [_statusBarFiller setHidden:YES];
     else [_statusBarFiller setHidden:NO];
     
-    if (!_shouldDelayCreationAnimation) [self repositionBubbles];
+    if (!_shouldDelayCreationAnimation && _isCurrentViewController && !_isDoingAnimation) [self repositionBubbles];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -408,7 +439,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     _isCurrentViewController = YES;
-    if (!_isDoingAnimation && !_shouldDelayCreationAnimation) [self repositionBubbles];
+    //Line below disabled to fix flash. may or may not cause problem where bubbles dont reposition
+//    if (!_isDoingAnimation && !_shouldDelayCreationAnimation) [self repositionBubbles];
 }
 
 - (void)viewDidLoad {

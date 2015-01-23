@@ -170,9 +170,11 @@
     if (_cornerButton) [_cornerButton reposition];
 }
 
-- (void)createCornerButtonWithTitle:(NSString *)title colour:(UIColor *)colour width:(CGFloat)width target:(id)target selector:(SEL)selector {
-    Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
-    _cornerButton = [CornerButton cornerButtonWithTitle:title width:width corner:c colour:colour target:target selector:selector];
+- (void)createCornerButtonWithTitle:(NSString *)title colourOrNil:(UIColor *)colour target:(id)target selector:(SEL)selector {
+    Corner corner = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
+    UIColor *buttonColour = (colour) ? colour : self.mainBubble.colour;
+    
+    _cornerButton = [CornerButton cornerButtonWithTitle:title corner:corner colour:buttonColour target:target selector:selector];
     [self.view addSubview:_cornerButton];
 }
 

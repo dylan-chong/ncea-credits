@@ -43,6 +43,7 @@
 		8482D7F61A4534FE00F1CD6D /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F51A4534FE00F1CD6D /* Goal.m */; };
 		8482D7FF1A46501B00F1CD6D /* SubjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */; };
 		8482D8051A46568300F1CD6D /* Launch-Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8482D8041A46568300F1CD6D /* Launch-Circle.png */; };
+		8486093B1A6E525100FE9E40 /* BubbleText.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486093A1A6E525100FE9E40 /* BubbleText.m */; };
 		848F7A561A665F3800F88C7A /* StatsPopupNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848F7A551A665F3800F88C7A /* StatsPopupNavViewController.m */; };
 		848F7A591A665F4E00F88C7A /* StatsPopupRootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848F7A581A665F4E00F88C7A /* StatsPopupRootTableViewController.m */; };
 		849178531A6A05900014EB95 /* Styles+Flasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 849178521A6A05900014EB95 /* Styles+Flasher.m */; };
@@ -169,6 +170,8 @@
 		8482D7FD1A46501B00F1CD6D /* SubjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectsViewController.h; sourceTree = "<group>"; };
 		8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectsViewController.m; sourceTree = "<group>"; };
 		8482D8041A46568300F1CD6D /* Launch-Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch-Circle.png"; sourceTree = "<group>"; };
+		848609391A6E525100FE9E40 /* BubbleText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleText.h; sourceTree = "<group>"; };
+		8486093A1A6E525100FE9E40 /* BubbleText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleText.m; sourceTree = "<group>"; };
 		848F7A541A665F3800F88C7A /* StatsPopupNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsPopupNavViewController.h; sourceTree = "<group>"; };
 		848F7A551A665F3800F88C7A /* StatsPopupNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsPopupNavViewController.m; sourceTree = "<group>"; };
 		848F7A571A665F4E00F88C7A /* StatsPopupRootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsPopupRootTableViewController.h; sourceTree = "<group>"; };
@@ -527,6 +530,8 @@
 				849D3D211880F2810030D432 /* AnchorView.h */,
 				849D3D221880F2810030D432 /* AnchorView.m */,
 				844BCACA1881126000FC132E /* Main Bubble */,
+				848609391A6E525100FE9E40 /* BubbleText.h */,
+				8486093A1A6E525100FE9E40 /* BubbleText.m */,
 				84B5A2C51880D93100969952 /* Bubble.h */,
 				84B5A2C61880D93100969952 /* Bubble.m */,
 				84B5A2C71880D93100969952 /* BubbleContainer.h */,
@@ -781,6 +786,7 @@
 				840440331971FAA700CC390E /* SetupNavigationController.m in Sources */,
 				84FCB2E519026D5700BBE4B0 /* ScrollArrowView.m in Sources */,
 				8470DD2E1A46708800266654 /* CustomGoals.m in Sources */,
+				8486093B1A6E525100FE9E40 /* BubbleText.m in Sources */,
 				844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */,
 				84B5A28A1880D8AD00969952 /* AppDelegate.m in Sources */,
 				845C40DE19481350001B1499 /* YearCollection.m in Sources */,

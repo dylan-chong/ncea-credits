@@ -15,7 +15,7 @@
 #define ItemSubject @"Subject"
 #define ItemCredits @"Credits"
 
-#define ItemIsAnInternal @"Internally assessed?"
+#define ItemIsAnInternal @"Internal Std.?"
 
 #define ItemFinalGrade @"Final Grade"
 #define ItemExpectedGrade @"Expected Grade"

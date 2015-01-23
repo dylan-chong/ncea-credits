@@ -15,7 +15,7 @@
 @implementation Styles (Flasher)
 
 + (void)flashStartWithView:(UIView *)view numberOfTimes:(NSUInteger)times sizeIncreaseMultiplierOr0ForDefault:(CGFloat)sizeMultiplier {
-    NSUInteger sm = (sizeMultiplier > 0) ? sizeMultiplier : DEFAULT_SIZE_INCREASE;
+    CGFloat sm = (sizeMultiplier > 0) ? sizeMultiplier : DEFAULT_SIZE_INCREASE;
     [self flashOffWithView:view originalTransform:view.transform sizeMultiplier:sm andTimesLeft:times];
 }
 

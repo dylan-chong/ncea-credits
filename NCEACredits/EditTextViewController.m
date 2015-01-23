@@ -277,7 +277,7 @@
 - (void)creationAnimationHasFinished {
     [super creationAnimationHasFinished];
     
-    [_flickScroller flashYESForUpNOForDownArrow:NO afterTimes:FLASH_DEFAULT_TIMES];
+    [_flickScroller flashYESForUpNOForDownArrow:NO afterTimes:FLASH_BUBBLE_VC_MAIN_BUBBLE_TIMES];
     
     [self.view bringSubviewToFront:_flickScroller.downArrow];
     [self.view bringSubviewToFront:_flickScroller.upArrow];
