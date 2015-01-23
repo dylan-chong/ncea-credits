@@ -28,7 +28,7 @@
         _calulatePosition = b;
         
         //create bubble in centre
-        _bubble = [[BubbleMain alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:frame]];
+        _bubble = [[BubbleMain alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:frame.size]];
         _bubble.usesDelegateToCallRedrawAnchors = YES;
         _bubble.delegate = self;
         [self addSubview:_bubble];
@@ -55,7 +55,7 @@
         _bubbleType = TitleBubble;
         _colour = colour;
         
-        _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:f] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
+        _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:f.size] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
         if (hasDelegate) _bubble.delegate = self;
         [self addSubview:_bubble];
         [_bubble startWiggle];
@@ -86,7 +86,7 @@
         _bubbleType = SubtitleBubble;
         _colour = colour;
         
-        _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerFrame:self.frame] colour:colour title:title andDelegate:hasDelegate];
+        _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:self.frame.size] colour:colour title:title andDelegate:hasDelegate];
         if (hasDelegate) _bubble.delegate = self;
         [self addSubview:_bubble];
         [_bubble startWiggle];

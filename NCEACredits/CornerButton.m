@@ -9,16 +9,14 @@
 #import "CornerButton.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define SPACE_BETWEEN_TEXT_AND_EDGE 8 * [Styles sizeModifier]
+
 @implementation CornerButton
 
-+ (CornerButton *)cornerButtonWithTitle:(NSString *)title width:(CGFloat)width corner:(Corner)corner colour:(UIColor *)colour target:(id)target selector:(SEL)selector {
-    CGRect f = CGRectZero;
-    f.size = CGSizeMake(width * [Styles sizeModifier], 40 * [Styles sizeModifier]);
-    f.origin = [Styles getExactOriginForCorner:corner andSize:f.size];
-    f.origin.y += [ApplicationDelegate getStatusBarHeight];
-    
-    CornerButton *cornerB = [[CornerButton alloc] initWithFrame:f andColour:colour];
++ (CornerButton *)cornerButtonWithTitle:(NSString *)title corner:(Corner)corner colour:(UIColor *)colour target:(id)target selector:(SEL)selector {
+    CornerButton *cornerB = [[CornerButton alloc] initWithFrame:CGRectZero andColour:colour];
     cornerB.buttonCorner = corner;
+    
     //Highlight colour and other events
     [cornerB setBackgroundColor:[UIColor whiteColor]];
     [cornerB addTarget:cornerB action:@selector(highlight) forControlEvents:UIControlEventTouchDown];
@@ -31,8 +29,15 @@
     [cornerB setTitle:title forState:UIControlStateNormal];
     [cornerB setTitleColor:colour forState:UIControlStateNormal];
     [cornerB setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    [cornerB.titleLabel setFont:[UIFont systemFontOfSize:20 * [Styles sizeModifier]]];
+    [cornerB.titleLabel setFont:[UIFont systemFontOfSize:18 * [Styles sizeModifier]]];
     cornerB.titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [cornerB sizeToFit];
+    CGRect f = cornerB.frame;
+    f.size.width += 2 * SPACE_BETWEEN_TEXT_AND_EDGE;
+    f.origin = [Styles getExactOriginForCorner:corner andSize:f.size];
+    f.origin.y += [ApplicationDelegate getStatusBarHeight];
+    cornerB.frame = f;
     
     [[cornerB layer] setBorderWidth:1.0 * [Styles sizeModifier]];
     [[cornerB layer] setBorderColor:[colour CGColor]];

@@ -39,6 +39,7 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
         [self setMainBubbleSimilarToBubble:mainBubble];
         [self createBubbleContainersAndAddAsSubviews];
         [self createAnchors];
+        
         [self createDeleteButton];
     }
     
@@ -277,11 +278,7 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
 //*
 
 - (void)createDeleteButton {
-    if (!_deleteButton) {
-        Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
-        _deleteButton = [CornerButton cornerButtonWithTitle:@"Delete" width:100 corner:c colour:[Styles redColour] target:self selector:@selector(deletePressed)];
-        [self.view addSubview:_deleteButton];
-    }
+    [self createCornerButtonWithTitle:@"Delete" colourOrNil:[Styles redColour] target:self selector:@selector(deletePressed)];
 }
 
 - (void)deletePressed {

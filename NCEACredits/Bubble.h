@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BubbleText.h"
+
+#define BUBBLE_WITHOUT_ICON_TEXT_FIELD_SPACE_FILL_DECIMAL sqrt(0.5)
 
 @protocol BubbleDelegate <NSObject>
 
@@ -21,7 +24,7 @@
 
 @property UIColor *colour;
 @property UIImageView *icon;
-@property UILabel *title;
+@property BubbleText *title;
 
 - (id)initWithFrame:(CGRect)frame colour:(UIColor *)colour iconName:(NSString *)iconName title:(NSString *)title andDelegate:(BOOL)hasDelegate;
 - (id)initWithFrame:(CGRect)frame colour:(UIColor *)colour title:(NSString *)title andDelegate:(BOOL)hasDelegate;
