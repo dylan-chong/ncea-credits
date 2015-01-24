@@ -109,7 +109,7 @@
     [self setMainBubble:self.mainBubble
         andChildBubbles:[NSArray arrayWithObjects:
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:addBlock colour:[Styles greenColour] iconName:@"Add.png" title:@"Add" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
-                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:subjectsBlock colour:[Styles pinkColour] iconName:@"Subjects.png" title:@"Edit" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
+                         [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:subjectsBlock colour:[Styles purpleColour] iconName:@"Subjects.png" title:@"Edit" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:statsBlock colour:[Styles blueColour] iconName:@"Stats.png" title:@"Stats" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
                          [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:optionsBlock colour:[Styles orangeColour] iconName:@"Options.png" title:@"Options" frameBubbleForStartingPosition:self.mainBubble.frame andDelegate:NO],
                          nil]];
@@ -157,7 +157,7 @@
 
 - (void)mainBubbleTapped:(id)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Credits:\nThis counts the number of credits of assessments with final grades. (For NCEA Levels 2 and 3, you start with an extra 20 credits.) You can tap the blue 'Stats' tab to view more information like predictions about the number of credits you expect to have (make sure to set an 'Expected Grade' in the 'Add' screen).\n\nGoals:\nThis shows the number of credits required to reach the required goal (e.g. Excellence Endorsement). You can change this in the setup screen by tapping the orange 'Options' tab, then 'Show Setup'. Note that in NCEA Level 1, 10 literacy and 10 numeracy credits are also required (see the 'Stats' tab to see the number of these credits)." preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
     
     //Log
@@ -216,7 +216,7 @@
 
 - (void)noAssessmentsAlert {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Looks like you don't have any assessments yet. Click the Add button on the left to create some. You can then edit them from the Subjects menu." preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

@@ -156,7 +156,7 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName
                                                                        message:@"There is already an assessment by this name and subject."
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         

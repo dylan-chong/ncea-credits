@@ -15,18 +15,16 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+        self.clipsToBounds = NO;
         _colour = colour;
-        self.clipsToBounds = YES;
         
         float w = frame.size.width;
         float h = frame.size.height;
         
         //title 60-85% height of bubble
-        _title = [[UILabel alloc] initWithFrame:CGRectMake(0, (h*0.6), w, (h*0.25))];
-        _title.text = title;
-        _title.font = [Styles heading2Font];
-        _title.textColor = [Styles mainTextColour];
-        _title.textAlignment = NSTextAlignmentCenter;
+        _title = [[BubbleText alloc] initWithFrame:CGRectMake(w*0.12, (h*0.6), w*0.76, (h*0.25))
+                                              text:title
+                                         fontOrNil:[Styles heading2Font]];
         
         //icon 10-60%
         _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, (h*0.1), w, (h*0.5))];
@@ -45,17 +43,16 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         _colour = colour;
-        self.clipsToBounds = YES;
+        self.clipsToBounds = NO;
         
         CGFloat w = frame.size.width;
         CGFloat h = frame.size.height;
         
-        _title = [[UILabel alloc] initWithFrame:CGRectMake(w*0.1, (h*0.4), (w*0.8), (h*0.2))];
-        _title.text = title;
-        _title.font = [Styles heading2Font];
-        _title.adjustsFontSizeToFitWidth = YES;
-        _title.textColor = [Styles mainTextColour];
-        _title.textAlignment = NSTextAlignmentCenter;
+        //Title should make up most of the bubble
+        CGFloat spaceFillDecimal = BUBBLE_WITHOUT_ICON_TEXT_FIELD_SPACE_FILL_DECIMAL;
+        _title = [[BubbleText alloc] initWithFrame:CGRectMake(w*(1-spaceFillDecimal)/2, h*(1-spaceFillDecimal)/2, w*spaceFillDecimal, h*spaceFillDecimal)
+                                              text:title
+                                         fontOrNil:nil];
         
         _usesDelegateToCallRedrawAnchors = hasDelegate;
         

@@ -34,4 +34,7 @@
 - (BOOL)deviceIsInLandscape;
 - (CGFloat)getStatusBarHeight;
 
+//Stats
+@property NSString *lastPressedSubjectOrTotal, *lastPressedGradePriority;
+
 @end

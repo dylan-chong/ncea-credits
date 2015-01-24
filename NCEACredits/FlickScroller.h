@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "ScrollArrowView.h"
 
-#define StandardScrollArrowWidth 45
-#define StandardScrollArrowHeight 15
-#define StandardScrollArrowSpaceFromEdge 25
-#define StandardScrollArrowShowAlpha 0.75
-
 @protocol FlickScrollerDelegate <NSObject>
 @required
 - (void)pageFlicked;
@@ -29,7 +24,7 @@
 @property NSUInteger currentPageIndex, items;
 @property id <FlickScrollerDelegate>delegate;
 
-- (id)initWithItems:(NSUInteger)items container:(UIView *)container andDelegate:(id)delegate;
+- (id)initWithItems:(NSUInteger)items container:(UIView *)container andFlickScrollerAndScrollArrowViewDelegate:(id)delegate;
 - (void)resetArrowPositions;
 + (CGSize)getContainerSize:(UIView *)container;
 
@@ -41,5 +36,7 @@
 
 - (void)show;
 - (void)hide;
+
+- (void)flashYESForUpNOForDownArrow:(BOOL)isUpArrow afterTimes:(NSUInteger)afterTimes;
 
 @end

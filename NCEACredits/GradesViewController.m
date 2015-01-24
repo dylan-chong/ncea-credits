@@ -10,9 +10,18 @@
 #import "AssessmentsForSubjectViewController.h"
 
 #define SET_COLOUR_TITLE @"Change Colours"
-#define SET_COLOUR_COLOUR [Styles pinkColour]
 
 @implementation GradesViewController
+
+- (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andStaggered:(BOOL)staggered {
+    self = [super initWithMainBubble:mainBubble delegate:delegate andStaggered:staggered];
+    
+    if (self) {
+        [self createColourButton];
+    }
+    
+    return self;
+}
 
 - (void)bubbleWasPressed:(BubbleContainer *)container {
     [super bubbleWasPressed:container];
@@ -20,7 +29,7 @@
     //Can't continue - no assessments
     if ([CurrentProfile getAssessmentTitlesForSubject:container.bubble.title.text].count == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"There don't appear to be any assessments for this subject. Try returning back to the main screen, then trying again." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
         
     } else {
@@ -28,19 +37,6 @@
         [childVC createBubbleContainersAndAddAsSubviews];
         [self startTransitionToChildBubble:container andBubbleViewController:childVC];
     }
-}
-
-- (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andStaggered:(BOOL)staggered {
-    self = [super initWithMainBubble:mainBubble delegate:delegate andStaggered:staggered];
-    
-    if (self) {
-        //Create set colour button
-        Corner c = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
-        _setColourButton = [CornerButton cornerButtonWithTitle:SET_COLOUR_TITLE width:170 corner:c colour:SET_COLOUR_COLOUR target:self selector:@selector(setColourBubblePressed)];
-        [self.view addSubview:_setColourButton];
-    }
-    
-    return self;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -60,6 +56,10 @@
 //*********
 //****
 //*
+
+- (void)createColourButton {
+    [self createCornerButtonWithTitle:SET_COLOUR_TITLE colourOrNil:nil target:self selector:@selector(setColourBubblePressed)];
+}
 
 - (void)setColourBubblePressed {
     //Show popup

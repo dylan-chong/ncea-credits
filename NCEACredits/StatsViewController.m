@@ -30,6 +30,7 @@
 
 - (void)bubbleWasPressed:(BubbleContainer *)container {
     [super bubbleWasPressed:container];
+    ApplicationDelegate.lastPressedGradePriority = container.bubble.title.text;
     
     StatsSubjectsViewController *stats = [[StatsSubjectsViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
     [self startTransitionToChildBubble:container andBubbleViewController:stats];
@@ -38,7 +39,7 @@
 - (void)hasTransitionedFromParentViewController {
     if (!CurrentAppSettings.hasOpenedStatsMenuBefore) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"This section allows you predict the amount of credits you will have. \n- The 'Expected' section is similar, only it uses your expected grades instead.\n- The 'Preliminary' section calculates how many credits you would have according to the preliminary grades you set for each assessment. \n- For both of these, the final grades take precedence over the other two types. The 'Final Only' section does not account for preliminary or expected grades." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
         
         CurrentAppSettings.hasOpenedStatsMenuBefore = YES;

@@ -1,5 +1,5 @@
 //
-//  StatsPopupRootTableViewController.h
+//  StatsPopupNavViewController.h
 //  NCEACredits
 //
 //  Created by Dylan Chong on 14/01/15.
@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface StatsPopupRootTableViewController : UITableViewController
+@interface StatsPopupNavViewController : UINavigationController
 
 @property NSArray *subjectsArrayOfAssessmentsArrays;
 @property NSString *subjectOrNilForTotal;
 @property NSString *gradeText;
 @property NSString *priorityText;
-@property NSUInteger totalCredits;
 
 @end

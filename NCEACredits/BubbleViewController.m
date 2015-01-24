@@ -344,8 +344,6 @@
 }
 
 - (void)setTransitionDifsWithBubbleContainer:(BubbleContainer *)b inBubbleVC:(BubbleViewController *)bvc {
-    BOOL hasParent = NO;
-    if (bvc.delegate) hasParent = YES;
     
     Corner c = [self getCornerWhereTappedBubbleWillTransitionTo];
     

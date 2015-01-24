@@ -13,9 +13,10 @@
 #define RGB(redLevel, greenLevel, blueLevel) [UIColor colorWithRed:redLevel/255.0 green:greenLevel/255.0 blue:blueLevel/255.5 alpha:1.0]
 + (UIColor *)mainTextColour {       return [UIColor whiteColor];}
 
-+ (UIColor *)greenColour{           return RGB(144, 217, 75);}
++ (UIColor *)greenColour{           return RGB(102, 204, 0);}
 + (UIColor *)orangeColour{          return RGB(255, 153, 42);}
 + (UIColor *)pinkColour{            return RGB(242, 99, 131);}
++ (UIColor *)purpleColour{          return RGB(76, 0, 153);}
 + (UIColor *)blueColour{            return RGB(24, 94, 189);}
 + (UIColor *)redColour{             return RGB(205, 20, 20);}
 + (UIColor *)lightBlueColour{       return RGB(51, 172, 227);}
@@ -61,11 +62,12 @@
              [Styles pinkColour], //pink/magenta
              [Styles lightBlueColour], //light blue (cyanish)
              [Styles goldColour],
+             [Styles purpleColour],
              [Styles greyColour], //medium grey
              [Styles darkGreyColour], //dark grey (blackish)
              [Styles lightGreyColour], //light grey
              [Styles mediumDarkGreyColour], //medium-dark grey
-             [Styles mediumLightGreyColour], //medium-light grey
+//             [Styles mediumLightGreyColour], //medium-light grey
              ];
 }
 

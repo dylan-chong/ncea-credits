@@ -7,8 +7,12 @@
 //
 
 #import "SimpleSelectionViewController.h"
+#import "StatsSubjectsViewController.h"
 
 @interface StatsCreditsViewController : SimpleSelectionViewController
 
+@property NSArray *assessmentsForPopup;
+@property NSString *subjectForPopup;
+@property NSString *gradeText;
 
 @end

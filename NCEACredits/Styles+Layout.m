@@ -12,6 +12,16 @@
 
 @implementation Styles (Layout)
 
++ (float)spaceFromEdgeOfScreen {
+    if ([self getDevice] == iPhone) {
+        return 6;
+    } else if ([self getDevice] == iPad) {
+        return 30;
+    }
+    
+    return 30 * [Styles sizeModifier];
+}
+
 + (CGRect)mainContainerRect {
     CGSize size = CGSizeMake(340 * [Styles sizeModifier], 340 * [Styles sizeModifier]);
     CGSize screen = [ApplicationDelegate getScreenSize];
@@ -34,14 +44,14 @@
     switch (c) {
         case TopLeft:
             availableOrigins = CGRectMake([Styles spaceFromEdgeOfScreen],
-                                          [Styles spaceFromEdgeOfScreen],
+                                          [Styles spaceFromEdgeOfScreen] + [ApplicationDelegate statusBarHeight],
                                           0,
                                           0);
             break;
             
         case TopRight:
             availableOrigins = CGRectMake([Styles middleXTitleBubblePosition],
-                                          [Styles spaceFromEdgeOfScreen],
+                                          [Styles spaceFromEdgeOfScreen] + [ApplicationDelegate statusBarHeight],
                                           0,
                                           0);
             break;
@@ -79,9 +89,11 @@
     if ([ApplicationDelegate deviceIsInLandscape]) {
         s.width = mainRect.origin.x - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
         s.height = mainRect.origin.y + (mainRect.size.height / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
+        s.height -= [ApplicationDelegate statusBarHeight];
     } else {
         s.width = mainRect.origin.x + (mainRect.size.width / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
         s.height = mainRect.origin.y - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
+        s.height -= [ApplicationDelegate statusBarHeight];
     }
     
     return s;
@@ -125,15 +137,13 @@
     }
 }
 
-+ (float)spaceFromEdgeOfScreen {
-    return 30 * [self sizeModifier];
-}
 
-+ (CGRect)getBubbleFrameWithContainerFrame:(CGRect)frame {
-    return CGRectMake(round(frame.size.width / 8.0),
-                      round(frame.size.height / 8.0),
-                      round(frame.size.width * (3.0/4)),
-                      round(frame.size.height * (3.0/4)));
+
++ (CGRect)getBubbleFrameWithContainerSize:(CGSize)size {
+    return CGRectMake(round(size.width / 8.0),
+                      round(size.height / 8.0),
+                      round(size.width * (3.0/4)),
+                      round(size.height * (3.0/4)));
 }
 
 + (Corner)getOppositeCornerToCorner:(Corner)c {
@@ -156,6 +166,11 @@
         p = CGPointMake(d, screen.height - d - size.height);
     } else {
         p = CGPointMake(screen.width - d - size.width, screen.height - d - size.height);
+    }
+    
+    if (c == TopLeft || c == TopRight) {
+        if (!([Styles getDevice] == iPhone && [ApplicationDelegate deviceIsInLandscape]))
+            p.y += [ApplicationDelegate getStatusBarHeight];
     }
     
     return p;

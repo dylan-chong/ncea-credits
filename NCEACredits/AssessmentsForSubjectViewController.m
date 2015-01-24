@@ -11,6 +11,10 @@
 
 @implementation AssessmentsForSubjectViewController
 
+- (NSString *)GET_CHILD_MAIN_BUBBLE_OVERRIDE_TITLE {
+    return nil;
+}
+
 - (void)createBubbleContainersAndAddAsSubviews {
     NSString *subject = [self getTitleOfMainBubble];
     
@@ -42,7 +46,7 @@
     
     if (!assessment) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"This assessment doesn't seem to exist. Try returning back to the main screen, then trying again." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         

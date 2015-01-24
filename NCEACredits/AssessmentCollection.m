@@ -285,13 +285,12 @@
     switch (level) {
         case 1:
             return 0;
-            break;
         case 2:
-            return 20;
-            break;
+            return 0;
+//            return 20;
         case 3:
-            return 20;
-            break;
+            return 0;
+//            return 20;
             
     }
     

@@ -11,6 +11,8 @@
 #import "Grade.h"
 #import "GoalMain.h"
 
+#define CREDITS_FORMAT @"Credits: %lu"
+
 @implementation BubbleMain
 
 - (id)initWithFrame:(CGRect)frame {
@@ -23,11 +25,9 @@
         CGFloat d = frame.size.width;
         
         //title 23-43% height of bubble
-        self.title = [[UILabel alloc] initWithFrame:CGRectMake(0, round(d*0.23), d, round(d*0.2))];
-        
-        self.title.font = [Styles heading1Font];
-        self.title.textColor = [Styles mainTextColour];
-        self.title.textAlignment = NSTextAlignmentCenter;
+        self.title = [[BubbleText alloc] initWithFrame:CGRectMake(0, round(d*0.23), d, round(d*0.2))
+                                                  text:[NSString stringWithFormat:CREDITS_FORMAT, (unsigned long)333]
+                                             fontOrNil:[Styles heading1Font]];
         
         //credit labels 45-55% height - E 9-36% width, M 36-63%, A 63-90%
         _excellenceCredits = [[BubbleMainCredits alloc] initWithFrame:
@@ -126,8 +126,7 @@
 }
 
 - (void)setTitleCredits:(NSUInteger)credits {
-    self.title.text = [NSString stringWithFormat:@"Credits: %lu", (unsigned long)credits];
+    self.title.text = [NSString stringWithFormat:CREDITS_FORMAT, (unsigned long)credits];
 }
-
 
 @end

@@ -110,7 +110,7 @@
         [alert addAction:a];
     }
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"NOOO!! CANCEL!! CANCEL!!" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -118,14 +118,14 @@
     if ([action.title isEqualToString:[NSString stringWithFormat:CANNOT_DELETE_STRING_FORMAT, CurrentProfile.profileName]]) {
         //Current selected
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You cannot delete your current profile. Please switch to a different one, then delete this one." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         //Not current
         NSString *mess = [NSString stringWithFormat:@"Are you sure you want to delete the profile called '%@'?", action.title];
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
         
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *confirmationAction) {
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleDestructive handler:^(UIAlertAction *confirmationAction) {
             //Delete
             [self deleteProfileWithTitle:action.title];
         }]];
@@ -140,7 +140,7 @@
     
     NSString *deletedMess = [NSString stringWithFormat:@"Profile '%@' was deleted.", profTitle];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:deletedMess preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -169,7 +169,7 @@
             
             NSString *mess = [NSString stringWithFormat:@"Profile '%@' was loaded.", action.title];
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+            [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:alert animated:YES completion:nil];
         }];
         [alert addAction:a];
@@ -210,7 +210,7 @@
         [self setAnimationSpeed:AnimationSpeedSelectionSlower withTitle:action.title];
     }]];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
     
 }
@@ -221,7 +221,7 @@
     
     NSString *mess = [NSString stringWithFormat:@"Animation speed set to '%@'.", title];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -241,7 +241,7 @@
 - (void)setuphasBeenDismissed {
     NSString *mess = [NSString stringWithFormat:@"Profile '%@' was saved", CurrentProfile.profileName];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

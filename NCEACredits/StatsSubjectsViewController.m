@@ -36,6 +36,8 @@
 - (void)bubbleWasPressed:(BubbleContainer *)container {
     [super bubbleWasPressed:container];
 
+    ApplicationDelegate.lastPressedSubjectOrTotal = container.bubble.title.text;
+    
     StatsCreditsViewController *stats = [[StatsCreditsViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
     [self startTransitionToChildBubble:container andBubbleViewController:stats];
 }

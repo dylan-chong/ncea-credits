@@ -18,5 +18,5 @@
 @end
 
 @interface UITextView (Stylesheet)
--(id)styleString;
+- (id)styleString;
 @end

@@ -9,6 +9,8 @@
 #import "EditTextBubble.h"
 #import "Styles.h"
 
+#define EXTRA_LINE_DISTANCE ANCHOR_THICKNESS/2
+
 @implementation EditTextBubble
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title text:(NSString *)text placeHolderText:(NSString *)placeholder towardsRightSide:(BOOL)isTowardsRight andType:(EditTextDataType)type
@@ -26,27 +28,31 @@
         _placeholder = placeholder;
         
         
-        float middle = 0.5;
+        CGFloat middle = 0.4;
+        CGFloat spaceFromEdge = 0.05;
+        CGFloat w = _viewContainer.frame.size.width;
         _titleLabel = [[UILabel alloc] initWithFrame:
-                  CGRectMake(0,
-                             0,
-                             _viewContainer.frame.size.width * (middle - 0.01),
-                             _viewContainer.frame.size.height)];
-
+                       CGRectMake(w * spaceFromEdge,
+                                  0,
+                                  w * (middle - 0.01 - spaceFromEdge),
+                                  _viewContainer.frame.size.height)];
+        
         _titleLabel.font = [Styles heading3Font];
         _titleLabel.text = [title stringByAppendingString:@":"];
         _titleLabel.textAlignment = NSTextAlignmentRight;
+        _titleLabel.adjustsFontSizeToFitWidth = YES;
         [_viewContainer addSubview:_titleLabel];
         
         _textLabel = [[UILabel alloc] initWithFrame:
-                      CGRectMake(_viewContainer.frame.size.width * (middle + 0.01),
+                      CGRectMake(w * (middle + 0.01),
                                  2.0 * [Styles sizeModifier],
-                                 _viewContainer.frame.size.width * (1 - middle - 0.01),
+                                 w * ((1 - middle - 0.01) - spaceFromEdge),
                                  _viewContainer.frame.size.height)];
-
+        
         _textLabel.font = [Styles body2Font];
         [self setTextLabelText:text];
         _textLabel.textAlignment = NSTextAlignmentLeft;
+        _textLabel.adjustsFontSizeToFitWidth = YES;
         [_viewContainer addSubview:_textLabel];
         
         self.backgroundColor = [UIColor clearColor];
@@ -77,8 +83,12 @@
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     [[Styles mediumLightGreyColour] setStroke];
-    CGContextSetLineWidth(context, 1.0);
-    CGContextMoveToPoint(context, self.bounds.size.width / 2, self.bounds.size.height / 2);
+    CGContextSetLineWidth(context, ANCHOR_THICKNESS);
+    
+    CGFloat xCentre = self.bounds.size.width / 2;
+    if (_isTowardsRight) xCentre -= EXTRA_LINE_DISTANCE;
+    else xCentre += EXTRA_LINE_DISTANCE;
+    CGContextMoveToPoint(context, xCentre, self.bounds.size.height / 2);
     
     if (_isTowardsRight) CGContextAddLineToPoint(context, self.bounds.size.width, self.bounds.size.height / 2);
     else CGContextAddLineToPoint(context, 0, self.bounds.size.height / 2);

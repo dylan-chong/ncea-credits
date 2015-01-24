@@ -13,7 +13,6 @@
 
 - (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andAssessmentOrNil:(Assessment *)assessment;
 @property Assessment *assessment;
-@property UIButton *deleteButton;
 
 + (NSArray *)getItemDataWithAssessmentOrNil:(Assessment *)assessment;
 

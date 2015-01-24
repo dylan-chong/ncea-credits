@@ -16,10 +16,19 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch-Image.png" translatesAutoresizingMaskIntoConstraints="NO" id="OMP-xJ-FLs">
+                    <rect key="frame" x="165" y="165" width="150" height="150"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="150" id="JWU-o8-gdq"/>
+                        <constraint firstAttribute="width" constant="150" id="x2N-DJ-dRP"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="APD-dw-oW4" secondAttribute="centerY" id="6XM-YW-qw9"/>
+                <constraint firstAttribute="centerX" secondItem="OMP-xJ-FLs" secondAttribute="centerX" id="QVL-dI-agp"/>
+                <constraint firstAttribute="centerY" secondItem="OMP-xJ-FLs" secondAttribute="centerY" id="aqx-P7-XcN"/>
                 <constraint firstAttribute="centerX" secondItem="APD-dw-oW4" secondAttribute="centerX" id="kAc-3w-THC"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -27,4 +36,7 @@
             <point key="canvasLocation" x="404" y="445"/>
         </view>
     </objects>
+    <resources>
+        <image name="Launch-Image.png" width="1024" height="1024"/>
+    </resources>
 </document>

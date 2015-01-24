@@ -12,22 +12,22 @@
 
 + (float)sizeModifier {
     Device d = [Styles getDevice];
-//    if (d == iPhone4Inch || d == iPhone3_5Inch) {
+    //    if (d == iPhone4Inch || d == iPhone3_5Inch) {
     if (d == iPhone) {
-        return 0.5;
+        return 0.6;
     }
     return 1; //iPad
 }
 
 + (Device)getDevice {
     if ([[[UIDevice currentDevice] model] rangeOfString:@"iPad" options:NSCaseInsensitiveSearch].location == NSNotFound) {
-//        if ([[UIScreen mainScreen] bounds].size.height == 480) {
-//            //NSLog(@"iPhone/iPod 3.5 inch");
-//            return iPhone3_5Inch;
-//        } else {
-//            //NSLog(@"iPhone/iPod 4 inch");
-//            return iPhone4Inch;
-//        }
+        //        if ([[UIScreen mainScreen] bounds].size.height == 480) {
+        //            //NSLog(@"iPhone/iPod 3.5 inch");
+        //            return iPhone3_5Inch;
+        //        } else {
+        //            //NSLog(@"iPhone/iPod 4 inch");
+        //            return iPhone4Inch;
+        //        }
         return iPhone;
     } else {
         //NSLog(@"iPad");
@@ -90,6 +90,27 @@
 
 + (NSArray *)sortArray:(NSArray *)array {
     return [array sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+}
+
++ (NSArray *)sortArray:(NSArray *)array byPropertyKey:(NSString *)key ascending:(BOOL)ascending {
+    NSArray *descriptors = @[[[NSSortDescriptor alloc] initWithKey:key ascending:ascending]];
+    return [array sortedArrayUsingDescriptors:descriptors];
+}
+
++ (NSString *)getRandomOKTitle {
+    static NSArray *_titles;
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        _titles = @[@"Okey dokey", @"Okey dokey then",
+                    @"Hmm, okay", @"Okay", @"Okay then",
+                    @"Mmkay", @"Mmkay, sure",
+                    @"Sure thing", @"Sure", @"Sure, okay",
+                    @"Yeah okay", @"Yeah okay then",
+                    @"Got it", @"Yup, got it", @"Okay, got it"];
+    });
+    
+    NSUInteger randomN = arc4random_uniform((u_int32_t)_titles.count);
+    return _titles[randomN];
 }
 
 @end

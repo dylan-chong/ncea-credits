@@ -61,7 +61,9 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 + (CGFloat)radiansToDegrees:(CGFloat)r;
 + (double)frameRate;
 + (NSArray *)sortArray:(NSArray *)array;
++ (NSArray *)sortArray:(NSArray *)array byPropertyKey:(NSString *)key ascending:(BOOL)ascending;
 
++ (NSString *)getRandomOKTitle;
 @end
 
 //*
@@ -100,7 +102,7 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 //****
 //*
 
-#define ANCHOR_THICKNESS 3.0
+#define ANCHOR_THICKNESS 2.5
 
 @interface Styles (Colours)
 

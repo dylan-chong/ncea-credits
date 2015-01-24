@@ -166,11 +166,6 @@
     return dataArray;
 }
 
-- (NSUInteger)getYearDateCurrentlyInUseOtherwiseCurrentDateYear {
-    if (_currentYear) return _currentYear;
-    else return [Year getCurrentYearDate];
-}
-
 - (NSUInteger)getPrimaryNCEALevelForCurrentYear {
     Year *year = [self getYearObjectForYearDate:_currentYear];
     return year.primaryLevelNumber;

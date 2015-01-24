@@ -9,7 +9,7 @@
 #import "CornerButton.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define SPACE_BETWEEN_TEXT_AND_EDGE 8 * [Styles sizeModifier]
+#define SPACE_BETWEEN_TEXT_AND_EDGE 14 * [Styles sizeModifier]
 
 @implementation CornerButton
 
