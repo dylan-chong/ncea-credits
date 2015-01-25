@@ -61,7 +61,7 @@
     CGSize containerSize = [FlickScroller getContainerSize:container];
     p.x = (containerSize.width - size.width) / 2;
     
-    if (isUp) p.y = StandardScrollArrowSpaceFromEdge + [ApplicationDelegate statusBarHeight] - StandardScrollArrowExtraTappingBoxSpace;
+    if (isUp) p.y = StandardScrollArrowSpaceFromEdge + [CurrentAppDelegate statusBarHeight] - StandardScrollArrowExtraTappingBoxSpace;
     else p.y = containerSize.height - size.height - StandardScrollArrowSpaceFromEdge + StandardScrollArrowExtraTappingBoxSpace;
     
     return p;

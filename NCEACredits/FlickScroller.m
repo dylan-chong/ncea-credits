@@ -79,7 +79,7 @@
 
 + (CGSize)getContainerSize:(UIView *)container {
     CGSize containerSize = container.frame.size;
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     
     if ((containerSize.width == screen.height || containerSize.width == screen.width) &&
         (containerSize.width == screen.height || containerSize.width == screen.width)) {
@@ -104,7 +104,7 @@
 //*
 
 + (NSUInteger)getNumberOfItemsPerPage {
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     
     CGFloat count = [Styles numberOfItemsInSelectionViewPer100px] * screen.height / 100;
     if ([EditTextViewController mainBubbleCoversUpEditBubble]) {

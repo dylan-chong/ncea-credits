@@ -66,7 +66,7 @@
 
 - (void)logJSONText {
     //Logs profile JSON
-    if (ApplicationDelegate.appSettings) {
+    if (CurrentAppDelegate.appSettings) {
         AppSettings *a = CurrentAppSettings;
         NSString *m = [[NSString alloc] initWithData:[a convertToJSONAsRoot]  encoding:NSUTF8StringEncoding];
         NSLog(@"\n\n\n//*\n//****\n//*********\n//****************\n//*************************\n********************************************    App Settings JSON    \n//*************************\n//****************\n//*********\n//****\n//*\n\n\n");
