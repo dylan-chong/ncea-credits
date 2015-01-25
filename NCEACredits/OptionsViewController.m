@@ -14,8 +14,13 @@
 #define OptionsBubbleTitleNewProfile @"New Profile"
 #define OptionsBubbleTitleDeleteProfile @"Delete Profile"
 #define OptionsBubbleTitleAnimationSpeed @"Speed"
+#define OptionsBubbleTitleSendFeedback @"Send Feedback"
 
 #define CANNOT_DELETE_STRING_FORMAT @"%@ (Cannot delete current)"
+
+#define FEEDBACK_RECIPIENT @[@"dylanchongit@gmail.com"]
+#define FEEDBACK_SUBJECT [NSString stringWithFormat:@"NCEA Credits v%@ Feedback: ", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]]
+#define FEEDBACK_BODY @"Hello, \n\nI have some feedback for NCEA Credits: \n\nThanks"
 
 @implementation OptionsViewController
 
@@ -24,7 +29,8 @@
                         OptionsBubbleTitleSwitchProfile,
                         OptionsBubbleTitleNewProfile,
                         OptionsBubbleTitleDeleteProfile,
-                        OptionsBubbleTitleAnimationSpeed
+                        OptionsBubbleTitleAnimationSpeed,
+                        OptionsBubbleTitleSendFeedback
                         ];
     
     NSMutableArray *pairs = [[NSMutableArray alloc] init];
@@ -65,17 +71,49 @@
         [self newProfilePressed];
     } else if ([title isEqualToString:OptionsBubbleTitleDeleteProfile]) {
         [self deleteProfilePressed];
+    } else if ([title isEqualToString:OptionsBubbleTitleSendFeedback]) {
+        [self sendFeedbackPressed];
     }
 }
 
 - (void)showSetupPressed {
-    CurrentAppSettings.setupState = SETUP_STATE_EDIT_PROFILE;
+    ApplicationDelegate.setupState = SETUP_STATE_EDIT_PROFILE;
     [SetupNavigationController showStoryboardFromViewController:self];
 }
 
 - (void)newProfilePressed {
-    CurrentAppSettings.setupState = SETUP_STATE_NEW_PROFILE_NOT_INITIAL;
+    ApplicationDelegate.setupState = SETUP_STATE_NEW_PROFILE_NOT_INITIAL;
     [SetupNavigationController showStoryboardFromViewController:self];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Send Feedback    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)sendFeedbackPressed {
+    [[self class] showMailPopupInViewControllerWithMFMailComposeDelegate:self];
+}
+
++ (void)showMailPopupInViewControllerWithMFMailComposeDelegate:(UIViewController<MFMailComposeViewControllerDelegate> *)controller {
+    MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
+    [mailVC setSubject:FEEDBACK_SUBJECT];
+    [mailVC setToRecipients:FEEDBACK_RECIPIENT];
+    [mailVC setMessageBody:FEEDBACK_BODY isHTML:NO];
+    [mailVC setMailComposeDelegate:controller];
+    [controller presentViewController:mailVC animated:YES completion:nil];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    if (error) NSLog(@"%@", [error localizedDescription]);
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 //*
@@ -125,12 +163,12 @@
         NSString *mess = [NSString stringWithFormat:@"Are you sure you want to delete the profile called '%@'?", action.title];
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
         
-        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleDestructive handler:^(UIAlertAction *confirmationAction) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"Yes, I'm sure" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *confirmationAction) {
             //Delete
             [self deleteProfileWithTitle:action.title];
         }]];
         
-        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"NOO!" style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     }
 }

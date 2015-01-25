@@ -27,14 +27,14 @@
         [self setFont:f];
         self.text = text;
         self.userInteractionEnabled = NO;
+        [self setTextAlignment:NSTextAlignmentCenter];
         
         if (DEBUG_MODE_ON && BUBBLE_TEXT_SHOW_BACKGROUND) {
             self.backgroundColor = [UIColor lightGrayColor];
             self.alpha = 0.5;
-            [self setTextAlignment:NSTextAlignmentLeft];
         } else {
             self.backgroundColor = [UIColor clearColor];
-            [self setTextAlignment:NSTextAlignmentCenter];
+            
         }
         
         CGFloat side = -BUBBLE_TEXT_UNREMOVABLE_SPACE_FROM_SIDES + BUBBLE_TEXT_EXTRA_SIDE_INSET;
@@ -85,7 +85,7 @@
         fontSize -= 0.1;
         self.font = [self.font fontWithSize:fontSize];
     }
-
+    
     if (!(DEBUG_MODE_ON && BUBBLE_TEXT_SHOW_BACKGROUND))
         [self resizeFrameAndCentre];
 }

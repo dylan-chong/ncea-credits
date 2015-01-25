@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 
-#define FILE_EXTENSION_INCLUDING_DOT @".json"
+#define FILE_EXTENSION_INCLUDING_DOT @".nceacredits"
 
 
 @implementation AppDelegate
@@ -21,7 +21,29 @@
     self.window.rootViewController = self.mainViewController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [self checkForFilesWIthJSONExtension];
     return YES;
+}
+
+- (void)checkForFilesWIthJSONExtension {
+    NSString *docsDir = [self getDocumentsDirectory];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSError *e;
+    NSArray *files = [manager contentsOfDirectoryAtPath:docsDir error:&e];
+    if (e) NSLog(@"%@", [e localizedDescription]);
+    
+    for (NSString *file in files) {
+        if (![file isEqualToString:APP_SETTINGS_FILE_NAME_WITH_EXT]) {
+            NSArray *components = [file componentsSeparatedByString:@"."];
+            if ([[components lastObject] isEqualToString:@"json"]) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You must delete the app due to updates" preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
+                [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
+                break;
+            }
+        }
+    }
 }
 
 - (Profile *)getCurrentProfile {

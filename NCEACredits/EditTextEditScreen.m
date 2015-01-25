@@ -95,7 +95,7 @@
     NSString *title = ((EditTextBubble *)_viewToEdit.bubble).titleLabel.text;
     if ([[title substringToIndex:title.length - TitleSuffix.length] isEqualToString:ItemTypeOfCredits]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Remember that literacy and numeracy credits are only for NCEA Level 1." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
         [self.delegate showAlert:alert];
     }
 }
@@ -113,8 +113,8 @@
 
 - (void)showAlertIfTooLong:(NSString *)textToCheck {
     if ([BubbleText textContainsWordsThatWillBeTooLargeForSubtitleBubble:textToCheck]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"A word in the name you just entered will be a little too long to display. You should shorten it to approximately 12-15 characters or less." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"A word in the name you just entered will be a little too long to display. You should shorten it to around 10-15 characters or less.\n\nYou could also hyphenate the word (e.g. electro-magnetism) and it will show up on two lines." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         }]];
         [self.delegate showAlert:alert];
     }
@@ -278,7 +278,7 @@
     for (NSString *sub in existingSubs) {
         if ([sub isEqualToString:newSub]) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"This subject already exists." preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+            [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
             [self.delegate showAlert:alert];
             
             return NO;
@@ -288,7 +288,7 @@
     //make sure isn't blank
     if (newSub.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"The subject cannot be blank." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
         [self.delegate showAlert:alert];
         
         return NO;
@@ -300,7 +300,7 @@
         [newSub isEqualToString:GradeTextTitleNone]) {
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"OK. You're very lucky I thought about this before you did. Imagine what could've happened if I didn't! You could've broken the VERY FOUNDATIONS of NCEA Credits! You would be completely screwed! And so would the whole world for that matter. Then what would you do?\n\n Very lucky." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Thank you developer! You're the best!"  style:UIAlertActionStyleCancel handler:nil]];
         [self.delegate showAlert:alert];
         return NO;
     }
@@ -338,7 +338,7 @@
             [[[UIAlertView alloc] initWithTitle:AppName
                                         message:@"Make sure the date is valid. Check that the day and month are possible.\n\nIt must also be in the format:\ndd/mm/yy."
                                        delegate:nil
-                              cancelButtonTitle:@"OK"
+                              cancelButtonTitle:RandomOK
                               otherButtonTitles: nil] show];
     } else {
         //Lots of credits

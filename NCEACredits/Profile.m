@@ -163,6 +163,8 @@
                               ]];
     }
     
+    dataArray = [[Styles sortArray:dataArray byPropertyKey:@"text" ascending:NO] mutableCopy];
+    
     return dataArray;
 }
 

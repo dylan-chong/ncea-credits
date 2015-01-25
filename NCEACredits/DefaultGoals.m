@@ -28,8 +28,8 @@
         
         NSInteger achReq = 80;
         GoalGradeReq(achReq, 1);
-        GoalGradeReq(achReq, 2);
-        GoalGradeReq(achReq, 3);
+        GoalGradeReq(60, 2);
+        GoalGradeReq(60, 3);
         
     } else if ([goalTitle isEqualToString:GoalMeritEndorsement]) {
         newGoal = [[Goal alloc] initWithGradeText:GradeTextMerit];

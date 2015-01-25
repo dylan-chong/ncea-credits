@@ -25,7 +25,7 @@
         CGFloat d = frame.size.width;
         
         //title 23-43% height of bubble
-        self.title = [[BubbleText alloc] initWithFrame:CGRectMake(0, round(d*0.23), d, round(d*0.2))
+        self.title = [[BubbleText alloc] initWithFrame:CGRectMake(0.08*d, round(d*0.23), d*0.84, round(d*0.2))
                                                   text:[NSString stringWithFormat:CREDITS_FORMAT, (unsigned long)333]
                                              fontOrNil:[Styles heading1Font]];
         

@@ -11,4 +11,6 @@
 
 @interface StatsSubjectsViewController : SubjectsViewController
 
+@property NSString *gradePriorityTitle;
+
 @end

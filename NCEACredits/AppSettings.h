@@ -19,7 +19,6 @@
 @interface AppSettings : ToJSONTemplate
 
 @property NSString *lastProfileFileName;
-@property NSInteger setupState;
 @property BOOL hasOpenedStatsMenuBefore;
 
 @property NSString *lastEnteredFinalGrade, *lastEnteredPrelimGrade, *lastEnteredExpectGrade, *lastEnteredSubject;

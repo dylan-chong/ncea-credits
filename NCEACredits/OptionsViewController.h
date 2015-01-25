@@ -8,7 +8,10 @@
 
 #import "SimpleSelectionViewController.h"
 #import "SetupRootController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface OptionsViewController : SimpleSelectionViewController <SetupRootControllerDelegate>
+@interface OptionsViewController : SimpleSelectionViewController <SetupRootControllerDelegate, MFMailComposeViewControllerDelegate>
+
++ (void)showMailPopupInViewControllerWithMFMailComposeDelegate:(UIViewController<MFMailComposeViewControllerDelegate> *)controller;
 
 @end

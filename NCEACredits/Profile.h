@@ -33,7 +33,6 @@
 @property YearCollection *yearCollection;
 - (Year *)getYearObjectForYearDate:(NSUInteger)date;
 - (Year *)getCurrentYear;
-- (NSUInteger)getYearDateCurrentlyInUseOtherwiseCurrentDateYear;
 - (NSUInteger)getPrimaryNCEALevelForCurrentYear;
 - (NSArray *)getYearsAsTableDatasForSetup;
 

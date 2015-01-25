@@ -53,8 +53,10 @@
 }
 
 - (NSArray *)getGeneralCells {
-    NSString *name = @"John Appleseed";
-    if (CurrentProfile.profileName) name = CurrentProfile.profileName;
+    NSString *name = @"John";
+    if (CurrentProfile.profileName && ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) name = CurrentProfile.profileName;
+    
+    NSInteger currentYear = (ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) ? CurrentProfile.currentYear : [Year getCurrentYearDate];
     
     return @[
              [[TableViewCellData alloc] initWithDetail:name
@@ -65,7 +67,7 @@
                                               selected:NO
                                           optionalData:0],
              
-             [[TableViewCellData alloc] initWithDetail:[NSString stringWithFormat:@"%lu", (unsigned long)[CurrentProfile getYearDateCurrentlyInUseOtherwiseCurrentDateYear]]
+             [[TableViewCellData alloc] initWithDetail:[NSString stringWithFormat:@"%lu", (unsigned long)currentYear]
                                                   text:@"Current Year"
                                                reuseId:@"edit"
                                              accessory:UITableViewCellAccessoryNone
@@ -92,7 +94,7 @@
     }
     
     BOOL goalHasBeenSelected = NO;
-    if (CurrentProfile.selectedGoalTitle) {
+    if (CurrentProfile.selectedGoalTitle && ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
         for (TableViewCellData *data in datas) {
             if ([data.text isEqualToString:CurrentProfile.selectedGoalTitle]) {
                 data.accessory = UITableViewCellAccessoryCheckmark;
@@ -103,7 +105,6 @@
     
     if (!goalHasBeenSelected) {
         ((TableViewCellData *) datas[0]).accessory = UITableViewCellAccessoryCheckmark;
-        goalHasBeenSelected = YES;
     }
     
     return datas;
@@ -112,7 +113,7 @@
 - (NSMutableArray *)getYearCellDatas {
     NSMutableArray *y;
     
-    if (CurrentProfile.yearCollection.years.count > 0) {
+    if (CurrentProfile.yearCollection.years.count > 0 && ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
         y = [[CurrentProfile getYearsAsTableDatasForSetup] mutableCopy];
     } else {
         y = [[NSMutableArray alloc] initWithObjects:[self getNewYearObjectWithAlreadyExistingYears:NO], nil];
@@ -120,7 +121,7 @@
     }
     
     //Add year button
-    [y addObject:[[TableViewCellData alloc] initWithDetail:@""
+    [y addObject:[[TableViewCellData alloc] initWithDetail:nil
                                                       text:@"Add year..."
                                                    reuseId:@"add"
                                                  accessory:UITableViewCellAccessoryNone
@@ -166,7 +167,7 @@
 }
 
 - (unsigned long)getNewYearDate {
-    unsigned long newDate = [CurrentProfile getYearDateCurrentlyInUseOtherwiseCurrentDateYear];
+    unsigned long newDate = [Year getCurrentYearDate];
     
     //is newDate already in use? get older dates until you find one not used
     while ([self checkIfYearDateIsAlreadyListed:newDate] == YES) {
@@ -392,7 +393,7 @@
         textField.placeholder = @"Your name";
         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSString *name = ((UITextField *)alert.textFields[0]).text;
         name = [name stringByReplacingOccurrencesOfString:@"\\" withString:@"_"];
         name = [name stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
@@ -419,6 +420,25 @@
                           withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionNone];
     [self.tableView deselectRowAtIndexPath:path animated:NO];
+    
+    [self sortAndRefreshYears];
+}
+
+- (void)sortAndRefreshYears {
+    TableViewCellData *addButton = [_yearCells lastObject];
+    [_yearCells removeLastObject];
+    
+    _yearCells = [[Styles sortArray:_yearCells byPropertyKey:@"text" ascending:NO] mutableCopy];
+    [_yearCells addObject:addButton];
+    
+    for (NSInteger a = 0; a < _yearCells.count; a++) {
+        TableViewCellData *data = _yearCells[a];
+        NSIndexPath *path = [NSIndexPath indexPathForItem:a inSection:1];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:path];
+        
+        cell.textLabel.text = data.text;
+        if (data.detail) cell.detailTextLabel.text = data.detail;
+    }
 }
 
 //------------------------------ Edit Years ------------------------------
@@ -427,7 +447,7 @@
     //Original cell data
     TableViewCellData *tappedYearData = _yearCells[row];
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please type in a year (date), then the primary NCEA Level for that year." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Please type in a year (date), then the main NCEA Level for that year." preferredStyle:UIAlertControllerStyleAlert];
     
     //Text fields
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
@@ -436,7 +456,7 @@
     }];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.text = [self getLastCharacterOfString:tappedYearData.detail];
+        textField.text = tappedYearData.detail;
         textField.placeholder = @"NCEA Level 1/2/3/(4)";
     }];
     
@@ -456,25 +476,22 @@
 
 - (void)yearCellAtRow:(NSUInteger)row editWindowDoneClicked:(UIAlertController *)alert {
     TableViewCellData *data = _yearCells[row];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:1]];
     NSString *invalidityMessage;
     
     //Validate year
     NSString *year = ((UITextField *)alert.textFields[0]).text;
     if ([self isString:year NumbersOnlyAndHasCertainNumberOfCharacters:4]) {
         data.text = year;
-        cell.textLabel.text = year;
     } else {
         invalidityMessage = @"Please enter a valid year.";
     }
     
     //Validate level
-    NSString *level = ((UITextField *)alert.textFields[1]).text;
+    NSString *level = [self getLastCharacterOfString:((UITextField *)alert.textFields[1]).text];
     NSUInteger levelInt = [level integerValue];
     if ([self isString:level NumbersOnlyAndHasCertainNumberOfCharacters:1] && levelInt >= 1 && levelInt <= 4) {//Supports NCEA 1-4
         NSString *detail = [NSString stringWithFormat:@"NCEA Level %li", (long) levelInt];
         data.detail = detail;
-        cell.detailTextLabel.text = detail;
     } else {
         if (invalidityMessage.length > 0) {
             invalidityMessage = @"Please enter a valid year and NCEA level.";
@@ -486,13 +503,14 @@
     //Some stuff not valid
     if (invalidityMessage) {
         UIAlertController *invalidityAlert = [UIAlertController alertControllerWithTitle:AppName message:invalidityMessage preferredStyle:UIAlertControllerStyleAlert];
-        [invalidityAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        [invalidityAlert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
             //Reshow edit window after close
             [self yearWasTappedAtRow:row];
         }]];
         [self presentViewController:invalidityAlert animated:YES completion:nil];
     }
     
+    [self sortAndRefreshYears];
     [self makeSureValidCurrentYearIsSelected];
 }
 
@@ -562,7 +580,7 @@
     }
     
     alert.popoverPresentationController.sourceRect = [self.tableView rectForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
-    alert.popoverPresentationController.sourceView = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+    alert.popoverPresentationController.sourceView = self.tableView;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -653,9 +671,9 @@
             if (shouldShowHelp) {
                 //Welcome message
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Welcome to %@!", AppName]
-                                                                               message:@"- Tap the green add button to create an assessment\n- Enter details like its subject and name\n- Then, tap save.\n\nDon't forget that grades and the AS Number are optional - you can always set them later.\n\nHappy credit counting!"
+                                                                               message:@"Tap the green add button to create an assessment; enter details like its subject and name;then, tap save.\n\nDon't forget that grades and the AS Number are optional.\n\nHappy credit counting!"
                                                                         preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                     [self closeSetupWithoutFurtherAdoAndHasSaved:YES];
                 }]];
                 [self presentViewController:alert animated:YES completion:nil];
@@ -664,11 +682,11 @@
             }
         }
         
-        CurrentAppSettings.setupState = SETUP_STATE_BLANK;
+        ApplicationDelegate.setupState = SETUP_STATE_BLANK;
     } else {
         //Duplicate alert
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You seem to have duplicate years. Duplicate NCEA levels are allowed, but not years." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     }
 }
@@ -698,13 +716,13 @@
     
     Profile *p = CurrentProfile;
     
-    if (CurrentAppSettings.setupState == SETUP_STATE_NEW_PROFILE_NOT_INITIAL) {
+    if (ApplicationDelegate.setupState == SETUP_STATE_NEW_PROFILE_NOT_INITIAL) {
         if ([self checkForFileConflictWithNewName:newName]) {
             return NO;
         } else {
             p = [[Profile alloc] initWithPropertiesOrNil:nil];
         }
-    } else if (CurrentAppSettings.setupState == SETUP_STATE_EDIT_PROFILE) {
+    } else if (ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
         //not initial setup
         NSString *oldName = CurrentProfile.profileName;
         if (![newName isEqualToString:oldName]) {
@@ -761,7 +779,7 @@
     p.yearCollection.years = yearsToKeep;
     p.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
     
-    if (CurrentAppSettings.setupState) [ApplicationDelegate setCurrentProfile:p];
+    if (ApplicationDelegate.setupState) [ApplicationDelegate setCurrentProfile:p];
     [ApplicationDelegate saveCurrentProfileAndAppSettings];
     
     return YES;
@@ -773,7 +791,7 @@
         if ([name isEqualToString:newName]) {
             //name is already used - avoid file conflict
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"There is already a profile with this name." preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+            [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:alert animated:YES completion:nil];
             return YES;
         }

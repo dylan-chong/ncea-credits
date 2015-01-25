@@ -14,6 +14,7 @@
 		840D5871188216B200DE24B7 /* AnimationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5870188216B200DE24B7 /* AnimationObject.m */; };
 		840D5874188240A700DE24B7 /* GoalTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D5873188240A700DE24B7 /* GoalTitle.m */; };
 		840D587618834B0300DE24B7 /* Stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D587518834B0300DE24B7 /* Stats.png */; };
+		84175F5E1A739C8A00D8C0DF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84175F5D1A739C8A00D8C0DF /* MessageUI.framework */; };
 		841B883E1A53621700E86DCC /* StatsCreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841B883D1A53621700E86DCC /* StatsCreditsViewController.m */; };
 		841B88411A54E76000E86DCC /* SubjectColourPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 841B88401A54E76000E86DCC /* SubjectColourPair.m */; };
 		841DADFF18B0A7D700626302 /* EditTextBubbleContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 841DADFE18B0A7D700626302 /* EditTextBubbleContainer.m */; };
@@ -118,6 +119,7 @@
 		840D5872188240A700DE24B7 /* GoalTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalTitle.h; sourceTree = "<group>"; };
 		840D5873188240A700DE24B7 /* GoalTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalTitle.m; sourceTree = "<group>"; };
 		840D587518834B0300DE24B7 /* Stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stats.png; sourceTree = "<group>"; };
+		84175F5D1A739C8A00D8C0DF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		841B883C1A53621700E86DCC /* StatsCreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsCreditsViewController.h; sourceTree = "<group>"; };
 		841B883D1A53621700E86DCC /* StatsCreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsCreditsViewController.m; sourceTree = "<group>"; };
 		841B883F1A54E76000E86DCC /* SubjectColourPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectColourPair.h; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84175F5E1A739C8A00D8C0DF /* MessageUI.framework in Frameworks */,
 				84265A6C1904A32000141564 /* QuartzCore.framework in Frameworks */,
 				84B5A27C1880D8AD00969952 /* CoreGraphics.framework in Frameworks */,
 				84B5A27E1880D8AD00969952 /* UIKit.framework in Frameworks */,
@@ -451,6 +454,7 @@
 		84B5A2781880D8AD00969952 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84175F5D1A739C8A00D8C0DF /* MessageUI.framework */,
 				84265A6B1904A32000141564 /* QuartzCore.framework */,
 				84B5A2791880D8AD00969952 /* Foundation.framework */,
 				84B5A27B1880D8AD00969952 /* CoreGraphics.framework */,

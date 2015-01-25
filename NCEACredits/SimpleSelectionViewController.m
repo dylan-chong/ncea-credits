@@ -170,7 +170,7 @@
     if (_cornerButton) [_cornerButton reposition];
 }
 
-- (void)createCornerButtonWithTitle:(NSString *)title colourOrNil:(UIColor *)colour target:(id)target selector:(SEL)selector {
+- (void)createCornerButtonWithTitle:(NSString *)title colourOrNilForMailBubbleColour:(UIColor *)colour target:(id)target selector:(SEL)selector {
     Corner corner = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
     UIColor *buttonColour = (colour) ? colour : self.mainBubble.colour;
     

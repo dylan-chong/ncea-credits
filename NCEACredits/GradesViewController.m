@@ -58,7 +58,7 @@
 //*
 
 - (void)createColourButton {
-    [self createCornerButtonWithTitle:SET_COLOUR_TITLE colourOrNil:nil target:self selector:@selector(setColourBubblePressed)];
+    [self createCornerButtonWithTitle:SET_COLOUR_TITLE colourOrNilForMailBubbleColour:nil target:self selector:@selector(setColourBubblePressed)];
 }
 
 - (void)setColourBubblePressed {

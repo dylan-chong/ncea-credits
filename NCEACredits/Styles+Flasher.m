@@ -69,7 +69,7 @@
 //*
 
 + (CGFloat)getDurationOfAnimationWithFlashTimes:(NSUInteger)times {
-    return (2 * times + 1) * FLASH_SPEED;
+    return (2 * times) * FLASH_SPEED;
 
 }
 

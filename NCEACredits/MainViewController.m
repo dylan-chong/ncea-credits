@@ -33,7 +33,7 @@
     //Show setup window
     if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
         //Hasn't shown setup
-        CurrentAppSettings.setupState = SETUP_STATE_NEW_PROFILE_INITIAL;
+        ApplicationDelegate.setupState = SETUP_STATE_NEW_PROFILE_INITIAL;
         [self showSetupWindow];
     } else {
         [self startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup];
@@ -47,9 +47,6 @@
 }
 
 - (void)startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup {
-    if (MAKE_FAKE_ASSESSMENTS && DEBUG_MODE_ON) [self makeFakeAssessments];
-    
-    [self updateMainBubbleStats];
     
     self.shouldDelayCreationAnimation = NO;
     [self startChildBubbleCreationAnimation];
@@ -148,24 +145,14 @@
 //*********
 //****************
 //*************************
-#pragma mark - ***************************    Container Press Events    ************************************
+#pragma mark - ***************************    Child Container Press Events    ************************************
 //*************************
 //****************
 //*********
 //****
 //*
 
-- (void)mainBubbleTapped:(id)sender {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Credits:\nThis counts the number of credits of assessments with final grades. (For NCEA Levels 2 and 3, you start with an extra 20 credits.) You can tap the blue 'Stats' tab to view more information like predictions about the number of credits you expect to have (make sure to set an 'Expected Grade' in the 'Add' screen).\n\nGoals:\nThis shows the number of credits required to reach the required goal (e.g. Excellence Endorsement). You can change this in the setup screen by tapping the orange 'Options' tab, then 'Show Setup'. Note that in NCEA Level 1, 10 literacy and 10 numeracy credits are also required (see the 'Stats' tab to see the number of these credits)." preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    //Log
-    [CurrentProfile logJSONText];
-    [CurrentAppSettings logJSONText];
-    [self logAssessmentGrades];
-}
-
+//------------------------------ Child Bubbles ------------------------------
 - (void)addContainerPressed {
     [self bubbleWasPressed:_addContainer];
     
@@ -207,6 +194,55 @@
 //*********
 //****************
 //*************************
+#pragma mark - ***************************    Main Container Tap    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+//------------------------------ Main Bubble ------------------------------
+
+- (void)mainBubbleTapped:(id)sender {
+    //Popup
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick an action." preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Edit Profile (with Goals and Years)" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        ApplicationDelegate.setupState = SETUP_STATE_EDIT_PROFILE;
+        [self showSetupWindow];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Send Feedback" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [OptionsViewController showMailPopupInViewControllerWithMFMailComposeDelegate:self];
+    }]];
+    if (MAKE_FAKE_ASSESSMENTS && DEBUG_MODE_ON) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"Make Dummy Assessments" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self makeFakeAssessments];
+        }]];
+    }
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIPopoverPresentationController *pop = [alert popoverPresentationController];
+    pop.sourceRect = self.mainBubble.frame;
+    pop.sourceView = self.view;
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    //Log
+    [CurrentProfile logJSONText];
+    [CurrentAppSettings logJSONText];
+    [self logAssessmentGrades];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    if (error) NSLog(@"%@", [error localizedDescription]);
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
 #pragma mark - ***************************    Other    ************************************
 //*************************
 //****************
@@ -234,7 +270,6 @@
 
 - (void)makeFakeAssessments {
     //Make fakes only when no assessments
-    
     if ([CurrentProfile getCurrentYear].assessmentCollection.assessments.count == 0) {
         NSArray *faketitles = @[@"mmmm", @"tttt", @"hhhh", @"zzzz", @"pppp", @"dddd"];
         
@@ -252,6 +287,8 @@
                 [CurrentProfile addAssessmentOrReplaceACurrentOne:a];
             }
         }
+        
+        [self updateMainBubbleStats];
     }
 }
 

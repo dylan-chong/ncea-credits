@@ -13,7 +13,6 @@
 - (AppSettings *)createBlank {
     AppSettings *as = [[AppSettings alloc] init];
     as.lastProfileFileName = @"";
-    as.setupState = SETUP_STATE_BLANK;
     as.hasOpenedStatsMenuBefore = NO;
     
     as.lastEnteredExpectGrade = @"";
@@ -30,7 +29,6 @@
 - (AppSettings *)loadFromJSONWithProperties:(NSDictionary *)properties {
     AppSettings *as = [[AppSettings alloc] init];
     as.lastProfileFileName = [properties objectForKey:@"lastProfileFileName"];
-    as.setupState = [[properties objectForKey:@"isMakingNewProfileFromOptionsMenu"] integerValue];
     as.hasOpenedStatsMenuBefore = [[properties objectForKey:@"hasOpenedStatsMenuBefore"] boolValue];
     
     as.lastEnteredExpectGrade = [properties objectForKey:@"lastEnteredExpectGrade"];
@@ -43,14 +41,13 @@
     NSNumber *animSpeed = [properties objectForKey:@"animationSpeed"];
     if (animSpeed) as.animationSpeed = [animSpeed integerValue];
     else as.animationSpeed = AnimationSpeedSelectionNormal;
-    
+
     return as;
 }
 
 - (NSData *)convertToJSONAsRoot {
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
     [properties setObject:_lastProfileFileName forKey:@"lastProfileFileName"];
-    [properties setObject:[NSNumber numberWithInteger:_setupState] forKey:@"isMakingNewProfileFromOptionsMenu"];
     [properties setObject:[NSNumber numberWithBool:_hasOpenedStatsMenuBefore] forKey:@"hasOpenedStatsMenuBefore"];
     
     [properties setObject:_lastEnteredExpectGrade forKey:@"lastEnteredExpectGrade"];
@@ -58,8 +55,8 @@
     [properties setObject:_lastEnteredPrelimGrade forKey:@"lastEnteredPrelimGrade"];
     [properties setObject:_lastEnteredSubject forKey:@"lastEnteredSubject"];
     [properties setObject:[NSNumber numberWithBool:_lastEnteredWasInternal] forKey:@"lastEnteredWasInternal"];
-    
-    [properties setObject:[NSNumber numberWithBool:_animationSpeed] forKey:@"animationSpeed"];
+
+    [properties setObject:[NSNumber numberWithInteger:_animationSpeed] forKey:@"animationSpeed"];
     
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];

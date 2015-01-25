@@ -8,8 +8,9 @@
 
 #import "BubbleViewController.h"
 #import "SetupRootController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface MainViewController : BubbleViewController <SetupRootControllerDelegate>
+@interface MainViewController : BubbleViewController <SetupRootControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (weak, nonatomic) BubbleContainer *addContainer, *gradesContainer, *statsContainer, *optionsContainer;
 

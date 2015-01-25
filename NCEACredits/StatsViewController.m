@@ -11,6 +11,16 @@
 
 @implementation StatsViewController
 
+- (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andStaggered:(BOOL)staggered {
+    self = [super initWithMainBubble:mainBubble delegate:delegate andStaggered:staggered];
+    
+    if (self) {
+        [self createCornerButtonWithTitle:@"Help me!" colourOrNilForMailBubbleColour:nil target:self selector:@selector(cornerButtonPressed:)];
+    }
+    
+    return self;
+}
+
 - (void)createBubbleContainersAndAddAsSubviews {
     NSArray *titles = @[STATS_BUBBLE_LEVEL_PRELIMINARY, STATS_BUBBLE_LEVEL_EXPECTED, STATS_BUBBLE_LEVEL_FINAL_ONLY];
     
@@ -36,16 +46,51 @@
     [self startTransitionToChildBubble:container andBubbleViewController:stats];
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Corner Button    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)cornerButtonPressed:(CornerButton *)sender {
+    [self showHelpPopup];
+}
+
 - (void)hasTransitionedFromParentViewController {
     if (!CurrentAppSettings.hasOpenedStatsMenuBefore) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"This section allows you predict the amount of credits you will have. \n- The 'Expected' section is similar, only it uses your expected grades instead.\n- The 'Preliminary' section calculates how many credits you would have according to the preliminary grades you set for each assessment. \n- For both of these, the final grades take precedence over the other two types. The 'Final Only' section does not account for preliminary or expected grades." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
+        [self showHelpPopup];
         
         CurrentAppSettings.hasOpenedStatsMenuBefore = YES;
     }
     
     [super hasTransitionedFromParentViewController];
 }
+
+- (void)showHelpPopup {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Use the 'Expected' and 'Preliminary' grades if you have not received all of your 'Final' grades yet. You can use these to predict how many credits you will have after you have received all of your 'Final' grades.\n\nYou can set these grades for each assessment in the 'Add' or 'Edit' screens." preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+//------------------------------ Flash ------------------------------
+//- (void)creationAnimationHasFinished {
+//    [super creationAnimationHasFinished];
+//    [self flashCornerButtonWithDelay];
+//}
+//
+//- (void)flashCornerButtonWithDelay {
+//    CGFloat delay = [Styles getDurationOfAnimationWithFlashTimes:FLASH_BUBBLE_VC_MAIN_BUBBLE_TIMES];
+//    [NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(flashCornerButton) userInfo:nil repeats:NO];
+//}
+//
+//- (void)flashCornerButton {
+//    [Styles flashStartWithView:self.cornerButton numberOfTimes:FLASH_DEFAULT_TIMES sizeIncreaseMultiplierOr0ForDefault:2];
+//}
 
 @end

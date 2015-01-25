@@ -278,7 +278,7 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
 //*
 
 - (void)createDeleteButton {
-    [self createCornerButtonWithTitle:@"Delete" colourOrNil:[Styles redColour] target:self selector:@selector(deletePressed)];
+    [self createCornerButtonWithTitle:@"Delete" colourOrNilForMailBubbleColour:[Styles redColour] target:self selector:@selector(deletePressed)];
 }
 
 - (void)deletePressed {

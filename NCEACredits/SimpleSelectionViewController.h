@@ -25,6 +25,6 @@
 @property BOOL staggered;
 
 @property CornerButton *cornerButton;
-- (void)createCornerButtonWithTitle:(NSString *)title colourOrNil:(UIColor *)colour target:(id)target selector:(SEL)selector;
+- (void)createCornerButtonWithTitle:(NSString *)title colourOrNilForMailBubbleColour:(UIColor *)colour target:(id)target selector:(SEL)selector;
 
 @end

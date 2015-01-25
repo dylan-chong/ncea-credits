@@ -35,9 +35,8 @@
     [cornerB sizeToFit];
     CGRect f = cornerB.frame;
     f.size.width += 2 * SPACE_BETWEEN_TEXT_AND_EDGE;
-    f.origin = [Styles getExactOriginForCorner:corner andSize:f.size];
-    f.origin.y += [ApplicationDelegate getStatusBarHeight];
     cornerB.frame = f;
+    [cornerB reposition];
     
     [[cornerB layer] setBorderWidth:1.0 * [Styles sizeModifier]];
     [[cornerB layer] setBorderColor:[colour CGColor]];
@@ -71,7 +70,6 @@
 - (void)reposition {
     CGRect f = self.frame;
     f.origin = [Styles getExactOriginForCorner:_buttonCorner andSize:f.size];
-    f.origin.y += [ApplicationDelegate getStatusBarHeight];
     self.frame = f;
 }
 
