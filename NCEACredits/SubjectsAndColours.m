@@ -120,7 +120,7 @@
         }
     }
     
-    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    [CurrentAppDelegate saveCurrentProfileAndAppSettings];
 }
 
 - (NSDictionary *)getAllSubjectsAndColoursForSubjects:(NSArray *)subjectsOfAssessments {

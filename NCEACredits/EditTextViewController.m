@@ -51,7 +51,7 @@
 }
 
 + (CGRect)getPositionOfObjectAtIndex:(NSInteger)index outOfBubbles:(NSUInteger)bubbles size:(CGSize)size fromCorner:(Corner)corner andFlickScroller:(FlickScroller *)flickScroller towardsRightSide:(BOOL)towardsRight {
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     
     //Calculate position on position in page
     NSUInteger perPage = [FlickScroller getNumberOfItemsPerPage];
@@ -108,7 +108,7 @@
 }
 
 + (BOOL)mainBubbleCoversUpEditBubble {
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     
     CGFloat space = screen.width - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
     if (([Styles editTextBubbleSize].width / 2) > space) {
@@ -146,12 +146,12 @@
 
 + (CGPoint)getCorner:(Corner)c withSize:(CGSize)size towardsRightSide:(BOOL)towardsRight {
     CGPoint origin;
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     float space = [Styles spaceFromEdgeOfScreen];
     
     float left = space  ;
     float right = screen.width - space ;
-    float top = space + [ApplicationDelegate getStatusBarHeight];
+    float top = space + [CurrentAppDelegate getStatusBarHeight];
     float bottom = screen.height - space - size.height;
     
     if (towardsRight) {
