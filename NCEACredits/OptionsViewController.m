@@ -8,27 +8,20 @@
 
 #import "OptionsViewController.h"
 #import "SetupNavigationController.h"
+#import "OptionsProfileViewController.h"
 
-#define OptionsBubbleTitleShowSetup @"Edit Profile"
-#define OptionsBubbleTitleSwitchProfile @"Switch Profile"
-#define OptionsBubbleTitleNewProfile @"New Profile"
-#define OptionsBubbleTitleDeleteProfile @"Delete Profile"
 #define OptionsBubbleTitleAnimationSpeed @"Speed"
 #define OptionsBubbleTitleSendFeedback @"Send Feedback"
-
-#define CANNOT_DELETE_STRING_FORMAT @"%@ (Cannot delete current)"
+#define OptionsBubbleTitleProfileSettings @"Profile Settings"
 
 #define FEEDBACK_RECIPIENT @[@"dylanchongit@gmail.com"]
 #define FEEDBACK_SUBJECT [NSString stringWithFormat:@"NCEA Credits v%@ Feedback: ", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]]
-#define FEEDBACK_BODY @"Hello, \n\nI have some feedback for NCEA Credits: \n\nThanks"
+#define FEEDBACK_BODY @"Hello, \n\nI have some feedback for NCEA Credits: \n\n\nThanks"
 
 @implementation OptionsViewController
 
 - (void)createBubbleContainersAndAddAsSubviews {
-    NSArray *titles = @[OptionsBubbleTitleShowSetup,
-                        OptionsBubbleTitleSwitchProfile,
-                        OptionsBubbleTitleNewProfile,
-                        OptionsBubbleTitleDeleteProfile,
+    NSArray *titles = @[OptionsBubbleTitleProfileSettings,
                         OptionsBubbleTitleAnimationSpeed,
                         OptionsBubbleTitleSendFeedback
                         ];
@@ -63,27 +56,16 @@
     
     if ([title isEqualToString:OptionsBubbleTitleAnimationSpeed]) {
         [self animationSpeedPressed];
-    } else if ([title isEqualToString:OptionsBubbleTitleSwitchProfile]) {
-        [self switchProfilePressed];
-    } else if ([title isEqualToString:OptionsBubbleTitleShowSetup]) {
-        [self showSetupPressed];
-    } else if ([title isEqualToString:OptionsBubbleTitleNewProfile]) {
-        [self newProfilePressed];
-    } else if ([title isEqualToString:OptionsBubbleTitleDeleteProfile]) {
-        [self deleteProfilePressed];
     } else if ([title isEqualToString:OptionsBubbleTitleSendFeedback]) {
         [self sendFeedbackPressed];
+    } else if ([title isEqualToString:OptionsBubbleTitleProfileSettings]) {
+        [self profileSettingsPressedWithContainer:container];
     }
 }
 
-- (void)showSetupPressed {
-    ApplicationDelegate.setupState = SETUP_STATE_EDIT_PROFILE;
-    [SetupNavigationController showStoryboardFromViewController:self];
-}
-
-- (void)newProfilePressed {
-    ApplicationDelegate.setupState = SETUP_STATE_NEW_PROFILE_NOT_INITIAL;
-    [SetupNavigationController showStoryboardFromViewController:self];
+- (void)profileSettingsPressedWithContainer:(BubbleContainer *)container {
+    OptionsProfileViewController *vc = [[OptionsProfileViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
+    [self startTransitionToChildBubble:container andBubbleViewController:vc];
 }
 
 //*
@@ -116,106 +98,6 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-//*
-//****
-//*********
-//****************
-//*************************
-#pragma mark - ***************************    Delete    ************************************
-//*************************
-//****************
-//*********
-//****
-//*
-
-- (void)deleteProfilePressed {
-    NSArray *names = [ApplicationDelegate getUsedProfileNames];
-    //    NSString *current = CurrentProfile.profileName;
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick a profile to delete" preferredStyle:UIAlertControllerStyleAlert];
-    
-    NSString *title;
-    for (NSString *name in names) {
-        
-        if ([name isEqualToString:CurrentProfile.profileName])
-            title = [NSString stringWithFormat:CANNOT_DELETE_STRING_FORMAT, name];
-        else
-            title = name;
-        
-        UIAlertAction *a = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-            [self confirmDeleteProfileWithAction:action];
-        }];
-        [alert addAction:a];
-    }
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"NOOO!! CANCEL!! CANCEL!!" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)confirmDeleteProfileWithAction:(UIAlertAction *)action {
-    if ([action.title isEqualToString:[NSString stringWithFormat:CANNOT_DELETE_STRING_FORMAT, CurrentProfile.profileName]]) {
-        //Current selected
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You cannot delete your current profile. Please switch to a different one, then delete this one." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
-    } else {
-        //Not current
-        NSString *mess = [NSString stringWithFormat:@"Are you sure you want to delete the profile called '%@'?", action.title];
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alert addAction:[UIAlertAction actionWithTitle:@"Yes, I'm sure" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *confirmationAction) {
-            //Delete
-            [self deleteProfileWithTitle:action.title];
-        }]];
-        
-        [alert addAction:[UIAlertAction actionWithTitle:@"NOO!" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-}
-
-- (void)deleteProfileWithTitle:(NSString *)profTitle {
-    [ApplicationDelegate deleteProfileWithProfileName:profTitle];
-    
-    NSString *deletedMess = [NSString stringWithFormat:@"Profile '%@' was deleted.", profTitle];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:deletedMess preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-//*
-//****
-//*********
-//****************
-//*************************
-#pragma mark - ***************************    Switch Profile    ************************************
-//*************************
-//****************
-//*********
-//****
-//*
-
-- (void)switchProfilePressed {
-    NSArray *names = [ApplicationDelegate getUsedProfileNames];
-    //    NSString *current = CurrentProfile.profileName;
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick a profile" preferredStyle:UIAlertControllerStyleAlert];
-    
-    for (NSString *name in names) {
-        UIAlertAction *a = [UIAlertAction actionWithTitle:name style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            //Tapped
-            [ApplicationDelegate switchToProfile:action.title];
-            
-            NSString *mess = [NSString stringWithFormat:@"Profile '%@' was loaded.", action.title];
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:alert animated:YES completion:nil];
-        }];
-        [alert addAction:a];
-    }
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-}
 
 //*
 //****
@@ -255,7 +137,7 @@
 
 - (void)setAnimationSpeed:(AnimationSpeedSelection)selection withTitle:(NSString *)title {
     CurrentAppSettings.animationSpeed = selection;
-    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    [CurrentAppDelegate saveCurrentProfileAndAppSettings];
     
     NSString *mess = [NSString stringWithFormat:@"Animation speed set to '%@'.", title];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
@@ -263,24 +145,6 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-//*
-//****
-//*********
-//****************
-//*************************
-#pragma mark - ***************************    Return from profile    ************************************
-//*************************
-//****************
-//*********
-//****
-//*
 
-//Delegate method
-- (void)setuphasBeenDismissed {
-    NSString *mess = [NSString stringWithFormat:@"Profile '%@' was saved", CurrentProfile.profileName];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-}
 
 @end

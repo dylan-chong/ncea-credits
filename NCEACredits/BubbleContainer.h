@@ -18,16 +18,9 @@ typedef NS_ENUM(NSInteger, BubbleType) {
     SubtitleBubble
 };
 
-
-@protocol BubbleContainerDelegate <BubbleDelegate>
-//subclasses BubbleDelegate so redrawAnchor method already exists
-@end
-
 typedef CGRect (^PositionCalculationBlock) (void);
 
-@interface BubbleContainer : UIView <BubbleDelegate, AnimationObjectDelegate>
-
-@property id<BubbleContainerDelegate> delegate;
+@interface BubbleContainer : UIView <AnimationObjectDelegate>
 
 @property Bubble *bubble;
 @property BubbleType bubbleType;

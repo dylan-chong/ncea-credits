@@ -10,8 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define COLOUR_HEIGHT_DECIMAL 0.8
-#define CORNER_RADIUS 6.0 * [Styles sizeModifier]
-#define COLOUR_WIDTH_OR_HEIGHT 30 * [Styles sizeModifier]
+#define CORNER_RADIUS 6.0// * [Styles sizeModifier]
+#define COLOUR_WIDTH_OR_HEIGHT 25.0 // * [Styles sizeModifier]
 
 @implementation ChangeColourSubjectColourTableViewCell
 

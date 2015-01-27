@@ -20,7 +20,7 @@
 
 - (id)initWithEditTextBubbleContainerToEdit:(EditTextBubbleContainer *)toEdit
 {
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     self = [super initWithFrame:CGRectMake(0, 0, screen.width, screen.height)];
     if (self) {
         _viewToEdit = toEdit;
@@ -57,7 +57,7 @@
 - (void)resetFrameWithAnimation:(BOOL)animated {
     float size = 0.25;
     float middle = 0.5;
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     
     self.frame = CGRectMake(0, 0, screen.width, screen.height);
     float t = [Styles animationSpeed];

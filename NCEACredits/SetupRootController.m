@@ -54,9 +54,9 @@
 
 - (NSArray *)getGeneralCells {
     NSString *name = @"John";
-    if (CurrentProfile.profileName && ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) name = CurrentProfile.profileName;
+    if (CurrentProfile.profileName && CurrentAppDelegate.setupState == SETUP_STATE_EDIT_PROFILE) name = CurrentProfile.profileName;
     
-    NSInteger currentYear = (ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) ? CurrentProfile.currentYear : [Year getCurrentYearDate];
+    NSInteger currentYear = (CurrentAppDelegate.setupState == SETUP_STATE_EDIT_PROFILE) ? CurrentProfile.currentYear : [Year getCurrentYearDate];
     
     return @[
              [[TableViewCellData alloc] initWithDetail:name
@@ -94,7 +94,7 @@
     }
     
     BOOL goalHasBeenSelected = NO;
-    if (CurrentProfile.selectedGoalTitle && ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
+    if (CurrentProfile.selectedGoalTitle && CurrentAppDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
         for (TableViewCellData *data in datas) {
             if ([data.text isEqualToString:CurrentProfile.selectedGoalTitle]) {
                 data.accessory = UITableViewCellAccessoryCheckmark;
@@ -113,7 +113,7 @@
 - (NSMutableArray *)getYearCellDatas {
     NSMutableArray *y;
     
-    if (CurrentProfile.yearCollection.years.count > 0 && ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
+    if (CurrentProfile.yearCollection.years.count > 0 && CurrentAppDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
         y = [[CurrentProfile getYearsAsTableDatasForSetup] mutableCopy];
     } else {
         y = [[NSMutableArray alloc] initWithObjects:[self getNewYearObjectWithAlreadyExistingYears:NO], nil];
@@ -393,7 +393,7 @@
         textField.placeholder = @"Your name";
         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }];
-    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSString *name = ((UITextField *)alert.textFields[0]).text;
         name = [name stringByReplacingOccurrencesOfString:@"\\" withString:@"_"];
         name = [name stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
@@ -660,29 +660,15 @@
 
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
     if (![self checkForDuplicateYears]) {
-        BOOL shouldShowHelp = ![CurrentProfile hasAllNecessaryInformationFromSetup];
         
         //Modify current profile
         BOOL wasAbleToSave = [self applySettingsToCurrentProfile];
         
         //Dismiss setup window
         if (wasAbleToSave) {
-            
-            if (shouldShowHelp) {
-                //Welcome message
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Welcome to %@!", AppName]
-                                                                               message:@"Tap the green add button to create an assessment; enter details like its subject and name;then, tap save.\n\nDon't forget that grades and the AS Number are optional.\n\nHappy credit counting!"
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                    [self closeSetupWithoutFurtherAdoAndHasSaved:YES];
-                }]];
-                [self presentViewController:alert animated:YES completion:nil];
-            } else {
-                [self closeSetupWithoutFurtherAdoAndHasSaved:YES];
-            }
+            [self closeSetupWithoutFurtherAdoAndHasSaved:YES];
         }
         
-        ApplicationDelegate.setupState = SETUP_STATE_BLANK;
     } else {
         //Duplicate alert
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You seem to have duplicate years. Duplicate NCEA levels are allowed, but not years." preferredStyle:UIAlertControllerStyleAlert];
@@ -716,18 +702,18 @@
     
     Profile *p = CurrentProfile;
     
-    if (ApplicationDelegate.setupState == SETUP_STATE_NEW_PROFILE_NOT_INITIAL) {
+    if (CurrentAppDelegate.setupState == SETUP_STATE_NEW_PROFILE_NOT_INITIAL) {
         if ([self checkForFileConflictWithNewName:newName]) {
             return NO;
         } else {
             p = [[Profile alloc] initWithPropertiesOrNil:nil];
         }
-    } else if (ApplicationDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
+    } else if (CurrentAppDelegate.setupState == SETUP_STATE_EDIT_PROFILE) {
         //not initial setup
         NSString *oldName = CurrentProfile.profileName;
         if (![newName isEqualToString:oldName]) {
             //name changed, must delete old file
-            [ApplicationDelegate deleteProfileWithProfileName:oldName];
+            [CurrentAppDelegate deleteProfileWithProfileName:oldName];
         }
     } else {
         //SETUP_STATE_NEW_PROFILE_INITIAL
@@ -779,14 +765,14 @@
     p.yearCollection.years = yearsToKeep;
     p.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
     
-    if (ApplicationDelegate.setupState) [ApplicationDelegate setCurrentProfile:p];
-    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    if (CurrentAppDelegate.setupState) [CurrentAppDelegate setCurrentProfile:p];
+    [CurrentAppDelegate saveCurrentProfileAndAppSettings];
     
     return YES;
 }
 
 - (BOOL)checkForFileConflictWithNewName:(NSString *)newName {
-    NSArray *profileNames = [ApplicationDelegate getUsedProfileNames];
+    NSArray *profileNames = [CurrentAppDelegate getUsedProfileNames];
     for (NSString *name in profileNames) {
         if ([name isEqualToString:newName]) {
             //name is already used - avoid file conflict

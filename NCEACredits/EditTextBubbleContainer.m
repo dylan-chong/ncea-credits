@@ -40,8 +40,6 @@
         } else {
             self.userInteractionEnabled = YES;
         }
-        
-        [self.bubble startWiggle];
     }
     return self;
 }

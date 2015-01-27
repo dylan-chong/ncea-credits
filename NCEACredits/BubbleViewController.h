@@ -19,7 +19,7 @@
 - (NSString *)getTitleOfMainBubble;
 @end
 
-@interface BubbleViewController : UIViewController <BubbleContainerDelegate, AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerDelegate>
+@interface BubbleViewController : UIViewController <AnimationObjectDelegate, AnimationManagerDelegate, BubbleViewControllerDelegate>
 
 - (NSString *)GET_CHILD_MAIN_BUBBLE_OVERRIDE_TITLE;
 
@@ -30,14 +30,12 @@
 @property (nonatomic) NSArray *childBubbles;
 @property (nonatomic, strong) BubbleContainer *mainBubble;
 @property (weak, nonatomic) BubbleContainer *parentBubble;
-@property AnchorView *anchors;
-- (void)createAnchors;
-@property BOOL disableAnchorReDraw;
 @property BOOL hasStartedGrowingAnimation, isDoingAnimation;
 @property (nonatomic) AnimationManager *animationManager;
 @property BOOL isCurrentViewController, shouldDelayCreationAnimation, hasDoneCreationAnimation, hasInitiatedCreationAnimation;
 
 - (void)setMainBubble:(BubbleContainer *)m andChildBubbles:(NSArray *)a;
+- (void)startGrowingAnimation;
 - (void)startChildBubbleCreationAnimation;
 - (void)startReturnScaleAnimation;
 - (void)startReturnSlideAnimation;
@@ -45,6 +43,7 @@
 - (void)creationAnimationHasFinished;
 
 - (void)repositionBubbles;
+- (void)hasRepositionedBubbles;
 
 - (void)startTransitionToChildBubble:(BubbleContainer *)b andBubbleViewController:(BubbleViewController *)bubbleViewController;
 @property (strong, nonatomic) BubbleViewController *childBubbleViewController;
@@ -59,4 +58,14 @@
 
 - (Corner)getCornerOfChildVCNewMainBubble:(BubbleContainer *)bubble;
 
+//Wiggle and anchor
+- (void)startWiggle;
+- (void)wiggle;
+- (void)stopWiggle;
+@property NSTimer *wiggleTimer;
+@property BOOL drawsAnchors;
+@property AnchorView *anchors;
+
++ (BOOL)allowsAnchorRedrawToStopWhenBubbleContainersAreStationary;
+- (void)createAnchorsIfNonExistent;
 @end

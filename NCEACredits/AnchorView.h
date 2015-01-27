@@ -16,7 +16,7 @@
 @property CGPoint relativityFromMainBubble;
 
 - (id)initWithStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo;
-- (void)setStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo;
 - (NSArray *)getAnimationObjectsForXDif:(float)xDif andYDif:(float)yDif;
+- (void)redrawAnchorsWithStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo;
 
 @end

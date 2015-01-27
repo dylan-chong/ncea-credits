@@ -10,7 +10,7 @@
 
 @implementation Styles
 
-+ (float)sizeModifier {
++ (CGFloat)sizeModifier {
     Device d = [Styles getDevice];
     //    if (d == iPhone4Inch || d == iPhone3_5Inch) {
     if (d == iPhone) {
@@ -35,13 +35,13 @@
     }
 }
 
-+ (float)startingScaleFactor {  return 0.01;    }
-+ (float)mainBubbleStartingScaleFactor {    return 0.25; } //changing this will require changing launch image size (340 * this * sizeModifier * 0.75)
-+ (float)animationSpeed {
++ (CGFloat)startingScaleFactor {  return 0.01;    }
++ (CGFloat)mainBubbleStartingScaleFactor {    return 0.25; } //changing this will require changing launch image size (340 * this * sizeModifier * 0.75)
++ (CGFloat)animationSpeed {
     return [Styles getAnimationSpeedWithSelection:CurrentAppSettings.animationSpeed];
 }
 
-+ (float)getAnimationSpeedWithSelection:(AnimationSpeedSelection)selection {
++ (CGFloat)getAnimationSpeedWithSelection:(AnimationSpeedSelection)selection {
     switch (selection) {
         case AnimationSpeedSelectionFaster:
             return ANIMATION_SPEED_SELECTION_NORMAL - (2 * ANIMATION_SPEED_SELECTION_INCREMENT);
@@ -58,7 +58,7 @@
     }
 }
 
-+ (double)frameRate {
++ (CGFloat)frameRate {
     return 30.0; //Do not change unless you alter animation class formula
 }
 

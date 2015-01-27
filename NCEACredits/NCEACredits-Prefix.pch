@@ -23,7 +23,7 @@
 #define NO_SAVE_MODE NO
 #define BUBBLE_TEXT_SHOW_BACKGROUND YES //ideally leave this on so that you remember to turn off debug mode
 
-#define ApplicationDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
+#define CurrentAppDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define CurrentProfile [(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentProfile]
 #define CurrentAppSettings [(AppDelegate *)[[UIApplication sharedApplication] delegate] getAppSettings]
 

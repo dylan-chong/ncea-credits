@@ -22,10 +22,6 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
     else return NO;
 };
 
-@interface EditAssessmentViewController ()
-
-@end
-
 @implementation EditAssessmentViewController
 
 - (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andAssessmentOrNil:(Assessment *)assessment {
@@ -38,13 +34,29 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
         self.delegate = delegate;
         [self setMainBubbleSimilarToBubble:mainBubble];
         [self createBubbleContainersAndAddAsSubviews];
-        [self createAnchors];
+        [self createAnchorsIfNonExistent];
         
         [self createDeleteButton];
+        
+        //dont create home button (method overrides normal one)
     }
     
     return self;
 }
+
+//uncomment to make quick text bubble flash
+//- (void)creationAnimationHasFinished {
+//    [super creationAnimationHasFinished];
+//    
+//    CGFloat delay = [Styles getDurationOfAnimationWithFlashTimes:FLASH_BUBBLE_VC_MAIN_BUBBLE_TIMES];
+//    delay += [Styles getDurationOfAnimationWithFlashTimes:FLASH_EDIT_TEXT_SCROLL_ARROW_TIMES];
+//    [NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(flashContainers) userInfo:nil repeats:NO];
+//}
+//
+//- (void)flashContainers {
+//    EditTextBubbleContainer *quick = [self getEditTextBubbleContainerForTitle:ItemQuickName];
+//    [Styles flashStartWithView:quick numberOfTimes:FLASH_DEFAULT_TIMES sizeIncreaseMultiplierOr0ForDefault:0];
+//}
 
 - (void)createBubbleContainersAndAddAsSubviews {
     NSArray *itemData = [EditAssessmentViewController getItemDataWithAssessmentOrNil:_assessment];

@@ -10,6 +10,7 @@
 #import "Styles.h"
 #import "SubjectColourPair.h"
 #import "CornerButton.h"
+#import "HomeButton.h"
 
 @interface SimpleSelectionViewController : BubbleViewController <UIGestureRecognizerDelegate>
 
@@ -25,6 +26,8 @@
 @property BOOL staggered;
 
 @property CornerButton *cornerButton;
+@property HomeButton *homeButton;
 - (void)createCornerButtonWithTitle:(NSString *)title colourOrNilForMailBubbleColour:(UIColor *)colour target:(id)target selector:(SEL)selector;
+- (void)homeButtonPressed;
 
 @end

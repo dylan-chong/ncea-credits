@@ -15,6 +15,7 @@
     Profile *p = [[Profile alloc] init];
     p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:nil];
     p.customGoals = [[CustomGoals alloc] initWithPropertiesOrNil:nil];
+    p.appOpenTimes = 0;
     return p;
 }
 
@@ -25,6 +26,10 @@
     p.selectedGoalTitle = [properties objectForKey:@"selectedGoalTitle"];
     p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:[properties objectForKey:@"yearCollection"]];
     p.customGoals = [[CustomGoals alloc] initWithPropertiesOrNil:[properties objectForKey:@"customGoals"]];
+    
+    NSNumber *appOpens = [properties objectForKey:@"appOpenTimes"];
+    if (appOpens) p.appOpenTimes = [appOpens integerValue];
+    else p.appOpenTimes = 0;
     return p;
 }
 
@@ -35,6 +40,7 @@
     [properties setObject:_selectedGoalTitle forKey:@"selectedGoalTitle"];
     [properties setObject:[_yearCollection convertToDictionaryOfProperties] forKey:@"yearCollection"];
     [properties setObject:[_customGoals convertToDictionaryOfProperties] forKey:@"customGoals"];
+    [properties setObject:[NSNumber numberWithInteger:_appOpenTimes] forKey:@"appOpenTimes"];
     
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
@@ -52,14 +58,14 @@
 
 - (void)logJSONText {
     //Logs profile JSON
-    if (ApplicationDelegate.currentProfile) {
+    if (CurrentAppDelegate.currentProfile) {
         Profile *p = CurrentProfile;
         NSString *m = [[NSString alloc] initWithData:[p convertToJSONAsRoot]  encoding:NSUTF8StringEncoding];
         NSLog(@"\n\n\n//*\n//****\n//*********\n//****************\n//*************************\n********************************************    Profile JSON    \n//*************************\n//****************\n//*********\n//****\n//*\n\n\n");
         NSLog(@"%@", m);
         
         //Log files
-        NSArray *fileNames = [ApplicationDelegate getUsedProfileNames];
+        NSArray *fileNames = [CurrentAppDelegate getUsedProfileNames];
         NSMutableString *files = [[NSMutableString alloc] initWithString:@"\n\n\n//Existing Profiles:"];
         
         for (NSString *name in fileNames) {
@@ -115,7 +121,7 @@
 
 - (void)deleteAssessment:(Assessment *)assess {
     [[self getCurrentYear].assessmentCollection deleteAssessment:assess];
-    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    [CurrentAppDelegate saveCurrentProfileAndAppSettings];
 }
 
 //*
@@ -187,7 +193,7 @@
 
 - (void)addAssessmentOrReplaceACurrentOne:(Assessment *)assessment {
     [[self getCurrentYear].assessmentCollection addAssessmentOrReplaceACurrentOne:assessment];
-    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    [CurrentAppDelegate saveCurrentProfileAndAppSettings];
 }
 
 - (NSArray *)getAssessmentTitlesForSubject:(NSString *)subject {

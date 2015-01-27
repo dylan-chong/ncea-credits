@@ -14,25 +14,28 @@
 @implementation AnchorView
 
 - (id)initWithStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo {
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     self = [super initWithFrame:CGRectMake(0, 0, screen.width, screen.height)];
     if (self) {
         _startingPoint = startingPoint;
         _pointsToDrawTo = pointsToDrawTo;
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
-- (void)setStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo {
-    _startingPoint = startingPoint;
-    _pointsToDrawTo = pointsToDrawTo;
-}
 
 - (void)drawLineFromPoint:(CGPoint)from toPoint:(CGPoint)to withContext:(CGContextRef)context {
     CGContextMoveToPoint(context, from.x, from.y);
     CGContextAddLineToPoint(context, to.x, to.y);
 }
+
+- (void)redrawAnchorsWithStartingPoint:(CGPoint)startingPoint andPointsToDrawTo:(NSArray *)pointsToDrawTo {
+    _startingPoint = startingPoint;
+    _pointsToDrawTo = pointsToDrawTo;
+    [self setNeedsDisplay];
+}
+
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();

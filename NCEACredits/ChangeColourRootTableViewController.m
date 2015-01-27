@@ -82,7 +82,7 @@
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
-    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    [CurrentAppDelegate saveCurrentProfileAndAppSettings];
     
     ChangeColourNavViewController *navVC = (ChangeColourNavViewController *)self.navigationController;
     [navVC callDelegateForWillClose];

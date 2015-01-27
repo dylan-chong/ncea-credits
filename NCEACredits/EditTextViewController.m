@@ -107,10 +107,10 @@
     return CGRectMake(origin.x + x + xPageMove, origin.y + y + yPageMove, size.width, size.height);
 }
 
-+ (BOOL)mainBubbleCoversUpEditBubble {
++ (BOOL)mainBubbleCoversUpEditBubbles {
     CGSize screen = [CurrentAppDelegate getScreenSize];
     
-    CGFloat space = screen.width - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
+    CGFloat space = screen.width - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width);
     if (([Styles editTextBubbleSize].width / 2) > space) {
         return YES;
     }
@@ -120,8 +120,8 @@
 
 + (CGFloat)getSpaceRemovalDueToPossibleMainBubbleBlockingEditBubbles {
     CGFloat spaceRemoval = 0;
-    if ([EditTextViewController mainBubbleCoversUpEditBubble]) {
-        spaceRemoval = [Styles spaceFromEdgeOfScreen] * 2 + ([Styles subtitleContainerSize].height / 2);
+    if ([EditTextViewController mainBubbleCoversUpEditBubbles]) {
+        spaceRemoval = [Styles spaceFromEdgeOfScreen] * 2 + ([Styles subtitleContainerSize].height);
     }
     
     return spaceRemoval;
@@ -174,21 +174,6 @@
         origin.x = right;
         origin.y = bottom;
     }
-    
-    //backup
-    //    if (c == TopLeft) {
-    //        origin.x = screen.width - space - (size.width / 2);
-    //        origin.y = space;
-    //    } else if (c == TopRight) {
-    //        origin.x = space;
-    //        origin.y = space;
-    //    } else if (c == BottomLeft) {
-    //        origin.x = screen.width - space - (size.width / 2);
-    //        origin.y = screen.height - space - (size.height / 2);
-    //    } else {
-    //        origin.x = space;
-    //        origin.y = screen.height - space - (size.height / 2);
-    //    }
     
     return origin;
 }
@@ -307,5 +292,10 @@
     [super repositionBubbles];
     [_flickScroller resetArrowPositions];
 }
+
+//re-enable if you enable wiggling on edit bubbles
+//+ (BOOL)allowsAnchorRedrawToStopWhenBubbleContainersAreStationary {
+//    return NO;
+//}
 
 @end

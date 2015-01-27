@@ -14,6 +14,13 @@
 #import "SetupNavigationController.h"
 #import "BubbleMain.h"
 
+//These cannot be the same
+#define LOADS_FOR_APP_STORE_REVIEW 6
+#define LOADS_FOR_FACEBOOOK_LIKE 3
+
+#define FACEBOOK_LINK @"https://www.facebook.com/nceacredits"
+#define APP_STORE_LINK @"https://itunes.apple.com/us/app/ncea-credits/id959483858?ls=1&mt=8"
+
 @implementation MainViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,21 +40,101 @@
     //Show setup window
     if (![CurrentProfile hasAllNecessaryInformationFromSetup]) {
         //Hasn't shown setup
-        ApplicationDelegate.setupState = SETUP_STATE_NEW_PROFILE_INITIAL;
+        CurrentAppDelegate.setupState = SETUP_STATE_NEW_PROFILE_INITIAL;
         [self showSetupWindow];
     } else {
         [self startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup];
     }
     
+    [self showReviewPopupIfNecessary];
 }
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Show Review Popups    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)showReviewPopupIfNecessary {
+    if (!self.hasShownSocialPopupRequest) {
+        NSUInteger appLoadCount = CurrentProfile.appOpenTimes;
+        
+        switch (appLoadCount) {
+            case LOADS_FOR_APP_STORE_REVIEW:
+                [self showAppStoreReviewPopupWithConfirmation:YES];
+                break;
+                
+            case LOADS_FOR_FACEBOOOK_LIKE:
+                [self showFacebookLikePopupWithConfirmation:YES];
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    self.hasShownSocialPopupRequest = YES;
+}
+
+- (void)showAppStoreReviewPopupWithConfirmation:(BOOL)withConfirmation {
+    if (withConfirmation) {
+        NSString *mess = [NSString stringWithFormat:@"Hello, it's that developer guy again.\n\nYou like NCEA Credits so much that you just have write a review on the App Store! Yes, of course you do! You obviously like it enough to open it %lu times. Why wouldn't you want to write a review?", (unsigned long)CurrentProfile.appOpenTimes];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Yea, why not?" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self showAppStoreReviewPopupWithConfirmation:NO];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        //go to link
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_STORE_LINK]];
+    }
+}
+
+- (void)showFacebookLikePopupWithConfirmation:(BOOL)withConfirmation  {
+    if (withConfirmation) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Hello fellow NCEAer,\n\nI am the developer of NCEA Credits. I am also a student working by myself to bring you this app which you love so much (yes you do).\n\nI would appreciate it if you could like my Facebook page, and recommend it to your friends (because NCEA Credits is your favourite app).\n\nThanks,\nDylan" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"MOAR likes!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self showFacebookLikePopupWithConfirmation:NO];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        //go to link
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:FACEBOOK_LINK]];
+    }
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (void)hasReturnedFromChildViewController {
     [super hasReturnedFromChildViewController];
     [self updateMainBubbleStats];
 }
 
+- (void)hasRepositionedBubbles {
+    [super hasRepositionedBubbles];
+    CurrentAppDelegate.bubbleVCisReturningToHomeScreen = NO;
+}
+
 - (void)startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup {
-    
     self.shouldDelayCreationAnimation = NO;
     [self startChildBubbleCreationAnimation];
 }
@@ -55,6 +142,10 @@
 - (void)setuphasBeenDismissed {
     //Setup VC delegate method
     [self startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup];
+    
+    //Tutorial
+    if (CurrentAppDelegate.setupState == SETUP_STATE_NEW_PROFILE_INITIAL)
+        [self showTutorial];
 }
 
 - (void)showSetupWindow {
@@ -70,7 +161,33 @@
 //*********
 //****************
 //*************************
-#pragma mark - ***************************************************************
+#pragma mark - ***************************    Tutorial Sorta    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)showTutorial {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Welcome to %@!", AppName]
+                                                                   message:@"Tap the 'Add' button; enter details like subject and quick name; then save. Rinse and repeat!\n\nDon't forget that grades and the AS Number are optional.\n\nHappy credit counting!"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"I'm ready!" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self flashAddButton];
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)flashAddButton {
+    [Styles flashStartWithView:_addContainer numberOfTimes:FLASH_DEFAULT_TIMES sizeIncreaseMultiplierOr0ForDefault:0];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Bubble Containers    ************************************
 //*************************
 //****************
 //*********
@@ -83,7 +200,6 @@
     };
     
     self.mainBubble = [[BubbleContainer alloc] initMainBubbleWithFrameCalculator:mainBlock];
-    self.mainBubble.delegate = self;
     [self.view addSubview:self.mainBubble];
     
     
@@ -204,15 +320,31 @@
 //------------------------------ Main Bubble ------------------------------
 
 - (void)mainBubbleTapped:(id)sender {
+    [self showQuickSettingsActionSheet];
+    
+    //Log
+    [CurrentProfile logJSONText];
+    [CurrentAppSettings logJSONText];
+    [self logAssessmentGrades];
+}
+
+- (void)showQuickSettingsActionSheet {
     //Popup
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick an action." preferredStyle:UIAlertControllerStyleActionSheet];
     
+    //add actions
     [alert addAction:[UIAlertAction actionWithTitle:@"Edit Profile (with Goals and Years)" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        ApplicationDelegate.setupState = SETUP_STATE_EDIT_PROFILE;
+        CurrentAppDelegate.setupState = SETUP_STATE_EDIT_PROFILE;
         [self showSetupWindow];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Send Feedback" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"Send us Feedback" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [OptionsViewController showMailPopupInViewControllerWithMFMailComposeDelegate:self];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Like on Facebook" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showFacebookLikePopupWithConfirmation:NO];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Write a Review" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showAppStoreReviewPopupWithConfirmation:NO];
     }]];
     if (MAKE_FAKE_ASSESSMENTS && DEBUG_MODE_ON) {
         [alert addAction:[UIAlertAction actionWithTitle:@"Make Dummy Assessments" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -220,17 +352,14 @@
         }]];
     }
     
+    //iphone only cancel button
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
     
+    //popover location
     UIPopoverPresentationController *pop = [alert popoverPresentationController];
     pop.sourceRect = self.mainBubble.frame;
     pop.sourceView = self.view;
     [self presentViewController:alert animated:YES completion:nil];
-    
-    //Log
-    [CurrentProfile logJSONText];
-    [CurrentAppSettings logJSONText];
-    [self logAssessmentGrades];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
