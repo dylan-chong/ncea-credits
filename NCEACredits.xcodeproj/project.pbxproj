@@ -32,6 +32,7 @@
 		8442D2E61A48D81C003C0C2D /* AppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8442D2E51A48D81C003C0C2D /* AppSettings.m */; };
 		8445E4081A402344002BDA5E /* ToJSONTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445E4071A402344002BDA5E /* ToJSONTemplate.m */; };
 		844CA93718AAB15A00D55F11 /* GradesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844CA93618AAB15A00D55F11 /* GradesViewController.m */; };
+		844F98E11A774B10008F96D0 /* OptionsProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844F98E01A774B10008F96D0 /* OptionsProfileViewController.m */; };
 		8459996D18AC00DE005F3FB1 /* SimpleSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */; };
 		8459E887196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */; };
 		8459E88C196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8459E88B196FD20E000D1C85 /* SetupStoryboard~ipad.storyboard */; };
@@ -44,6 +45,8 @@
 		8482D7F61A4534FE00F1CD6D /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F51A4534FE00F1CD6D /* Goal.m */; };
 		8482D7FF1A46501B00F1CD6D /* SubjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */; };
 		8482D8051A46568300F1CD6D /* Launch-Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8482D8041A46568300F1CD6D /* Launch-Circle.png */; };
+		8483F3FF1A75A213000452B4 /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 8483F3FE1A75A213000452B4 /* House.png */; };
+		8483F4021A75A835000452B4 /* HomeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8483F4011A75A835000452B4 /* HomeButton.m */; };
 		8486093B1A6E525100FE9E40 /* BubbleText.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486093A1A6E525100FE9E40 /* BubbleText.m */; };
 		8486093E1A71EE4500FE9E40 /* Launch-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8486093D1A71EE4500FE9E40 /* Launch-Image.png */; };
 		848F7A561A665F3800F88C7A /* StatsPopupNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848F7A551A665F3800F88C7A /* StatsPopupNavViewController.m */; };
@@ -153,6 +156,8 @@
 		8445E4071A402344002BDA5E /* ToJSONTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToJSONTemplate.m; sourceTree = "<group>"; };
 		844CA93518AAB15A00D55F11 /* GradesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradesViewController.h; sourceTree = "<group>"; };
 		844CA93618AAB15A00D55F11 /* GradesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradesViewController.m; sourceTree = "<group>"; };
+		844F98DF1A774B10008F96D0 /* OptionsProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsProfileViewController.h; sourceTree = "<group>"; };
+		844F98E01A774B10008F96D0 /* OptionsProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsProfileViewController.m; sourceTree = "<group>"; };
 		8459996B18AC00DE005F3FB1 /* SimpleSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSelectionViewController.h; sourceTree = "<group>"; };
 		8459996C18AC00DE005F3FB1 /* SimpleSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleSelectionViewController.m; sourceTree = "<group>"; };
 		8459E886196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "SetupStoryboard~iphone.storyboard"; sourceTree = "<group>"; };
@@ -173,6 +178,9 @@
 		8482D7FD1A46501B00F1CD6D /* SubjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectsViewController.h; sourceTree = "<group>"; };
 		8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectsViewController.m; sourceTree = "<group>"; };
 		8482D8041A46568300F1CD6D /* Launch-Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch-Circle.png"; sourceTree = "<group>"; };
+		8483F3FE1A75A213000452B4 /* House.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = House.png; sourceTree = "<group>"; };
+		8483F4001A75A835000452B4 /* HomeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeButton.h; sourceTree = "<group>"; };
+		8483F4011A75A835000452B4 /* HomeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeButton.m; sourceTree = "<group>"; };
 		848609391A6E525100FE9E40 /* BubbleText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleText.h; sourceTree = "<group>"; };
 		8486093A1A6E525100FE9E40 /* BubbleText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleText.m; sourceTree = "<group>"; };
 		8486093D1A71EE4500FE9E40 /* Launch-Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch-Image.png"; sourceTree = "<group>"; };
@@ -325,6 +333,8 @@
 			children = (
 				842C90111A5F532400393758 /* CornerButton.h */,
 				842C90121A5F532400393758 /* CornerButton.m */,
+				8483F4001A75A835000452B4 /* HomeButton.h */,
+				8483F4011A75A835000452B4 /* HomeButton.m */,
 				841B883F1A54E76000E86DCC /* SubjectColourPair.h */,
 				841B88401A54E76000E86DCC /* SubjectColourPair.m */,
 			);
@@ -352,6 +362,17 @@
 				840D5873188240A700DE24B7 /* GoalTitle.m */,
 			);
 			name = "Main Bubble";
+			sourceTree = "<group>";
+		};
+		844F98E21A774B18008F96D0 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				84AD67DF1A4E808100F58333 /* OptionsViewController.h */,
+				84AD67E01A4E808100F58333 /* OptionsViewController.m */,
+				844F98DF1A774B10008F96D0 /* OptionsProfileViewController.h */,
+				844F98E01A774B10008F96D0 /* OptionsProfileViewController.m */,
+			);
+			name = Options;
 			sourceTree = "<group>";
 		};
 		8459E868196FB456000D1C85 /* Setup */ = {
@@ -521,6 +542,7 @@
 				84B5A2A91880D8F100969952 /* Options.png */,
 				840D587518834B0300DE24B7 /* Stats.png */,
 				84B5A2AB1880D8F100969952 /* Subjects.png */,
+				8483F3FE1A75A213000452B4 /* House.png */,
 			);
 			name = Resources;
 			path = NCEACredits;
@@ -579,8 +601,7 @@
 				84B5A2D61880D98200969952 /* MainViewController.m */,
 				841DAE0518B3123700626302 /* AddViewController.h */,
 				841DAE0618B3123700626302 /* AddViewController.m */,
-				84AD67DF1A4E808100F58333 /* OptionsViewController.h */,
-				84AD67E01A4E808100F58333 /* OptionsViewController.m */,
+				844F98E21A774B18008F96D0 /* Options */,
 				842C90071A5F43DA00393758 /* Grades */,
 				84AD67E81A5127F700F58333 /* Stats */,
 			);
@@ -743,6 +764,7 @@
 				8459E887196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard in Resources */,
 				840D587618834B0300DE24B7 /* Stats.png in Resources */,
 				8470DD2B1A466FC300266654 /* Launch Screen.xib in Resources */,
+				8483F3FF1A75A213000452B4 /* House.png in Resources */,
 				84B5A2841880D8AD00969952 /* InfoPlist.strings in Resources */,
 				842C90181A5F5B6600393758 /* ChangeColourStoryboard.storyboard in Resources */,
 				84AD67DE1A4E23B300F58333 /* Loading-Text.png in Resources */,
@@ -790,10 +812,12 @@
 				8470DD311A46736900266654 /* AssessmentsForSubjectViewController.m in Sources */,
 				8445E4081A402344002BDA5E /* ToJSONTemplate.m in Sources */,
 				84A435C91966B7280091905B /* Year.m in Sources */,
+				8483F4021A75A835000452B4 /* HomeButton.m in Sources */,
 				84BC0F2818B49BCD00D03F3C /* EditTextEditScreen.m in Sources */,
 				84B5A2D91880D98200969952 /* MainViewController.m in Sources */,
 				8442D2E31A482930003C0C2D /* GoalGradeReqAndLevel.m in Sources */,
 				840D5871188216B200DE24B7 /* AnimationObject.m in Sources */,
+				844F98E11A774B10008F96D0 /* OptionsProfileViewController.m in Sources */,
 				842C90131A5F532400393758 /* CornerButton.m in Sources */,
 				8482D7F31A4534C200F1CD6D /* GoalMain.m in Sources */,
 				848F7A561A665F3800F88C7A /* StatsPopupNavViewController.m in Sources */,
