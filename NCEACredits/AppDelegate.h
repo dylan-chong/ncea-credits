@@ -11,7 +11,7 @@
 #import "Profile.h"
 #import "AppSettings.h"
 
-@class MainViewController, AppSettings;
+@class MainViewController, AppSettings, HomeButton;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -37,5 +37,6 @@
 //Globals
 @property NSString *lastPressedSubjectOrTotal, *lastPressedGradePriority; //Stats
 @property NSInteger setupState;
+@property BOOL bubbleVCisReturningToHomeScreen;
 
 @end

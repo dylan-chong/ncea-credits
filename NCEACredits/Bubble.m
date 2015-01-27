@@ -30,8 +30,8 @@
         _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, (h*0.1), w, (h*0.5))];
         if (!([iconName isEqualToString:@""] || !iconName)) _icon.image = [UIImage imageNamed:iconName];
         
-        _usesDelegateToCallRedrawAnchors = hasDelegate;
         
+        self.wiggles = YES;
         [self addSubview:_title];
         [self addSubview:_icon];
     }
@@ -54,8 +54,7 @@
                                               text:title
                                          fontOrNil:nil];
         
-        _usesDelegateToCallRedrawAnchors = hasDelegate;
-        
+        self.wiggles = YES;
         [self addSubview:_title];
         [self addSubview:_icon];
         
@@ -89,17 +88,22 @@
 //****
 //*
 
-- (void)startWiggle {
+
+- (void)setupWiggle {
     _direction = arc4random() % 360;
     _clockwise = arc4random() % 2;
     _wiggleSpeedPixelsPerFrame = (0.05 + (arc4random_uniform(1000) / 1000.0 * 0.1)) * [Styles sizeModifier];
-    _wiggleTurnSpeed = 1 + arc4random_uniform(3);
+    _wiggleTurnSpeed = (1 + arc4random_uniform(3));
     
-    _wiggleTimer = [NSTimer scheduledTimerWithTimeInterval:1/[Styles frameRate] target:self selector:@selector(wiggle) userInfo:Nil repeats:YES];
+    self.hasSetupWiggle = YES;
 }
 
 - (void)wiggle {
-    if (_disableWiggleForTransition != YES) {
+    if (!self.hasSetupWiggle && _wiggles) {
+        [self setupWiggle];
+    }
+    
+    if (_wiggles) {
         float xMov = sin([Styles degreesToRadians:_direction]) * _wiggleSpeedPixelsPerFrame;
         float yMov = cos([Styles degreesToRadians:_direction]) * _wiggleSpeedPixelsPerFrame;
         
@@ -113,23 +117,7 @@
             _direction -= _wiggleTurnSpeed;
             if (_direction < 0) _direction = 359;
         }
-        
-        if (_usesDelegateToCallRedrawAnchors == YES) {
-            [self.delegate redrawAnchors];
-        }
     }
-}
-
-- (void)stopWiggle {
-    [_wiggleTimer invalidate];
-    _wiggleTimer = nil;
-    
-    float centerX = self.frame.size.width * (4.0/3) / 2;
-    CGPoint centreOfContainer = CGPointMake(centerX, centerX);
-    
-    [UIView animateWithDuration: [self secondsForPixelsToMoveBetweenPoint:self.center andPoint:centreOfContainer] animations:^{
-        self.center = centreOfContainer;
-    }];
 }
 
 - (float)secondsForPixelsToMoveBetweenPoint:(CGPoint)pointA andPoint:(CGPoint)pointB {

@@ -18,9 +18,6 @@
 #define LOADS_FOR_APP_STORE_REVIEW 6
 #define LOADS_FOR_FACEBOOOK_LIKE 3
 
-#define FACEBOOK_LINK @"https://www.facebook.com/nceacredits"
-#define APP_STORE_LINK @"https://itunes.apple.com/us/app/ncea-credits/id959483858?ls=1&mt=8"
-
 @implementation MainViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

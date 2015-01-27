@@ -106,9 +106,9 @@
 + (NSUInteger)getNumberOfItemsPerPage {
     CGSize screen = [CurrentAppDelegate getScreenSize];
     
-    CGFloat count = [Styles numberOfItemsInSelectionViewPer100px] * screen.height / 100;
-    if ([EditTextViewController mainBubbleCoversUpEditBubble]) {
-        CGFloat toRemove = [Styles numberOfItemsInSelectionViewPer100px] * [Styles subtitleContainerSize].height / 100;
+    CGFloat count = [Styles numberOfItemsInSelectionViewPer100Points] * screen.height / 100;
+    if ([EditTextViewController mainBubbleCoversUpEditBubbles]) {
+        CGFloat toRemove = [Styles numberOfItemsInSelectionViewPer100Points] * [Styles subtitleContainerSize].height / 100;
         count -= toRemove;
     }
     
@@ -189,7 +189,7 @@
 }
 
 - (void)flashArrow:(ScrollArrowView *)arrow {
-    [Styles flashStartWithView:arrow numberOfTimes:FLASH_DEFAULT_TIMES sizeIncreaseMultiplierOr0ForDefault:3.0];
+    [Styles flashStartWithView:arrow numberOfTimes:FLASH_EDIT_TEXT_SCROLL_ARROW_TIMES sizeIncreaseMultiplierOr0ForDefault:3.0];
 }
 
 @end

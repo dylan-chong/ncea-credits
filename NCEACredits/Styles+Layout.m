@@ -12,7 +12,7 @@
 
 @implementation Styles (Layout)
 
-+ (float)spaceFromEdgeOfScreen {
++ (CGFloat)spaceFromEdgeOfScreen {
     if ([self getDevice] == iPhone) {
         return 6;
     } else if ([self getDevice] == iPad) {
@@ -24,7 +24,7 @@
 
 + (CGRect)mainContainerRect {
     CGSize size = CGSizeMake(340 * [Styles sizeModifier], 340 * [Styles sizeModifier]);
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     //centre of screen
     CGPoint point = CGPointMake(round((screen.width - size.width) / 2), round((screen.height - size.height) / 2));
     
@@ -39,19 +39,19 @@
     CGSize size = [Styles titleContainerSize];
     CGRect availableOrigins;
     
-    float x, y;
+    CGFloat x, y;
     
     switch (c) {
         case TopLeft:
             availableOrigins = CGRectMake([Styles spaceFromEdgeOfScreen],
-                                          [Styles spaceFromEdgeOfScreen] + [ApplicationDelegate statusBarHeight],
+                                          [Styles spaceFromEdgeOfScreen] + [CurrentAppDelegate statusBarHeight],
                                           0,
                                           0);
             break;
             
         case TopRight:
             availableOrigins = CGRectMake([Styles middleXTitleBubblePosition],
-                                          [Styles spaceFromEdgeOfScreen] + [ApplicationDelegate statusBarHeight],
+                                          [Styles spaceFromEdgeOfScreen] + [CurrentAppDelegate statusBarHeight],
                                           0,
                                           0);
             break;
@@ -73,8 +73,8 @@
     
     availableOrigins.size = [Styles getAvailableOriginsSize];
     
- 	x = (float) availableOrigins.origin.x + arc4random_uniform(availableOrigins.size.width);
-    y = (float) availableOrigins.origin.y + arc4random_uniform(availableOrigins.size.height);
+ 	x = (CGFloat) availableOrigins.origin.x + arc4random_uniform(availableOrigins.size.width);
+    y = (CGFloat) availableOrigins.origin.y + arc4random_uniform(availableOrigins.size.height);
     if (showOrigins == YES) return availableOrigins;
     
     CGRect r = CGRectMake(x, y, size.width, size.height);
@@ -86,31 +86,31 @@
     CGSize s;
     CGRect mainRect = [Styles mainContainerRect];
     
-    if ([ApplicationDelegate deviceIsInLandscape]) {
+    if ([CurrentAppDelegate deviceIsInLandscape]) {
         s.width = mainRect.origin.x - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
         s.height = mainRect.origin.y + (mainRect.size.height / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
-        s.height -= [ApplicationDelegate statusBarHeight];
+        s.height -= [CurrentAppDelegate statusBarHeight];
     } else {
         s.width = mainRect.origin.x + (mainRect.size.width / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
         s.height = mainRect.origin.y - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
-        s.height -= [ApplicationDelegate statusBarHeight];
+        s.height -= [CurrentAppDelegate statusBarHeight];
     }
     
     return s;
 }
 
-+ (float)middleXTitleBubblePosition {
++ (CGFloat)middleXTitleBubblePosition {
     CGRect mainRect = [Styles mainContainerRect];
-    if ([ApplicationDelegate deviceIsInLandscape]) {
+    if ([CurrentAppDelegate deviceIsInLandscape]) {
         return mainRect.origin.x + mainRect.size.width + [Styles spaceFromEdgeOfScreen];
     } else {
         return mainRect.origin.x + (mainRect.size.width / 2) + [Styles spaceFromEdgeOfScreen];
     }
 }
 
-+ (float)middleYTitleBubblePosition {
++ (CGFloat)middleYTitleBubblePosition {
     CGRect mainRect = [Styles mainContainerRect];
-    if ([ApplicationDelegate deviceIsInLandscape]) {
+    if ([CurrentAppDelegate deviceIsInLandscape]) {
         return mainRect.origin.y + (mainRect.size.height / 2) + [Styles spaceFromEdgeOfScreen];
     } else {
         return mainRect.origin.y + mainRect.size.height + [Styles spaceFromEdgeOfScreen];
@@ -142,8 +142,8 @@
 + (CGRect)getBubbleFrameWithContainerSize:(CGSize)size {
     return CGRectMake(round(size.width / 8.0),
                       round(size.height / 8.0),
-                      round(size.width * (3.0/4)),
-                      round(size.height * (3.0/4)));
+                      round(size.width * BUBBLE_TO_BUBBLE_CONTAINER_SIZE_RATIO),
+                      round(size.height * BUBBLE_TO_BUBBLE_CONTAINER_SIZE_RATIO));
 }
 
 + (Corner)getOppositeCornerToCorner:(Corner)c {
@@ -154,9 +154,9 @@
 }
 
 + (CGPoint)getExactOriginForCorner:(Corner)c andSize:(CGSize)size {
-    float d = [Styles spaceFromEdgeOfScreen];
+    CGFloat d = [Styles spaceFromEdgeOfScreen];
     CGPoint p;
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     
     if (c == TopLeft) {
         p = CGPointMake(d, d);
@@ -169,15 +169,15 @@
     }
     
     if (c == TopLeft || c == TopRight) {
-        if (!([Styles getDevice] == iPhone && [ApplicationDelegate deviceIsInLandscape]))
-            p.y += [ApplicationDelegate getStatusBarHeight];
+        if (!([Styles getDevice] == iPhone && [CurrentAppDelegate deviceIsInLandscape]))
+            p.y += [CurrentAppDelegate getStatusBarHeight];
     }
     
     return p;
 }
 
 + (Corner)getCornerForPoint:(CGPoint)point {
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     
     if (point.x >= screen.width / 2) {
         if (point.y >= screen.height / 2) {
@@ -194,6 +194,16 @@
     }
 }
 
++ (BOOL)cornerIsLeft:(Corner)corner {
+    if (corner == TopLeft || corner == BottomLeft) return YES;
+    return NO;
+}
+
++ (BOOL)cornerIsTop:(Corner)corner {
+    if (corner == TopLeft || corner == TopRight) return YES;
+    return NO;
+}
+
 + (CGRect)getRectCentreOfFrame:(CGRect)rect withSize:(CGSize)size {
     //For starting sliding animation
     CGRect r = CGRectMake(0, 0, size.width, size.height);
@@ -208,7 +218,7 @@
 
 //Selection Paging
 
-+ (float)numberOfItemsInSelectionViewPer100px {
++ (CGFloat)numberOfItemsInSelectionViewPer100Points {
     return 0.8 / [Styles sizeModifier];
 }
 

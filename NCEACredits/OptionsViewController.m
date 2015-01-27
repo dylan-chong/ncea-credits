@@ -9,10 +9,14 @@
 #import "OptionsViewController.h"
 #import "SetupNavigationController.h"
 #import "OptionsProfileViewController.h"
+#import "MainViewController.h"
 
-#define OptionsBubbleTitleAnimationSpeed @"Speed"
+#define OptionsBubbleTitleAnimationSpeed @"Animation Speed"
 #define OptionsBubbleTitleSendFeedback @"Send Feedback"
 #define OptionsBubbleTitleProfileSettings @"Profile Settings"
+#define OptionsBubbleTitleAbout @"About"
+#define OptionsBubbleTitleFacebook @"Like us on Facebook"
+#define OptionsBubbleTitleAppStore @"Write a Review"
 
 #define FEEDBACK_RECIPIENT @[@"dylanchongit@gmail.com"]
 #define FEEDBACK_SUBJECT [NSString stringWithFormat:@"NCEA Credits v%@ Feedback: ", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]]
@@ -23,7 +27,10 @@
 - (void)createBubbleContainersAndAddAsSubviews {
     NSArray *titles = @[OptionsBubbleTitleProfileSettings,
                         OptionsBubbleTitleAnimationSpeed,
-                        OptionsBubbleTitleSendFeedback
+                        OptionsBubbleTitleSendFeedback,
+                        OptionsBubbleTitleFacebook,
+                        OptionsBubbleTitleAppStore,
+                        OptionsBubbleTitleAbout
                         ];
     
     NSMutableArray *pairs = [[NSMutableArray alloc] init];
@@ -60,12 +67,13 @@
         [self sendFeedbackPressed];
     } else if ([title isEqualToString:OptionsBubbleTitleProfileSettings]) {
         [self profileSettingsPressedWithContainer:container];
+    } else if ([title isEqualToString:OptionsBubbleTitleAbout]) {
+        [self showAboutPopup];
+    } else if ([title isEqualToString:OptionsBubbleTitleAppStore]) {
+        [self goToURL:APP_STORE_LINK];
+    } else if ([title isEqualToString:OptionsBubbleTitleFacebook]) {
+        [self goToURL:FACEBOOK_LINK];
     }
-}
-
-- (void)profileSettingsPressedWithContainer:(BubbleContainer *)container {
-    OptionsProfileViewController *vc = [[OptionsProfileViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
-    [self startTransitionToChildBubble:container andBubbleViewController:vc];
 }
 
 //*
@@ -145,6 +153,34 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Other    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)goToURL:(NSString *)link {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
+}
 
 
+- (void)profileSettingsPressedWithContainer:(BubbleContainer *)container {
+    OptionsProfileViewController *vc = [[OptionsProfileViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
+    [self startTransitionToChildBubble:container andBubbleViewController:vc];
+}
+
+- (void)showAboutPopup {
+    NSDictionary *bundle = [[NSBundle mainBundle] infoDictionary];
+    NSString *mess = [NSString stringWithFormat:@"Version: %@ (%@)\n%@\n\n\u00A9 Copyright Dylan Chong", bundle[@"CFBundleShortVersionString"], bundle[@"CFBundleVersion"], bundle[@"CFBundleIdentifier"]];
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 @end

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "HomeButton.h"
 
 #define FILE_EXTENSION_INCLUDING_DOT @".nceacredits"
 
@@ -22,7 +23,12 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    [self getStatusBarHeight];
+    //For old versions
     [self checkForFilesWIthJSONExtension];
+    
+    //app count
+    CurrentProfile.appOpenTimes++;
     return YES;
 }
 
@@ -37,7 +43,7 @@
         if (![file isEqualToString:APP_SETTINGS_FILE_NAME_WITH_EXT]) {
             NSArray *components = [file componentsSeparatedByString:@"."];
             if ([[components lastObject] isEqualToString:@"json"]) {
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You must delete the app due to updates" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"You must delete the app due to updates. If you don't want to, rename all .json files in the documents directory to .nceacredits" preferredStyle:UIAlertControllerStyleAlert];
                 [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
                 [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
                 break;
@@ -195,7 +201,7 @@
     NSString *fileName = [self getFileNameWithProfileName:name];
     [self loadProfileWithFileName:fileName];
     CurrentAppSettings.lastProfileFileName = fileName;
-    [ApplicationDelegate saveCurrentProfileAndAppSettings];
+    [CurrentAppDelegate saveCurrentProfileAndAppSettings];
 }
 
 //*
@@ -259,6 +265,11 @@
 //*********
 //****
 //*
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    self.currentProfile = nil;
+    self.appSettings = nil;
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

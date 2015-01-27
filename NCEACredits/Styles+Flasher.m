@@ -7,6 +7,7 @@
 //
 
 #import "Styles.h"
+#import "BubbleContainer.h"
 
 #define OVERLAY_COLOUR [UIColor whiteColor]
 #define FLASH_SPEED [Styles animationSpeed]
@@ -16,11 +17,12 @@
 
 + (void)flashStartWithView:(UIView *)view numberOfTimes:(NSUInteger)times sizeIncreaseMultiplierOr0ForDefault:(CGFloat)sizeMultiplier {
     CGFloat sm = (sizeMultiplier > 0) ? sizeMultiplier : DEFAULT_SIZE_INCREASE;
+    
     [self flashOffWithView:view originalTransform:view.transform sizeMultiplier:sm andTimesLeft:times];
 }
 
 + (void)flashOffWithView:(UIView *)view originalTransform:(CGAffineTransform)originalTransform sizeMultiplier:(CGFloat)sizeMultiplier andTimesLeft:(NSUInteger)timesLeft {
-    [UIView animateWithDuration:FLASH_SPEED animations:^{
+    [UIView animateWithDuration:FLASH_SPEED delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         //Scale up
         view.transform = [self getTransformForSizeIncrease:sizeMultiplier andTransform:view.transform];
         
@@ -30,7 +32,7 @@
 }
 
 + (void)flashOnWithView:(UIView *)view originalTransform:(CGAffineTransform)originalTransform sizeMultiplier:(CGFloat)sizeMultiplier andTimesLeft:(NSUInteger)timesLeft {
-    [UIView animateWithDuration:FLASH_SPEED animations:^{
+    [UIView animateWithDuration:FLASH_SPEED delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         //Scale up
         view.transform = [self getTransformForSizeIncrease:1/sizeMultiplier andTransform:view.transform];
         
@@ -43,9 +45,9 @@
 }
 
 + (void)flashEndWithView:(UIView *)view originalTransform:(CGAffineTransform)originalTransform {
-    [UIView animateWithDuration:FLASH_SPEED animations:^{
+    [UIView animateWithDuration:FLASH_SPEED delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         view.transform = originalTransform;
-    }];
+    } completion:nil];
 }
 
 //------------------------------ Size modifier ------------------------------
@@ -70,7 +72,7 @@
 
 + (CGFloat)getDurationOfAnimationWithFlashTimes:(NSUInteger)times {
     return (2 * times) * FLASH_SPEED;
-
+    
 }
 
 @end

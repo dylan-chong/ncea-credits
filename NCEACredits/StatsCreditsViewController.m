@@ -24,8 +24,8 @@ NSString *(^GradeTextForAbbreviatedGrade) (NSString *) = ^(NSString *abb) {
     NSDictionary *creds;
     NSString *exc, *mer, *ach, *not, *non, *ame, *em;
     
-    GradePriorityType g = [StatsCreditsViewController getGradePriorityEnumFromString:ApplicationDelegate.lastPressedGradePriority];
-    NSString *subjectOrTotal = ApplicationDelegate.lastPressedSubjectOrTotal;
+    GradePriorityType g = [StatsCreditsViewController getGradePriorityEnumFromString:CurrentAppDelegate.lastPressedGradePriority];
+    NSString *subjectOrTotal = CurrentAppDelegate.lastPressedSubjectOrTotal;
     if ([subjectOrTotal isEqualToString:STATS_SUBJECTS_TOTAL]) {
         creds = [CurrentProfile getNumberOfAllCreditsForPriority:g];
     } else {
@@ -77,9 +77,9 @@ NSString *(^GradeTextForAbbreviatedGrade) (NSString *) = ^(NSString *abb) {
     [super bubbleWasPressed:container];
     
     
-    NSString *priorityText = ApplicationDelegate.lastPressedGradePriority;
+    NSString *priorityText = CurrentAppDelegate.lastPressedGradePriority;
     GradePriorityType priority = [StatsCreditsViewController getGradePriorityEnumFromString:priorityText];
-    NSString *subjectOrTotal = ApplicationDelegate.lastPressedSubjectOrTotal;
+    NSString *subjectOrTotal = CurrentAppDelegate.lastPressedSubjectOrTotal;
     
     NSString *gradeAbbr = [container.bubble.title.text componentsSeparatedByString:@":"][0];//Get text before colon
     NSString *gradeText = GradeTextForAbbreviatedGrade(gradeAbbr);
