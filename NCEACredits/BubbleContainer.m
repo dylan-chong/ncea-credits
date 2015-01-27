@@ -29,10 +29,7 @@
         
         //create bubble in centre
         _bubble = [[BubbleMain alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:frame.size]];
-        _bubble.usesDelegateToCallRedrawAnchors = YES;
-        _bubble.delegate = self;
         [self addSubview:_bubble];
-        [_bubble startWiggle];
         
         self.backgroundColor = bg;
         
@@ -56,9 +53,8 @@
         _colour = colour;
         
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:f.size] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
-        if (hasDelegate) _bubble.delegate = self;
         [self addSubview:_bubble];
-        [_bubble startWiggle];
+
         if (![Styles rect:startingFrame isEqualToRect:CGRectZero]) {
             self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
             self.userInteractionEnabled = NO;
@@ -87,9 +83,7 @@
         _colour = colour;
         
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:self.frame.size] colour:colour title:title andDelegate:hasDelegate];
-        if (hasDelegate) _bubble.delegate = self;
         [self addSubview:_bubble];
-        [_bubble startWiggle];
         
         self.backgroundColor = bg;
         
@@ -146,22 +140,6 @@
     } else if (tag == ScaleWidth || tag == ScaleHeight) {
         _bubble.transform = CGAffineTransformMakeScale(value, value);
     }
-}
-
-//*
-//****
-//*********
-//****************
-//*************************
-#pragma mark - ***************************    Anchors    ************************************
-//*************************
-//****************
-//*********
-//****
-//*
-
-- (void)redrawAnchors {
-    [self.delegate redrawAnchors];
 }
 
 //*

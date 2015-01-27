@@ -40,7 +40,7 @@
 
 - (void)bubbleWasPressed:(BubbleContainer *)container {
     [super bubbleWasPressed:container];
-    ApplicationDelegate.lastPressedGradePriority = container.bubble.title.text;
+    CurrentAppDelegate.lastPressedGradePriority = container.bubble.title.text;
     
     StatsSubjectsViewController *stats = [[StatsSubjectsViewController alloc] initWithMainBubble:container delegate:self andStaggered:YES];
     [self startTransitionToChildBubble:container andBubbleViewController:stats];
@@ -73,10 +73,12 @@
 }
 
 - (void)showHelpPopup {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Use the 'Expected' and 'Preliminary' grades if you have not received all of your 'Final' grades yet. You can use these to predict how many credits you will have after you have received all of your 'Final' grades.\n\nYou can set these grades for each assessment in the 'Add' or 'Edit' screens." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Use the 'Expected' and 'Preliminary' grades if you have not received all of your 'Final' grades yet.\n\nYou can use these to predict your total credits at the end of the year.\n\nYou can set these grades for each assessment in the 'Add' or 'Edit' screens. If you do set a 'Final' grade, it overrides the other two." preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
+
+//**********************************************************************
 
 //------------------------------ Flash ------------------------------
 //- (void)creationAnimationHasFinished {

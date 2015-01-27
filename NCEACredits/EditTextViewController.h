@@ -11,7 +11,6 @@
 #import "FlickScroller.h"
 
 #define EditTextScrollingNumberOfBubbles 7
-#define EditTextScrollingExtraDiagonalFractionalSpaceBetweenBubbles 0.03
 
 @interface EditTextViewController : SimpleSelectionViewController <EditTextBubbleContainerDelegate, EditTextEditScreenDelegate, UIAlertViewDelegate, FlickScrollerDelegate, ScrollArrowViewDelegate>
 
@@ -24,6 +23,6 @@
 @property FlickScroller *flickScroller;
 - (FlickScroller *)getFlickScroller;
 
-+ (BOOL)mainBubbleCoversUpEditBubble;
++ (BOOL)mainBubbleCoversUpEditBubbles;
 
 @end

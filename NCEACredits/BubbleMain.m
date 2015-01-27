@@ -22,6 +22,7 @@
         self.colour = [Styles redColour];
         self.transform = CGAffineTransformMakeScale([Styles mainBubbleStartingScaleFactor], [Styles mainBubbleStartingScaleFactor]);
         
+        self.wiggles = YES;
         CGFloat d = frame.size.width;
         
         //title 23-43% height of bubble

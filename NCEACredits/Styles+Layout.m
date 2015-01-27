@@ -71,7 +71,7 @@
             break;
     }
     
-    availableOrigins.size = [Styles getAvailableOriginsSize];
+    availableOrigins.size = [Styles getAvailableOriginsSizeWithCorner:c];
     
  	x = (CGFloat) availableOrigins.origin.x + arc4random_uniform(availableOrigins.size.width);
     y = (CGFloat) availableOrigins.origin.y + arc4random_uniform(availableOrigins.size.height);
@@ -82,20 +82,29 @@
     return r;
 }
 
-+ (CGSize)getAvailableOriginsSize {
++ (CGSize)getAvailableOriginsSizeWithCorner:(Corner)corner {
     CGSize s;
     CGRect mainRect = [Styles mainContainerRect];
+    CGFloat sbh = [CurrentAppDelegate getStatusBarHeight];
     
     if ([CurrentAppDelegate deviceIsInLandscape]) {
         s.width = mainRect.origin.x - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
         s.height = mainRect.origin.y + (mainRect.size.height / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
-        s.height -= [CurrentAppDelegate statusBarHeight];
     } else {
         s.width = mainRect.origin.x + (mainRect.size.width / 2) - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].width;
         s.height = mainRect.origin.y - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
-        s.height -= [CurrentAppDelegate statusBarHeight];
     }
     
+    if ([CurrentAppDelegate deviceIsInLandscape] && [Styles getDevice] == iPhone) {
+        //no status bar
+    } else {
+        if ([Styles cornerIsTop:corner]) {
+            s.height -= sbh;
+        }
+    }
+    
+    if (s.height < 0) s.height = 0;
+    if (s.width < 0) s.width = 0;
     return s;
 }
 

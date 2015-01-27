@@ -55,6 +55,7 @@
         _textLabel.adjustsFontSizeToFitWidth = YES;
         [_viewContainer addSubview:_textLabel];
         
+        //self.wiggles = YES;
         self.backgroundColor = [UIColor clearColor];
     }
     
@@ -73,10 +74,6 @@
         _isPlaceHolder = YES;
         _textLabel.textColor = [EditTextBubble placeholderColour];
     }
-}
-
-- (CGPoint)getAnchorPoint {
-    return self.center;
 }
 
 

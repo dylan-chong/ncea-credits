@@ -49,17 +49,17 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 //*
 @interface Styles : NSObject
 
-+ (float)sizeModifier;
++ (CGFloat)sizeModifier;
 + (Device)getDevice;
-+ (float)startingScaleFactor;
-+ (float)mainBubbleStartingScaleFactor;
-+ (float)animationSpeed;
++ (CGFloat)startingScaleFactor;
++ (CGFloat)mainBubbleStartingScaleFactor;
++ (CGFloat)animationSpeed;
 + (BOOL)rect:(CGRect)r1 isEqualToRect:(CGRect)r2;
 + (BOOL)point:(CGPoint)r1 isEqualToPoint:(CGPoint)r2;
 + (BOOL)size:(CGSize)s1 isEqualToSize:(CGSize)s2;
 + (CGFloat)degreesToRadians:(CGFloat)d;
 + (CGFloat)radiansToDegrees:(CGFloat)r;
-+ (double)frameRate;
++ (CGFloat)frameRate;
 + (NSArray *)sortArray:(NSArray *)array;
 + (NSArray *)sortArray:(NSArray *)array byPropertyKey:(NSString *)key ascending:(BOOL)ascending;
 
@@ -139,21 +139,25 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 //****
 //*
 
+#define BUBBLE_TO_BUBBLE_CONTAINER_SIZE_RATIO 0.75
+
 @interface Styles (Layout)
 
 + (CGRect)mainContainerRect;
 + (CGRect)titleContainerRectWithCorner:(Corner)c;
 + (CGSize)titleContainerSize;
 + (CGSize)subtitleContainerSize;
-+ (float)spaceFromEdgeOfScreen;
++ (CGFloat)spaceFromEdgeOfScreen;
 + (CGRect)getBubbleFrameWithContainerSize:(CGSize)size;
 + (Corner)getOppositeCornerToCorner:(Corner)c;
 + (Corner)getCornerWithTitleContainerFrame:(CGRect)r;
 + (CGPoint)getExactOriginForCorner:(Corner)c andSize:(CGSize)size;
 + (Corner)getCornerForPoint:(CGPoint)point;
++ (BOOL)cornerIsLeft:(Corner)corner;
++ (BOOL)cornerIsTop:(Corner)corner;
 + (CGRect)getRectCentreOfFrame:(CGRect)rect withSize:(CGSize)size;
 + (CGSize)editTextBubbleSize;
-+ (float)numberOfItemsInSelectionViewPer100px;
++ (CGFloat)numberOfItemsInSelectionViewPer100Points;
 + (NSUInteger)minimumItemsPerSelectionPage;
 
 @end
@@ -171,6 +175,7 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
 //*
 
 #define FLASH_DEFAULT_TIMES 2
+#define FLASH_EDIT_TEXT_SCROLL_ARROW_TIMES FLASH_DEFAULT_TIMES
 #define FLASH_BUBBLE_VC_MAIN_BUBBLE_TIMES FLASH_DEFAULT_TIMES - 1
 @interface Styles (Flasher)
 

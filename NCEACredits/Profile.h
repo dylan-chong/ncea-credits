@@ -43,4 +43,6 @@
 - (NSData *)convertToJSONAsRoot;
 - (void)logJSONText;
 
+@property NSUInteger appOpenTimes;
+
 @end
