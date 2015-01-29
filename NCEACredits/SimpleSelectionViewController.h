@@ -29,5 +29,6 @@
 @property HomeButton *homeButton;
 - (void)createCornerButtonWithTitle:(NSString *)title colourOrNilForMailBubbleColour:(UIColor *)colour target:(id)target selector:(SEL)selector;
 - (void)homeButtonPressed;
+- (void)createHomeButton;
 
 @end

@@ -35,6 +35,9 @@ typedef NS_ENUM(NSInteger, AnimationSpeedSelection) {
     AnimationSpeedSelectionSlow,
     AnimationSpeedSelectionSlower
 };
+#define ANIMATION_SPEED_LOAD_MULTIPLIER 1.5
+
+#define TOO_MANY_CREDITS_FOR_ASSESSMENT 15
 
 //*
 //****

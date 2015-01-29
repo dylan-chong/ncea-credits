@@ -342,7 +342,7 @@
                               otherButtonTitles: nil] show];
     } else {
         //Lots of credits
-        if ([[ItemCredits stringByAppendingString:TitleSuffix] isEqualToString:_title.text] && [_text.text intValue] > 15)
+        if ([[ItemCredits stringByAppendingString:TitleSuffix] isEqualToString:_title.text] && [_text.text intValue] > TOO_MANY_CREDITS_FOR_ASSESSMENT)
             [[[UIAlertView alloc] initWithTitle:AppName
                                         message:@"Gee that's a lot of credits. I hope you aren't trying to cheat the system...\n\nHave fun with that."
                                        delegate:nil

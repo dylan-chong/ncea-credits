@@ -7,9 +7,12 @@
 //
 
 #import "ToJSONTemplate.h"
+#import "Goal.h"
 
 @interface CustomGoals : ToJSONTemplate
 
 @property NSMutableArray *goals;
++ (NSArray *)getAllCustomGoals;
+- (Goal *)getGoalForTitle:(NSString *)title;
 
 @end

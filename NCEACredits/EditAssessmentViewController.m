@@ -37,8 +37,7 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
         [self createAnchorsIfNonExistent];
         
         [self createDeleteButton];
-        
-        //dont create home button (method overrides normal one)
+        [self createHomeButton];
     }
     
     return self;
@@ -282,7 +281,7 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
 //*********
 //****************
 //*************************
-#pragma mark - ***************************    Delete    ************************************
+#pragma mark - ***************************    Delete and Home   ************************************
 //*************************
 //****************
 //*********
@@ -310,6 +309,14 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
     }
     
     [super startReturnScaleAnimation];
+}
+
+//------------------------------ Home ------------------------------
+//home button calls startReturnScaleAnimation (which displays confirmation alert) - no need to add functionality
+
+- (void)mainBubbleWasPressed {
+    CurrentAppDelegate.bubbleVCisReturningToHomeScreen = NO;
+    [super mainBubbleWasPressed];
 }
 
 @end

@@ -58,6 +58,8 @@
 
 - (Corner)getCornerOfChildVCNewMainBubble:(BubbleContainer *)bubble;
 
+- (BubbleContainer *)getChildBubbleContainerForTitle:(NSString *)title;
+
 //Wiggle and anchor
 - (void)startWiggle;
 - (void)wiggle;
@@ -68,4 +70,6 @@
 
 + (BOOL)allowsAnchorRedrawToStopWhenBubbleContainersAreStationary;
 - (void)createAnchorsIfNonExistent;
+
+- (void)mainBubbleWasPressed;
 @end

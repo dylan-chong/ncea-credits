@@ -380,4 +380,26 @@
     return total;
 }
 
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Other    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (BOOL)collectionContainsLargeCreditAssessments {
+    for (Assessment *a in _assessments) {
+        if (a.creditsWhenAchieved > TOO_MANY_CREDITS_FOR_ASSESSMENT) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 @end

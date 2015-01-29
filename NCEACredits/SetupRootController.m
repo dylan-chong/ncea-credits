@@ -78,7 +78,7 @@
 }
 
 - (NSArray *)getGoalCellDatas {
-    NSArray *titles = [GoalMain getAllGoalTitles];
+    NSArray *titles = [[self class] getGoalTitlesForGoals:[GoalMain getAllGoals]];
     NSMutableArray *datas = [[NSMutableArray alloc] init];
     
     for (NSString *s in titles) {
@@ -109,6 +109,15 @@
     
     return datas;
 }
+
++ (NSArray *)getGoalTitlesForGoals:(NSArray *)goals {
+    NSMutableArray *titles = [[NSMutableArray alloc] init];
+    for (Goal *goal in goals) {
+        [titles addObject:goal.title];
+    }
+    return titles;
+}
+
 
 - (NSMutableArray *)getYearCellDatas {
     NSMutableArray *y;

@@ -286,7 +286,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8404403D1972782500CC390E /* Goals */ = {
+		8404403D1972782500CC390E /* Goals (not saved) */ = {
 			isa = PBXGroup;
 			children = (
 				8482D7F11A4534C200F1CD6D /* GoalMain.h */,
@@ -298,7 +298,7 @@
 				8442D2E11A482930003C0C2D /* GoalGradeReqAndLevel.h */,
 				8442D2E21A482930003C0C2D /* GoalGradeReqAndLevel.m */,
 			);
-			name = Goals;
+			name = "Goals (not saved)";
 			sourceTree = "<group>";
 		};
 		840D586E18820C5700DE24B7 /* Animation */ = {
@@ -395,6 +395,7 @@
 			children = (
 				8470DD2C1A46708800266654 /* CustomGoals.h */,
 				8470DD2D1A46708800266654 /* CustomGoals.m */,
+				8404403D1972782500CC390E /* Goals (not saved) */,
 				845C40DC19481350001B1499 /* YearCollection.h */,
 				845C40DD19481350001B1499 /* YearCollection.m */,
 				84A435C71966B7280091905B /* Year.h */,
@@ -494,7 +495,6 @@
 				8442D2E51A48D81C003C0C2D /* AppSettings.m */,
 				84FF925B18A08F7B00988F62 /* Profile Structure */,
 				8459E868196FB456000D1C85 /* Setup */,
-				8404403D1972782500CC390E /* Goals */,
 				84B5A2C01880D91400969952 /* Styles */,
 				84FF925A18A08F6B00988F62 /* UI */,
 				84B5A2801880D8AD00969952 /* Supporting Files */,

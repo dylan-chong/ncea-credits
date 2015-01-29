@@ -35,4 +35,6 @@
 - (BOOL)assessmentExistsByIdentifier:(Assessment *)assess;
 - (void)deleteAssessment:(Assessment *)assess;
 
+- (BOOL)collectionContainsLargeCreditAssessments;
+
 @end

@@ -11,12 +11,13 @@
 @implementation Goal
 #warning TODO: custom goals
 
-- (id)initWithGradeText:(NSString *)gpg {
+- (id)initWithGradeText:(NSString *)gpg andTitle:(NSString *)title {
     self = [super init];
     
     if (self) {
         _primaryGrade = gpg;
         _availableGoalGradeReqs = [[NSArray alloc] init];
+        _title = title;
     }
     
     return self;
@@ -41,11 +42,9 @@
     return NO;
 }
 
-- (NSInteger)getCreditsLeftToCompleteWithAllCredits:(NSDictionary *)allCredits atLevel:(NSUInteger)level {
+- (NSInteger)getCreditsLeftToCompleteWithCreditsForPrimaryGrade:(NSInteger)credits atLevel:(NSUInteger)level {
     NSInteger required = [self getRequirementForLevel:level];
-    NSInteger current = [[allCredits objectForKey:_primaryGrade] integerValue];
-    
-    return required - current;
+    return required - credits;
 }
 
 - (NSUInteger)getRequirementForLevel:(NSUInteger)level {

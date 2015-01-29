@@ -44,6 +44,59 @@
     }
     
     [self showReviewPopupIfNecessary];
+    [self showGoalCompletionAlertIfNecessary];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Goals    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)showGoalCompletionAlertIfNecessary {
+    if (!CurrentProfile.hasCompletedGoal && [CurrentProfile goalIsComplete]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"CONGRATULATIONS!\n\nYou did NOT get our 1,000,000th customer prize, but you did get the next best thing!\n\nYou completed YOUR GOAL!\nHOORAY!! TIME TO CELEBRATE!!" preferredStyle:UIAlertControllerStyleAlert];
+        
+        //opt 1 (alert 1)
+        [alert addAction:[UIAlertAction actionWithTitle:@"Ingest suspicious substance" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            //opt 1 (alert 2)
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"No celebration for you!\n*snatches celebration out of your hands*" preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"Fine..." style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                
+                //opt 1 (alert 3)
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"...celebrationless, the miserable teenager walks off in shame, despite completing his proudest achievement.\n\nDon't make the same mistake he did kids.\nDon't do drugs.\n\nDrugs are bad." preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    
+                    //opt 1 (alert 4)
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"I'll assume you learnt your lesson. Here's your celebration back.\n\nHave fun!" preferredStyle:UIAlertControllerStyleAlert];
+                    [alert addAction:[UIAlertAction actionWithTitle:@"Hooray!" style:UIAlertActionStyleCancel handler:nil]];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }]];
+                [self presentViewController:alert animated:YES completion:nil];
+            }]];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }]];
+        
+        //opt 2 (alert 1)
+        [alert addAction:[UIAlertAction actionWithTitle:@"Don't ingest suspicious substance" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+            //opt 2 (alert 2)
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Good. You passed the idiot test.\n\nNow it's time to celebrate!" preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"Yay!" style:UIAlertActionStyleCancel handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        CurrentProfile.hasCompletedGoal = YES;
+        [CurrentAppDelegate saveCurrentProfileAndAppSettings];
+    }
 }
 
 //*
@@ -143,6 +196,8 @@
     //Tutorial
     if (CurrentAppDelegate.setupState == SETUP_STATE_NEW_PROFILE_INITIAL)
         [self showTutorial];
+    
+    [self updateMainBubbleStats];
 }
 
 - (void)showSetupWindow {
@@ -267,39 +322,49 @@
 
 //------------------------------ Child Bubbles ------------------------------
 - (void)addContainerPressed {
-    [self bubbleWasPressed:_addContainer];
-    
-    AddViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer delegate:self andAssessmentOrNil:nil];
-    [self startTransitionToChildBubble:_addContainer andBubbleViewController:b];
+    if (!self.isShowingMainBubblePopup) {
+        [self bubbleWasPressed:_addContainer];
+        
+        AddViewController *b = [[AddViewController alloc] initWithMainBubble:_addContainer delegate:self andAssessmentOrNil:nil];
+        [self startTransitionToChildBubble:_addContainer andBubbleViewController:b];
+    }
 }
 
 - (void)gradesContainerPressed {
-    [self bubbleWasPressed:_gradesContainer];
-    
-    if ([CurrentProfile getNumberOfAssessmentsInCurrentYear] > 0) {
-        GradesViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer delegate:self andStaggered:YES];
-        [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
-    } else {
-        [self noAssessmentsAlert];
+    if (!self.isShowingMainBubblePopup) {
+        [self bubbleWasPressed:_gradesContainer];
+        
+        if ([CurrentProfile getNumberOfAssessmentsInCurrentYear] > 0) {
+            GradesViewController *b = [[GradesViewController alloc] initWithMainBubble:_gradesContainer delegate:self andStaggered:YES];
+            [self startTransitionToChildBubble:_gradesContainer andBubbleViewController:b];
+        } else {
+            [self noAssessmentsAlert];
+        }
     }
 }
 
 - (void)statsContainerPressed {
-    [self bubbleWasPressed:_statsContainer];
-    
-    if ([CurrentProfile getNumberOfAssessmentsInCurrentYear] > 0) {
-        StatsViewController *b = [[StatsViewController alloc] initWithMainBubble:_statsContainer delegate:self andStaggered:YES];
-        [self startTransitionToChildBubble:_statsContainer andBubbleViewController:b];
-    } else {
-        [self noAssessmentsAlert];
+    if (!self.isShowingMainBubblePopup) {
+        if (!self.isShowingMainBubblePopup) {
+            [self bubbleWasPressed:_statsContainer];
+            
+            if ([CurrentProfile getNumberOfAssessmentsInCurrentYear] > 0) {
+                StatsViewController *b = [[StatsViewController alloc] initWithMainBubble:_statsContainer delegate:self andStaggered:YES];
+                [self startTransitionToChildBubble:_statsContainer andBubbleViewController:b];
+            } else {
+                [self noAssessmentsAlert];
+            }
+        }
     }
 }
 
 - (void)optionsContainerPressed {
-    [self bubbleWasPressed:_optionsContainer];
-    
-    OptionsViewController *opt = [[OptionsViewController alloc] initWithMainBubble:_optionsContainer delegate:self andStaggered:YES];
-    [self startTransitionToChildBubble:_optionsContainer andBubbleViewController:opt];
+    if (!self.isShowingMainBubblePopup) {
+        [self bubbleWasPressed:_optionsContainer];
+        
+        OptionsViewController *opt = [[OptionsViewController alloc] initWithMainBubble:_optionsContainer delegate:self andStaggered:YES];
+        [self startTransitionToChildBubble:_optionsContainer andBubbleViewController:opt];
+    }
 }
 
 //*
@@ -326,37 +391,47 @@
 }
 
 - (void)showQuickSettingsActionSheet {
-    //Popup
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick an action." preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    //add actions
-    [alert addAction:[UIAlertAction actionWithTitle:@"Edit Profile (with Goals and Years)" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        CurrentAppDelegate.setupState = SETUP_STATE_EDIT_PROFILE;
-        [self showSetupWindow];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Send us Feedback" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [OptionsViewController showMailPopupInViewControllerWithMFMailComposeDelegate:self];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Like on Facebook" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showFacebookLikePopupWithConfirmation:NO];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Write a Review" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showAppStoreReviewPopupWithConfirmation:NO];
-    }]];
-    if (MAKE_FAKE_ASSESSMENTS && DEBUG_MODE_ON) {
-        [alert addAction:[UIAlertAction actionWithTitle:@"Make Dummy Assessments" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self makeFakeAssessments];
+    if (!self.isDoingAnimation) {
+        self.isShowingMainBubblePopup = YES;
+        //Popup
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Pick an action." preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        //add actions
+        [alert addAction:[UIAlertAction actionWithTitle:@"Edit Profile (with Goals and Years)" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            CurrentAppDelegate.setupState = SETUP_STATE_EDIT_PROFILE;
+            [self showSetupWindow];
+            self.isShowingMainBubblePopup = NO;
         }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Send us Feedback" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [OptionsViewController showMailPopupInViewControllerWithMFMailComposeDelegate:self];
+            self.isShowingMainBubblePopup = NO;
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Like on Facebook" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self showFacebookLikePopupWithConfirmation:NO];
+            self.isShowingMainBubblePopup = NO;
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Write a Review" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self showAppStoreReviewPopupWithConfirmation:NO];
+            self.isShowingMainBubblePopup = NO;
+        }]];
+        if (MAKE_FAKE_ASSESSMENTS && DEBUG_MODE_ON) {
+            [alert addAction:[UIAlertAction actionWithTitle:@"Make Dummy Assessments" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self makeFakeAssessments];
+                self.isShowingMainBubblePopup = NO;
+            }]];
+        }
+        
+        //iphone only cancel button
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+            self.isShowingMainBubblePopup = NO;
+        }]];
+        
+        //popover location
+        UIPopoverPresentationController *pop = [alert popoverPresentationController];
+        pop.sourceRect = self.mainBubble.frame;
+        pop.sourceView = self.view;
+        [self presentViewController:alert animated:YES completion:nil];
     }
-    
-    //iphone only cancel button
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
-    
-    //popover location
-    UIPopoverPresentationController *pop = [alert popoverPresentationController];
-    pop.sourceRect = self.mainBubble.frame;
-    pop.sourceView = self.view;
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {

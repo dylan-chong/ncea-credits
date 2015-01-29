@@ -22,10 +22,6 @@
     return @"Tap to Save";
 }
 
-- (void)setMainBubbleSimilarToBubble:(BubbleContainer *)container {
-    [super setMainBubbleSimilarToBubble:container];
-}
-
 + (NSArray *)getEditBubblesWithEditTextScreenItemDataArray:(NSArray *)itemData delegate:(SimpleSelectionViewController *)delegate towardsRightSide:(BOOL)towardsRightSide flickScroller:(FlickScroller *)flickScroller corner:(Corner)cornerOfMainBubble andMainBubble:(BubbleContainer *)mainB {
     
     NSMutableArray *blocks = [[NSMutableArray alloc] init];

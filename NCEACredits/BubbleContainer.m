@@ -113,7 +113,7 @@
 - (AnimationManager *)getAnimationManagerForMainBubbleGrowth {
     return [[AnimationManager alloc] initWithAnimationObjects:[[NSArray alloc] initWithObjects:
                                                                [[AnimationObject alloc] initWithStartingPoint:[Styles mainBubbleStartingScaleFactor] endingPoint:1.0 tag:ScaleWidth andDelegate:self], nil]
-                                                       length:[Styles animationSpeed] tag:0 andDelegate:nil];
+                                                       length:[Styles animationSpeed] * ANIMATION_SPEED_LOAD_MULTIPLIER tag:0 andDelegate:nil];
 }
 
 - (void)startGrowingMainBubbleAnimation {

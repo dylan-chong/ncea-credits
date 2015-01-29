@@ -35,6 +35,10 @@
     }
 }
 
+- (void)flashHomeButton {
+    [Styles flashStartWithView:self.homeButton numberOfTimes:FLASH_DEFAULT_TIMES sizeIncreaseMultiplierOr0ForDefault:2.0];
+}
+
 //*
 //****
 //*********
@@ -105,7 +109,7 @@
         [alert addAction:a];
     }
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"NOOO!! CANCEL!! CANCEL!!" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -164,7 +168,9 @@
             
             NSString *mess = [NSString stringWithFormat:@"Profile '%@' was loaded.", action.title];
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
+            [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+                [self flashHomeButton];
+            }]];
             [self presentViewController:alert animated:YES completion:nil];
         }];
         [alert addAction:a];
@@ -190,7 +196,12 @@
 - (void)setuphasBeenDismissed {
     NSString *mess = [NSString stringWithFormat:@"Profile '%@' was saved", CurrentProfile.profileName];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        if ([self.lastTappedBubble.bubble.title.text isEqualToString:OptionsBubbleTitleNewProfile]) {
+            //flash home button if new profile created
+            [self flashHomeButton];
+        }
+    }]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

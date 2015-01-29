@@ -30,4 +30,15 @@
     return properties;
 }
 
++ (NSArray *)getAllCustomGoals {
+    return CurrentProfile.customGoals.goals;
+}
+
+- (Goal *)getGoalForTitle:(NSString *)title {
+    for (Goal *goal in self.goals) {
+        if ([goal.title isEqualToString:title]) return goal;
+    }
+    return nil;
+}
+
 @end

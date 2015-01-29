@@ -90,7 +90,7 @@
     for (NSString *key in _subjectsAndColours) {
         BOOL subjectStillExists = NO;
         for (NSString *sub in subjectsOfAssessments) {
-            if (sub == key) {
+            if ([sub isEqualToString:key]) {
                 subjectStillExists = YES;
             }
         }
