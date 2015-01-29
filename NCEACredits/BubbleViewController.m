@@ -27,7 +27,7 @@
     _hasDoneCreationAnimation = NO;
     _hasInitiatedCreationAnimation = NO;
     
-    _initiallyThoughtScreenSize = [ApplicationDelegate getScreenSize]; //Device may rotate during transition, reposition after if needed
+    _initiallyThoughtScreenSize = [CurrentAppDelegate getScreenSize]; //Device may rotate during transition, reposition after if needed
     return self;
 }
 
@@ -52,13 +52,11 @@
     
     if (container.bubbleType == TitleBubble) {
         _mainBubble = [[BubbleContainer alloc] initTitleBubbleWithFrameCalculator:p colour:container.colour iconName:container.imageName title:title frameBubbleForStartingPosition:CGRectZero andDelegate:YES];
-        _mainBubble.delegate = self;
     } else if (container.bubbleType == SubtitleBubble) {
         _mainBubble = [[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:p colour:container.colour title:title frameBubbleForStartingPosition:CGRectZero andDelegate:YES];
-        _mainBubble.delegate = self;
     }
     
-    [_mainBubble addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startReturnScaleAnimation)]];
+    [_mainBubble addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mainBubbleWasPressed)]];
     [self.view addSubview:_mainBubble];
 }
 
@@ -66,35 +64,17 @@
     _mainBubble = m;
     _childBubbles = a;
     
-    [self createAnchors];
+    [self createAnchorsIfNonExistent];
     [self.view bringSubviewToFront:_mainBubble];
 }
 
-- (void)createAnchors {
-    _anchors = [[AnchorView alloc] initWithStartingPoint:[self.view convertPoint:[_mainBubble.bubble getAnchorPoint] fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
-    [self.view addSubview:_anchors];
-    [self.view sendSubviewToBack:_anchors];
-}
-
-- (void)redrawAnchors {
-    if (_disableAnchorReDraw != YES && _isCurrentViewController) {
-        [_anchors setStartingPoint:[self.view convertPoint:[_mainBubble.bubble getAnchorPoint] fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
-        [_anchors setNeedsDisplay];
-    }
-}
-
-- (NSArray *)getAnchorPointsFromChildBubbles {
-    NSMutableArray *points = [[NSMutableArray alloc] init];
-    for (BubbleContainer *b in _childBubbles) {
-        [points addObject:[NSValue valueWithCGPoint:[self.view convertPoint:[b.bubble getAnchorPoint] fromView:b]]];
-    }
-    
-    return points;
+- (void)mainBubbleWasPressed {
+    [self startReturnScaleAnimation];
 }
 
 - (void)repositionBubbles {
-    self.initiallyThoughtScreenSize = [ApplicationDelegate getScreenSize];
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    self.initiallyThoughtScreenSize = [CurrentAppDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     _anchors.frame = CGRectMake(0, 0, screen.width, screen.height);
     [self redrawAnchors];
     
@@ -102,9 +82,30 @@
 }
 
 - (void)hasRepositionedBubbles {
-    if (!CGSizeEqualToSize(_initiallyThoughtScreenSize, [ApplicationDelegate getScreenSize]))
+    if (!CGSizeEqualToSize(_initiallyThoughtScreenSize, [CurrentAppDelegate getScreenSize]))
         [self repositionBubbles];
 }
+
+- (BubbleContainer *)getChildBubbleContainerForTitle:(NSString *)title {
+    for (BubbleContainer *b in self.childBubbles) {
+        if ([b.bubble.title.text isEqualToString:title]) {
+            return b;
+        }
+    }
+    return nil;
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    General Animation    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
 
 - (void)setAnimationManager:(AnimationManager *)animationManager {
     if (!_shouldDelayCreationAnimation) {
@@ -114,6 +115,40 @@
         
         _isDoingAnimation = YES;
         _animationManager = animationManager;
+    }
+}
+
+- (void)animationHasFinished:(NSInteger)tag {
+    _isDoingAnimation = NO;
+    
+    if (tag == 1) {
+        //Sliding finished
+        [self startGrowingAnimation];
+    } else if (tag == 2) {
+        //Growing finished
+        [self creationAnimationHasFinished];
+    } else if (tag == 3) {
+        //transition
+        [self stopWiggle];
+        [self presentViewController:_childBubbleViewController animated:NO completion:nil];
+        _childBubbleViewController.anchors.relativityFromMainBubble =
+        CGPointMake(_mainBubble.center.x - _childBubbleViewController.parentBubble.center.x,
+                    _mainBubble.center.y - _childBubbleViewController.parentBubble.center.y);
+        
+        [_childBubbleViewController hasTransitionedFromParentViewController];
+        _isCurrentViewController = NO;
+    } else if (tag == 4) {
+        //reposition bubbles or transition reverse
+        [self enableChildButtons];
+        [self hasRepositionedBubbles];
+    } else if (tag == 5) {
+        //return scale
+        [self startReturnSlideAnimation];
+    } else if (tag == 6) {
+        //return slide
+        [self dismissViewControllerAnimated:NO completion:^{
+            [self.delegate hasReturnedFromChildViewController];
+        }];
     }
 }
 
@@ -140,24 +175,31 @@
         
         [self.view bringSubviewToFront:_mainBubble];
         
-        [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:a length:[Styles animationSpeed] tag:1 andDelegate:self]];
-        [_animationManager startAnimation];
-        
         //Only works on main vc
-        if ([self class] == [MainViewController class])
-            [NSTimer scheduledTimerWithTimeInterval:[Styles animationSpeed] / 2
+        CGFloat speed = [Styles animationSpeed];
+        if ([self class] == [MainViewController class]) {
+            [NSTimer scheduledTimerWithTimeInterval:[Styles animationSpeed] / 2 * ANIMATION_SPEED_LOAD_MULTIPLIER
                                              target:self.mainBubble
                                            selector:@selector(startGrowingMainBubbleAnimation)
                                            userInfo:nil
                                             repeats:NO];
+            
+            speed *= ANIMATION_SPEED_LOAD_MULTIPLIER;
+        }
+        
+        [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:a length:speed tag:1 andDelegate:self]];
+        [_animationManager startAnimation];
     }
+    
 }
 
 - (void)startGrowingAnimation {
+    CGFloat speed = [Styles animationSpeed];
+    if ([self class] == [MainViewController class]) speed *= ANIMATION_SPEED_LOAD_MULTIPLIER;
     [self setAnimationManager:[[AnimationManager alloc] initWithAnimationObjects:[[NSArray alloc] initWithObjects:
                                                                                   [[AnimationObject alloc] initWithStartingPoint:[Styles startingScaleFactor] endingPoint:1.0 tag:ScaleWidth andDelegate:self],
                                                                                   nil]
-                                                                          length:[Styles animationSpeed]
+                                                                          length:speed
                                                                              tag:2 andDelegate:self]];
     [_animationManager startAnimation];
     
@@ -171,39 +213,6 @@
     }
 }
 
-- (void)animationHasFinished:(NSInteger)tag {
-    _isDoingAnimation = NO;
-    
-    if (tag == 1) {
-        [self startGrowingAnimation];
-    } else if (tag == 2) {
-        //Growing finished
-        [self creationAnimationHasFinished];
-    } else if (tag == 3) {
-        //transition
-        [self presentViewController:_childBubbleViewController animated:NO completion:nil];
-        _childBubbleViewController.anchors.relativityFromMainBubble =
-        CGPointMake(_mainBubble.center.x - _childBubbleViewController.parentBubble.center.x,
-                    _mainBubble.center.y - _childBubbleViewController.parentBubble.center.y);
-        
-        [_childBubbleViewController hasTransitionedFromParentViewController];
-        _isCurrentViewController = NO;
-    } else if (tag == 4) {
-        //reposition bubbles or transition reverse
-        [self enableChildButtons];
-        [self hasRepositionedBubbles];
-    } else if (tag == 5) {
-        //return scale
-        [self startReturnSlideAnimation];
-    } else if (tag == 6) {
-        //return slide
-        [self dismissViewControllerAnimated:NO completion:^{
-            _parentBubble.bubble.frame = _mainBubble.bubble.frame;
-            [self.delegate hasReturnedFromChildViewController];
-        }];
-    }
-}
-
 - (void)creationAnimationHasFinished {
     _hasDoneCreationAnimation = YES;
     [self enableChildButtons];
@@ -213,7 +222,7 @@
         [Styles flashStartWithView:_mainBubble numberOfTimes:FLASH_BUBBLE_VC_MAIN_BUBBLE_TIMES sizeIncreaseMultiplierOr0ForDefault:0];
     
     //Reposition if needed
-    if (!CGSizeEqualToSize(_initiallyThoughtScreenSize, [ApplicationDelegate getScreenSize])) [self repositionBubbles];
+    if (!CGSizeEqualToSize(_initiallyThoughtScreenSize, [CurrentAppDelegate getScreenSize])) [self repositionBubbles];
 }
 
 - (void)disableChildButtons {
@@ -359,19 +368,75 @@
     NSLog(@"Bubble '%@' was pressed in '%@'.", container.bubble.title.text, NSStringFromClass([self class]));
 }
 
-//------------------------------ Wiggle ------------------------------
-- (void)disableWiggleForTransition {
-    _mainBubble.bubble.disableWiggleForTransition = YES;
-    for (BubbleContainer *b in _childBubbles) {
-        b.bubble.disableWiggleForTransition = YES;
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Wiggle  and Anchors    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)startWiggle {
+    if (!self.wiggleTimer)
+        self.wiggleTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/[Styles frameRate] target:self selector:@selector(wiggle) userInfo:nil repeats:YES];
+}
+
+- (void)wiggle {
+    [self.mainBubble.bubble wiggle];
+    
+    for (BubbleContainer *container in self.childBubbles) {
+        [container.bubble wiggle];
+    }
+    
+    if ([[self class] allowsAnchorRedrawToStopWhenBubbleContainersAreStationary]) {
+        if (_isDoingAnimation) {
+            [self redrawAnchors];
+            _drawsAnchors = YES;
+        } else {
+            if (_drawsAnchors) {
+                [self redrawAnchors];
+                _drawsAnchors = NO;
+            }
+        }
+    } else {
+        [self redrawAnchors];
     }
 }
 
-- (void)enableWiggleAfterTransition {
-    _mainBubble.bubble.disableWiggleForTransition = NO;
-    for (BubbleContainer *b in _childBubbles) {
-        b.bubble.disableWiggleForTransition = NO;
++ (BOOL)allowsAnchorRedrawToStopWhenBubbleContainersAreStationary {
+    return YES;
+}
+
+- (void)stopWiggle {
+    [self.wiggleTimer invalidate];
+    self.wiggleTimer = nil;
+}
+
+//------------------------------ Anchors ------------------------------
+- (void)createAnchorsIfNonExistent {
+    if (!_anchors) {
+        _anchors = [[AnchorView alloc] initWithStartingPoint:[self.view convertPoint:[_mainBubble.bubble getAnchorPoint] fromView:_mainBubble] andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
+        [self.view addSubview:_anchors];
+        [self.view sendSubviewToBack:_anchors];
     }
+}
+
+- (void)redrawAnchors {
+    [self.anchors redrawAnchorsWithStartingPoint:[self.view convertPoint:[_mainBubble.bubble getAnchorPoint] fromView:_mainBubble]
+                               andPointsToDrawTo:[self getAnchorPointsFromChildBubbles]];
+}
+
+- (NSArray *)getAnchorPointsFromChildBubbles {
+    NSMutableArray *points = [[NSMutableArray alloc] init];
+    for (BubbleContainer *b in _childBubbles) {
+        [points addObject:[NSValue valueWithCGPoint:[self.view convertPoint:[b.bubble getAnchorPoint] fromView:b]]];
+    }
+    
+    return points;
 }
 
 //*
@@ -416,9 +481,9 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
-    [ApplicationDelegate setScreenSize:size];
+    [CurrentAppDelegate setScreenSize:size];
     
-    if ([ApplicationDelegate deviceIsInLandscape] && [Styles getDevice] == iPhone) [_statusBarFiller setHidden:YES];
+    if ([CurrentAppDelegate deviceIsInLandscape] && [Styles getDevice] == iPhone) [_statusBarFiller setHidden:YES];
     else [_statusBarFiller setHidden:NO];
     
     if (!_shouldDelayCreationAnimation && _isCurrentViewController && !_isDoingAnimation) [self repositionBubbles];
@@ -437,8 +502,9 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     _isCurrentViewController = YES;
-    //Line below disabled to fix flash. may or may not cause problem where bubbles dont reposition
-//    if (!_isDoingAnimation && !_shouldDelayCreationAnimation) [self repositionBubbles];
+    
+    [self createAnchorsIfNonExistent];
+    [self startWiggle];
 }
 
 - (void)viewDidLoad {
@@ -446,7 +512,7 @@
     
     //Make sure status bar filler is large enough for portrait and landscape
     CGRect rect = [[UIApplication sharedApplication] statusBarFrame];
-    CGSize screen = [ApplicationDelegate getScreenSize];
+    CGSize screen = [CurrentAppDelegate getScreenSize];
     if (screen.width > screen.height) rect.size.width = screen.width;
     else rect.size.width = screen.height;
     
