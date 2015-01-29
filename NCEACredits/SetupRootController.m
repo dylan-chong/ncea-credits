@@ -730,7 +730,8 @@
     
     //Apply general things first
     p.profileName = newName;
-    p.currentYear = [((TableViewCellData *)_generalCells[1]).detail integerValue];
+    NSString *currentYearDetail = ((TableViewCellData *)_generalCells[1]).detail;
+    p.currentYear = [currentYearDetail integerValue];
     
     //Apply selected goal
     for (TableViewCellData *goalData in _goalCells) {
