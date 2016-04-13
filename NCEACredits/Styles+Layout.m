@@ -8,7 +8,7 @@
 
 #import "Styles.h"
 
-#define showOrigins NO
+#define RANDOM_TITLE_CONTAINER_POSITION NO
 
 @implementation Styles (Layout)
 
@@ -25,8 +25,12 @@
 + (CGRect)mainContainerRect {
     CGSize size = CGSizeMake(340 * [Styles sizeModifier], 340 * [Styles sizeModifier]);
     CGSize screen = [CurrentAppDelegate getScreenSize];
+    
     //centre of screen
     CGPoint point = CGPointMake(round((screen.width - size.width) / 2), round((screen.height - size.height) / 2));
+    
+    if ([CurrentAppDelegate statusBarIsShowing])
+        point.y += [CurrentAppDelegate statusBarHeight] / 2;
     
     return CGRectMake(point.x, point.y, size.width, size.height);
 }
@@ -36,6 +40,13 @@
 + (CGSize)subtitleContainerSize {  return CGSizeMake(180 * [Styles sizeModifier], 180 * [Styles sizeModifier]);    }
 
 + (CGRect)titleContainerRectWithCorner:(Corner)c {
+    //uncomment to set bubbles to exact corners
+    //    CGSize s = [self titleContainerSize];
+    //    CGRect frame;
+    //    frame.origin = [self getExactOriginForCorner:c andSize:s];
+    //    frame.size = s;
+    //    return s;
+    
     CGSize size = [Styles titleContainerSize];
     CGRect availableOrigins;
     
@@ -44,14 +55,14 @@
     switch (c) {
         case TopLeft:
             availableOrigins = CGRectMake([Styles spaceFromEdgeOfScreen],
-                                          [Styles spaceFromEdgeOfScreen] + [CurrentAppDelegate statusBarHeight],
+                                          [Styles spaceFromEdgeOfScreen],
                                           0,
                                           0);
             break;
             
         case TopRight:
             availableOrigins = CGRectMake([Styles middleXTitleBubblePosition],
-                                          [Styles spaceFromEdgeOfScreen] + [CurrentAppDelegate statusBarHeight],
+                                          [Styles spaceFromEdgeOfScreen],
                                           0,
                                           0);
             break;
@@ -71,11 +82,16 @@
             break;
     }
     
+    if (!([CurrentAppDelegate statusBarIsShowing]) && [Styles cornerIsTop:c]) availableOrigins.origin.y += [CurrentAppDelegate statusBarHeight];
     availableOrigins.size = [Styles getAvailableOriginsSizeWithCorner:c];
     
- 	x = (CGFloat) availableOrigins.origin.x + arc4random_uniform(availableOrigins.size.width);
-    y = (CGFloat) availableOrigins.origin.y + arc4random_uniform(availableOrigins.size.height);
-    if (showOrigins == YES) return availableOrigins;
+    if (RANDOM_TITLE_CONTAINER_POSITION) {
+        x = availableOrigins.origin.x + arc4random_uniform(availableOrigins.size.width);
+        y = availableOrigins.origin.y + arc4random_uniform(availableOrigins.size.height);
+    } else {
+        x = availableOrigins.origin.x + (availableOrigins.size.width / 2);
+        y = availableOrigins.origin.y + (availableOrigins.size.height / 2);
+    }
     
     CGRect r = CGRectMake(x, y, size.width, size.height);
     
@@ -95,7 +111,7 @@
         s.height = mainRect.origin.y - ([Styles spaceFromEdgeOfScreen] * 2) - [Styles titleContainerSize].height;
     }
     
-    if ([CurrentAppDelegate deviceIsInLandscape] && [Styles getDevice] == iPhone) {
+    if ([CurrentAppDelegate statusBarIsShowing]) {
         //no status bar
     } else {
         if ([Styles cornerIsTop:corner]) {
@@ -178,7 +194,7 @@
     }
     
     if (c == TopLeft || c == TopRight) {
-        if (!([Styles getDevice] == iPhone && [CurrentAppDelegate deviceIsInLandscape]))
+        if ([CurrentAppDelegate statusBarIsShowing])
             p.y += [CurrentAppDelegate getStatusBarHeight];
     }
     

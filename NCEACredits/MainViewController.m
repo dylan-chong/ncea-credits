@@ -18,6 +18,12 @@
 #define LOADS_FOR_APP_STORE_REVIEW 6
 #define LOADS_FOR_FACEBOOOK_LIKE 3
 
+//Other consts
+#define UNIVERSITY_RANK_SCORE_CREDIT_COUNT 80
+#define UNIVERSITY_RANK_EXCELLENCE_POINTS 4
+#define UNIVERSITY_RANK_MERIT_POINTS 3
+#define UNIVERSITY_RANK_ACHIEVED_POINTS 2
+
 @implementation MainViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,8 +49,10 @@
         [self startCreationAnimationsWhichMayHaveBeenDelayedDueToPossibleRequirementOfSetup];
     }
     
-    [self showReviewPopupIfNecessary];
-    [self showGoalCompletionAlertIfNecessary];
+    if (CurrentProfile.hasAllNecessaryInformationFromSetup) {
+        [self showReviewPopupIfNecessary];
+        [self showGoalCompletionAlertIfNecessary];
+    }
 }
 
 //*
@@ -421,6 +429,14 @@
             }]];
         }
         
+        NSUInteger x = [CurrentProfile getPrimaryNCEALevelForCurrentYear];
+        if ([CurrentProfile getPrimaryNCEALevelForCurrentYear] == 3) {
+            [alert addAction:[UIAlertAction actionWithTitle:@"Calculate University Rank Score" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self showCalculationForUniversityRankScore];
+                self.isShowingMainBubblePopup = NO;
+            }]];
+        }
+        
         //iphone only cancel button
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
             self.isShowingMainBubblePopup = NO;
@@ -455,6 +471,37 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Looks like you don't have any assessments yet. Click the Add button on the left to create some. You can then edit them from the Subjects menu." preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showCalculationForUniversityRankScore {
+    NSDictionary *creds = [CurrentProfile getNumberOfAllCreditsForPriority:GradePriorityFinalGrade];
+    NSUInteger totalUsed = 0;
+    NSUInteger excPoints = 0;
+    NSUInteger merPoints = 0;
+    NSUInteger achPoints = 0;
+    NSUInteger x; //temporary storage
+    
+    if ([[creds objectForKey:GradeTextExcellence] integerValue] >= UNIVERSITY_RANK_SCORE_CREDIT_COUNT) {
+        x = UNIVERSITY_RANK_SCORE_CREDIT_COUNT * UNIVERSITY_RANK_EXCELLENCE_POINTS;
+        totalUsed += x;
+        excPoints += x;
+    }
+    
+    //**********************************************************************
+    //**********************************************************************
+    //**********************************************************************
+    //**********************************************************************
+#warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#warning TODO NEXT: 24 cred limit
+#warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //**********************************************************************
+    //**********************************************************************
+    //**********************************************************************
+    //**********************************************************************
 }
 
 //*

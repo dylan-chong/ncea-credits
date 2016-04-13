@@ -33,6 +33,9 @@
 - (CGSize)getScreenSize;
 - (BOOL)deviceIsInLandscape;
 - (CGFloat)getStatusBarHeight;
+- (BOOL)statusBarIsShowing;
+
+@property BOOL hasAddedToAppLaunchCount;
 
 //Globals
 @property NSString *lastPressedSubjectOrTotal, *lastPressedGradePriority; //Stats

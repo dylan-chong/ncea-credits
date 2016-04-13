@@ -92,16 +92,17 @@
     }];
     
     //Type of credits warning
-    NSString *title = ((EditTextBubble *)_viewToEdit.bubble).titleLabel.text;
-    if ([[title substringToIndex:title.length - TitleSuffix.length] isEqualToString:ItemTypeOfCredits]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Remember that literacy and numeracy credits are only for NCEA Level 1." preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
-        [self.delegate showAlert:alert];
-    }
+//    NSString *title = ((EditTextBubble *)_viewToEdit.bubble).titleLabel.text;
+//    if ([[title substringToIndex:title.length - TitleSuffix.length] isEqualToString:ItemTypeOfCredits]) {
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Remember that literacy and numeracy credits are only for NCEA Level 1." preferredStyle:UIAlertControllerStyleAlert];
+//        [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];
+//        [self.delegate showAlert:alert];
+//    }
 }
 
 - (void)hide {
     _text.text = [_text.text stringByReplacingOccurrencesOfString:@"\"" withString:@"-"];
+    [_text resignFirstResponder];
     
     EditTextBubble *b = ((EditTextBubble *)(_viewToEdit.bubble));
     [b setTextLabelText:_text.text];

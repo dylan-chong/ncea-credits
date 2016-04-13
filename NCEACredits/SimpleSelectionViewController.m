@@ -11,10 +11,6 @@
 
 #define SIMPLE_SELECTION_STAGGER_AMOUNT 0.73
 
-@interface SimpleSelectionViewController ()
-
-@end
-
 @implementation SimpleSelectionViewController
 
 - (id)initWithMainBubble:(BubbleContainer *)mainBubble delegate:(id<BubbleViewControllerDelegate>)delegate andStaggered:(BOOL)staggered {
@@ -25,7 +21,9 @@
         self.delegate = delegate;
         [self setMainBubbleSimilarToBubble:mainBubble];
         [self createBubbleContainersAndAddAsSubviews];
-        [self createAnchors];
+        [self createAnchorsIfNonExistent];
+        
+        [self createHomeButton];
     }
     return self;
 }
@@ -61,7 +59,7 @@
         
         if (pair.colour) colourToUse = pair.colour;
         else colourToUse = c;
-    
+        
         [m addObject:[[BubbleContainer alloc] initSubtitleBubbleWithFrameCalculator:blocks[a] colour:colourToUse title:pair.subject frameBubbleForStartingPosition:mainB.frame andDelegate:NO]];
     }
     
@@ -95,13 +93,13 @@
     if (bubbles > 4 && (index + 1) / 2.0 == round((index + 1) / 2.0) && staggered) r *= SIMPLE_SELECTION_STAGGER_AMOUNT;
     
     double sinAns, cosAns;
-    CGSize screen = [ApplicationDelegate getScreenSize];
-    if ([ApplicationDelegate deviceIsInLandscape]) {
-         sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r * (screen.width / screen.height);
-         cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r;
+    CGSize screen = [CurrentAppDelegate getScreenSize];
+    if ([CurrentAppDelegate deviceIsInLandscape]) {
+        sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r * (screen.width / screen.height);
+        cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r;
     } else {
-         sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r;
-         cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r * (screen.height / screen.width);
+        sinAns = sin([Styles degreesToRadians:angleFromOrigin]) * r;
+        cosAns = cos([Styles degreesToRadians:angleFromOrigin]) * r * (screen.height / screen.width);
     }
     
     double x, y;
@@ -136,7 +134,7 @@
 }
 
 + (double)getRadius {
-    CGSize size = [ApplicationDelegate getScreenSize];
+    CGSize size = [CurrentAppDelegate getScreenSize];
     
     if (size.width > size.height) {
         return size.height - ([Styles spaceFromEdgeOfScreen] * 2) - ([Styles subtitleContainerSize].width / 2);
@@ -154,28 +152,85 @@
 //*********
 //****************
 //*************************
-#pragma mark - ***************************    Corner Button    ************************************
+#pragma mark - ***************************    Corner and Home Buttons    ************************************
 //*************************
 //****************
 //*********
 //****
 //*
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    [self repositionCornerButton];
-}
-
-- (void)repositionCornerButton {
-    if (_cornerButton) [_cornerButton reposition];
+//------------------------------ Corner ------------------------------
+- (void)repositionCornerButtonAndHomeButton {
+    if (_cornerButton) {
+        [_cornerButton reposition];
+    }
+    if (_homeButton) {
+        [_homeButton reposition];
+    }
 }
 
 - (void)createCornerButtonWithTitle:(NSString *)title colourOrNilForMailBubbleColour:(UIColor *)colour target:(id)target selector:(SEL)selector {
     Corner corner = [Styles getOppositeCornerToCorner:[Styles getCornerForPoint:self.mainBubble.center]];
     UIColor *buttonColour = (colour) ? colour : self.mainBubble.colour;
     
-    _cornerButton = [CornerButton cornerButtonWithTitle:title corner:corner colour:buttonColour target:target selector:selector];
+    _cornerButton = [[CornerButton alloc] initWithColour:buttonColour text:title corner:corner target:target selector:selector];
     [self.view addSubview:_cornerButton];
+}
+
+- (void)repositionBubbles {
+    [super repositionBubbles];
+    
+    [self repositionCornerButtonAndHomeButton];
+}
+
+//------------------------------ Home ------------------------------
+
+- (void)createHomeButton {
+    _homeButton = [[HomeButton alloc] initWithSimpleVC:self];
+    [self.view addSubview:_homeButton];
+}
+
+- (void)startGrowingAnimation {
+    [self showOrHideCornerAndHomeButton:YES];
+    
+    [super startGrowingAnimation];
+}
+
+- (void)homeButtonPressed {
+    CurrentAppDelegate.bubbleVCisReturningToHomeScreen = YES;
+    [self startReturnScaleAnimation];
+}
+
+- (void)hasRepositionedBubbles {
+    [super hasRepositionedBubbles];
+    [self showOrHideCornerAndHomeButton:YES];
+    
+    //return home
+    if (CurrentAppDelegate.bubbleVCisReturningToHomeScreen) {
+        if (self.delegate) {
+            [self startReturnScaleAnimation];
+        }
+    }
+}
+
+- (void)startReturnScaleAnimation {
+    [super startReturnScaleAnimation];
+    [self showOrHideCornerAndHomeButton:NO];
+}
+
+- (void)startTransitionToChildBubble:(BubbleContainer *)b andBubbleViewController:(BubbleViewController *)bubbleViewController {
+    [super startTransitionToChildBubble:b andBubbleViewController:bubbleViewController];
+    [self showOrHideCornerAndHomeButton:NO];
+}
+
+- (void)showOrHideCornerAndHomeButton:(BOOL)showsOrNO {
+    if (showsOrNO) {
+        if (_homeButton) [_homeButton show];
+        if (_cornerButton) [_cornerButton show];
+    } else {
+        if (_homeButton) [_homeButton hide];
+        if (_cornerButton) [_cornerButton hide];
+    }
 }
 
 @end

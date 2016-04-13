@@ -70,9 +70,9 @@
     } else if ([title isEqualToString:OptionsBubbleTitleAbout]) {
         [self showAboutPopup];
     } else if ([title isEqualToString:OptionsBubbleTitleAppStore]) {
-        [self goToURL:APP_STORE_LINK];
+        [[self class] goToURL:APP_STORE_LINK];
     } else if ([title isEqualToString:OptionsBubbleTitleFacebook]) {
-        [self goToURL:FACEBOOK_LINK];
+        [[self class] goToURL:FACEBOOK_LINK];
     }
 }
 
@@ -93,12 +93,22 @@
 }
 
 + (void)showMailPopupInViewControllerWithMFMailComposeDelegate:(UIViewController<MFMailComposeViewControllerDelegate> *)controller {
-    MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
-    [mailVC setSubject:FEEDBACK_SUBJECT];
-    [mailVC setToRecipients:FEEDBACK_RECIPIENT];
-    [mailVC setMessageBody:FEEDBACK_BODY isHTML:NO];
-    [mailVC setMailComposeDelegate:controller];
-    [controller presentViewController:mailVC animated:YES completion:nil];
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
+        [mailVC setSubject:FEEDBACK_SUBJECT];
+        [mailVC setToRecipients:FEEDBACK_RECIPIENT];
+        [mailVC setMessageBody:FEEDBACK_BODY isHTML:NO];
+        [mailVC setMailComposeDelegate:controller];
+        [controller presentViewController:mailVC animated:YES completion:nil];
+    } else {
+        //no mail account setup
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"It appears I can't create an email. You will have to setup an email account on this device to send feedback.\n\nOtherwise, you can send us a message on our Facebook page. Do you want to do that instead?" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Go to Facebook" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+            [self goToURL:FACEBOOK_LINK];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [controller presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
@@ -165,7 +175,7 @@
 //****
 //*
 
-- (void)goToURL:(NSString *)link {
++ (void)goToURL:(NSString *)link {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
 }
 
@@ -177,7 +187,7 @@
 
 - (void)showAboutPopup {
     NSDictionary *bundle = [[NSBundle mainBundle] infoDictionary];
-    NSString *mess = [NSString stringWithFormat:@"Version: %@ (%@)\n%@\n\n\u00A9 Copyright Dylan Chong", bundle[@"CFBundleShortVersionString"], bundle[@"CFBundleVersion"], bundle[@"CFBundleIdentifier"]];
+    NSString *mess = [NSString stringWithFormat:@"Version: %@ (%@)\n%@\n\n\u00A9 Copyright 2015 Dylan Chong", bundle[@"CFBundleShortVersionString"], bundle[@"CFBundleVersion"], bundle[@"CFBundleIdentifier"]];
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:mess preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:RandomOK style:UIAlertActionStyleCancel handler:nil]];

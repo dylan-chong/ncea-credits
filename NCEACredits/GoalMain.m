@@ -12,9 +12,30 @@
 
 @implementation GoalMain
 
-+ (NSArray *)getAllGoalTitles {
-    return [DefaultGoals getDefaultGoalTitles];
-    #warning TODO: return custom goals too
++ (Goal *)getAnyTypeOfGoalForTitle:(NSString *)title {
+    Goal *goal = [self getDefaultGoalForTitle:title];
+    if (goal) return goal;
+    
+    goal = [self getCustomGoalForTitle:title];
+    if (goal) return goal;
+    
+    return nil;
+}
+
++ (NSArray *)getAllGoals {
+    NSArray *defaults = [DefaultGoals getAllDefaultGoals];
+    NSArray *customGoals = [CustomGoals getAllCustomGoals];
+    
+    if (customGoals) return [defaults arrayByAddingObjectsFromArray:customGoals];
+    else return defaults;
+}
+
++ (Goal *)getDefaultGoalForTitle:(NSString *)title {
+    return [DefaultGoals getGoalForTitle:title];
+}
+
++ (Goal *)getCustomGoalForTitle:(NSString *)title {
+    return [CurrentProfile.customGoals getGoalForTitle:title];
 }
 
 @end

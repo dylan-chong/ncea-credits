@@ -27,8 +27,6 @@
     //For old versions
     [self checkForFilesWIthJSONExtension];
     
-    //app count
-    CurrentProfile.appOpenTimes++;
     return YES;
 }
 
@@ -53,9 +51,14 @@
 }
 
 - (Profile *)getCurrentProfile {
-    if (_currentProfile)
+    if (_currentProfile) {
+        //app count
+        if (!_hasAddedToAppLaunchCount) {
+            _currentProfile.appOpenTimes++;
+            self.hasAddedToAppLaunchCount = YES;
+        }
         return _currentProfile;
-    else {
+    } else {
         [self loadProfileWithFileName:CurrentAppSettings.lastProfileFileName];
         return _currentProfile;
     }
@@ -252,6 +255,12 @@
     } else {
         return _statusBarHeight;
     }
+}
+
+- (BOOL)statusBarIsShowing {
+    if ([Styles getDevice] == iPhone && [CurrentAppDelegate deviceIsInLandscape])
+        return NO;
+    return YES;
 }
 
 //*

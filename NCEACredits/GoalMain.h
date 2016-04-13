@@ -11,6 +11,8 @@
 
 @interface GoalMain : NSObject
 
-+ (NSArray *)getAllGoalTitles;
++ (NSArray *)getAllGoals;
++ (Goal *)getAnyTypeOfGoalForTitle:(NSString *)title;
++ (Goal *)getCustomGoalForTitle:(NSString *)title;
 
 @end

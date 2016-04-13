@@ -11,13 +11,6 @@
 #import "BubbleMain.h"
 #import "AnimationManager.h"
 
-
-#if 1
-#define bg [UIColor clearColor]
-#else
-#define bg [UIColor lightGrayColor]
-#endif
-
 @implementation BubbleContainer
 
 - (id)initMainBubbleWithFrameCalculator:(PositionCalculationBlock)b {
@@ -31,8 +24,12 @@
         _bubble = [[BubbleMain alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:frame.size]];
         [self addSubview:_bubble];
         
-        self.backgroundColor = bg;
-        
+        if (DEBUG_MODE_ON && BUBBLE_CONTAINER_SHOW_BACKGROUND) {
+            self.backgroundColor = [UIColor lightGrayColor];
+            self.alpha = 0.5;
+        } else {
+            self.backgroundColor = [UIColor clearColor];
+        }
     }
     return self;
 }
@@ -54,7 +51,7 @@
         
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:f.size] colour:colour iconName:iconName title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];
-
+        
         if (![Styles rect:startingFrame isEqualToRect:CGRectZero]) {
             self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);
             self.userInteractionEnabled = NO;
@@ -62,7 +59,12 @@
             self.userInteractionEnabled = YES;
         }
         
-        self.backgroundColor = bg;
+        if (DEBUG_MODE_ON && BUBBLE_CONTAINER_SHOW_BACKGROUND) {
+            self.backgroundColor = [UIColor lightGrayColor];
+            self.alpha = 0.5;
+        } else {
+            self.backgroundColor = [UIColor clearColor];
+        }
     }
     
     return self;
@@ -85,7 +87,12 @@
         _bubble = [[Bubble alloc] initWithFrame:[Styles getBubbleFrameWithContainerSize:self.frame.size] colour:colour title:title andDelegate:hasDelegate];
         [self addSubview:_bubble];
         
-        self.backgroundColor = bg;
+        if (DEBUG_MODE_ON && BUBBLE_CONTAINER_SHOW_BACKGROUND) {
+            self.backgroundColor = [UIColor lightGrayColor];
+            self.alpha = 0.5;
+        } else {
+            self.backgroundColor = [UIColor clearColor];
+        }
         
         if (![Styles rect:startingFrame isEqualToRect:CGRectZero]) {
             self.bubble.transform = CGAffineTransformMakeScale([Styles startingScaleFactor], [Styles startingScaleFactor]);

@@ -312,7 +312,17 @@ BOOL (^EditTextBoolToBOOL) (NSString *) = ^(NSString *edit) {
 }
 
 //------------------------------ Home ------------------------------
-//home button calls startReturnScaleAnimation (which displays confirmation alert) - no need to add functionality
+
+//uncomment to make home button exit without saving (and ask for confirmation)
+//- (void)homeButtonPressed {
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:AppName message:@"Are you sure you want to exit without saving and return to the home screen?" preferredStyle:UIAlertControllerStyleAlert];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+//        CurrentAppDelegate.bubbleVCisReturningToHomeScreen = YES;
+//        [super startReturnScaleAnimation];
+//    }]];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+//    [self presentViewController:alert animated:YES completion:nil];
+//}
 
 - (void)mainBubbleWasPressed {
     CurrentAppDelegate.bubbleVCisReturningToHomeScreen = NO;

@@ -36,9 +36,11 @@
 - (NSUInteger)getPrimaryNCEALevelForCurrentYear;
 - (NSArray *)getYearsAsTableDatasForSetup;
 
-@property NSString *selectedGoalTitle;
-
+@property (nonatomic) NSString *selectedGoalTitle;
+@property BOOL hasCompletedGoal;
 @property CustomGoals *customGoals;
+- (BOOL)goalIsComplete;
+- (BOOL)collectionContainsLargeCreditAssessments;
 
 - (NSData *)convertToJSONAsRoot;
 - (void)logJSONText;

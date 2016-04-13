@@ -8,6 +8,7 @@
 
 #import "Profile.h"
 #import "TableViewCellData.h"
+#import "GoalMain.h"
 
 @implementation Profile
 
@@ -16,6 +17,7 @@
     p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:nil];
     p.customGoals = [[CustomGoals alloc] initWithPropertiesOrNil:nil];
     p.appOpenTimes = 0;
+    p.hasCompletedGoal = NO;
     return p;
 }
 
@@ -23,13 +25,18 @@
     Profile *p = [[Profile alloc] init];
     p.profileName = [properties objectForKey:@"profileName"];
     p.currentYear = [[properties objectForKey:@"currentYear"] integerValue];
-    p.selectedGoalTitle = [properties objectForKey:@"selectedGoalTitle"];
+    [p setSelectedGoalTitleWithoutUsingNormalSetterMethod:[properties objectForKey:@"selectedGoalTitle"]];
     p.yearCollection = [[YearCollection alloc] initWithPropertiesOrNil:[properties objectForKey:@"yearCollection"]];
     p.customGoals = [[CustomGoals alloc] initWithPropertiesOrNil:[properties objectForKey:@"customGoals"]];
     
     NSNumber *appOpens = [properties objectForKey:@"appOpenTimes"];
     if (appOpens) p.appOpenTimes = [appOpens integerValue];
     else p.appOpenTimes = 0;
+    
+    NSNumber *hasCompletedGoal = properties[@"hasCompletedGoal"];
+    if (hasCompletedGoal) p.hasCompletedGoal = [hasCompletedGoal boolValue];
+    else p.hasCompletedGoal = NO;
+    
     return p;
 }
 
@@ -41,6 +48,7 @@
     [properties setObject:[_yearCollection convertToDictionaryOfProperties] forKey:@"yearCollection"];
     [properties setObject:[_customGoals convertToDictionaryOfProperties] forKey:@"customGoals"];
     [properties setObject:[NSNumber numberWithInteger:_appOpenTimes] forKey:@"appOpenTimes"];
+    properties[@"hasCompletedGoal"] = [NSNumber numberWithBool:_hasCompletedGoal];
     
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:properties options:NSJSONWritingPrettyPrinted error:&error];
@@ -226,6 +234,54 @@
 
 - (NSDictionary *)getNumberOfCreditsForPriority:(GradePriorityType)priority andSubject:(NSString *)subject {
     return [[self getCurrentYear].assessmentCollection getNumberCreditsForPriority:priority subject:subject andLevel:[self getPrimaryNCEALevelForCurrentYear]];
+}
+
+//*
+//****
+//*********
+//****************
+//*************************
+#pragma mark - ***************************    Goal    ************************************
+//*************************
+//****************
+//*********
+//****
+//*
+
+- (void)setSelectedGoalTitle:(NSString *)selectedGoalTitle {
+    if (![_selectedGoalTitle isEqualToString:selectedGoalTitle] && _selectedGoalTitle) {
+        //goal has changed
+        _selectedGoalTitle = selectedGoalTitle;
+        
+        if ([self goalIsComplete]) {
+            //new goal already complete
+            self.hasCompletedGoal = YES;
+        } else {
+            self.hasCompletedGoal = NO;
+        }
+    } else {
+        _selectedGoalTitle = selectedGoalTitle;
+    }
+}
+
+- (void)setSelectedGoalTitleWithoutUsingNormalSetterMethod:(NSString *)selectedGoalTitle {
+    _selectedGoalTitle = selectedGoalTitle;
+}
+
+- (BOOL)goalIsComplete {
+    if (!(DEBUG_MODE_ON && ALLOW_LARGE_CREDIT_CHEATING))
+        if ([self collectionContainsLargeCreditAssessments]) return NO; //no cheating allowed!
+    
+    NSString *grade = [GoalMain getAnyTypeOfGoalForTitle:self.selectedGoalTitle].primaryGrade;
+    NSInteger creds = [self getNumberOfCreditsForGradeIncludingBetterGrades:grade priority:GradePriorityFinalGrade andLevel:[self getCurrentYear].primaryLevelNumber];
+    Goal *goal = [GoalMain getAnyTypeOfGoalForTitle:self.selectedGoalTitle];
+    NSInteger creditsToGo = [goal getCreditsLeftToCompleteWithCreditsForPrimaryGrade:creds atLevel:[self getCurrentYear].primaryLevelNumber];
+    if (creditsToGo > 0) return NO;
+    else return YES;
+}
+
+- (BOOL)collectionContainsLargeCreditAssessments {
+    return [[self getCurrentYear].assessmentCollection collectionContainsLargeCreditAssessments];
 }
 
 @end

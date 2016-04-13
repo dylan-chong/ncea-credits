@@ -44,7 +44,6 @@
 		8482D7F31A4534C200F1CD6D /* GoalMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F21A4534C200F1CD6D /* GoalMain.m */; };
 		8482D7F61A4534FE00F1CD6D /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7F51A4534FE00F1CD6D /* Goal.m */; };
 		8482D7FF1A46501B00F1CD6D /* SubjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */; };
-		8482D8051A46568300F1CD6D /* Launch-Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8482D8041A46568300F1CD6D /* Launch-Circle.png */; };
 		8483F3FF1A75A213000452B4 /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 8483F3FE1A75A213000452B4 /* House.png */; };
 		8483F4021A75A835000452B4 /* HomeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8483F4011A75A835000452B4 /* HomeButton.m */; };
 		8486093B1A6E525100FE9E40 /* BubbleText.m in Sources */ = {isa = PBXBuildFile; fileRef = 8486093A1A6E525100FE9E40 /* BubbleText.m */; };
@@ -177,7 +176,6 @@
 		8482D7F51A4534FE00F1CD6D /* Goal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Goal.m; sourceTree = "<group>"; };
 		8482D7FD1A46501B00F1CD6D /* SubjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectsViewController.h; sourceTree = "<group>"; };
 		8482D7FE1A46501B00F1CD6D /* SubjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectsViewController.m; sourceTree = "<group>"; };
-		8482D8041A46568300F1CD6D /* Launch-Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch-Circle.png"; sourceTree = "<group>"; };
 		8483F3FE1A75A213000452B4 /* House.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = House.png; sourceTree = "<group>"; };
 		8483F4001A75A835000452B4 /* HomeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeButton.h; sourceTree = "<group>"; };
 		8483F4011A75A835000452B4 /* HomeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeButton.m; sourceTree = "<group>"; };
@@ -215,7 +213,7 @@
 		84B5A2811880D8AD00969952 /* NCEACredits-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NCEACredits-Info.plist"; sourceTree = "<group>"; };
 		84B5A2831880D8AD00969952 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84B5A2851880D8AD00969952 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		84B5A2871880D8AD00969952 /* NCEACredits-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NCEACredits-Prefix.pch"; sourceTree = "<group>"; };
+		84B5A2871880D8AD00969952 /* NCEACredits-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NCEACredits-Prefix.pch"; sourceTree = "<group>"; wrapsLines = 1; };
 		84B5A2881880D8AD00969952 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84B5A2891880D8AD00969952 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		84B5A28B1880D8AD00969952 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -411,7 +409,6 @@
 				8470DD2A1A466FC300266654 /* Launch Screen.xib */,
 				8486093D1A71EE4500FE9E40 /* Launch-Image.png */,
 				84AD67DD1A4E23B300F58333 /* Loading-Text.png */,
-				8482D8041A46568300F1CD6D /* Launch-Circle.png */,
 			);
 			name = Launch;
 			sourceTree = "<group>";
@@ -760,7 +757,6 @@
 				84B5A2AC1880D8F100969952 /* Add.png in Resources */,
 				84B5A2AF1880D8F100969952 /* Subjects.png in Resources */,
 				84E4BA911A65CB2800D7AF47 /* StatsPopupStoryboard.storyboard in Resources */,
-				8482D8051A46568300F1CD6D /* Launch-Circle.png in Resources */,
 				8459E887196FD0B8000D1C85 /* SetupStoryboard~iphone.storyboard in Resources */,
 				840D587618834B0300DE24B7 /* Stats.png in Resources */,
 				8470DD2B1A466FC300266654 /* Launch Screen.xib in Resources */,

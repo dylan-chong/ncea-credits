@@ -121,8 +121,8 @@
 }
 
 - (float)secondsForPixelsToMoveBetweenPoint:(CGPoint)pointA andPoint:(CGPoint)pointB {
-    float xDif = abs(pointA.x - pointB.x);
-    float yDif = abs(pointA.y - pointB.y);
+    float xDif = fabsf(pointA.x - pointB.x);
+    float yDif = fabsf(pointA.y - pointB.y);
     
     float distance = sqrtf(powf(xDif, 2) + powf(yDif, 2));
     float seconds = distance / _wiggleSpeedPixelsPerFrame / [Styles frameRate];

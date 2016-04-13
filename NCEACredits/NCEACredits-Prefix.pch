@@ -1,7 +1,7 @@
 //
 //  Prefix header
 //
-//  The contents of this file are implicitly included at the beginning of every source file.
+//  The contents of this file are implicitly included at the beginning of every source file. K
 //
 
 #import <Availability.h>
@@ -22,6 +22,8 @@
 #define MAKE_FAKE_ASSESSMENTS YES
 #define NO_SAVE_MODE NO
 #define BUBBLE_TEXT_SHOW_BACKGROUND YES //ideally leave this on so that you remember to turn off debug mode
+#define BUBBLE_CONTAINER_SHOW_BACKGROUND NO
+#define ALLOW_LARGE_CREDIT_CHEATING YES
 
 #define CurrentAppDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define CurrentProfile [(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentProfile]
