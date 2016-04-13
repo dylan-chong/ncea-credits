@@ -1,1 +1,2 @@
-# ncea-credits
+# NCEA Credits
+for iOS
