@@ -1,0 +1,640 @@
+{
+  "hasCompletedGoal" : true,
+  "selectedGoalTitle" : "Excel. Endors.",
+  "profileName" : "Dylan Chong",
+  "customGoals" : {
+    "goals" : [
+
+    ]
+  },
+  "yearCollection" : {
+    "years" : [
+      {
+        "assessmentCollection" : {
+          "assessments" : [
+            {
+              "subject" : "Music",
+              "quickName" : "Instrumentation",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 1,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Maths",
+              "quickName" : "Simultaneous Equations",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 2,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 2
+            },
+            {
+              "subject" : "IT",
+              "quickName" : "Website Review",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 3,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Physics",
+              "quickName" : "Research",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 4,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "Chemistry",
+              "quickName" : "Ions",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 5,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "IT",
+              "quickName" : "Website",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 6,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Merit",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "English",
+              "quickName" : "Portfolio",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 7,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 6
+            },
+            {
+              "subject" : "Music",
+              "quickName" : "Solo Performance",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 8,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 6
+            },
+            {
+              "subject" : "Maths",
+              "quickName" : "Graphs",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 9,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Music",
+              "quickName" : "NZ Research",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 10,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Music",
+              "quickName" : "Composition",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 11,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 6
+            },
+            {
+              "subject" : "Music",
+              "quickName" : "Group Performance",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 12,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Chemistry",
+              "quickName" : "Redox",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 13,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "IT",
+              "quickName" : "Programming",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 14,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "IT",
+              "quickName" : "LAN",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 15,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "Maths",
+              "quickName" : "Coordinate Geometry",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 16,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 2
+            },
+            {
+              "subject" : "Maths",
+              "quickName" : "Probability",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 17,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Excellence",
+                "expected" : "Excellence",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Chemistry",
+              "quickName" : "Titration",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 18,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "English",
+              "quickName" : "Connections",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Literacy",
+              "identifier" : 19,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Achieved",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Physics",
+              "quickName" : "Nuclear",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 20,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "English",
+              "quickName" : "Speech",
+              "isAnInternal" : true,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 21,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Achieved",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "Physics",
+              "quickName" : "Electro-magnetism",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 22,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Excellence",
+                "expected" : "Excellence",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 6
+            },
+            {
+              "subject" : "Chemistry",
+              "quickName" : "Energy",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 23,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "IT",
+              "quickName" : "Computer Science",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 24,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "English",
+              "quickName" : "Poetry",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 25,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Excellence",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Music",
+              "quickName" : "Theory",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 26,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Excellence",
+                "expected" : "Excellence",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Chemistry",
+              "quickName" : "Organic",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 27,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Excellence",
+                "expected" : "Excellence",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Music",
+              "quickName" : "Aural",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 28,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Excellence",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Chemistry",
+              "quickName" : "Bonding",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 29,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Excellence",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 5
+            },
+            {
+              "subject" : "Physics",
+              "quickName" : "Mechanics",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 30,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Excellence",
+                "expected" : "Excellence",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 6
+            },
+            {
+              "subject" : "Maths",
+              "quickName" : "Calculus",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 31,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Merit",
+                "expected" : "Excellence",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 5
+            },
+            {
+              "subject" : "Physics",
+              "quickName" : "Waves",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 33,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Merit",
+                "expected" : "Excellence",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "English",
+              "quickName" : "Unfamiliar",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 34,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Achieved",
+                "expected" : "Merit",
+                "final" : "Achieved"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "English",
+              "quickName" : "Film",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 35,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Not Achieved",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Maths",
+              "quickName" : "Algebra",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 36,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Merit",
+                "expected" : "Excellence",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            }
+          ]
+        },
+        "subjectsAndColours" : {
+          "subjectsAndColours" : {
+            "Music" : {
+              "green" : 0.6745098,
+              "red" : 0.2,
+              "alpha" : 1,
+              "blue" : 0.888454
+            },
+            "Physics" : {
+              "green" : 0.6,
+              "red" : 1,
+              "alpha" : 1,
+              "blue" : 0.1643836
+            },
+            "Maths" : {
+              "green" : 0.07843138,
+              "red" : 0.8039216,
+              "alpha" : 1,
+              "blue" : 0.07827789
+            },
+            "IT" : {
+              "green" : 0.3686275,
+              "red" : 0.09411765,
+              "alpha" : 1,
+              "blue" : 0.739726
+            },
+            "Chemistry" : {
+              "green" : 0.8,
+              "red" : 0.4,
+              "alpha" : 1,
+              "blue" : 0
+            },
+            "English" : {
+              "green" : 0.3882353,
+              "red" : 0.9490196,
+              "alpha" : 1,
+              "blue" : 0.5127202
+            }
+          }
+        },
+        "yearDate" : 2014,
+        "identifier" : 1,
+        "primaryLevelNumber" : 2
+      },
+      {
+        "assessmentCollection" : {
+          "assessments" : [
+
+          ]
+        },
+        "subjectsAndColours" : {
+          "subjectsAndColours" : {
+
+          }
+        },
+        "yearDate" : 2015,
+        "identifier" : 2,
+        "primaryLevelNumber" : 3
+      }
+    ]
+  },
+  "appOpenTimes" : 79,
+  "currentYear" : 2014
+}

@@ -1,0 +1,215 @@
+{
+  "hasCompletedGoal" : true,
+  "selectedGoalTitle" : "Achievement",
+  "profileName" : "Testing",
+  "customGoals" : {
+    "goals" : [
+
+    ]
+  },
+  "yearCollection" : {
+    "years" : [
+      {
+        "assessmentCollection" : {
+          "assessments" : [
+            {
+              "subject" : "Maths",
+              "quickName" : "Probability",
+              "isAnInternal" : true,
+              "level" : 1,
+              "typeOfCredits" : "Normal",
+              "identifier" : 1,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Achieved"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Music",
+              "quickName" : "Composition",
+              "isAnInternal" : true,
+              "level" : 1,
+              "typeOfCredits" : "Normal",
+              "identifier" : 2,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Achieved"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 6
+            },
+            {
+              "subject" : "English",
+              "quickName" : "Portfolio",
+              "isAnInternal" : true,
+              "level" : 1,
+              "typeOfCredits" : "Normal",
+              "identifier" : 3,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "",
+                "final" : "Excellence"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 6
+            },
+            {
+              "subject" : "Maths",
+              "quickName" : "Algebra",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 4,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Merit",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Chemistry",
+              "quickName" : "Ions",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 5,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Merit",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "Physics",
+              "quickName" : "Research",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 6,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Merit",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 3
+            },
+            {
+              "subject" : "I.T.",
+              "quickName" : "Website",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 7,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "",
+                "expected" : "Merit",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            },
+            {
+              "subject" : "Gbf",
+              "quickName" : "Lots",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 9,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Merit",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 26
+            },
+            {
+              "subject" : "Gbf",
+              "quickName" : "Heck",
+              "isAnInternal" : false,
+              "level" : 2,
+              "typeOfCredits" : "Normal",
+              "identifier" : 10,
+              "isUnitStandard" : false,
+              "gradeSet" : {
+                "preliminary" : "Merit",
+                "expected" : "Excellence",
+                "final" : "Merit"
+              },
+              "assessmentNumber" : 0,
+              "creditsWhenAchieved" : 4
+            }
+          ]
+        },
+        "subjectsAndColours" : {
+          "subjectsAndColours" : {
+            "Gbf" : {
+              "green" : 0.7372549,
+              "red" : 0.9607843,
+              "alpha" : 1,
+              "blue" : 0
+            },
+            "Physics" : {
+              "green" : 0.6,
+              "red" : 1,
+              "alpha" : 1,
+              "blue" : 0.1643836
+            },
+            "Music" : {
+              "green" : 0.6745098,
+              "red" : 0.2,
+              "alpha" : 1,
+              "blue" : 0.888454
+            },
+            "I.T." : {
+              "green" : 0.3686275,
+              "red" : 0.09411765,
+              "alpha" : 1,
+              "blue" : 0.739726
+            },
+            "Maths" : {
+              "green" : 0.07843138,
+              "red" : 0.8039216,
+              "alpha" : 1,
+              "blue" : 0.07827789
+            },
+            "Chemistry" : {
+              "green" : 0.8,
+              "red" : 0.4,
+              "alpha" : 1,
+              "blue" : 0
+            },
+            "English" : {
+              "green" : 0.3882353,
+              "red" : 0.9490196,
+              "alpha" : 1,
+              "blue" : 0.5127202
+            }
+          }
+        },
+        "yearDate" : 2015,
+        "identifier" : 1,
+        "primaryLevelNumber" : 2
+      }
+    ]
+  },
+  "appOpenTimes" : 16,
+  "currentYear" : 2015
+}
