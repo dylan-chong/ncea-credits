@@ -10,7 +10,11 @@ Key features include:
 Download NCEA Credits on the App Store, and have fun simplifying your schooling life!
 
 * Note: the iTunes account has expired so the App can no longer be downloaded
-
 * [View the trailer here](http://youtu.be/fOPfoITzX3E)
-
 * [See the Facebook page here](https://www.facebook.com/nceacredits)
+
+![Home Screen](/Images/Github\ Images/1\ Main\ Page.png)
+![Home Screen](/Images/Github\ Images/2\ Add\ Page.png)
+![Home Screen](/Images/Github\ Images/3\ Subjects\ Page.png)
+![Home Screen](/Images/Github\ Images/4\ Assessments\ Page.png)
+![Home Screen](/Images/Github\ Images/5\ Credit\ Count\ Modal.png)
